@@ -1,0 +1,25 @@
+
+<article class="g17">
+  <div>
+    <h3 class="formTitle">Odometer Fraud Complaint Form</h3>
+    <form novalidate="novalidate" name="form">
+      <div class="formField">
+        <label>Which type of Odometer Fraud are you reporting?</label>
+        <ul class="radioList">
+          <li>
+            <label> 
+              <input type="radio" name="one"/><span>That you are a victim of odometer fraud</span>
+            </label>
+            <label> 
+              <input type="radio" name="one"/><span>That you are aware of an individual, business, or organization that knowingly engages in odometer fraud</span>
+            </label>
+          </li>
+        </ul>
+      </div>
+      <div class="continue">
+        <button data-ng-disabled="form.$invalid" data-ng-click="next()">Continue</button>
+      </div>
+      <portalcancel></portalcancel>
+    </form>
+  </div>
+</article>

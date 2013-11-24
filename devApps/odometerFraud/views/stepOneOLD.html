@@ -1,0 +1,61 @@
+<div class="mainContent">
+	<div class="content singleContainer" style="overflow: hidden;padding-bottom:1em;">
+		<h3>Contact Us Step 1 of 3</h3>
+		<form novalidate name="form">
+			<div class="formField firstName">
+				<label>First Name<span class="reqText">Required</span></label>
+				<input type="text" name="firstname" data-ng-model="firstname" required="true"  placeholder="First Name">
+				<p data-ng-show="form.firstname.$invalid && form.firstname.$dirty">
+					You must enter your first name
+				</p>
+			</div>
+			<div class="formField lastName">
+				<label>Last Name<span class="reqText">Required</span></label>
+				<input type="text" name="lastname" data-ng-model="lastname" required="true" placeholder="Last Name">
+				<p data-ng-show="form.lastname.$invalid && form.lastname.$dirty">
+					You must enter your last name
+				</p>
+			</div>
+			<div class="formField phone">
+				<label>Phone</label>
+				<input type="text" ng-maxlength="12" name="phone" data-ng-model="phone"  data-ng-pattern="/[0-9-\-]{12,}/" placeholder="804-555-1212">
+				<p data-ng-show="form.phone.$invalid && form.phone.$dirty">
+					You must enter a valid phone number (ex.804-555-1212)
+				</p>
+			</div>
+			<div class="formField email">
+				<label>Email<span class="reqText">Required</span></label>
+				<input type="text" id="email" name="email" data-ng-model="email" required="true"  data-ng-pattern="/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/"  placeholder="Email">
+				<p data-ng-show="form.email.$invalid && form.email.$dirty">
+					You must enter your email
+				</p>
+			</div>
+			<div class="formField subject">
+				<label>Subject<span class="reqText">Required</span></label>
+				<select id="sub" ng-change="setText(subject)" data-ng-model="subject" required="true" style="background:#eee;" name="subject">
+					<option value="">Choose a Subject</option>
+					<option value="di" data="Driver Information">Driver Information</option>
+					<option value="vi">Vehicle Information</option>
+					<option value="su">Suspension</option>
+					<option value="ot">Online Transaction</option>
+					<option value="gq">General Question</option>
+					<option value="co">Comments</option>
+					<option value="ti">Technical Information</option>
+					<option value="ot">Other</option>
+				</select>
+				<p data-ng-show="form.subject.$invalid && form.subject.$dirty">
+					Required
+				</p>
+			</div>
+		</form>
+		<div class="continue">
+			<button  data-ng-disabled="form.$invalid"  data-ng-click="next()">
+				Continue
+			</button>
+		</div>
+		<h2 class="loaderText err" style="background:none;" data-ng-show="err">{{err}}</h2>
+		<portalcancel data-ng-show="!isloading"></portalcancel>
+	</div>
+
+</div>
+

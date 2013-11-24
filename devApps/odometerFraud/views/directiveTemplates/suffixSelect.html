@@ -1,0 +1,11 @@
+<div class="formField suffix">
+				<label>Suffix<span class="reqText">Required</span></label>
+				<select ng-model="suffix" required="true" style="background:#eee;" name="select">
+					<option value="">Choose</option>
+					<option value="Mr.">Mr.</option>
+					<option value="Ms.">Ms.</option>
+				</select>
+				<p ng-show="form.select.$invalid && form.select.$dirty">
+					Required
+				</p>
+			</div>
