@@ -1,0 +1,45 @@
+!!! html
+html.no-js(lang='en')
+	head
+		meta(charset='utf-8')
+		meta(http-equiv="X-UA-Compatible",content="IE=edge,chrome=1")
+		meta(name="viewport",content="width=device-width,initial-scale=1")
+		meta(name="description",content="Virginia DMV Search")
+		
+		title DMV Search
+		
+		link(rel='stylesheet', href='/css/odometerFraud.css')
+		script(src="scripts/shims/mod.min.js")
+		
+		//if lt IE 9
+		script(src="scripts/shims/respond.min.js")
+		
+	body#ng-app.contactUs(data-ng-app='odomFraud')
+		
+		//if lt IE 8
+			:markdown
+				You are using an **outdated browser**. 
+				Please [upgrade your browser](https://browsehappy.com) or
+				[activate Google Chrome](http://www.google.com/chromeframe/?redirect=true) to improve your experience.
+		
+		ul.vaNav(data-ng-include="'http://10.156.147.82/views/includes/vaNav.html'")
+		section.site
+			header.dmvHeader.g16(data-ng-include="'views/includes/dmvHeaderPlain.html'")
+		
+			block content
+			
+		block scripts
+		
+		<!-- build:js scripts/contactUs.min.js -->
+		script(src="scripts/vendor/jquery-1.10.2.js")
+		script(src="scripts/vendor/angular.js")
+		script(src="scripts/vendor/resource.js")
+		script(src="scripts/vendor/ngSanitize.js")
+		script(src="scripts/vendor/underscore.js")
+		script(src="scripts/dev/controllers.js")
+		script(src="http://10.156.147.82/modules/portalCancel/portalCancel.js")
+		script(src="scripts/dev/factories.js")
+		script(src="scripts/dev/directives.js")
+		script(src="scripts/dev/dmvPortalConfig.js")
+		script(src="scripts/vendor/ga.js")
+		<!-- endbuild -->
