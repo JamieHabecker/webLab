@@ -1,0 +1,7 @@
+@mixin LightToOrange{
+background: -moz-linear-gradient(top,  #FFAD16 50%,  #ff9b0c 50%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(50%,#FFAD16), color-stop(50%,#ff9b0c)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, #FFAD16 50%,#ff9b0c 50%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, #FFAD16 50%,#ff9b0c 50%); /* Opera 11.10+ */
+background: linear-gradient(bottom, #ff9b0c 50%,   #FFAD16 50%); /* W3C */
+}

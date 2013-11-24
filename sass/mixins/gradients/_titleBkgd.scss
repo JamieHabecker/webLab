@@ -1,0 +1,21 @@
+@mixin titleBkgd{
+
+background: #eeeeee;
+background: -moz-linear-gradient(top,  #eeeeee 0%, #BEC1C2 78%);
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(78%,#BEC1C2));
+background: -webkit-linear-gradient(top,  #eeeeee 0%,#BEC1C2 78%);
+background: -o-linear-gradient(top,  #eeeeee 0%,#BEC1C2 78%);
+background: -ms-linear-gradient(top,  #eeeeee 0%,#BEC1C2 78%);
+background: linear-gradient(to bottom,  #eeeeee 0%,#BEC1C2 78%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#BEC1C2',GradientType=0 );
+
+
+
+
+
+
+
+
+
+
+}

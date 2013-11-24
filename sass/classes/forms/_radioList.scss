@@ -1,0 +1,40 @@
+ul.radioList{
+		margin:0;
+		padding:0;
+	li{
+		border:1px solid $cGray;
+		background:#f1f1f1;
+		font-size:1em;
+		color:#333;
+		cursor:pointer;
+		overflow:hidden;
+		label{
+			padding:1em;
+			background:$grayLighter;
+			border-bottom:1px solid $cGray;
+			&:last-child{
+				border:none;
+			}
+			&:hover{
+				cursor:pointer;
+			}
+			input{
+				width:3%;
+				display:inline-block;
+				margin-top:-5px;
+				float:left;
+			}
+			&:hover{
+			background:#FFF9D3;
+		}
+		&.selected{
+			background:#BFFFC6
+		}
+		span{
+			display:inline-block;
+			width:95%;
+			}
+		}
+	}
+}
+	

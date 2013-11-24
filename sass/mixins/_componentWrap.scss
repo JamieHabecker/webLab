@@ -1,0 +1,6 @@
+@mixin componentWrapper{
+  @include lightlyRounded;
+  @include bottomShadowLight;
+  border: 2px solid $blueLighter;
+  background:$white;
+}

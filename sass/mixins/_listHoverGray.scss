@@ -1,0 +1,5 @@
+@mixin hoverGray{
+	background: $listHover;
+	border-radius:0px 3px 3px 0px;
+	box-shadow:-1px 1px 1px #d9d9d9;
+}

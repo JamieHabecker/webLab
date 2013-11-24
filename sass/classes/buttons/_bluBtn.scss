@@ -1,0 +1,32 @@
+@mixin bluBtn{
+	background:orange;
+	@include blueToLight;
+	border:solid 2px $blueLighter;
+	padding:3px 8px;
+	@include lightlyRounded;
+	@include bottomShadowLight;
+	@include textShadowLight;
+  	font-weight:bold;
+  	color:$white;
+  	&:after {
+  		display: inline-block;
+    		content: "";
+    		width: 15px;
+    		height: 13px;
+    		background: transparent url('/img/ui-icons_ffffff_256x240.png') no-repeat;
+    		background-position: -30px -15px;
+    		z-index:9999;
+    		}
+    		&:hover{
+    			@include LightToOrange;
+    			}
+    	}
+.bluBtn{
+	@include bluBtn;
+	width:100px;
+}
+
+a.bluBtn{
+	text-decoration:none !important;
+	color:#FFFFFF !important;
+}

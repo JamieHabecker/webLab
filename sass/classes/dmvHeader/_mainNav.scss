@@ -1,0 +1,58 @@
+div.mainNavHold{
+	margin-top:0;
+}
+
+
+
+	div.mainNav{
+		display:none;
+	}
+			
+@media screen and (min-width:758px){
+	div.mainNav{
+		clear:both;
+		width:99%;
+		margin-bottom:1em;
+		display:block !important;
+		border-radius:5px;
+		border:2px solid $blueLighter;
+		@include blueToLight;
+		@include bottomShadowLight;
+			ul.mainNavLinks{
+				margin:0 auto;
+				display:block;
+				text-align: center;
+					li{
+						display:inline-block;
+						line-height: 2.5em;
+						cursor:pointer;
+			a{
+				padding:0 0.5em;
+				border:none;
+				color:white;
+
+			}
+			&:hover{
+				@include darkBlueToLight;
+			}
+		}
+	}
+}
+.mob{
+				display:none;
+			}
+	
+}
+
+
+@media screen and (min-width:1016px){
+	div.mainNav{
+		ul.mainNavLinks{
+			li{
+				a{
+					padding:0 1.4em;
+				}
+			}
+		}
+	}
+}

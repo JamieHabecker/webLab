@@ -1,0 +1,66 @@
+ul.vaNav{
+	height:0px;
+	width:100%;
+  	background:url("/img/vaNavBkgd.jpg");
+  	@include bottomShadow;
+  	border-bottom:2px solid $blueLighter;
+	margin:0;
+	padding:0;
+	transition:all .5s ease-in-out; 
+   	-o-transition:all .5s ease-in-out; 
+   	-moz-transition:all .5s ease-in-out; 
+   	-webkit-transition:all .5s ease-in-out;
+   	margin-top:-7px;
+	li{
+		float:left;
+		margin-top:-300px;
+		transition:all .8s ease-in-out; 
+		-o-transition:all .8s ease-in-out; 
+		-moz-transition:all .8s ease-in-out; 
+		-webkit-transition:all .8s ease-in-out;
+		list-style-type: none;
+		img{
+		max-width:100% !important;
+		}
+		a{
+			background:url(/img/divider.jpg);
+  			background-repeat:no-repeat;
+  			height:40px;
+  			margin-top:0px;
+			margin-right:10px;
+			color:$offWhite;
+			padding:11px 0 0 11px;
+			float:left;
+			text-decoration:none;
+		}
+		&:first-child > a{
+				background:none;
+				float:none;
+		}	
+		&:last-child{
+			float:right;
+		}
+	}
+}
+
+
+
+@media screen and (min-width:758px){
+   	ul.vaNav{
+   		height:41px;
+   		transition:all .5s ease-in-out; 
+   		-o-transition:all .5s ease-in-out; 
+   		-moz-transition:all .5s ease-in-out; 
+   		-webkit-transition:all .5s ease-in-out;
+   		margin-top:0;
+   		li{
+   			margin-top:0;
+   			transition:all .8s ease-in-out; 
+   			-o-transition:all .8s ease-in-out; 
+   			-moz-transition:all .8s ease-in-out; 
+   			-webkit-transition:all .8s ease-in-out;
+   		}
+   	}
+}
+
+

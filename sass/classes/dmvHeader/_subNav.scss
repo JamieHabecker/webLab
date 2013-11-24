@@ -1,0 +1,124 @@
+div.subNav{
+clear:left;
+width:$seventeen;
+
+
+div.login{
+	float:left;
+	width:$four;
+}
+
+div.subLinks{
+	display:none;
+	a{
+		color:$blueDarker;
+		text-decoration: none;
+		
+	}
+}
+
+
+
+}
+@media screen and (max-width:420px){
+	div.subNav{
+		div.login{
+			display:block;
+			float:none;
+			width:98%;
+			margin:0 auto;
+			text-align:center;
+			button{
+				width:60%;
+			}
+		}
+	}
+	div.search{
+			float:none;
+			width:98%;
+			margin:0 auto;
+			margin-top:1em;
+			text-align:center;
+			input{
+				width:98%;
+				margin:0 auto;
+				display:block;
+			}
+			button{
+				width:100%;
+				margin-top:0.5em;
+			}
+		}
+	
+	
+}
+
+@media screen and (min-width:758px){
+	div.subNav{
+		float:left;
+		clear:none;
+		margin-left:$gutter;
+		margin-bottom:1em;
+		width:$eight;
+		div.login{
+			float:none;
+			margin-left:2em;
+			margin-top:3em;
+			width:$six;
+		}
+		div.subLinks{
+			display:block;
+			margin-left:2em;
+			margin-top:1em;
+			a{
+				float:left;
+				margin-right:0.5em;
+			}
+		}
+
+}
+	
+}
+
+
+
+
+@media screen and (min-width:758px){
+	div.subNav{
+		float:left;
+		margin-left:$gutter;
+		div.login{
+			margin-left:2em;
+			width:$four;
+		}
+		div.subLinks{
+			display:block;
+			margin-left:2em;
+			margin-top:1em;
+			a{
+				float:left;
+				
+			}
+		}
+	}
+}
+
+
+@media screen and (min-width:1016px){
+	div.subNav{
+	div.login{
+			width:$three;
+			float:left;
+		}
+		div.subLinks{
+			float:left;
+			margin-left:0;
+			margin-top:3em;
+			a{
+				margin-right:0.7em;
+				
+			}
+		}
+	}
+}
+

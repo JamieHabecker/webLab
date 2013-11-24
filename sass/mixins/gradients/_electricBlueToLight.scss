@@ -1,0 +1,6 @@
+@mixin electricBlueToLight{
+background: -moz-linear-gradient(bottom, $electricBlue 0%,  $blueLightest 100%); /* W3C */
+ background: linear-gradient(bottom, $electricBlue 0%,  $blueLightest 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( endColorstr='#{$electricBlue}', startColorstr='#{$blueLightest}',GradientType=0); /* IE6-8 */
+
+}

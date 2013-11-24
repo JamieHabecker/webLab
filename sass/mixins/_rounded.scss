@@ -1,0 +1,30 @@
+@mixin lessRounded{
+-webkit-border-radius: 5px; 
+  border-radius:5px;
+}
+@mixin leftRounded{
+-webkit-border-radius: 8px 0 0 8px; 
+  border-radius:8px 0 0 8px;
+
+}
+@mixin rightRounded{
+ -webkit-border-radius: 0 8px 0 8px; 
+  border-radius:0  8px 8px 0;
+
+  
+}
+@mixin lightlyRounded{
+ -webkit-border-radius: 8px; 
+  border-radius:8px;
+  
+  
+}
+@mixin mediumRounded{
+ -webkit-border-radius: 13px; 
+  border-radius:13px;
+  
+  
+}
+
+
+

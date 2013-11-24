@@ -1,0 +1,7 @@
+@mixin mainContentFontSize{
+	div.ver2, div.bbq-default, section.home{
+a,p, b,ul li,ul li ul li, ul,li,ol,td, blockquote, pre, th{
+  font-size: 0.85rem; 
+} 
+}	
+}

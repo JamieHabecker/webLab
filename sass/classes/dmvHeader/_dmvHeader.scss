@@ -1,0 +1,23 @@
+header.dmvHeader{
+	margin:0 auto;
+	div.logo{
+		float:left;
+		img{
+		}
+	}
+}
+
+
+@media screen and (max-width:420px){
+	div.logo{
+		width:$seventeen;
+	}
+}
+@media screen and (min-width:421px){
+header.dmvHeader{
+	div.logo{
+		float:left;
+		width:275px;
+	}
+}
+}

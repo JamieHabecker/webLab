@@ -1,0 +1,22 @@
+div.search{
+	float:right;
+	margin-bottom:2em;
+}
+
+
+
+@media screen and (min-width:758px){
+	div.search{
+	margin-left:$gutter;
+	margin-top:2.875em;
+	position:absolute;
+	right:3%;
+	text-align:right;
+	input{
+		padding-left:1em;
+		
+	}
+	}
+	
+}
+

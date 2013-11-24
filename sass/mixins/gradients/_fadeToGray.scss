@@ -1,0 +1,5 @@
+
+@mixin fadeToGray{
+  background: -moz-linear-gradient(bottom, #7c8588 50%,  #aeb4b7 50%); /* W3C */
+  background: linear-gradient(bottom, #7c8588 50%,  #aeb4b7 50%); /* W3C */
+}

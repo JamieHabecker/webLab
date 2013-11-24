@@ -1,0 +1,19 @@
+@mixin textShadowDark{
+ text-shadow: 0px -1px 0px $gray;
+}
+
+@mixin textShadowDarkLeft{
+ text-shadow: -1px -1px 0px #666;
+}
+
+@mixin textShadowLight{
+ text-shadow: 0px 1px 0px $grayLight;
+}
+
+@mixin textShadowBlue{
+ text-shadow: 0px 1px 0px $blueLight;
+}
+
+@mixin textShadowLighter{
+ text-shadow: 0px 1px 0px $grayLighter;
+}

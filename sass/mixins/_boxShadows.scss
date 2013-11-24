@@ -1,0 +1,31 @@
+@mixin bottomShadowLight{
+box-shadow: 0px 3px 3px $grayLight;
+}
+
+@mixin bottomShadow{
+box-shadow: 0px 3px 3px $darkGray;
+}
+
+@mixin rightShadow{
+box-shadow: 3px 3px 3px $grayLight;
+}
+
+@mixin rightShadowOnly{
+box-shadow: 2px 0px 3px $grayLight;
+
+}
+
+@mixin bottomShadowBlack{
+box-shadow: 0px 3px 3px $darkerGray;
+}
+
+@mixin topShadowLight{
+box-shadow: -2px -3px 3px $grayLight;
+}
+
+.bottomShadow{
+  @include bottomShadow;
+}
+.rightShadow{
+  @include rightShadow;
+}
