@@ -2,7 +2,8 @@ webLab
 ==========
 
 Development Apps being built:
-  1. main template skeletons for both us and them
+  1. main template skeletons for outside and inside web worlds
 
-Participants:
-  1. Trey is building for the outside world
+Developers:
+  1. Trey C.
+  2. Jamie H.
