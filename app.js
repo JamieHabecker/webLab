@@ -8,7 +8,6 @@ var routes = require('./routes');
 var mydmv = require('./routes/myDMV');
 var http = require('http');
 var path = require('path');
-var stylus = require('stylus');
 var app = express();
 // Enables CORS
 var enableCORS = function(req, res, next) {
@@ -29,21 +28,13 @@ var enableCORS = function(req, res, next) {
 // enable CORS!
 app.use(enableCORS);
 //--------------
-function compile(str, path) {
-  return stylus(str)
-    .set('filename', path)
-}
+
 // all environments
 app.set('port', process.env.PORT || 80);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
  
-
-    app.use(require("stylus").middleware({
-        src: __dirname + "/public",
-        compress: true
-    }));
 
 
 
@@ -69,6 +60,7 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/myDMV', mydmv.home);
 app.get('/Search', mydmv.home);
+
 
 
 http.createServer(app).listen(app.get('port'), function(){
