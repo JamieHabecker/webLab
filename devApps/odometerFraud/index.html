@@ -16,9 +16,9 @@
 Please <a href="https://browsehappy.com">upgrade your browser</a> or
 <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome</a> to improve your experience.</p>
     <![endif]-->
-    <ul data-ng-include="'http://10.156.147.82/views/includes/vaNav.html'" class="vaNav"></ul>
+    <ul data-ng-include="'/views/includes/vaNav.html'" class="vaNav"></ul>
     <section class="site">
-      <header data-ng-include="'views/includes/dmvHeaderPlain.html'" class="dmvHeader g16"></header>
+      <header data-ng-include="'/views/includes/dmvHeaderPlain.html'" class="dmvHeader g16"></header>
       <div data-ng-view  data-ng-animate="{enter: 'an-enter'}" class="content g16">
         <h2 style="text-align:center">Preparing Portal...</h2>
       </div>
@@ -29,7 +29,7 @@ Please <a href="https://browsehappy.com">upgrade your browser</a> or
     <script src="scripts/vendor/ngSanitize.js"></script>
     <script src="scripts/vendor/underscore.js"></script>
     <script src="scripts/dev/controllers.js"></script>
-    <script src="http://10.156.147.82/modules/portalCancel/portalCancel.js"></script>
+    <script src="/globalModules/portalCancel.js"></script>
     <script src="scripts/dev/factories.js"></script>
     <script src="scripts/dev/directives.js"></script>
     <script src="scripts/dev/dmvPortalConfig.js"></script>
