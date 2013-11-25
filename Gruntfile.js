@@ -3,14 +3,15 @@ module.exports = function(grunt){
 	    
 watch: {
 	sass:{
-		files:['/sass/**/*.scss','/sass/**/**/*.scss', 'sass/*.scss'],
+		files:['sass/*.scss', 'sass/**/*.scss'],
 		tasks:['compass']
 	},
-	all: {
-		files: ['views/*html','views/includes/*html','views/home/*html','scripts/dev/*.js','img/*.png,jpg,jpeg,gif,webp,svg'],
-		},
+	all :{
+		files: ['*.html','devApps/**/jade/*.jade','devApps/**/scripts/dev/*.js' ],
+		tasks:[]
+	},
 	jade: {
-		files: ['search/views/*.jade','jade/*.jade'],
+		files: ['*.jade'],
 		tasks: ['jade']
 	},
 	options:{
@@ -26,7 +27,7 @@ bump:{
 connect:{
 	all:{
 		options:{
-			port:80,
+			port:8000,
 			hostname: "10.156.147.183",
 			middleware: function(connect, options){
 				return [
@@ -62,21 +63,24 @@ open: {
                 dest: 'scripts/contactUs.js' //where to output the script
 			}
 		},
+		
 compass: {
       options: {
-        sassDir: 'sass',
-        cssDir: 'css',
-        imageDir: 'img',
+        sassDir: 'sass/',
+        cssDir: 'public/css/',
+        imageDir: 'img/',
         outputStyle: 'compressed',
-        importPath: '/sass/',
+        importPath: '/Users/bpq63476/Desktop/webLab/',
         //relativeAssets: false
       },
+      
       server: {
         options: {
           debugInfo: true
         }
       }
     },
+    
     
     
 
@@ -100,14 +104,13 @@ jade: {
 			}
 		},
 		files: {
-			"index.html": ["jade/index.jade"],
-			"views/stepOne.html": ["jade/stepOne.jade"]
+			"index.html": ["index.jade"]
 		}
 	}
 },  
 
-
- clean: {
+/*
+clean: {
             options: { force: true },
             release: ['../../contactus/']
         },
@@ -118,6 +121,7 @@ jade: {
                 }
             }
         },
+*/
  usemin: {
             html: ['../../contactus/index.html']
     }
@@ -141,11 +145,9 @@ jade: {
 	grunt.loadNpmTasks('grunt-bump');
 	
 
-    //dev task
-	grunt.registerTask('server', [
+  //dev task
+grunt.registerTask('server', [
 		'compass',
-		'concat',
-		'uglify',
 		'jade',
 		'connect',
 		'open',
