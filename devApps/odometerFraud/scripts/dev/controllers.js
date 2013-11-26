@@ -1,15 +1,13 @@
 angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig', 'factories', 'portalCancel'])//.value('$anchorScroll', angular.noop)
 
 
-
-
 .config(['$routeProvider','$locationProvider','$httpProvider', function($routeProvider,$locationProvider, $httpProvider){
      $httpProvider.defaults.headers.get = {
         'Accept' : 'application/json, text/javascript, */*'
    };
     $routeProvider
-    .when('/OdometerFraud', {
-        controller : 'StepOneController',
+    .when('/', {
+        controller : 'DisclaimerController',
         templateUrl : 'views/discalimer.html'
     })
     .when('/StepOne', {
@@ -25,10 +23,25 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig', 'facto
         templateUrl : 'views/complete.html'
     })
     .otherwise({
-        redirectTo : '/ContactUs'
+        redirectTo : '/'
     });
 
 }])
+
+.controller('DisclaimerController', ['$scope',function($scope){
+	
+	
+	
+	
+}])
+
+
+
+
+
+/*
+
+
 
 
 
@@ -240,7 +253,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig', 'facto
    }
 
 }])
-
+*/
 
 .animation('an-enter', function() {
         return {
