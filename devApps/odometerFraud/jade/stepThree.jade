@@ -1,0 +1,27 @@
+article.g17
+	div
+		h3.formTitle Complainant/Victim Information cont.
+		form(novalidate, name="form")
+			.formField.email
+				label Email<span class="reqText">Required
+				input(type="text",name="address",data-ng-model="address",required="true",placeholder="First Name")
+				p(data-ng-show="form.address.$invalid && form.address.$dirty")
+					You must enter your address
+			.formField.phone
+				label Phone<span class="reqText">Required
+				input(type="text",name="firstname",data-ng-model="firstname",required="true",placeholder="First Name")
+				p(data-ng-show="form.firstname.$invalid && form.firstname.$dirty")
+					You must enter your first name
+			.formField.radio
+				label How do you prefer to be contacted?
+				ul.radioList
+					li
+						label
+							input(type="radio",name="one", data-ng-required="true", data-ng-click='one()')
+							<span>Email</span>
+						label(data-ng-click='next(two)')
+							input(type="radio",name="one", data-ng-required="true", data-ng-click='two()')
+							<span>Phone</span>
+			.continue
+				button(data-ng-click="next()") Continue
+			portalcancel
