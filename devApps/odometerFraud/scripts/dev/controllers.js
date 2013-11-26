@@ -77,9 +77,9 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig', 'facto
 		console.log($scope.an)
 		if($scope.an === "Yes"){
 			sessionStorage.an = true;
-			$location.path("/StepFour")
-		}else{
 			$location.path("/StepTwo")
+		}else{
+			$location.path("/StepFour")
 		}
 		
 	}
