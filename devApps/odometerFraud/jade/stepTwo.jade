@@ -1,0 +1,37 @@
+article.g17
+	div
+		h3.formTitle Odometer Fraud Complaint Form - Step Two
+		form(novalidate, name="form")
+			.formField.firstName
+				label First Name<span class="reqText">Required
+				input(type="text",name="firstname",data-ng-model="firstname",required="true",placeholder="First Name")
+				p(data-ng-show="form.firstname.$invalid && form.firstname.$dirty")
+					You must enter your first name
+			.formField.lastName
+				label Last Name<span class="reqText">Required
+				input(type="text",name="firstname",data-ng-model="lastname",required="true",placeholder="First Name")
+				p(data-ng-show="form.lastname.$invalid && form.lastname.$dirty")
+					You must enter your last name
+			.formField.address
+				label Address<span class="reqText">Required
+				input(type="text",name="address",data-ng-model="address",required="true",placeholder="First Name")
+				p(data-ng-show="form.address.$invalid && form.address.$dirty")
+					You must enter your address
+			.formField.city
+				label City<span class="reqText">Required
+				input(type="text",name="address",data-ng-model="address",required="true",placeholder="First Name")
+				p(data-ng-show="form.address.$invalid && form.address.$dirty")
+					You must enter your address
+			.formField.state
+				label State<span class="reqText">Required
+				input(type="text",name="address",data-ng-model="address",required="true",placeholder="First Name")
+				p(data-ng-show="form.address.$invalid && form.address.$dirty")
+					You must enter your address
+			.formField.zip
+				label Zip<span class="reqText">Required
+				input(type="text",name="address",data-ng-model="address",required="true",placeholder="First Name")
+				p(data-ng-show="form.address.$invalid && form.address.$dirty")
+					You must enter your address
+			.continue
+				button(data-ng-click="next()") Continue
+			portalcancel
