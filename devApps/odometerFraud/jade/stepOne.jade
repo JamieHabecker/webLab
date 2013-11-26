@@ -2,7 +2,7 @@ article.g17
 	div
 		h3.formTitle Odometer Fraud Complaint Form - Step One
 		form(novalidate, name="form")
-			.formField
+			.formField.radio
 				label Which type of Odometer Fraud are you reporting?
 				ul.radioList
 					li
@@ -12,6 +12,17 @@ article.g17
 						label
 							input(type="radio",name="type", data-ng-model="comType", value="2", data-ng-required="true", data-ng-click='two()')
 							<span>That you are aware of an individual, business, or organization that knowingly engages in odometer fraud</span>
+				
+			.formField.radio(data-ng-show="comType === '2'")
+				label Do you wish to remain anonymous?
+				ul.radioList
+					li
+						label
+							input(type="radio",name="an", data-ng-model="an", value="Yes", data-ng-required="true")
+							<span>Yes</span>
+						label
+							input(type="radio",name="an", data-ng-model="an", value="No", data-ng-required="true")
+							<span>No</span>
 			.continue
 				button(data-ng-disabled="checkIt",data-ng-click="next()") Continue
 			portalcancel

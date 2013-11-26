@@ -73,9 +73,15 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig', 'facto
 		sessionStorage.type = "2";
 		$scope.checkIt = false;
 	}
-	
 	$scope.next= function(){
-		$location.path("/StepTwo")
+		console.log($scope.an)
+		if($scope.an === "Yes"){
+			sessionStorage.an = true;
+			$location.path("/StepFour")
+		}else{
+			$location.path("/StepTwo")
+		}
+		
 	}
 }])
 
@@ -137,7 +143,11 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig', 'facto
 
 .controller('StepFourController', ['$scope','$location', function($scope, $location){
 	$scope.next= function(){
-		$location.path("/StepFive")
+		if(sessionStorage.stepTwo){
+			$location.path("/StepFive")
+		}else{
+			$location.path("/StepSix")
+		}
 	}
 }])
 

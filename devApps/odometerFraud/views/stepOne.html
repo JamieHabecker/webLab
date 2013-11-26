@@ -3,7 +3,7 @@
   <div>
     <h3 class="formTitle">Odometer Fraud Complaint Form - Step One</h3>
     <form novalidate="novalidate" name="form">
-      <div class="formField">
+      <div class="formField radio">
         <label>Which type of Odometer Fraud are you reporting?</label>
         <ul class="radioList">
           <li>
@@ -12,6 +12,19 @@
             </label>
             <label>
               <input type="radio" name="type" data-ng-model="comType" value="2" data-ng-required="true" data-ng-click="two()"/><span>That you are aware of an individual, business, or organization that knowingly engages in odometer fraud</span>
+            </label>
+          </li>
+        </ul>
+      </div>
+      <div data-ng-show="comType === '2'" class="formField radio">
+        <label>Do you wish to remain anonymous?</label>
+        <ul class="radioList">
+          <li>
+            <label>
+              <input type="radio" name="an" data-ng-model="an" value="Yes" data-ng-required="true"/><span>Yes</span>
+            </label>
+            <label>
+              <input type="radio" name="an" data-ng-model="an" value="No" data-ng-required="true"/><span>No</span>
             </label>
           </li>
         </ul>
