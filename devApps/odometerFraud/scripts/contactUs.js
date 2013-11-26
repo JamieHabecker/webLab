@@ -27217,6 +27217,14 @@ angular.module('ngResource', ['ng']).
         controller : 'StepTwoController',
         templateUrl : 'views/stepTwo.html'
     })
+    .when('/StepThree', {
+        controller : 'StepThreeController',
+        templateUrl : 'views/stepThree.html'
+    })
+    .when('/StepFour', {
+        controller : 'StepFourController',
+        templateUrl : 'views/stepFour.html'
+    })
     .when('/Verify', {
         controller : 'VerifyController',
         templateUrl : 'views/verify.html'
@@ -27240,18 +27248,33 @@ angular.module('ngResource', ['ng']).
 
 .controller('StepOneController', ['$scope','$location', function($scope, $location){
 	$scope.one= function(){
-		$scope.next = true;
-		sessionStorage.type = "vic"
-		$location.path("/StepTwo")
+		sessionStorage.type = "vic"	
 	}
 	$scope.two= function(){
-		$scope.next= true;
-		console.log("two")
+		sessionStorage.type = "oth"	
+	}
+	
+	$scope.next= function(){
 		$location.path("/StepTwo")
 	}
 }])
 
 .controller('StepTwoController', ['$scope','$location', function($scope, $location){
+	$scope.next= function(){
+		$location.path("/StepThree")
+	}
+	
+}])
+
+
+.controller('StepThreeController', ['$scope','$location', function($scope, $location){
+	$scope.next= function(){
+		$location.path("/StepFour")
+	}
+}])
+
+
+.controller('StepFourController', ['$scope','$location', function($scope, $location){
 	$scope.one= function(){
 		$scope.next = true;
 		sessionStorage.type = "vic"

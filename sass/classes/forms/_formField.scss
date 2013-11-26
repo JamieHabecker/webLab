@@ -1,5 +1,4 @@
 div.formField{
-	background:yellow;
 	label{
 		padding-bottom:0.5em;
 	}
@@ -23,7 +22,7 @@ div.formField{
 }
 
 @media screen and (min-width:758px){
-	div.firstName, div.lastName, div.email, div.phone{
+	div.firstName, div.lastName, div.email, div.phone, div.gen{
 		width:49%;
 		float:left;
 	}
@@ -34,10 +33,14 @@ div.formField{
 		width:32%;
 		float:left;
 	}
-	div.lastName, div.state, div.zip, div.phone{
+	div.lastName, div.state, div.zip, div.phone,div.address.gen{
 		margin-left:2%;
 	}
-
+	div.gen{
+		width:49%;
+		float:left;
+		clear:none;
+	}
 }
 
 

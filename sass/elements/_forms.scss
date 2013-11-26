@@ -1,3 +1,155 @@
 form{
-	padding:1em;
+	padding:0em 1em;
+}
+input, textarea{
+	background:#eee;
+}
+input{
+	height:2em;
+}
+input[type="text"], input[type="password"],input[type="date"],input[type="email"]{
+	width:100%;
+	margin:0 auto;
+	height:3em;
+	border-radius:5px;
+	border:1px solid #ccc;
+	background:#eee;
+}
+
+select, textarea, input[type="text"], input[type="password"], 
+input[type="datetime"], input[type="datetime-local"], 
+input[type="date"], input[type="month"], input[type="time"], 
+input[type="week"], input[type="number"], input[type="email"], 
+input[type="url"], input[type="search"], input[type="tel"],
+ input[type="color"], 
+ .uneditable-input {
+    border-radius: 4px 4px 4px 4px;
+    color: #555555;
+    display:block;
+    line-height: 20px;
+    margin-bottom: 10px;
+    vertical-align: middle;
+}
+
+textarea {
+ padding-top:0.5em;
+    height: auto;
+    width:100%;
+}
+
+textarea,select, 
+input[type="text"],
+input[type="date"],
+input[type="checkbox"],
+input[type="password"], 
+input[type="datetime"], 
+input[type="datetime-local"], 
+input[type="date"], 
+input[type="month"], 
+input[type="time"], 
+input[type="week"], 
+input[type="number"], 
+input[type="email"], 
+input[type="url"], 
+input[type="search"], 
+input[type="tel"], 
+input[type="color"], 
+.uneditable-input {
+    border: 1px solid #CCCCCC;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+}
+textarea:focus,
+input[type="text"]:focus,
+input[type="date"]:focus,
+input[type="password"]:focus, 
+input[type="datetime"]:focus, 
+input[type="datetime-local"]:focus,
+input[type="month"]:focus, 
+input[type="time"]:focus, 
+input[type="week"]:focus, 
+input[type="number"]:focus, 
+input[type="email"]:focus, 
+input[type="url"]:focus, 
+input[type="search"]:focus, 
+input[type="tel"]:focus, 
+input[type="color"]:focus, 
+.uneditable-input:focus {
+    border-color: rgba(82, 168, 236, 0.8);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(185, 199, 208, 0.6);
+    outline: 0 none;
+    background:#fff9d3 !important;
+}
+
+select{
+	background:#eee;
+	padding-top:10px;
+	padding-bottom:10px;
+	padding-right:3px;
+	option{
+		&:first-child{
+			background:none;
+		}
+		background:#fff;
+	}
+}
+.lt-ie9{  
+	select{
+		background:none;
+	}
+	textarea{
+		min-height:8em;
+	}
+}  
+
+input[type="radio"].ng-valid.ng-pristine, input[type="checkbox"].ng-valid.ng-pristine{
+	background:none;
+}
+
+
+
+button[disabled]{
+	opacity:0.5;
+	cursor:default;
+	&:hover{
+		@include orangeToLight;
+	}
+}
+input{
+	background-color:#eee;
+}
+
+input.ng-invalid.ng-dirty, select.ng-invalid{
+background-color: #FCA4A7;
+}
+
+input.ng-invalid.ng-dirty:focus {
+	background:#fff9d3;
+}
+input.ng-valid.ng-dirty{
+background-color: #BFFFC6;
+}
+input.ng-pristine.ng-valid{
+	background-color: #eee;
+}
+
+
+
+input[type="checkbox"]{
+	border:1px solid #ccc;
+	border:none\9;
+}
+
+
+textarea.ng-pristine.ng-invalid.ng-invalid-required {
+    background: none repeat scroll 0 0 #FCE3E4;
+}
+
+textarea.ng-valid-maxlength.ng-dirty.ng-invalid.ng-invalid-required {
+    background: none repeat scroll 0 0 #FCE3E4;
+}
+
+
+textarea.ng-dirty.ng-valid-required.ng-invalid.ng-invalid-maxlength{
+	 background: none repeat scroll 0 0 #FCE3E4;
 }
