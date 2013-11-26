@@ -24,6 +24,10 @@ bump:{
   files:['package.json']
 },
    
+   
+   
+
+   
 connect:{
 	all:{
 		options:{
@@ -169,10 +173,3 @@ copy: {
   ]);
 
 };
-
-
-
-
-
-
-
