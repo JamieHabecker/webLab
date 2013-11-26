@@ -31,10 +31,10 @@ input[type="url"], input[type="search"], input[type="tel"],
     vertical-align: middle;
 }
 
-textarea {
+textarea{
  padding-top:0.5em;
-    height: auto;
-    width:100%;
+ height: auto;
+ width:100%;
 }
 
 textarea,select, 
@@ -109,7 +109,9 @@ input[type="radio"].ng-valid.ng-pristine, input[type="checkbox"].ng-valid.ng-pri
 
 
 button[disabled]{
-	opacity:0.5;
+	position:relative;
+	opacity:0.3;
+	filter: alpha(opacity=70);
 	cursor:default;
 	&:hover{
 		@include orangeToLight;

@@ -1,46 +1,49 @@
 angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig', 'factories', 'portalCancel'])//.value('$anchorScroll', angular.noop)
 
-
 .config(['$routeProvider','$locationProvider','$httpProvider', function($routeProvider,$locationProvider, $httpProvider){
-     $httpProvider.defaults.headers.get = {
-        'Accept' : 'application/json, text/javascript, */*'
-   };
-    $routeProvider
-    .when('/', {
-        controller : 'DisclaimerController',
-        templateUrl : 'views/disclaimer.html'
-    })
-    .when('/StepOne', {
-        controller : 'StepOneController',
-        templateUrl : 'views/stepOne.html'
-    })
-    .when('/StepTwo', {
-        controller : 'StepTwoController',
-        templateUrl : 'views/stepTwo.html'
-    })
-    .when('/StepThree', {
-        controller : 'StepThreeController',
-        templateUrl : 'views/stepThree.html'
-    })
-    .when('/StepFour', {
-        controller : 'StepFourController',
-        templateUrl : 'views/stepFour.html'
-    })
-    .when('/StepFive', {
-        controller : 'StepFiveController',
-        templateUrl : 'views/stepFive.html'
-    })
-    .when('/Verify', {
-        controller : 'VerifyController',
-        templateUrl : 'views/verify.html'
-    })
-    .when('/Complete', {
-        controller : 'CompleteController',
-        templateUrl : 'views/complete.html'
-    })
-    .otherwise({
-        redirectTo : '/'
-    });
+	$httpProvider.defaults.headers.get = {
+		'Accept' : 'application/json, text/javascript, */*'
+	};
+	$routeProvider
+	.when('/', {
+		controller : 'DisclaimerController',
+		templateUrl : 'views/disclaimer.html'
+	})
+	.when('/StepOne', {
+		controller : 'StepOneController',
+		templateUrl : 'views/stepOne.html'
+	})
+	.when('/StepTwo', {
+		controller : 'StepTwoController',
+		templateUrl : 'views/stepTwo.html'
+	})
+	.when('/StepThree', {
+		controller : 'StepThreeController',
+		templateUrl : 'views/stepThree.html'
+	})
+	.when('/StepFour', {
+		controller : 'StepFourController',
+		templateUrl : 'views/stepFour.html'
+	})
+	.when('/StepFive', {
+		controller : 'StepFiveController',
+		templateUrl : 'views/stepFive.html'
+	})
+	.when('/StepSix', {
+		controller : 'StepSixController',
+		templateUrl : 'views/stepSix.html'
+	})
+	.when('/Verify', {
+		controller : 'VerifyController',
+		templateUrl : 'views/verify.html'
+	})
+	.when('/Complete', {
+		controller : 'CompleteController',
+		templateUrl : 'views/complete.html'
+	})
+	.otherwise({
+		redirectTo : '/'
+	});
 
 }])
 
@@ -48,15 +51,27 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig', 'facto
 	$scope.next = function(){
 		$location.path('/StepOne')
 	}
-	
 }])
 
 .controller('StepOneController', ['$scope','$location', function($scope, $location){
+	if(sessionStorage.type){
+		var a = sessionStorage.type;
+		if(a === "1"){
+			$scope.comType = "1";
+		}else{
+			$scope.comType = "2";
+		}
+		$scope.checkIt = false;
+	}else{
+		$scope.checkIt = true;
+	}
 	$scope.one= function(){
-		sessionStorage.type = "vic"	
+		sessionStorage.type = "1";	
+		$scope.checkIt = false;
 	}
 	$scope.two= function(){
-		sessionStorage.type = "oth"	
+		sessionStorage.type = "2";
+		$scope.checkIt = false;
 	}
 	
 	$scope.next= function(){
@@ -64,16 +79,57 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig', 'facto
 	}
 }])
 
-.controller('StepTwoController', ['$scope','$location', function($scope, $location){
-	$scope.next= function(){
-		$location.path("/StepThree")
-	}
+.controller('StepTwoController', ['$scope','$location','$timeout',function($scope, $location, $timeout){
+	 if(sessionStorage.stepTwo){
+	 	var data = sessionStorage.getItem('stepTwo');
+	 	var p = JSON.parse(data); 
+	 	var formFill = {
+	 		fillIt : function() {
+	 			$scope.firstname= p.firstname;
+	 			$scope.lastname  = p.lastname;
+	 			$scope.address  = p.address;
+	 			$scope.city  = p.city;
+	 			$scope.state = p.state;
+	 			$scope.zip = p.zip
+	 			}
+	 		};
+	 	$timeout(formFill.fillIt, 100);
+   }
 	
+	$scope.next= function(){
+		var stepTwo = {
+			firstname : $scope.firstname,
+			lastname : $scope.lastname,
+			address : $scope.address,
+			city: $scope.city,
+			state: $scope.state,
+			zip: $scope.zip
+			};
+			sessionStorage.setItem('stepTwo', JSON.stringify(stepTwo));
+			$location.path("/StepThree")
+	}
 }])
 
-
-.controller('StepThreeController', ['$scope','$location', function($scope, $location){
+.controller('StepThreeController', ['$scope','$location','$timeout', function($scope, $location, $timeout){
+	if(sessionStorage.stepThree){
+	 	var data = sessionStorage.getItem('stepThree');
+	 	var p = JSON.parse(data); 
+	 	var formFill = {
+	 		fillIt : function() {
+	 			$scope.email= p.email;
+	 			$scope.phone = p.phone;
+	 			$scope.conPref  = p.conPref;
+	 			}
+	 		};
+	 	$timeout(formFill.fillIt, 100);
+   }
 	$scope.next= function(){
+		var stepThree = {
+			email : $scope.email,
+			phone : $scope.phone,
+			conPref : $scope.conPref
+			};
+		sessionStorage.setItem('stepThree', JSON.stringify(stepThree));
 		$location.path("/StepFour")
 	}
 }])
@@ -86,6 +142,13 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig', 'facto
 }])
 
 .controller('StepFiveController', ['$scope','$location', function($scope, $location){
+	$scope.next= function(){
+		$location.path("/StepSix")
+	}
+}])
+
+
+.controller('StepSixController', ['$scope','$location', function($scope, $location){
 	
 }])
 

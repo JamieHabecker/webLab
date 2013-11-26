@@ -9,29 +9,29 @@ article.g17
 					You must enter your first name
 			.formField.lastName
 				label Last Name<span class="reqText">Required
-				input(type="text",name="firstname",data-ng-model="lastname",required="true",placeholder="First Name")
+				input(type="text",name="lastname",data-ng-model="lastname",required="true",placeholder="Last Name")
 				p(data-ng-show="form.lastname.$invalid && form.lastname.$dirty")
 					You must enter your last name
 			.formField.address
 				label Address<span class="reqText">Required
-				input(type="text",name="address",data-ng-model="address",required="true",placeholder="First Name")
+				input(type="text",name="address",data-ng-model="address",required="true",placeholder="Address")
 				p(data-ng-show="form.address.$invalid && form.address.$dirty")
 					You must enter your address
 			.formField.city
 				label City<span class="reqText">Required
-				input(type="text",name="address",data-ng-model="address",required="true",placeholder="First Name")
-				p(data-ng-show="form.address.$invalid && form.address.$dirty")
+				input(type="text",name="city",data-ng-model="city",required="true",placeholder="City")
+				p(data-ng-show="form.city.$invalid && form.city.$dirty")
 					You must enter your address
 			.formField.state
 				label State<span class="reqText">Required
-				input(type="text",name="address",data-ng-model="address",required="true",placeholder="First Name")
-				p(data-ng-show="form.address.$invalid && form.address.$dirty")
+				input(type="text",name="state",data-ng-model="state",required="true",placeholder="State")
+				p(data-ng-show="form.state.$invalid && form.state.$dirty")
 					You must enter your address
 			.formField.zip
 				label Zip<span class="reqText">Required
-				input(type="text",name="address",data-ng-model="address",required="true",placeholder="First Name")
-				p(data-ng-show="form.address.$invalid && form.address.$dirty")
+				input(type="text",name="zip",data-ng-model="zip",required="true",placeholder="Zip")
+				p(data-ng-show="form.zip.$invalid && form.zip.$dirty")
 					You must enter your address
 			.continue
-				button(data-ng-click="next()") Continue
+				button(data-ng-disabled="form.$invalid", data-ng-click="next()") Continue
 			portalcancel

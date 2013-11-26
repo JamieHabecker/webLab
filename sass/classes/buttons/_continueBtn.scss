@@ -16,6 +16,9 @@ div.continue{
 	button{
 	  width:80%;
 	}
+	button[disabled]{
+		opacity:0.3;
+	}
 }
 
 

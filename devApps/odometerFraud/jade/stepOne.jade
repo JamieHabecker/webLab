@@ -7,11 +7,12 @@ article.g17
 				ul.radioList
 					li
 						label
-							input(type="radio",name="type", data-ng-required="true", data-ng-click='one()')
+							input(type="radio",name="type", data-ng-model="comType", value="1", data-ng-required="true", data-ng-click='one()')
 							<span>That you are a victim of odometer fraud</span>
 						label
-							input(type="radio",name="type", data-ng-click='two()')
+							input(type="radio",name="type", data-ng-model="comType", value="2", data-ng-required="true", data-ng-click='two()')
 							<span>That you are aware of an individual, business, or organization that knowingly engages in odometer fraud</span>
 			.continue
-				button(data-ng-click="next()") Continue
+				button(data-ng-disabled="checkIt",data-ng-click="next()") Continue
 			portalcancel
+			
