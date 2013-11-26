@@ -8,13 +8,13 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig', 'facto
         'Accept' : 'application/json, text/javascript, */*'
    };
     $routeProvider
-    .when('/ContactUs', {
+    .when('/OdometerFraud', {
+        controller : 'StepOneController',
+        templateUrl : 'views/discalimer.html'
+    })
+    .when('/StepOne', {
         controller : 'StepOneController',
         templateUrl : 'views/stepOne.html'
-    })
-    .when('/StepTwo', {
-        controller : 'StepTwoController',
-        templateUrl : 'views/stepTwo.html'
     })
     .when('/Verify', {
         controller : 'VerifyController',
@@ -33,8 +33,6 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig', 'facto
 
 
 .controller('StepOneController', ['$scope','$location','$timeout', function($scope, $location, $timeout){
-    sessionStorage.removeItem('vehicles');
-    sessionStorage.removeItem('drivers');
    if(sessionStorage.stepOne){
     var one = sessionStorage.getItem('stepOne');
     var cdOne = JSON.parse(one); 
