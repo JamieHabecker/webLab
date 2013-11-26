@@ -1,0 +1,37 @@
+nav.portalCancel{
+	clear:both;
+	display:block;
+	text-align:center;
+	padding-bottom:2em;
+	a{
+	@include rightShadow;
+	background:#788E9C;
+	color:#eee;
+	font-weight:bold;
+	border: 1px solid #ccc;
+	border-top:1px solid #eee;
+	width:80%;
+	display:inline-block;
+	padding:0.5em;
+	&:hover{
+		cursor:pointer;
+		background:#52616B;
+	}
+	}
+}
+
+@media screen and(min-width:758px){
+	nav.portalCancel{
+		text-align:right;
+		a{
+			width:20%;
+			text-align:center;
+			margin-right:2em;
+		}
+	}
+}
+
+  
+  
+  
+  

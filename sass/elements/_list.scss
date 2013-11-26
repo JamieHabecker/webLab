@@ -1,0 +1,16 @@
+p + ul{
+  margin-top:0.3em;
+}
+ul{
+  li{
+    line-height:1.5em;
+  }
+}
+
+
+p.address + ul{
+  li{
+    list-style-type:none;
+    line-height:1.3em;
+  }
+}
