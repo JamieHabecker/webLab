@@ -27207,11 +27207,15 @@ angular.module('ngResource', ['ng']).
     $routeProvider
     .when('/', {
         controller : 'DisclaimerController',
-        templateUrl : 'views/discalimer.html'
+        templateUrl : 'views/disclaimer.html'
     })
     .when('/StepOne', {
         controller : 'StepOneController',
         templateUrl : 'views/stepOne.html'
+    })
+    .when('/StepTwo', {
+        controller : 'StepTwoController',
+        templateUrl : 'views/stepTwo.html'
     })
     .when('/Verify', {
         controller : 'VerifyController',
@@ -27227,16 +27231,37 @@ angular.module('ngResource', ['ng']).
 
 }])
 
-.controller('DisclaimerController', ['$scope',function($scope){
-	
-	
-	
+.controller('DisclaimerController', ['$scope','$location', function($scope, $location){
+	$scope.next = function(){
+		$location.path('/StepOne')
+	}
 	
 }])
 
+.controller('StepOneController', ['$scope','$location', function($scope, $location){
+	$scope.one= function(){
+		$scope.next = true;
+		sessionStorage.type = "vic"
+		$location.path("/StepTwo")
+	}
+	$scope.two= function(){
+		$scope.next= true;
+		console.log("two")
+		$location.path("/StepTwo")
+	}
+}])
 
-
-
+.controller('StepTwoController', ['$scope','$location', function($scope, $location){
+	$scope.one= function(){
+		$scope.next = true;
+		sessionStorage.type = "vic"
+		console.log("one")
+	}
+	$scope.two= function(){
+		$scope.next= true;
+		console.log("two")
+	}
+}])
 
 /*
 

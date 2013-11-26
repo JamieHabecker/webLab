@@ -1,17 +1,17 @@
 article.g17
 	div
-		h3.formTitle Odometer Fraud Complaint Form
-		form(novalidate,name="form")
+		h3.formTitle Odometer Fraud Complaint Form - Step One
+		form(novalidate, name="form")
 			.formField
 				label Which type of Odometer Fraud are you reporting?
 				ul.radioList
 					li
-						label 
-							input(type="radio",name="one")
+						label
+							input(type="radio",name="type", data-ng-required="true", data-ng-click='one()')
 							<span>That you are a victim of odometer fraud</span>
-						label 
-							input(type="radio",name="one")
+						label
+							input(type="radio",name="type", data-ng-click='two()')
 							<span>That you are aware of an individual, business, or organization that knowingly engages in odometer fraud</span>
 			.continue
-				button(data-ng-disabled="form.$invalid",data-ng-click="next()") Continue
+				button(data-ng-click="next()") Continue
 			portalcancel

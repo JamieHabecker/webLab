@@ -109,7 +109,9 @@ jade: {
 		files: {
 			"index.html": ["jade/index.jade"],
 			"views/stepOne.html": ["jade/stepOne.jade"],
-			"views/disclaimer.html" : ['jade/disclaimer.jade']
+			"views/disclaimer.html" : ['jade/disclaimer.jade'],
+			"views/stepTwo.html" : ['jade/stepTwo.jade'],
+			"views/stepThree.html" : ['jade/stepThree.jade']
 		}
 	}
 },  

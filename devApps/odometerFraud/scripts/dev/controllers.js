@@ -8,11 +8,19 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig', 'facto
     $routeProvider
     .when('/', {
         controller : 'DisclaimerController',
-        templateUrl : 'views/discalimer.html'
+        templateUrl : 'views/disclaimer.html'
     })
     .when('/StepOne', {
         controller : 'StepOneController',
         templateUrl : 'views/stepOne.html'
+    })
+    .when('/StepTwo', {
+        controller : 'StepTwoController',
+        templateUrl : 'views/stepTwo.html'
+    })
+    .when('/StepThree', {
+        controller : 'StepThreeController',
+        templateUrl : 'views/stepThree.html'
     })
     .when('/Verify', {
         controller : 'VerifyController',
@@ -28,16 +36,45 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig', 'facto
 
 }])
 
-.controller('DisclaimerController', ['$scope',function($scope){
+.controller('DisclaimerController', ['$scope','$location', function($scope, $location){
+	$scope.next = function(){
+		$location.path('/StepOne')
+	}
 	
+}])
+
+.controller('StepOneController', ['$scope','$location', function($scope, $location){
+	$scope.one= function(){
+		sessionStorage.type = "vic"	
+	}
+	$scope.two= function(){
+		sessionStorage.type = "oth"	
+	}
 	
-	
+	$scope.next= function(){
+		$location.path("/StepTwo")
+	}
+}])
+
+.controller('StepTwoController', ['$scope','$location', function($scope, $location){
+	$scope.next= function(){
+		$location.path("/StepThree")
+	}
 	
 }])
 
 
-
-
+.controller('StepThreeController', ['$scope','$location', function($scope, $location){
+	$scope.one= function(){
+		$scope.next = true;
+		sessionStorage.type = "vic"
+		console.log("one")
+	}
+	$scope.two= function(){
+		$scope.next= true;
+		console.log("two")
+	}
+}])
 
 /*
 
