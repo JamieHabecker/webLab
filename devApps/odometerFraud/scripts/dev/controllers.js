@@ -26,6 +26,10 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig', 'facto
         controller : 'StepFourController',
         templateUrl : 'views/stepFour.html'
     })
+    .when('/StepFive', {
+        controller : 'StepFiveController',
+        templateUrl : 'views/stepFive.html'
+    })
     .when('/Verify', {
         controller : 'VerifyController',
         templateUrl : 'views/verify.html'
@@ -76,15 +80,13 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig', 'facto
 
 
 .controller('StepFourController', ['$scope','$location', function($scope, $location){
-	$scope.one= function(){
-		$scope.next = true;
-		sessionStorage.type = "vic"
-		console.log("one")
+	$scope.next= function(){
+		$location.path("/StepFive")
 	}
-	$scope.two= function(){
-		$scope.next= true;
-		console.log("two")
-	}
+}])
+
+.controller('StepFiveController', ['$scope','$location', function($scope, $location){
+	
 }])
 
 /*

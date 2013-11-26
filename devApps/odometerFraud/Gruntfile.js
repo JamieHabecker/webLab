@@ -112,7 +112,8 @@ jade: {
 			"views/disclaimer.html" : ['jade/disclaimer.jade'],
 			"views/stepTwo.html" : ['jade/stepTwo.jade'],
 			"views/stepThree.html" : ['jade/stepThree.jade'],
-			"views/stepFour.html" : ['jade/stepFour.jade']
+			"views/stepFour.html" : ['jade/stepFour.jade'],
+			"views/stepFive.html" : ['jade/stepFive.jade']
 		}
 	}
 },  

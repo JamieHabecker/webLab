@@ -22,18 +22,18 @@ div.formField{
 }
 
 @media screen and (min-width:758px){
-	div.firstName, div.lastName, div.email, div.phone, div.gen{
+	div.firstName, div.lastName, div.email, div.phone, div.gen, div.vin, div.plate, div.prmColr, div.secColr{
 		width:49%;
 		float:left;
 	}
 	div.address, div.radio{
 		clear:left;
 	}
-	div.city, div.state, div.zip{
+	div.city, div.state, div.zip, div.make, div.model, div.year{
 		width:32%;
 		float:left;
 	}
-	div.lastName, div.state, div.zip, div.phone,div.address.gen{
+	div.lastName, div.state, div.zip, div.phone,div.address.gen, div.make, div.model, div.plate, div.secColr{
 		margin-left:2%;
 	}
 	div.gen{
