@@ -13,4 +13,16 @@ div.continue{
 			margin-top:1em;
 		}
 	}
+	button{
+	  width:80%;
+	}
+}
+
+
+@media screen and (min-width:758px){
+  div.continue{
+    button{
+      width:40%;
+    }
+  }
 }
