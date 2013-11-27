@@ -1,4 +1,4 @@
-angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig', 'factories', 'portalCancel'])//.value('$anchorScroll', angular.noop)
+angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','globalFactories','factories', 'portalCancel'])//.value('$anchorScroll', angular.noop)
 
 .config(['$routeProvider','$locationProvider','$httpProvider', function($routeProvider,$locationProvider, $httpProvider){
 	$httpProvider.defaults.headers.get = {
@@ -67,7 +67,6 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig', 'facto
 	}
 	$scope.one= function(){
 		sessionStorage.type = "1";
-		sessionStorage.an = false;	
 		$scope.checkIt = false;
 	}
 	$scope.two= function(){
@@ -78,9 +77,8 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig', 'facto
 		$scope.checkIt = false;
 	}
 	$scope.next= function(){
-		console.log($scope.an)
-		if($scope.an === "Yes"){
-			sessionStorage.an = false;
+		if($scope.comType === "1" || $scope.an === "Yes"){
+			sessionStorage.an = false;	
 			$location.path("/StepTwo")
 		}else{
 			$location.path("/StepFour")
@@ -89,7 +87,19 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig', 'facto
 	}
 }])
 
-.controller('StepTwoController', ['$scope','$location','$timeout',function($scope, $location, $timeout){
+.controller('StepTwoController', ['$scope','$location','$timeout','StateFactory', function($scope, $location, $timeout, StateFactory){
+	 StateFactory.menu({},{}, successcb, errorcb);
+    function successcb(data){
+      $scope.states = data;
+      //var a = data.slice(0,3)
+       //$scope.menuLinksss = a;
+       $scope.stateChange = function(){
+       	console.log($scope.State)
+       }
+    }
+    function errorcb(err){
+      console.log(err)
+    }
 	 if(sessionStorage.stepTwo){
 	 	var data = sessionStorage.getItem('stepTwo');
 	 	var p = JSON.parse(data); 
@@ -145,7 +155,22 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig', 'facto
 }])
 
 
-.controller('StepFourController', ['$scope','$location', function($scope, $location){
+.controller('StepFourController', ['$scope','$location','MenuFactory', function($scope, $location,MenuFactory){
+	
+	StateFactory.menu({},{}, successcb, errorcb);
+    function successcb(data){
+      $scope.states = data;
+      //var a = data.slice(0,3)
+       //$scope.menuLinksss = a;
+       $scope.stateChange = function(){
+       	console.log($scope.State)
+       }
+    }
+    function errorcb(err){
+      console.log(err)
+    }
+	
+	
 	$scope.next= function(){
 		if(sessionStorage.stepTwo){
 			$location.path("/StepFive")
