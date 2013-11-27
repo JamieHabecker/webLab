@@ -1,4 +1,4 @@
-angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','globalFactories','factories', 'portalCancel'])//.value('$anchorScroll', angular.noop)
+angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','globalFactories','globalDirectives','factories', 'portalCancel'])//.value('$anchorScroll', angular.noop)
 
 .config(['$routeProvider','$locationProvider','$httpProvider', function($routeProvider,$locationProvider, $httpProvider){
 	$httpProvider.defaults.headers.get = {
@@ -87,19 +87,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 	}
 }])
 
-.controller('StepTwoController', ['$scope','$location','$timeout','StateFactory', function($scope, $location, $timeout, StateFactory){
-	 StateFactory.menu({},{}, successcb, errorcb);
-    function successcb(data){
-      $scope.states = data;
-      //var a = data.slice(0,3)
-       //$scope.menuLinksss = a;
-       $scope.stateChange = function(){
-       	console.log($scope.State)
-       }
-    }
-    function errorcb(err){
-      console.log(err)
-    }
+.controller('StepTwoController', ['$scope','$location','$timeout', function($scope, $location, $timeout){
 	 if(sessionStorage.stepTwo){
 	 	var data = sessionStorage.getItem('stepTwo');
 	 	var p = JSON.parse(data); 
@@ -109,11 +97,14 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 	 			$scope.lastname  = p.lastname;
 	 			$scope.address  = p.address;
 	 			$scope.city  = p.city;
-	 			$scope.state = p.state;
+	 			$scope.current = p.state;
 	 			$scope.zip = p.zip
 	 			}
 	 		};
+	 		console.log(p.state)
 	 	$timeout(formFill.fillIt, 100);
+   }else{
+   	$scope.current = "Select a State"
    }
 	
 	$scope.next= function(){
@@ -122,7 +113,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 			lastname : $scope.lastname,
 			address : $scope.address,
 			city: $scope.city,
-			state: $scope.state,
+			state: $scope.state.code,
 			zip: $scope.zip
 			};
 			sessionStorage.setItem('stepTwo', JSON.stringify(stepTwo));

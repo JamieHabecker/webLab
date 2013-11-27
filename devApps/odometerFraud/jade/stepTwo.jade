@@ -22,10 +22,7 @@ article.g17
 				input(type="text",name="city",data-ng-model="city",required="true",placeholder="City")
 				p(data-ng-show="form.city.$invalid && form.city.$dirty")
 					You must enter your city
-			.formField.state
-				label State
-				select(data-ng-model="State",data-ng-options="c.State for c in states", data-ng-change="stateChange()")
-					option(value="") Select a state
+			.formField.state(states)
 			.formField.zip
 				label Zip<span class="reqText">Required
 				input(type="text",name="zip",data-ng-model="zip",required="true",placeholder="Zip")
