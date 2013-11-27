@@ -1,0 +1,5 @@
+<div class="formField custNumber">
+<label>Customer Number or SSN</label>
+<input type="text" id="name" name="name" ng-model="name"  ng-pattern="/^([\w\-]{9,12})+$/" placeholder="Customer Number">
+<p ng-show="form.name.$invalid && form.name.$dirty">You must enter a valid customer number</p>
+</div>

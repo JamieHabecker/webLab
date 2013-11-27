@@ -1,0 +1,9 @@
+<div class="formField title">
+<label>Title Number</label>
+<input type="text"  name="title" ng-model="title" ng-required="true"  ng-pattern="/^[a-zA-Z0-9\-_]{0,22}$/" placeholder="Title">
+<p ng-show="form.title.$invalid && form.title.$dirty">You must enter a title number</p>
+</div>
+
+
+
+

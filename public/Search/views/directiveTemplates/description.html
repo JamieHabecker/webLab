@@ -1,0 +1,11 @@
+<div class="formField description">
+<label>Message</label>
+<textarea  name="description" data-ng-maxlength="500" ng-model="description" ng-change="change()" placeholder="Description"></textarea>
+<p ng-show="form.description.$error.maxlength">You have exceeded the maximum amount of characters</p>
+<p ng-show="form.description.$valid">{{left}}</p>
+</div>
+			
+
+
+
+   

@@ -1,0 +1,180 @@
+[
+	{
+		"code": "VA",
+		"State": "Virginia"
+	}, {
+		"code": "AL",
+		"State": "Alabama"
+	}, {
+		"code": "AK",
+		"State": "Alaska"
+	}, {
+		"code": "AS",
+		"State": "American Samoa"
+	}, {
+		"code": "AZ",
+		"State": "Arizona"
+	}, {
+		"code": "AR",
+		"State": "Arkansas"
+	}, {
+		"code": "CA",
+		"State": "California"
+	}, {
+		"code": "CO",
+		"State": "Colorado"
+	}, {
+		"code": "CT",
+		"State": "Connecticut"
+	}, {
+		"code": "DE",
+		"State": "Delaware"
+	}, {
+		"code": "DC",
+		"State": "District of Columbia"
+	}, {
+		"code": "FL",
+		"State": "Florida"
+	}, {
+		"code": "GA",
+		"State": "Georgia"
+	}, {
+		"code": "GU",
+		"State": "Guam"
+	}, {
+		"code": "HI",
+		"State": "Hawaii"
+	}, {
+		"code": "ID",
+		"State": "Idaho"
+	}, {
+		"code": "IL",
+		"State": "Illinois"
+	}, {
+		"code": "IN",
+		"State": "Indiana"
+	}, {
+		"code": "IA",
+		"State": "Iowa"
+	}, {
+		"code": "KS",
+		"State": "Kansas"
+	}, {
+		"code": "KY",
+		"State": "Kentucky"
+	}, {
+		"code": "LA",
+		"State": "Louisiana"
+	}, {
+		"code": "ME",
+		"State": "Maine"
+	}, {
+		"code": "MK",
+		"State": "Mariana Islands"
+	}, {
+		"code": "MD",
+		"State": "Maryland"
+	}, {
+		"code": "MA",
+		"State": "Massachusetts"
+	}, {
+		"code": "MI",
+		"State": "Michigan"
+	}, {
+		"code": "AA",
+		"State": "Military (Zip 340)"
+	}, {
+		"code": "AE",
+		"State": "Military (Zip 090-098)"
+	}, {
+		"code": "AP",
+		"State": "Military (Zip 962-966)"
+	}, {
+		"code": "MN",
+		"State": "Minnesota"
+	}, {
+		"code": "MO",
+		"State": "Missouri"
+	}, {
+		"code": "MT",
+		"State": "Montana"
+	}, {
+		"code": "NE",
+		"State": "Nebraska"
+	}, {
+		"code": "NV",
+		"State": "Nevada"
+	}, {
+		"code": "NH",
+		"State": "New Hampshire"
+	}, {
+		"code": "NJ",
+		"State": "New Jersey"
+	}, {
+		"code": "NM",
+		"State": "New Mexico"
+	}, {
+		"code": "NY",
+		"State": "New York"
+	}, {
+		"code": "NC",
+		"State": "North Carolina"
+	}, {
+		"code": "ND",
+		"State": "North Dakota"
+	}, {
+		"code": "MP",
+		"State": "Northern Mariana Islands"
+	}, {
+		"code": "OH",
+		"State": "Ohio"
+	}, {
+		"code": "OK",
+		"State": "Oklahoma"
+	}, {
+		"code": "OR",
+		"State": "Oregon"
+	}, {
+		"code": "PA",
+		"State": "Pennsylvania"
+	}, {
+		"code": "PR",
+		"State": "Puerto Rico"
+	}, {
+		"code": "RI",
+		"State": "Rhode Island"
+	}, {
+		"code": "SC",
+		"State": "South Carolina"
+	}, {
+		"code": "SD",
+		"State": "South Dakota"
+	}, {
+		"code": "TN",
+		"State": "Tennessee"
+	}, {
+		"code": "TX",
+		"State": "Texas"
+	}, {
+		"code": "DS",
+		"State": "US Dept. of State"
+	}, {
+		"code": "UT",
+		"State": "Utah"
+	}, {
+		"code": "VT",
+		"State": "Vermont"
+	}, {
+		"code": "WA",
+		"State": "Washington"
+	}, {
+		"code": "WV",
+		"State": "West Virginia"
+	}, {
+		"code": "WI",
+		"State": "Wisconsin"
+	}, {
+		"code": "WY",
+		"State": "Wyoming"
+	}
+]
