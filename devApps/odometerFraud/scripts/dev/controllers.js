@@ -88,34 +88,47 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 }])
 
 .controller('StepTwoController', ['$scope','$location','$timeout', function($scope, $location, $timeout){
+	var a;
 	 if(sessionStorage.stepTwo){
 	 	var data = sessionStorage.getItem('stepTwo');
-	 	var p = JSON.parse(data); 
+	 	var p = JSON.parse(data);
 	 	var formFill = {
 	 		fillIt : function() {
 	 			$scope.firstname= p.firstname;
 	 			$scope.lastname  = p.lastname;
 	 			$scope.address  = p.address;
 	 			$scope.city  = p.city;
-	 			$scope.current = p.state;
+	 			$scope.current = sessionStorage.state1;
+	 			$scope.state = sessionStorage.state1;
 	 			$scope.zip = p.zip
 	 			}
 	 		};
-	 		console.log(p.state)
 	 	$timeout(formFill.fillIt, 100);
    }else{
    	$scope.current = "Select a State"
    }
-	
+	$scope.setState = function(){
+		a = $scope.state.code;
+	}
 	$scope.next= function(){
+		//var stat;
+		if($scope.state.code === undefined){
+			a = sessionStorage.state1;
+		}
+			//stat = sessionStorage.state1;
+		//}else{
+			sessionStorage.state1 = a;
+			//stat = $scope.state.code;
+		//}
 		var stepTwo = {
 			firstname : $scope.firstname,
 			lastname : $scope.lastname,
 			address : $scope.address,
 			city: $scope.city,
-			state: $scope.state.code,
+			state: a,
 			zip: $scope.zip
 			};
+		
 			sessionStorage.setItem('stepTwo', JSON.stringify(stepTwo));
 			$location.path("/StepThree")
 	}
