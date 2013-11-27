@@ -18,12 +18,12 @@ article.g17
 				ul.radioList
 					li
 						label
-							input(type="radio",name="an", data-ng-model="an", value="Yes", data-ng-required="true")
+							input(type="radio",name="an", data-ng-model="an", value="Yes", data-ng-required="true", data-ng-click="check()")
 							<span>Yes</span>
 						label
-							input(type="radio",name="an", data-ng-model="an", value="No", data-ng-required="true")
+							input(type="radio",name="an", data-ng-model="an", value="No", data-ng-required="true", data-ng-click="check()")
 							<span>No</span>
 			.continue
-				button(data-ng-disabled="checkIt",data-ng-click="next()") Continue
+				button(data-ng-disabled="checkIt", data-ng-click="next()") Continue
 			portalcancel
 			

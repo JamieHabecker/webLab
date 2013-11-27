@@ -66,17 +66,21 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig', 'facto
 		$scope.checkIt = true;
 	}
 	$scope.one= function(){
-		sessionStorage.type = "1";	
+		sessionStorage.type = "1";
+		sessionStorage.an = false;	
 		$scope.checkIt = false;
 	}
 	$scope.two= function(){
 		sessionStorage.type = "2";
+		$scope.checkIt = true;
+	}
+	$scope.check= function(){
 		$scope.checkIt = false;
 	}
 	$scope.next= function(){
 		console.log($scope.an)
 		if($scope.an === "Yes"){
-			sessionStorage.an = true;
+			sessionStorage.an = false;
 			$location.path("/StepTwo")
 		}else{
 			$location.path("/StepFour")
