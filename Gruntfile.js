@@ -1,43 +1,42 @@
 module.exports = function(grunt){
 	grunt.initConfig({
-	    
-watch: {
-	sass:{
-		files:['sass/*.scss', 'sass/**/*.scss'],
-		tasks:['compass']
-	},
-	all :{
-		files: ['*.html','devApps/**/jade/*.jade','devApps/**/scripts/dev/*.js' ],
-		tasks:[]
-	},
-	jade: {
-		files: ['*.jade'],
-		tasks: ['jade']
-	},
-	options:{
-		spawn:false,
-		livereload: true
-		}
-},
-
-bump:{
-  files:['package.json']
-},
-	    
-connect:{
-	all:{
-		options:{
-			port:8000,
-			hostname: "10.156.147.183",
-			middleware: function(connect, options){
-				return [
-					require('grunt-contrib-livereload/lib/utils').livereloadSnippet,
-					connect.static(options.base)
-				];
+		watch: {
+			sass:{
+				files:['sass/*.scss', 'sass/**/*.scss'],
+				tasks:['compass']
+			},
+			all :{
+				files: ['*.html','devApps/**/jade/*.jade','devApps/**/scripts/dev/*.js' ],
+				tasks:[]
+			},
+			jade: {
+				files: ['*.jade'],
+				tasks: ['jade']
+			},
+			options:{
+			spawn:false,
+			livereload: true
 			}
-		}
-	}
-},
+		},
+
+		bump:{
+  		files:['package.json']
+		},
+	    
+		connect:{
+			all:{
+				options:{
+					port:8000,
+					hostname: "10.156.147.183",
+					middleware: function(connect,options){
+						return [
+							require('grunt-contrib-livereload/lib/utils').livereloadSnippet,
+							connect.static(options.base)
+						];
+					}
+				}
+			}
+		},
 
 open: {
 	all: {
@@ -46,23 +45,21 @@ open: {
 	}
 },
 
- 
-  
-		//JSHint Options
-		jshint:{
-			all: ['scripts/dev*.js']
-		},
+//JSHint Options
+jshint:{
+	all: ['scripts/dev*.js']
+},
 
-		//concat options
-		concat:{
-			options: {
-				separator: ';' 
-			},
-			dist:{
-				src: ['scripts/vendor/jquery-1.10.2.js','scripts/vendor/angular.js','scripts/vendor/resource.js','scripts/vendor/underscore.js','scripts/dev/*js'], //Using mini match for your scripts to concatenate
-                dest: 'scripts/contactUs.js' //where to output the script
-			}
-		},
+//concat options
+concat:{
+	options: {
+		separator: ';'
+	},
+	dist:{
+		src: ['scripts/vendor/jquery-1.10.2.js','scripts/vendor/angular.js','scripts/vendor/resource.js','scripts/vendor/underscore.js','scripts/dev/*js'], //Using mini match for your scripts to concatenate
+		dest: 'scripts/contactUs.js' //where to output the script
+	}
+},
 		
 compass: {
 	options: {
