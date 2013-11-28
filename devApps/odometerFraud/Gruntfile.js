@@ -1,33 +1,28 @@
 module.exports = function(grunt){
 	grunt.initConfig({
-	    
-watch: {
-	sass:{
-		files:['../sass/**/*.scss','../../sass/**/**/*.scss', 'sass/*.scss'],
-		tasks:['compass']
-	},
-	all: {
-		files: ['views/*html','views/includes/*html','scripts/dev/*.js'],
-		tasks: []
+		watch: {
+			sass:{
+			files:['../sass/**/*.scss','../../sass/**/**/*.scss', 'sass/*.scss'],
+			tasks:['compass']
 		},
-	jade: {
-		files: ['jade/*.jade'],
-		tasks: ['jade']
-	},
-	options:{
-		spawn:false,
-		livereload: true
+		all: {
+			files: ['views/*html','views/includes/*html','scripts/dev/*.js'],
+			tasks: []
+		},
+		jade: {
+			files: ['jade/*.jade'],
+			tasks: ['jade']
+		},
+		options:{
+			spawn:false,
+			livereload: true
 		}
 },
 
 bump:{
-  files:['package.json']
+	files:['package.json']
 },
-   
-   
-   
 
-   
 connect:{
 	all:{
 		options:{
@@ -41,23 +36,17 @@ connect:{
 			}
 		}
 	}
-	
 },
 
-
-open: {
-    all: {
-    // Gets the port from the connect configuration
-    path: 'http://localhost:<%= connect.all.options.port%>'
+open:{
+	all: {
+		path: 'http://localhost:<%= connect.all.options.port%>'
     }
-  
 },
 
- 
-//JSHint Options
 jshint:{
 	all: ['scripts/dev*.js']
-	},
+},
 
 		//concat options
 		concat:{
