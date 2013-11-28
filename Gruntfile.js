@@ -70,7 +70,7 @@ compass: {
         cssDir: 'public/css/',
         imageDir: 'img/',
         outputStyle: 'compressed',
-        importPath: '/Users/bpq63476/Desktop/webLab/',
+        importPath: '/Users/bpq63476/Desktop/webLab/'
         //relativeAssets: false
       },
       
