@@ -41,8 +41,8 @@ connect:{
 
 open: {
 	all: {
-    // Gets the port from the connect configuration
-    path: 'http://localhost:<%= connect.all.options.port%>'
+		// Gets the port from the connect configuration
+		path: 'http://localhost:<%= connect.all.options.port%>'
 	}
 },
 
@@ -65,26 +65,21 @@ open: {
 		},
 		
 compass: {
-      options: {
-        sassDir: 'sass/',
-        cssDir: 'public/css/',
-        imageDir: 'img/',
-        outputStyle: 'compressed',
-        importPath: '/Users/bpq63476/Desktop/webLab/'
-        //relativeAssets: false
-      },
-      
-      server: {
-        options: {
-          debugInfo: true
-        }
-      }
-    },
-    
-    
-    
+	options: {
+		sassDir: 'sass/',
+		cssDir: 'public/css/',
+		imageDir: 'img/',
+		outputStyle: 'compressed',
+ 		importPath: '/Users/bpq63476/Desktop/webLab/'
+		//relativeAssets: false
+		},
+	server: {
+		options: {
+		debugInfo: true
+		}
+	}
+},
 
-		
 //uglify options
 uglify: {
     dest: {
