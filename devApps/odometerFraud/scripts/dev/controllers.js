@@ -159,22 +159,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 }])
 
 
-.controller('StepFourController', ['$scope','$location','MenuFactory', function($scope, $location,MenuFactory){
-	
-	StateFactory.menu({},{}, successcb, errorcb);
-    function successcb(data){
-      $scope.states = data;
-      //var a = data.slice(0,3)
-       //$scope.menuLinksss = a;
-       $scope.stateChange = function(){
-       	console.log($scope.State)
-       }
-    }
-    function errorcb(err){
-      console.log(err)
-    }
-	
-	
+.controller('StepFourController', ['$scope','$location',function($scope, $location){
 	$scope.next= function(){
 		if(sessionStorage.stepTwo){
 			$location.path("/StepFive")
