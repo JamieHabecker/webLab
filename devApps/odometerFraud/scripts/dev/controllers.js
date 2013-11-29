@@ -1,4 +1,4 @@
-angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','globalFactories','globalDirectives','factories', 'portalCancel'])//.value('$anchorScroll', angular.noop)
+angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','globalFactories','globalDirectives','factories'])//.value('$anchorScroll', angular.noop)
 
 .config(['$routeProvider','$locationProvider','$httpProvider', function($routeProvider,$locationProvider, $httpProvider){
 	$httpProvider.defaults.headers.get = {
@@ -56,11 +56,11 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 .controller('StepOneController', ['$scope','$location', function($scope, $location){
 	if(sessionStorage.type){
 		var a = sessionStorage.type;
-		if(a === "1"){
-			$scope.comType = "1";
-		}else{
-			$scope.comType = "2";
-		}
+			if(a === "1"){
+				$scope.comType = "1";
+			}else{
+				$scope.comType = "2";
+			}
 		$scope.checkIt = false;
 	}else{
 		$scope.checkIt = true;
