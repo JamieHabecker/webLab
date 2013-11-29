@@ -1,6 +1,7 @@
 module.exports = function(grunt){
-	grunt.initConfig({
-		watch: {
+grunt.initConfig({
+
+	watch: {
 			sass:{
 			files:['../sass/**/*.scss','../../sass/**/**/*.scss', 'sass/*.scss'],
 			tasks:['compass']
@@ -19,11 +20,11 @@ module.exports = function(grunt){
 		}
 },
 
-bump:{
+	bump:{
 	files:['package.json']
 },
 
-connect:{
+	connect:{
 	all:{
 		options:{
 			port:300,
@@ -38,56 +39,51 @@ connect:{
 	}
 },
 
-open:{
+	open:{
 	all: {
 		path: 'http://localhost:<%= connect.all.options.port%>'
     }
 },
 
-jshint:{
+	jshint:{
 	all: ['scripts/dev*.js']
 },
 
-		//concat options
-		concat:{
-			options: {
-				separator: ';' 
-			},
-			dist:{
-				src: ['scripts/vendor/jquery-1.10.2.js','scripts/vendor/angular.js','scripts/vendor/resource.js','scripts/vendor/underscore.js','scripts/dev/*js'], //Using mini match for your scripts to concatenate
-                dest: 'scripts/contactUs.js' //where to output the script
-			}
-		},
-compass: {
-      options: {
-        sassDir: 'sass/',
-        cssDir: 'css/',
-        imageDir: '../../public/img',
-        outputStyle: 'compressed',
-        importPath: '../../sass',
-        //relativeAssets: false
-      },
-      server: {
-        options: {
-          debugInfo: true
-        }
-      }
-    },
-    
-    
-
-		
-//uglify options
-uglify: {
-    dest: {
-      files: {
-        'scripts/contactUs.min.js': ['scripts/contactUs.js']
-      }
-    }
+	concat:{
+	options: {
+		separator: ';'
+	},
+	dist:{
+		src:['scripts/vendor/jquery-1.10.2.js','scripts/vendor/angular.js','scripts/vendor/resource.js','scripts/vendor/underscore.js','scripts/dev/*js'], //Using mini match for your scripts to concatenate
+		dest:'scripts/contactUs.js' //where to output the script
+		}
 },
 
+	compass: {
+	options: {
+		sassDir: 'sass/',
+		cssDir: 'css/',
+		imageDir: '../../public/img',
+		outputStyle: 'compressed',
+		importPath: '../../sass'
+		//relativeAssets: false
+		},
+	server: {
+		options: {
+			debugInfo: true
+		}
+	}
+},
 
-jade: {
+	uglify: {
+	dest: {
+		files: {
+			'scripts/contactUs.min.js': ['scripts/contactUs.js']
+		}
+	}
+},
+
+	jade: {
 	compile: {
 		options: {
 		pretty: true,
@@ -106,30 +102,26 @@ jade: {
 			"views/stepSix.html" : ['jade/stepSix.jade']
 		}
 	}
-},  
+},
 
+	clean:{
+	 options: { force: true },
+	 release: ['../../public/OdometerFraud/']
+ },
 
+	copy:{
+	release:{
+		files: {
+			'../../public/OdometerFraud/': ['scripts/contactUs.min.js','scripts/shims/*','views/*','sass/_odomFraud.scss','views/directiveTemplates/*','index.html', 'img/*']
+		}
+	}
+},
 
- clean: {
-            options: { force: true },
-            release: ['../../public/OdometerFraud/']
-        },
-copy: {            
-        release: {
-                files: {
-                    '../../public/OdometerFraud/': ['scripts/contactUs.min.js','scripts/shims/*','views/*','sass/_odomFraud.scss','views/directiveTemplates/*','index.html', 'img/*']
-                },
-         
-          }
-        },
- usemin: {
-            html: ['../../public/OdometerFraud/index.html']
-    }
-       
-	
-	
-	
-	});
+	usemin:{
+		html:['../../public/OdometerFraud/index.html']
+}
+
+});
 
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-connect');
@@ -143,10 +135,9 @@ copy: {
 	grunt.loadNpmTasks('grunt-contrib-compass');
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-bump');
-	
 
-    //dev task
-	grunt.registerTask('server', [
+//dev task
+grunt.registerTask('server', [
 		'compass',
 		'concat',
 		'uglify',
@@ -155,15 +146,15 @@ copy: {
 		'open',
 		'watch'
   ]);
-  
-  //build task
-  grunt.registerTask('build', [
-  'compass',
-  'concat',
-   'uglify',
-    'clean',
-    'copy',
-    'usemin'
-  ]);
+
+//build task
+grunt.registerTask('build', [
+	'compass',
+	'concat',
+	'uglify',
+	'clean',
+	'copy',
+	'usemin'
+]);
 
 };
