@@ -138,14 +138,14 @@ grunt.initConfig({
 
 //dev task
 grunt.registerTask('server', [
-		'compass',
-		'concat',
-		'uglify',
-		'jade',
-		'connect',
-		'open',
-		'watch'
-  ]);
+	'compass',
+	'concat',
+	'uglify',
+	'jade',
+	'connect',
+	'open',
+	'watch'
+]);
 
 //build task
 grunt.registerTask('build', [
