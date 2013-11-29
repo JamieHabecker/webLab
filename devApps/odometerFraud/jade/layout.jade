@@ -22,9 +22,9 @@ html.no-js(lang='en')
 				Please [upgrade your browser](https://browsehappy.com) or
 				[activate Google Chrome](http://www.google.com/chromeframe/?redirect=true) to improve your experience.
 		
-		ul.vaNav(data-ng-include="'/globals/includes/vaNav.html'")
+		ul.vaNav(data-ng-include="'http://localhost/globals/includes/vaNav.html'")
 		section.site
-			header.dmvHeader.g16(data-ng-include="'/globals/includes/dmvHeaderPlain.html'")
+			header.dmvHeader.g16(data-ng-include="'http://localhost/globals/includes/dmvHeaderPlain.html'")
 		
 			block content
 			
@@ -37,7 +37,7 @@ html.no-js(lang='en')
 		script(src="scripts/vendor/ngSanitize.js")
 		script(src="scripts/vendor/underscore.js")
 		script(src="scripts/dev/controllers.js")
-		script(src="/globals/portalCancel.js")
+		script(src="http://localhost/globals/portalCancel.js")
 		script(src="http://localhost/globals/factories.js")
 		script(src="http://localhost/globals/directives.js")
 		script(src="scripts/dev/factories.js")
