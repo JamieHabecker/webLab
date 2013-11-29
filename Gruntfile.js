@@ -81,7 +81,7 @@ compass: {
 uglify: {
     dest: {
       files: {
-        'scripts/contactUs.min.js': ['scripts/contactUs.js']
+        'public/globals.min.js': ['public/globals/*.js']
       }
     }
 },
