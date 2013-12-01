@@ -1,5 +1,6 @@
-angular.module("globalDirectives", [])
-.directive('states', function(StateFactory){
+angular.module("globals", ['globalFactories'])
+
+.directive('states',['StateFactory',function(StateFactory){
 			return{
 				restrict: "A",
 				template: "<label>State<span class='reqText'>Required</label><select data-ng-model='state' data-ng-click='setState()' data-ng-options='c.State for c in states'>" +
@@ -14,7 +15,7 @@ angular.module("globalDirectives", [])
 					}
 				}
 			};
-		})
+		}])
 
 .controller('PortalCancelController',['$scope', function($scope){
 			$scope.portalCancel = function(){
