@@ -61,8 +61,8 @@ grunt.initConfig({
 
 	compass: {
 	options: {
-		sassDir: 'sass/',
-		cssDir: 'css/',
+		sassDir: '../../sass/',
+		cssDir: '../../public/css/',
 		imageDir: '../../public/img',
 		outputStyle: 'compressed',
 		importPath: '../../sass'
