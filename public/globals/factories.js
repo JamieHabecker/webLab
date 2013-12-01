@@ -1,9 +1,6 @@
-var dev = "http://localhost";
-
 angular.module("globalFactories", [])
-
-
 .factory('StateFactory',['$resource', function($resource) {
+		var dev = "http://localhost";
 		var baseUrl = dev + "/globals/models/states.json";
 			return $resource(baseUrl, {}, {
 				menu: {
@@ -12,4 +9,4 @@ angular.module("globalFactories", [])
 					url : baseUrl
 				}
 			});
-}])
+}]);

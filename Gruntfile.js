@@ -5,6 +5,10 @@ module.exports = function(grunt){
 				files:['sass/*.scss', 'sass/**/*.scss'],
 				tasks:['compass']
 			},
+			javascript:{
+				files:['public/globals/*.js'],
+				tasks:['uglify']
+			},
 			all :{
 				files: ['*.html','devApps/**/jade/*.jade','devApps/**/scripts/dev/*.js' ],
 				tasks:[]

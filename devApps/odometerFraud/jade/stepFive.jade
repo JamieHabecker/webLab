@@ -1,0 +1,42 @@
+article.g17
+	div
+		h3.formTitle Vehicle Information <span>(required if you are the victim of odometer fraud)
+		form(novalidate, name="form")
+			.formField.year
+				label Year<span class="reqText">Required
+				input(type="text",name="address",data-ng-model="address",required="true",placeholder="First Name")
+				p(data-ng-show="form.address.$invalid && form.address.$dirty")
+					You must enter your address
+			.formField.make
+				label Make<span class="reqText">Required
+				input(type="text",name="firstname",data-ng-model="firstname",required="true",placeholder="First Name")
+				p(data-ng-show="form.firstname.$invalid && form.firstname.$dirty")
+					You must enter your first name
+			.formField.model
+				label Model<span class="reqText">Required
+				input(type="text",name="firstname",data-ng-model="firstname",required="true",placeholder="First Name")
+				p(data-ng-show="form.firstname.$invalid && form.firstname.$dirty")
+					You must enter your first name
+			.formField.vin
+				label VIN<span class="reqText">Required
+				input(type="text",name="firstname",data-ng-model="firstname",required="true",placeholder="First Name")
+				p(data-ng-show="form.firstname.$invalid && form.firstname.$dirty")
+					You must enter your first name
+			.formField.plate
+				label License Plate<span class="reqText">Required
+				input(type="text",name="firstname",data-ng-model="firstname",required="true",placeholder="First Name")
+				p(data-ng-show="form.firstname.$invalid && form.firstname.$dirty")
+					You must enter your first name
+			.formField.prmColr
+				label Primary Vehicle Color<span class="reqText">Required
+				input(type="text",name="firstname",data-ng-model="firstname",required="true",placeholder="First Name")
+				p(data-ng-show="form.firstname.$invalid && form.firstname.$dirty")
+					You must enter your first name
+			.formField.secColr
+				label Secondary Vehicle Color<span class="reqText">Required
+				input(type="text",name="firstname",data-ng-model="firstname",required="true",placeholder="First Name")
+				p(data-ng-show="form.firstname.$invalid && form.firstname.$dirty")
+					You must enter your first name
+			.continue
+				button(data-ng-click="next()") Continue
+			portalcancel

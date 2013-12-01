@@ -54,7 +54,7 @@ grunt.initConfig({
 		separator: ';'
 	},
 	dist:{
-		src:['scripts/vendor/jquery-1.10.2.js','scripts/vendor/angular.js','scripts/vendor/resource.js','scripts/vendor/underscore.js','scripts/dev/*js'], //Using mini match for your scripts to concatenate
+		src:['scripts/vendor/jquery-1.10.2.js','scripts/vendor/angular.js','scripts/vendor/resource.js','scripts/vendor/underscore.js','scripts/dev/*js','../../public/globals.min.js'], //Using mini match for your scripts to concatenate
 		dest:'scripts/contactUs.js' //where to output the script
 		}
 },
@@ -112,7 +112,7 @@ grunt.initConfig({
 	copy:{
 	release:{
 		files: {
-			'../../public/OdometerFraud/': ['scripts/contactUs.min.js','scripts/shims/*','views/*','sass/_odomFraud.scss','views/directiveTemplates/*','index.html', 'img/*']
+			'../../public/OdometerFraud/': ['scripts/contactUs.min.js','scripts/shims/*','views/*','index.html']
 		}
 	}
 },

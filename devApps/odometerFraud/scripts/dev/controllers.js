@@ -1,4 +1,4 @@
-angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','globalFactories','globalDirectives','factories'])//.value('$anchorScroll', angular.noop)
+angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','globalDirectives','globalFactories','factories'])//.value('$anchorScroll', angular.noop)
 
 .config(['$routeProvider','$locationProvider','$httpProvider', function($routeProvider,$locationProvider, $httpProvider){
 	$httpProvider.defaults.headers.get = {

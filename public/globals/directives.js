@@ -1,7 +1,4 @@
 angular.module("globalDirectives", [])
-
-
-
 .directive('states', function(StateFactory){
 			return{
 				restrict: "A",
@@ -32,6 +29,6 @@ angular.module("globalDirectives", [])
 						'<a ng-click="portalCancel()">Cancel</a></nav>',
 				replace: true
 			};
-		})
+		});
 
 

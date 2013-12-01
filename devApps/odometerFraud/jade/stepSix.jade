@@ -1,0 +1,12 @@
+article.g17
+	div
+		h3.formTitle Complaint Detail Information <span>(provide as much detail as possible)
+		form(novalidate, name="form")
+			.formField.text
+				label Complaint Details<span class="reqText">Required
+				textarea(name="details",data-ng-model="address",required="true",placeholder="Complaint Details")
+				p(data-ng-show="form.address.$invalid && form.address.$dirty")
+					You must enter your address
+			.continue
+				button(data-ng-click="next()") Continue
+			portalcancel
