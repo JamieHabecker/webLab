@@ -23,6 +23,22 @@ angular.module("globals", ['globalFactories'])
 			};
 		}])
 
+.controller('ReturnController',['$scope','$location', function($scope, $location){
+			$scope.returnTo = function(){
+				$location.path('/Verify')
+			};
+		}])
+
+
+.directive('return', function(){
+			return{
+				restrict: 'A',
+				template:'<nav data-ng-show="rt" data-ng-controller="ReturnController">' +
+						'<a data-ng-click="returnTo()"> Return to Summary</a></nav>',
+				replace: true
+			};
+		})
+
 .directive('portalcancel', function(){
 			return{
 				restrict: 'E',

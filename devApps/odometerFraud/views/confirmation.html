@@ -30,11 +30,15 @@
       <li><b>Your Email:</b> {{a.email}}</li>
       <li><b>Phone:</b> {{a.phone}}</li>
       <li><b>Contact Preference:</b> {{a.conPref}}</li>
+      <li class="edit"><a data-ng-click="edit('StepFive')"> Edit </a></li>
     </ul>
   </div>
   <div data-ng-repeat="a in theData" class="details">
     <h3>Details</h3>
     <p>{{a.details}}</p>
+    <ul>
+      <li class="edit"><a data-ng-click="edit('StepSix')"> Edit </a></li>
+    </ul>
   </div>
   <div class="continue">
     <button data-ng-click="next()">Continue</button>

@@ -25,9 +25,12 @@ article.g17.confirmation
 				li <b>Your Email:</b> {{a.email}}
 				li <b>Phone:</b> {{a.phone}}
 				li <b>Contact Preference:</b> {{a.conPref}}
+				li.edit <a data-ng-click="edit('StepFive')"> Edit </a>
 		div.details(data-ng-repeat="a in theData")
 			h3 Details
 			p {{a.details}}
+			ul
+				li.edit <a data-ng-click="edit('StepSix')"> Edit </a>
 		.continue
 			button(data-ng-click="next()") Continue
 		<h2 class="loaderText"  data-ng-show="isloading && !err" data-ng-animate="'fade'">Sending Information</h2>
