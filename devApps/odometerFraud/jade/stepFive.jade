@@ -3,32 +3,12 @@ article.g17
 		h3.formTitle Vehicle Information
 		form(novalidate, name="form")
 			.formField.year(year)
-			.formField.make
-				label Make<span class="reqText">Required
-				input(type="text",name="make",data-ng-model="make",data-ng-required="true", placeholder="Vehicle Make")
-				p(data-ng-show="form.make.$invalid && form.make.$dirty")
-					You must enter the vehicles make
-			.formField.model
-				label Model<span class="reqText">Required
-				input(type="text",name="model",data-ng-model="model",required="true",placeholder="Vehicle Model")
-				p(data-ng-show="form.model.$invalid && form.model.$dirty")
-					You must enter the vehicles model
+			.formField.make(make, req="true")
+			.formField.model(model, req="true")
 			.formField.vin(vin)
-			.formField.plate
-				label License Plate<span class="reqText">Required
-				input(type="text",name="plate",data-ng-model="plate",required="true",placeholder="License Plate")
-				p(data-ng-show="form.plate.$invalid && form.plate.$dirty")
-					You must enter your first name
-			.formField.prmColr
-				label Primary Vehicle Color<span class="reqText">Required
-				input(type="text",name="prmColor",data-ng-model="prmColor",required="true",placeholder="Primary Color")
-				p(data-ng-show="form.primColor.$invalid && form.primColor.$dirty")
-					You must enter your first name
-			.formField.secColr
-				label Secondary Vehicle Color
-				input(type="text",name="secColor",data-ng-model="secColor",placeholder="Secondary Color")
-				p(data-ng-show="form.secColor.$invalid && form.secColor.$dirty")
-					You must enter your first name
+			.formField.plate(plate)
+			.formField.prmColr(prmcolr)
+			.formField.secColr(seccolr req="false")
 			.continue
 				button(btn)
 				.return(return)
