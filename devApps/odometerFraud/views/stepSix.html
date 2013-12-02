@@ -1,0 +1,19 @@
+
+<article class="g17">
+  <div>
+    <h3 class="formTitle">Complaint Detail Information <span>(provide as much detail as possible)</h3>
+    <form novalidate="novalidate" name="form">
+      <div class="formField text">
+        <label>Complaint Details<span class="reqText">Required</label>
+        <textarea name="details" data-ng-model="address" required="true" placeholder="Complaint Details"></textarea>
+        <p data-ng-show="form.address.$invalid &amp;&amp; form.address.$dirty">
+          <You>must enter your address</You>
+        </p>
+      </div>
+      <div class="continue">
+        <button data-ng-click="next()">Continue</button>
+      </div>
+      <portalcancel></portalcancel>
+    </form>
+  </div>
+</article>

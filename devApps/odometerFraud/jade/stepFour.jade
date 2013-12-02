@@ -6,21 +6,18 @@ article.g17
 				label Company/Suspect Name<span class="reqText">Required
 				input(type="text",name="compName",data-ng-model="compName",required="true",placeholder="Company Name")
 				p(data-ng-show="form.compName.$invalid && form.compName.$dirty")
-					You must enter your address
+					You must enter a company name
 			.formField.address.gen
 				label Company Address
-				input(type="text",name="firstname",data-ng-model="compAddress", placeholder="Address")
-				p(data-ng-show="form.firstname.$invalid && form.firstname.$dirty")
-					You must enter your first name
+				input(type="text",name="compAddress",data-ng-model="compAddress", placeholder="Address")
+				p(data-ng-show="form.compAddress.$invalid && form.compAddress.$dirty")
+					You must enter a companys address
 			.formField.city
 				label City
-				input(type="text",name="firstname",data-ng-model="compCity",placeholder="City")
-				p(data-ng-show="form.firstname.$invalid && form.firstname.$dirty")
-					You must enter your first name
-			.formField.state
-				label State
-				select(data-ng-model="State",data-ng-options="c.State for c in states", data-ng-change="stateChange()")
-					option(value="") Select a state
+				input(type="text",name="compCity", data-ng-model="compCity",placeholder="City")
+				p(data-ng-show="form.compCity.$invalid && form.compCity.$dirty")
+					You must enter the companys city
+			.formField.state(states)
 			.formField.zip
 				label Zip
 				input(type="text",name="compZip",data-ng-model="compZip",placeholder="Zip")

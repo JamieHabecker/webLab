@@ -7,7 +7,7 @@ grunt.initConfig({
 			tasks:['compass']
 		},
 		all: {
-			files: ['views/*html','views/includes/*html','scripts/dev/*.js'],
+			files: ['views/*html','views/includes/*html','scripts/dev/*.js','../../public/css/*.css'],
 			tasks: []
 		},
 		jade: {
@@ -61,11 +61,11 @@ grunt.initConfig({
 
 	compass: {
 	options: {
-		sassDir: '../../sass/',
-		cssDir: '../../public/css/',
+		sassDir: 'sass/',
+		cssDir: 'css/',
 		imageDir: '../../public/img',
 		outputStyle: 'compressed',
-		importPath: '../../sass'
+		importPath: '../../sass/'
 		//relativeAssets: false
 		},
 	server: {
