@@ -13,10 +13,7 @@ article.g17
 			.formField.city
 				label City
 				input(type="text",name="firstname",data-ng-model="compCity",placeholder="City")
-			.formField.state
-				label State
-				select(data-ng-model="State",data-ng-options="c.State for c in states")
-					option(value="") Select a state
+			.formField.state(states)
 			.formField.zip
 				label Zip
 				input(type="text",name="compZip",data-ng-model="compZip", size="5", data-ng-pattern="zip", placeholder="Zip")

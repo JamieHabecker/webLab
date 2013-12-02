@@ -18,12 +18,7 @@
         <label>City</label>
         <input type="text" name="firstname" data-ng-model="compCity" placeholder="City"/>
       </div>
-      <div class="formField state">
-        <label>State</label>
-        <select data-ng-model="State" data-ng-options="c.State for c in states">
-          <option value="">Select a state</option>
-        </select>
-      </div>
+      <div states="states" class="formField state"></div>
       <div class="formField zip">
         <label>Zip</label>
         <input type="text" name="compZip" data-ng-model="compZip" size="5" data-ng-pattern="zip" placeholder="Zip"/>

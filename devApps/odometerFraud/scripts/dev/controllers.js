@@ -54,6 +54,10 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 }])
 
 .controller('StepOneController', ['$scope','$location', function($scope, $location){
+
+			//var limit = 1024 * 1024 * 5; // 5 MB
+			//var remSpace = limit - unescape(encodeURIComponent(JSON.stringify(sessionStorage))).length;
+			//console.log(remSpace)
 	if(sessionStorage.type){
 		var a = sessionStorage.type;
 			if(a === "1"){
@@ -106,8 +110,6 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 		 if(complete){
 			 $scope.rt = true;
 		 }
-   }else{
-   	$scope.current = "Select a State"
    }
 	$scope.next= function(){
 		if($scope.state !== undefined){
@@ -199,13 +201,13 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 
 			$scope.next= function(){
 		var stepFive = {
-			year: $scope.year,
-			make: $scope.make,
-			model: $scope.model,
-			vin : $scope.vin,
-			plate: $scope.plate,
-			prmColor: $scope.prmColor,
-			secColor: $scope.secColor
+			year: $scope.vyear,
+			make: $scope.vmake,
+			model: $scope.vmodel,
+			vin : $scope.vvin,
+			plate: $scope.vplate,
+			prmColor: $scope.vprmColor,
+			secColor: $scope.vsecColor
 		}
 		sessionStorage.setItem('stepFive', JSON.stringify(stepFive));
 		$location.path('/StepSix')
@@ -283,8 +285,6 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 			console.log($scope.theData)
 
 }])
-
-
 
 
 
