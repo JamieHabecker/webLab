@@ -4,9 +4,8 @@ article.g17
 		form(novalidate, name="form")
 			.formField.text
 				label Complaint Details<span class="reqText">Required
-				textarea(name="details",data-ng-model="address",required="true",placeholder="Complaint Details")
-				p(data-ng-show="form.address.$invalid && form.address.$dirty")
-					You must enter your address
+				textarea(name="details",data-ng-model="details",required="true",placeholder="Complaint Details")
+				p(data-ng-show="form.details.$invalid && form.details.$dirty") You must enter the details of your complaint
 			.continue
 				button(data-ng-click="next()") Continue
 			portalcancel
