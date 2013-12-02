@@ -6,30 +6,28 @@ article.g17
 				label Company/Suspect Name<span class="reqText">Required
 				input(type="text",name="compName",data-ng-model="compName",required="true",placeholder="Company Name")
 				p(data-ng-show="form.compName.$invalid && form.compName.$dirty")
-					You must enter a company name
+					You must enter your address
 			.formField.address.gen
 				label Company Address
-				input(type="text",name="compAddress",data-ng-model="compAddress", placeholder="Address")
-				p(data-ng-show="form.compAddress.$invalid && form.compAddress.$dirty")
-					You must enter a companys address
+				input(type="text",name="firstname",data-ng-model="compAddress", placeholder="Address")
 			.formField.city
 				label City
-				input(type="text",name="compCity", data-ng-model="compCity",placeholder="City")
-				p(data-ng-show="form.compCity.$invalid && form.compCity.$dirty")
-					You must enter the companys city
-			.formField.state(states)
+				input(type="text",name="firstname",data-ng-model="compCity",placeholder="City")
+			.formField.state
+				label State
+				select(data-ng-model="State",data-ng-options="c.State for c in states")
+					option(value="") Select a state
 			.formField.zip
 				label Zip
-				input(type="text",name="compZip",data-ng-model="compZip",placeholder="Zip")
+				input(type="text",name="compZip",data-ng-model="compZip", size="5", data-ng-pattern="zip", placeholder="Zip")
 			.formField.email
 				label Company Email
-				input(type="text",name="compEmail",data-ng-model="compEmail",data-ng-pattern="/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/", placeholder="Email")
+				input(type="text",name="compEmail",data-ng-model="compEmail", data-ng-pattern="email", placeholder="Email")
 				p(data-ng-show="form.compEmail.$invalid && form.compEmail.$dirty") You must enter a valid email
 			.formField.phone
 				label Phone
-				input(type="text",name="comPhone",data-ng-maxlength="12",data-ng-model="compPhone",required="true",data-ng-pattern="/[0-9-\-]{12,}/", placeholder="804-555-1212")
+				input(type="text",name="comPhone",data-ng-maxlength="12",data-ng-model="compPhone", data-ng-pattern="/[0-9-\-]{12,}/", placeholder="804-555-1212")
 				p(data-ng-show="form.compPhone.$invalid && form.compPhone.$dirty") You must enter a valid phone number (ex.804-555-1212)
 			.continue
 				button(data-ng-click="next()") Continue
-				.return(return)
 			portalcancel

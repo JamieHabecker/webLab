@@ -1,59 +1,48 @@
 
 <article class="g17">
   <div>
-    <h3 class="formTitle">Vehicle Information <span>(required if you are the victim of odometer fraud)</h3>
+    <h3 class="formTitle">Vehicle Information</h3>
     <form novalidate="novalidate" name="form">
-      <div class="formField year">
-        <label>Year<span class="reqText">Required</label>
-        <input type="text" name="address" data-ng-model="address" required="true" placeholder="First Name"/>
-        <p data-ng-show="form.address.$invalid &amp;&amp; form.address.$dirty">
-          <You>must enter your address</You>
-        </p>
-      </div>
+      <div year="year" class="formField year"></div>
       <div class="formField make">
         <label>Make<span class="reqText">Required</label>
-        <input type="text" name="firstname" data-ng-model="firstname" required="true" placeholder="First Name"/>
-        <p data-ng-show="form.firstname.$invalid &amp;&amp; form.firstname.$dirty">
-          <You>must enter your first name</You>
+        <input type="text" name="make" data-ng-model="make" data-ng-required="true" placeholder="Vehicle Make"/>
+        <p data-ng-show="form.make.$invalid &amp;&amp; form.make.$dirty">
+          <You>must enter the vehicles make</You>
         </p>
       </div>
       <div class="formField model">
         <label>Model<span class="reqText">Required</label>
-        <input type="text" name="firstname" data-ng-model="firstname" required="true" placeholder="First Name"/>
-        <p data-ng-show="form.firstname.$invalid &amp;&amp; form.firstname.$dirty">
-          <You>must enter your first name</You>
+        <input type="text" name="model" data-ng-model="model" required="true" placeholder="Vehicle Model"/>
+        <p data-ng-show="form.model.$invalid &amp;&amp; form.model.$dirty">
+          <You>must enter the vehicles model</You>
         </p>
       </div>
-      <div class="formField vin">
-        <label>VIN<span class="reqText">Required</label>
-        <input type="text" name="firstname" data-ng-model="firstname" required="true" placeholder="First Name"/>
-        <p data-ng-show="form.firstname.$invalid &amp;&amp; form.firstname.$dirty">
-          <You>must enter your first name</You>
-        </p>
-      </div>
+      <div vin="vin" class="formField vin"></div>
       <div class="formField plate">
         <label>License Plate<span class="reqText">Required</label>
-        <input type="text" name="firstname" data-ng-model="firstname" required="true" placeholder="First Name"/>
-        <p data-ng-show="form.firstname.$invalid &amp;&amp; form.firstname.$dirty">
+        <input type="text" name="plate" data-ng-model="plate" required="true" placeholder="License Plate"/>
+        <p data-ng-show="form.plate.$invalid &amp;&amp; form.plate.$dirty">
           <You>must enter your first name</You>
         </p>
       </div>
       <div class="formField prmColr">
         <label>Primary Vehicle Color<span class="reqText">Required</label>
-        <input type="text" name="firstname" data-ng-model="firstname" required="true" placeholder="First Name"/>
-        <p data-ng-show="form.firstname.$invalid &amp;&amp; form.firstname.$dirty">
+        <input type="text" name="prmColor" data-ng-model="prmColor" required="true" placeholder="Primary Color"/>
+        <p data-ng-show="form.primColor.$invalid &amp;&amp; form.primColor.$dirty">
           <You>must enter your first name</You>
         </p>
       </div>
       <div class="formField secColr">
-        <label>Secondary Vehicle Color<span class="reqText">Required</label>
-        <input type="text" name="firstname" data-ng-model="firstname" required="true" placeholder="First Name"/>
-        <p data-ng-show="form.firstname.$invalid &amp;&amp; form.firstname.$dirty">
+        <label>Secondary Vehicle Color</label>
+        <input type="text" name="secColor" data-ng-model="secColor" placeholder="Secondary Color"/>
+        <p data-ng-show="form.secColor.$invalid &amp;&amp; form.secColor.$dirty">
           <You>must enter your first name</You>
         </p>
       </div>
       <div class="continue">
-        <button data-ng-click="next()">Continue</button>
+        <button btn="btn"></button>
+        <div return="return" class="return"></div>
       </div>
       <portalcancel></portalcancel>
     </form>

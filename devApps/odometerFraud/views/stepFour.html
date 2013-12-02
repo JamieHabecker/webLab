@@ -7,41 +7,39 @@
         <label>Company/Suspect Name<span class="reqText">Required</label>
         <input type="text" name="compName" data-ng-model="compName" required="true" placeholder="Company Name"/>
         <p data-ng-show="form.compName.$invalid &amp;&amp; form.compName.$dirty">
-          <You>must enter a company name</You>
+          <You>must enter your address</You>
         </p>
       </div>
       <div class="formField address gen">
         <label>Company Address</label>
-        <input type="text" name="compAddress" data-ng-model="compAddress" placeholder="Address"/>
-        <p data-ng-show="form.compAddress.$invalid &amp;&amp; form.compAddress.$dirty">
-          <You>must enter a companys address</You>
-        </p>
+        <input type="text" name="firstname" data-ng-model="compAddress" placeholder="Address"/>
       </div>
       <div class="formField city">
         <label>City</label>
-        <input type="text" name="compCity" data-ng-model="compCity" placeholder="City"/>
-        <p data-ng-show="form.compCity.$invalid &amp;&amp; form.compCity.$dirty">
-          <You>must enter the companys city</You>
-        </p>
+        <input type="text" name="firstname" data-ng-model="compCity" placeholder="City"/>
       </div>
-      <div states="states" class="formField state"></div>
+      <div class="formField state">
+        <label>State</label>
+        <select data-ng-model="State" data-ng-options="c.State for c in states">
+          <option value="">Select a state</option>
+        </select>
+      </div>
       <div class="formField zip">
         <label>Zip</label>
-        <input type="text" name="compZip" data-ng-model="compZip" placeholder="Zip"/>
+        <input type="text" name="compZip" data-ng-model="compZip" size="5" data-ng-pattern="zip" placeholder="Zip"/>
       </div>
       <div class="formField email">
         <label>Company Email</label>
-        <input type="text" name="compEmail" data-ng-model="compEmail" data-ng-pattern="/^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+.)+([a-zA-Z0-9]{2,4})+$/" placeholder="Email"/>
+        <input type="text" name="compEmail" data-ng-model="compEmail" data-ng-pattern="email" placeholder="Email"/>
         <p data-ng-show="form.compEmail.$invalid &amp;&amp; form.compEmail.$dirty">You must enter a valid email</p>
       </div>
       <div class="formField phone">
         <label>Phone</label>
-        <input type="text" name="comPhone" data-ng-maxlength="12" data-ng-model="compPhone" required="true" data-ng-pattern="/[0-9--]{12,}/" placeholder="804-555-1212"/>
+        <input type="text" name="comPhone" data-ng-maxlength="12" data-ng-model="compPhone" data-ng-pattern="/[0-9--]{12,}/" placeholder="804-555-1212"/>
         <p data-ng-show="form.compPhone.$invalid &amp;&amp; form.compPhone.$dirty">You must enter a valid phone number (ex.804-555-1212)</p>
       </div>
       <div class="continue">
         <button data-ng-click="next()">Continue</button>
-        <div return="return" class="return"></div>
       </div>
       <portalcancel></portalcancel>
     </form>

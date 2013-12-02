@@ -152,7 +152,9 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 	}
 }])
 
-.controller('StepFourController', ['$scope','$location','$timeout', function($scope, $location,$timeout){
+.controller('StepFourController', ['$scope','$location','$timeout','complete', function($scope, $location,$timeout, complete){
+			$scope.zip = /^\d\d\d\d\d$/;
+			$scope.email= /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 			if(sessionStorage.stepFour){
 				var data = sessionStorage.getItem('stepFour');
 				var p = JSON.parse(data);
@@ -194,7 +196,19 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 }])
 
 .controller('StepFiveController', ['$scope','$location', function($scope, $location){
-	$scope.next= function(){
+
+			$scope.next= function(){
+		var stepFive = {
+			year: $scope.year,
+			make: $scope.make,
+			model: $scope.model,
+			vin : $scope.vin,
+			plate: $scope.plate,
+			prmColor: $scope.prmColor,
+			secColor: $scope.secColor
+		}
+		sessionStorage.setItem('stepFive', JSON.stringify(stepFive));
+		$location.path('/StepSix')
 	}
 }])
 
@@ -228,12 +242,12 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 			two = sessionStorage.getItem('stepTwo');
 			three = sessionStorage.getItem('stepThree');
 			four = sessionStorage.getItem('stepFour');
-			//five = sessionStorage.getItem('stepFive');
+			five = sessionStorage.getItem('stepFive');
 			six = sessionStorage.getItem('stepSix');
 			cdTwo = JSON.parse(two);
 			cdThree = JSON.parse(three);
 			cdFour = JSON.parse(four);
-			//cdFive = JSON.parse(five);
+			cdFive = JSON.parse(five);
 			cdSix = JSON.parse(six)
 			$scope.edit = function(x){
 				console.log(x)
@@ -256,6 +270,13 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 				compZip: cdFour.compZip,
 				compEmail: cdFour.compEmail,
 				compPhone: cdFour.compPhone,
+				year: cdFive.year,
+				make: cdFive.make,
+				model: cdFive.model,
+				vin: cdFive.vin,
+				plate: cdFive.plate,
+				prmColr: cdFive.prmColr,
+				secColr: cdFive.secColr,
 				details: cdSix.details
 			};
 			$scope.theData = [data];

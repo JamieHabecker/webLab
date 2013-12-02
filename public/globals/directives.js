@@ -1,4 +1,5 @@
-angular.module("globals", ['globalFactories'])
+angular.module("globals", ['globalFactories', 'globalControllers'])
+
 
 .directive('states',['StateFactory',function(StateFactory){
 			return{
@@ -17,24 +18,45 @@ angular.module("globals", ['globalFactories'])
 			};
 		}])
 
-.controller('PortalCancelController',['$scope', function($scope){
-			$scope.portalCancel = function(){
-				window.location.replace("/");
-			};
-		}])
 
-.controller('ReturnController',['$scope','$location', function($scope, $location){
-			$scope.returnTo = function(){
-				$location.path('/Verify')
-			};
-		}])
+.directive('btn', function(){
+			return{
+			restrict: 'A',
+			template: '<button data-ng-disabled="form.$invalid" data-ng-click="next()"> Continue</button>',
+			replace: true
+			}
+	})
 
+.directive('year', function(){
+			return{
+				restrict: 'A',
+				template: "<label>Year<span class='reqText'>Required</span></label><input type='text' name='theyear' data-ng-model='theyear' data-ng-pattern='yearR' required='true' placeholder='YYYY'>" +
+						"<p data-ng-show='form.theyear.$invalid && form.theyear.$dirty'>You must enter the vehicles year</p>",
+				link: function(scope){
+				//scope.vinR= /^(\d){4}$/;
+				scope.yearR= /^(19|20)\d{2}$/;
+				//scope.textR= /^[a-zA-Z]+$/;
+				},
+			}
+})
+
+.directive('vin', function(){
+			return{
+				restrict: 'A',
+				template: "<label>Last Four of VIN<span class='reqText'>Required</span></label><input type='text' name='thevin' data-ng-model='thevin' data-ng-pattern='vinR' required='true' placeholder='VIN'>" +
+						"<p data-ng-show='form.thevin.$invalid && form.thevin.$dirty'>You must enter the last four VIN</p>",
+				link: function(scope){
+					scope.vinR= /^(\d){4}$/;
+					//scope.textR= /^[a-zA-Z]+$/;
+				},
+			}
+		})
 
 .directive('return', function(){
 			return{
 				restrict: 'A',
 				template:'<nav data-ng-show="rt" data-ng-controller="ReturnController">' +
-						'<a data-ng-click="returnTo()"> Return to Summary</a></nav>',
+						'<a data-ng-click="returnTo();next()"> Return to Summary</a></nav>',
 				replace: true
 			};
 		})
@@ -46,6 +68,4 @@ angular.module("globals", ['globalFactories'])
 						'<a ng-click="portalCancel()">Cancel</a></nav>',
 				replace: true
 			};
-		});
-
-
+		})

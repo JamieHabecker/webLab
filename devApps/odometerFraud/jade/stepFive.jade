@@ -1,42 +1,35 @@
 article.g17
 	div
-		h3.formTitle Vehicle Information <span>(required if you are the victim of odometer fraud)
+		h3.formTitle Vehicle Information
 		form(novalidate, name="form")
-			.formField.year
-				label Year<span class="reqText">Required
-				input(type="text",name="address",data-ng-model="address",required="true",placeholder="First Name")
-				p(data-ng-show="form.address.$invalid && form.address.$dirty")
-					You must enter your address
+			.formField.year(year)
 			.formField.make
 				label Make<span class="reqText">Required
-				input(type="text",name="firstname",data-ng-model="firstname",required="true",placeholder="First Name")
-				p(data-ng-show="form.firstname.$invalid && form.firstname.$dirty")
-					You must enter your first name
+				input(type="text",name="make",data-ng-model="make",data-ng-required="true", placeholder="Vehicle Make")
+				p(data-ng-show="form.make.$invalid && form.make.$dirty")
+					You must enter the vehicles make
 			.formField.model
 				label Model<span class="reqText">Required
-				input(type="text",name="firstname",data-ng-model="firstname",required="true",placeholder="First Name")
-				p(data-ng-show="form.firstname.$invalid && form.firstname.$dirty")
-					You must enter your first name
-			.formField.vin
-				label VIN<span class="reqText">Required
-				input(type="text",name="firstname",data-ng-model="firstname",required="true",placeholder="First Name")
-				p(data-ng-show="form.firstname.$invalid && form.firstname.$dirty")
-					You must enter your first name
+				input(type="text",name="model",data-ng-model="model",required="true",placeholder="Vehicle Model")
+				p(data-ng-show="form.model.$invalid && form.model.$dirty")
+					You must enter the vehicles model
+			.formField.vin(vin)
 			.formField.plate
 				label License Plate<span class="reqText">Required
-				input(type="text",name="firstname",data-ng-model="firstname",required="true",placeholder="First Name")
-				p(data-ng-show="form.firstname.$invalid && form.firstname.$dirty")
+				input(type="text",name="plate",data-ng-model="plate",required="true",placeholder="License Plate")
+				p(data-ng-show="form.plate.$invalid && form.plate.$dirty")
 					You must enter your first name
 			.formField.prmColr
 				label Primary Vehicle Color<span class="reqText">Required
-				input(type="text",name="firstname",data-ng-model="firstname",required="true",placeholder="First Name")
-				p(data-ng-show="form.firstname.$invalid && form.firstname.$dirty")
+				input(type="text",name="prmColor",data-ng-model="prmColor",required="true",placeholder="Primary Color")
+				p(data-ng-show="form.primColor.$invalid && form.primColor.$dirty")
 					You must enter your first name
 			.formField.secColr
-				label Secondary Vehicle Color<span class="reqText">Required
-				input(type="text",name="firstname",data-ng-model="firstname",required="true",placeholder="First Name")
-				p(data-ng-show="form.firstname.$invalid && form.firstname.$dirty")
+				label Secondary Vehicle Color
+				input(type="text",name="secColor",data-ng-model="secColor",placeholder="Secondary Color")
+				p(data-ng-show="form.secColor.$invalid && form.secColor.$dirty")
 					You must enter your first name
 			.continue
-				button(data-ng-click="next()") Continue
+				button(btn)
+				.return(return)
 			portalcancel
