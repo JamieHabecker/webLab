@@ -4,6 +4,7 @@ article.confirmation{
     margin-top:0;
     li{
       list-style-type: none;
+      line-height:2em;
     }
   }
   div.yInfo, div.bInfo, div.vInfo, div.details{
@@ -12,6 +13,7 @@ article.confirmation{
     ul{
       li.edit{
         text-align: right;
+        margin-right:1em;
         a{
           cursor:pointer;
           color:$orange;
@@ -24,4 +26,34 @@ article.confirmation{
     }
     border-bottom:1px solid #cccccc;
   }
+  div.details{
+    p{
+      margin:1em;
+    }
+  }
 }
+
+@media screen and (min-width:758px){
+  article.confirmation{
+    div{
+    padding:1em;
+    div.yInfo, div.bInfo, div.vInfo, div.details{
+      padding:0;
+      min-height:19em;
+      width:49%;
+      background:$grayLighter;
+      float:left;
+      margin-bottom:2%;
+    }
+      div.bInfo, div.details{
+        margin-left:1%;
+      }
+      div.vInfo{
+        clear:left;
+      }
+
+
+    }
+  }
+}
+
