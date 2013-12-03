@@ -20,11 +20,13 @@ article.g17.confirmation
 		div.vInfo(data-ng-repeat="a in theData")
 			h3 Vehicle Information
 			ul
-				li <b>Your Name:</b> {{a.firstname}} {{a.lastname}}
-				li <b>Your Address:</b> {{a.address}}, {{a.city}}, {{a.state}}, {{a.zip}}
-				li <b>Your Email:</b> {{a.email}}
-				li <b>Phone:</b> {{a.phone}}
-				li <b>Contact Preference:</b> {{a.conPref}}
+				li <b>Year:</b> {{a.year}}
+				li <b>Make:</b> {{a.make}}
+				li <b>Model:</b> {{a.model}}
+				li <b>Last Four of VIN:</b> {{a.vin}}
+				li <b>License Plate:</b> {{a.plate}}
+				li <b>Primary Color:</b> {{a.prmColor}}
+				li(data-ng-show="a.secColor") <b>Secondary Color:</b> {{a.secColor}}
 				li.edit <a data-ng-click="edit('StepFive')"> Edit </a>
 		div.details(data-ng-repeat="a in theData")
 			h3 Details
@@ -32,5 +34,5 @@ article.g17.confirmation
 			ul
 				li.edit <a data-ng-click="edit('StepSix')"> Edit </a>
 		.continue
-			button(btn)
+			div(btn,act="Submit")
 		<h2 class="loaderText"  data-ng-show="isloading && !err" data-ng-animate="'fade'">Sending Information</h2>

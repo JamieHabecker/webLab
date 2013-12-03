@@ -22,8 +22,12 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 .directive('btn', function(){
 			return{
 			restrict: 'A',
-			template: '<button data-ng-disabled="form.$invalid" data-ng-click="next()"> Continue</button>',
-			replace: true
+			template: '<button data-ng-disabled="form.$invalid" data-ng-click="next()">{{action}}</button>',
+			replace: true,
+			link: function(scope,ele,attr){
+				console.log(attr)
+				scope.action= attr.act;
+			}
 			}
 	})
 
@@ -101,8 +105,8 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 .directive('return', function(){
 			return{
 				restrict: 'A',
-				template:'<nav data-ng-show="rt" data-ng-controller="ReturnController">' +
-						'<a data-ng-click="returnTo();next()"> Return to Summary</a></nav>',
+				template:'<nav data-ng-show="rt">' +
+						'<a data-ng-click="next()"> Return to Summary</a></nav>',
 				replace: true
 			};
 		})

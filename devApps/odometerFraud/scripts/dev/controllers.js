@@ -108,11 +108,8 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 	 			}
 	 		};
 	 	$timeout(formFill.fillIt, 100);
-		 if(complete){
-			 $scope.rt = true;
-		 }
    }
-	$scope.next= function(){
+	$scope.next= function(x){
 		if($scope.state !== undefined){
 			sessionStorage.state = $scope.state.State;
 		}
@@ -124,7 +121,11 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 			zip: $scope.zip
 			};
 			sessionStorage.setItem('stepTwo', JSON.stringify(stepTwo));
+		if(complete){
+			$location.path("/Verify")
+		}else{
 			$location.path("/StepThree")
+		}
 	}
 }])
 
@@ -140,9 +141,6 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 	 			}
 	 		};
 	 	$timeout(formFill.fillIt, 100);
-		if(complete){
-			$scope.rt = true;
-		}
    }
 	$scope.next= function(){
 		var stepThree = {
@@ -151,7 +149,11 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 			conPref : $scope.conPref
 			};
 		sessionStorage.setItem('stepThree', JSON.stringify(stepThree));
-		$location.path("/StepFour")
+		if(complete){
+			$location.path("/Verify")
+		}else{
+			$location.path("/StepFour")
+		}
 	}
 }])
 
@@ -173,9 +175,6 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 			}
 			};
 		$timeout(formFill.fillIt, 100);
-			if(complete){
-				$scope.rt = true;
-		}
 	}
 	$scope.next= function(){
 		if($scope.state !== undefined){
@@ -190,7 +189,9 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 			compPhone : $scope.compPhone
 		};
 		sessionStorage.setItem('stepFour', JSON.stringify(stepFour));
-		if(sessionStorage.an){
+		if(complete){
+			$location.path("/Verify")
+		}else if(sessionStorage.an){
 			$location.path("/StepFive")
 		}else{
 		$location.path("/StepSix")
@@ -230,7 +231,11 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 			secColor: $scope.vsc
 		}
 		sessionStorage.setItem('stepFive', JSON.stringify(stepFive));
+		if(complete){
+			$location.path("/Verify")
+		}else{
 		$location.path('/StepSix')
+		}
 	}
 }])
 

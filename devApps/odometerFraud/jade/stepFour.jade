@@ -26,5 +26,5 @@ article.g17
 				input(type="text",name="comPhone",data-ng-maxlength="12",data-ng-model="compPhone", data-ng-pattern="/[0-9-\-]{12,}/", placeholder="804-555-1212")
 				p(data-ng-show="form.compPhone.$invalid && form.compPhone.$dirty") You must enter a valid phone number (ex.804-555-1212)
 			.continue
-				button(data-ng-click="next()") Continue
+				div(btn,act="Continue")
 			portalcancel
