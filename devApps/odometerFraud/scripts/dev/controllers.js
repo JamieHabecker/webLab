@@ -268,48 +268,53 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 .controller('VerifyController', ['$scope','$location', function($scope,$location){
 			var state = sessionStorage.state;
 			var compState = sessionStorage.compState;
+			var two,three,four,five,six,cdTwo,cdThree,cdFour,cdFive,cdSix;
+			if(sessionStorage.stepTwo){
+				two = sessionStorage.getItem('stepTwo')
+				three = sessionStorage.getItem('stepThree');
+				four = sessionStorage.getItem('stepFour');
+				five = sessionStorage.getItem('stepFive');
+				six = sessionStorage.getItem('stepSix');
+				cdTwo = JSON.parse(two);
+				cdThree = JSON.parse(three);
+				cdFour = JSON.parse(four);
+				cdFive = JSON.parse(five);
+				cdSix = JSON.parse(six);
+				data = {
+					firstname  : cdTwo.firstname,
+					lastname  : cdTwo.lastname,
+					address  : cdTwo.address,
+					city : cdTwo.city,
+					zip : cdTwo.zip,
+					state: state,
+					email : cdThree.email,
+					phone : cdThree.phone,
+					conPref : cdThree.conPref,
+					compName : cdFour.compName,
+					compAddress: cdFour.compAddress,
+					compCity: cdFour.compCity,
+					compState: compState,
+					compZip: cdFour.compZip,
+					compEmail: cdFour.compEmail,
+					compPhone: cdFour.compPhone,
+					year: cdFive.year,
+					make: cdFive.make,
+					model: cdFive.model,
+					vin: cdFive.vin,
+					plate: cdFive.plate,
+					prmColor: cdFive.prmColor,
+					secColor: cdFive.secColor,
+					details: cdSix.details
+				};
+				$scope.theData = [data];
+			}else{
+				$location.path('/')
+			}
 			sessionStorage.complete = true;
-			two = sessionStorage.getItem('stepTwo');
-			three = sessionStorage.getItem('stepThree');
-			four = sessionStorage.getItem('stepFour');
-			five = sessionStorage.getItem('stepFive');
-			six = sessionStorage.getItem('stepSix');
-			cdTwo = JSON.parse(two);
-			cdThree = JSON.parse(three);
-			cdFour = JSON.parse(four);
-			cdFive = JSON.parse(five);
-			cdSix = JSON.parse(six)
 			$scope.edit = function(x){
 				console.log(x)
 				$location.path('/' + x)
 			}
-			data = {
-				firstname  : cdTwo.firstname,
-				lastname  : cdTwo.lastname,
-				address  : cdTwo.address,
-				city : cdTwo.city,
-				zip : cdTwo.zip,
-				state: state,
-				email : cdThree.email,
-				phone : cdThree.phone,
-				conPref : cdThree.conPref,
-				compName : cdFour.compName,
-				compAddress: cdFour.compAddress,
-				compCity: cdFour.compCity,
-				compState: compState,
-				compZip: cdFour.compZip,
-				compEmail: cdFour.compEmail,
-				compPhone: cdFour.compPhone,
-				year: cdFive.year,
-				make: cdFive.make,
-				model: cdFive.model,
-				vin: cdFive.vin,
-				plate: cdFive.plate,
-				prmColor: cdFive.prmColor,
-				secColor: cdFive.secColor,
-				details: cdSix.details
-			};
-			$scope.theData = [data];
 			$scope.next= function(){
 				$location.path('/Complete')
 			}
