@@ -9,6 +9,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 		controller : 'DisclaimerController',
 		templateUrl : 'views/disclaimer.html'
 	})
+
 	.when('/StepOne', {
 		controller : 'StepOneController',
 		templateUrl : 'views/stepOne.html'
