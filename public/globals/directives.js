@@ -41,6 +41,7 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 				}
 			}
 		})
+
 .directive('year', function(){
 			return{
 				restrict: 'A',
@@ -55,7 +56,7 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 .directive('plate', function(){
 			return{
 				restrict: 'A',
-				template: "<label>Plate<span class='reqText'>Required</span></label><input type='text' name='vplate' data-ng-model='vplate' data-ng-maxlength='8' required='true' placeholder='License Plate'>" +
+				template: "<label>Plate<span class='reqText'>Required</span></label><input type='text' data-ng-maxlength='8' name='vplate' data-ng-model='vplate' data-ng-maxlength='8' required='true' placeholder='License Plate'>" +
 						"<p data-ng-show='form.vplate.$invalid && form.vplate.$dirty'>You must enter the vehicles license plate</p>",
 			}
 })

@@ -1,14 +1,15 @@
 angular.module("factories", [])
 
-
-
-
 .factory('message', function() {
     return []
 })
 
 .factory('complete', function(){
-			return false;
+			if(sessionStorage.complete){
+				return true;
+			}else{
+				return false;
+			}
 		})
 
 .factory('ContactFactory',['$resource', function($resource) {
