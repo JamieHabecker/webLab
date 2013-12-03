@@ -7,6 +7,13 @@ angular.module("factories", [])
     return []
 })
 
+.factory('complete', function(){
+			if(sessionStorage.complete){
+				return true
+			}else{
+				return
+			}
+		})
 
 .factory('ContactFactory',['$resource', function($resource) {
     var baseUrl = "/apps/ContactUs/Default.aspx/SendFields";

@@ -1,0 +1,36 @@
+article.g17.confirmation
+		h3.formTitle Please verify the following information
+		div.yInfo(data-ng-repeat="a in theData")
+			h3 Your Information:
+			ul
+				li <b>Your Name:</b> {{a.firstname}} {{a.lastname}}
+				li <b>Your Address:</b> {{a.address}}, {{a.city}}, {{a.state}}, {{a.zip}}
+				li <b>Your Email:</b> {{a.email}}
+				li <b>Phone:</b> {{a.phone}}
+				li <b>Contact Preference:</b> {{a.conPref}}
+				li.edit <a data-ng-click="edit('StepTwo')"> Edit </a>
+		div.bInfo(data-ng-repeat="a in theData")
+			h3 Company Information:
+			ul
+				li <b>Company/Suspect Name:</b> {{a.compName}}
+				li(data-ng-show="a.compAddress") <b>Company Address:</b> {{a.compAddress}}, {{a.compCity}}, {{a.compState}}, {{a.compZip}}
+				li(data-ng-show="a.compEmail") <b>Company Email:</b> {{a.compEmail}}
+				li(data-ng-show="a.compPhone") <b>Company Phone:</b> {{a.compPhone}}
+				li.edit <a data-ng-click="edit('StepFour')"> Edit </a>
+		div.vInfo(data-ng-repeat="a in theData")
+			h3 Vehicle Information
+			ul
+				li <b>Your Name:</b> {{a.firstname}} {{a.lastname}}
+				li <b>Your Address:</b> {{a.address}}, {{a.city}}, {{a.state}}, {{a.zip}}
+				li <b>Your Email:</b> {{a.email}}
+				li <b>Phone:</b> {{a.phone}}
+				li <b>Contact Preference:</b> {{a.conPref}}
+				li.edit <a data-ng-click="edit('StepFive')"> Edit </a>
+		div.details(data-ng-repeat="a in theData")
+			h3 Details
+			p {{a.details}}
+			ul
+				li.edit <a data-ng-click="edit('StepSix')"> Edit </a>
+		.continue
+			button(btn)
+		<h2 class="loaderText"  data-ng-show="isloading && !err" data-ng-animate="'fade'">Sending Information</h2>

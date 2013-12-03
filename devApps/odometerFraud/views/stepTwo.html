@@ -1,0 +1,49 @@
+
+<article class="g17">
+  <div>
+    <h3 class="formTitle">Complainant/Victim Information</h3>
+    <form novalidate="novalidate" name="form">
+      <div class="formField firstName">
+        <label>First Name<span class="reqText">Required</label>
+        <input type="text" name="firstname" data-ng-model="firstname" required="true" placeholder="First Name"/>
+        <p data-ng-show="form.firstname.$invalid &amp;&amp; form.firstname.$dirty">
+          <You>must enter your first name</You>
+        </p>
+      </div>
+      <div class="formField lastName">
+        <label>Last Name<span class="reqText">Required</label>
+        <input type="text" name="lastname" data-ng-model="lastname" required="true" placeholder="Last Name"/>
+        <p data-ng-show="form.lastname.$invalid &amp;&amp; form.lastname.$dirty">
+          <You>must enter your last name</You>
+        </p>
+      </div>
+      <div class="formField address">
+        <label>Address<span class="reqText">Required</label>
+        <input type="text" name="address" data-ng-model="address" required="true" placeholder="Address"/>
+        <p data-ng-show="form.address.$invalid &amp;&amp; form.address.$dirty">
+          <You>must enter your address</You>
+        </p>
+      </div>
+      <div class="formField city">
+        <label>City<span class="reqText">Required</label>
+        <input type="text" name="city" data-ng-model="city" required="true" placeholder="City"/>
+        <p data-ng-show="form.city.$invalid &amp;&amp; form.city.$dirty">
+          <You>must enter your city</You>
+        </p>
+      </div>
+      <div states="states" class="formField state"></div>
+      <div class="formField zip">
+        <label>Zip<span class="reqText">Required</label>
+        <input type="text" name="zip" data-ng-model="zip" required="true" placeholder="Zip"/>
+        <p data-ng-show="form.zip.$invalid &amp;&amp; form.zip.$dirty">
+          <You>must enter your address</You>
+        </p>
+      </div>
+      <div class="continue">
+        <button btn="btn"></button>
+        <div return="return" class="return"></div>
+      </div>
+      <portalcancel></portalcancel>
+    </form>
+  </div>
+</article>

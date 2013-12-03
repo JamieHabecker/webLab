@@ -1,0 +1,42 @@
+
+<article class="g17">
+  <div>
+    <h3 class="formTitle">Company/Suspect Information <span>(provide as much information as possible)</h3>
+    <form novalidate="novalidate" name="form">
+      <div class="formField companyName gen">
+        <label>Company/Suspect Name<span class="reqText">Required</label>
+        <input type="text" name="compName" data-ng-model="compName" required="true" placeholder="Company Name"/>
+        <p data-ng-show="form.compName.$invalid &amp;&amp; form.compName.$dirty">
+          <You>must enter your address</You>
+        </p>
+      </div>
+      <div class="formField address gen">
+        <label>Company Address</label>
+        <input type="text" name="firstname" data-ng-model="compAddress" placeholder="Address"/>
+      </div>
+      <div class="formField city">
+        <label>City</label>
+        <input type="text" name="firstname" data-ng-model="compCity" placeholder="City"/>
+      </div>
+      <div states="states" class="formField state"></div>
+      <div class="formField zip">
+        <label>Zip</label>
+        <input type="text" name="compZip" data-ng-model="compZip" size="5" data-ng-pattern="zip" placeholder="Zip"/>
+      </div>
+      <div class="formField email">
+        <label>Company Email</label>
+        <input type="text" name="compEmail" data-ng-model="compEmail" data-ng-pattern="email" placeholder="Email"/>
+        <p data-ng-show="form.compEmail.$invalid &amp;&amp; form.compEmail.$dirty">You must enter a valid email</p>
+      </div>
+      <div class="formField phone">
+        <label>Phone</label>
+        <input type="text" name="comPhone" data-ng-maxlength="12" data-ng-model="compPhone" data-ng-pattern="/[0-9--]{12,}/" placeholder="804-555-1212"/>
+        <p data-ng-show="form.compPhone.$invalid &amp;&amp; form.compPhone.$dirty">You must enter a valid phone number (ex.804-555-1212)</p>
+      </div>
+      <div class="continue">
+        <button data-ng-click="next()">Continue</button>
+      </div>
+      <portalcancel></portalcancel>
+    </form>
+  </div>
+</article>

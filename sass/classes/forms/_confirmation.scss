@@ -1,0 +1,27 @@
+article.confirmation{
+  ul{
+    padding-top:0.5em;
+    margin-top:0;
+    li{
+      list-style-type: none;
+    }
+  }
+  div.yInfo, div.bInfo, div.vInfo, div.details{
+    width:97%;
+    margin:0 auto;
+    ul{
+      li.edit{
+        text-align: right;
+        a{
+          cursor:pointer;
+          color:$orange;
+        }
+      }
+    }
+    h3{
+      padding-left:1em;
+      padding-top:1em;
+    }
+    border-bottom:1px solid #cccccc;
+  }
+}

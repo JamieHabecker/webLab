@@ -2,7 +2,7 @@ module.exports = function(grunt){
 	grunt.initConfig({
 		watch: {
 			sass:{
-				files:['sass/*.scss', 'sass/**/*.scss'],
+				files:['sass/*.scss', 'sass/**/*.scss', 'sass/**/**/*.scss'],
 				tasks:['compass']
 			},
 			javascript:{
@@ -19,7 +19,7 @@ module.exports = function(grunt){
 			},
 			options:{
 			spawn:false,
-			livereload: true
+			livereload:35730
 			}
 		},
 
