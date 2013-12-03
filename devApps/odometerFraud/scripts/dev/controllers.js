@@ -156,27 +156,27 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 }])
 
 .controller('StepFourController', ['$scope','$location','$timeout','complete', function($scope, $location,$timeout, complete){
-			$scope.zip = /^\d\d\d\d\d$/;
-			$scope.email= /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-			if(sessionStorage.stepFour){
-				var data = sessionStorage.getItem('stepFour');
-				var p = JSON.parse(data);
-				var formFill = {
-					fillIt : function() {
-						$scope.compName= p.compName;
-						$scope.compAddress = p.compAddress;
-						$scope.compCity  = p.compCity;
-						$scope.current = sessionStorage.compState;
-						$scope.compZip = p.compZip;
-						$scope.compEmail = p.compEmail;
-						$scope.compPhone = p.compPhone;
-					}
-			};
-				$timeout(formFill.fillIt, 100);
-				if(complete){
-					$scope.rt = true;
-				}
+	$scope.zip = /^\d\d\d\d\d$/;
+	$scope.email= /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+	if(sessionStorage.stepFour){
+		var data = sessionStorage.getItem('stepFour');
+		var p = JSON.parse(data);
+		var formFill = {
+			fillIt : function() {
+				$scope.compName= p.compName;
+				$scope.compAddress = p.compAddress;
+				$scope.compCity  = p.compCity;
+				$scope.current = sessionStorage.compState;
+				$scope.compZip = p.compZip;
+				$scope.compEmail = p.compEmail;
+				$scope.compPhone = p.compPhone;
 			}
+			};
+		$timeout(formFill.fillIt, 100);
+			if(complete){
+				$scope.rt = true;
+		}
+	}
 	$scope.next= function(){
 		if($scope.state !== undefined){
 		sessionStorage.compState = $scope.state.State;
@@ -198,17 +198,36 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 	}
 }])
 
-.controller('StepFiveController', ['$scope','$location', function($scope, $location){
-
-			$scope.next= function(){
+.controller('StepFiveController', ['$scope','$location','$timeout','complete',function($scope, $location,$timeout,complete){
+	if(sessionStorage.stepFive){
+				var data = sessionStorage.getItem('stepFive');
+				var p = JSON.parse(data);
+				var formFill = {
+					fillIt : function() {
+						$scope.vyear= p.year;
+						$scope.vmake = p.make;
+						$scope.vmodel  = p.model;
+						$scope.vvin = p.vin;
+						$scope.vplate = p.plate;
+						$scope.vpc = p.prmColor;
+						$scope.vsc = p.secColor;
+					}
+				};
+				$timeout(formFill.fillIt, 100);
+				if(complete){
+					$scope.rt = true;
+				}
+	}
+	$scope.next= function(){
+		console.log($scope.vsc)
 		var stepFive = {
 			year: $scope.vyear,
 			make: $scope.vmake,
 			model: $scope.vmodel,
 			vin : $scope.vvin,
 			plate: $scope.vplate,
-			prmColor: $scope.vprmColor,
-			secColor: $scope.vsecColor
+			prmColor: $scope.vpc,
+			secColor: $scope.vsc
 		}
 		sessionStorage.setItem('stepFive', JSON.stringify(stepFive));
 		$location.path('/StepSix')
@@ -278,8 +297,8 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 				model: cdFive.model,
 				vin: cdFive.vin,
 				plate: cdFive.plate,
-				prmColr: cdFive.prmColr,
-				secColr: cdFive.secColr,
+				prmColor: cdFive.prmColor,
+				secColor: cdFive.secColor,
 				details: cdSix.details
 			};
 			$scope.theData = [data];
