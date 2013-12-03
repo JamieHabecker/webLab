@@ -9,7 +9,6 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 				link: function(scope, elm, attrs){
 					StateFactory.menu({},{}, statescb, stateserr);
 					function statescb(data){
-						scope.current="Select a State"
 						scope.states = data;
 					}
 					function stateserr(err){

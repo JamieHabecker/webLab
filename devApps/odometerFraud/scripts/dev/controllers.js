@@ -93,7 +93,6 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 }])
 
 .controller('StepTwoController', ['$scope','$location','$timeout','complete', function($scope, $location, $timeout, complete){
-	var a;
 	 if(sessionStorage.stepTwo){
 	 	var data = sessionStorage.getItem('stepTwo');
 	 	var p = JSON.parse(data);
@@ -108,11 +107,11 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 	 			}
 	 		};
 	 	$timeout(formFill.fillIt, 100);
-   }
-	$scope.next= function(x){
-		if($scope.state !== undefined){
-			sessionStorage.state = $scope.state.State;
-		}
+   }else{
+		 $scope.current="Select a State";
+	 }
+	$scope.next= function(){
+		sessionStorage.state = $scope.state.code;
 		var stepTwo = {
 			firstname : $scope.firstname,
 			lastname : $scope.lastname,
@@ -175,10 +174,14 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 			}
 			};
 		$timeout(formFill.fillIt, 100);
+	}else{
+		$scope.current = "Select a State";
 	}
 	$scope.next= function(){
 		if($scope.state !== undefined){
-		sessionStorage.compState = $scope.state.State;
+			sessionStorage.compState = $scope.state.State;
+		}else{
+			sessionStorage.compState = ""
 		}
 		var stepFour = {
 			compName : $scope.compName,
@@ -307,11 +310,14 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 				details: cdSix.details
 			};
 			$scope.theData = [data];
-			console.log($scope.theData)
-
+			$scope.next= function(){
+				$location.path('/Complete')
+			}
 }])
 
-
+.controller('CompleteController', ['$scope','complete', function($scope, complete){
+			sessionStorage.clear();
+}])
 
 
 

@@ -100,7 +100,8 @@ grunt.initConfig({
 			"views/stepFour.html" : ['jade/stepFour.jade'],
 			"views/stepFive.html" : ['jade/stepFive.jade'],
 			"views/stepSix.html" : ['jade/stepSix.jade'],
-			"views/confirmation.html" : ['jade/confirmation.jade']
+			"views/confirmation.html" : ['jade/confirmation.jade'],
+			"views/complete.html" : ['jade/complete.jade']
 		}
 	}
 },
