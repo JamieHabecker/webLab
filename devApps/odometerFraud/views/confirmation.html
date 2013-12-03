@@ -17,7 +17,7 @@
       <h3>Company Information:</h3>
       <ul>
         <li><b>Company/Suspect Name:</b> {{a.compName}}</li>
-        <li data-ng-show="a.compAddress"><b>Company Address:</b> {{a.compAddress}}, {{a.compCity}}, {{a.compState}}, {{a.compZip}}</li>
+        <li data-ng-show="a.compAddress || a.compCity || a.compState || a.compZip"><b>Company Address:</b> {{a.compAddress}}, {{a.compCity}}, {{a.compState}}, {{a.compZip}}</li>
         <li data-ng-show="a.compEmail"><b>Company Email:</b> {{a.compEmail}}</li>
         <li data-ng-show="a.compPhone"><b>Company Phone:</b> {{a.compPhone}}</li>
         <li class="edit"><a data-ng-click="edit('StepFour')"> Edit </a></li>

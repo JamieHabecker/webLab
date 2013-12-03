@@ -14,7 +14,7 @@ article.g17.confirmation
 			h3 Company Information:
 			ul
 				li <b>Company/Suspect Name:</b> {{a.compName}}
-				li(data-ng-show="a.compAddress") <b>Company Address:</b> {{a.compAddress}}, {{a.compCity}}, {{a.compState}}, {{a.compZip}}
+				li(data-ng-show="a.compAddress || a.compCity || a.compState || a.compZip") <b>Company Address:</b> {{a.compAddress}}, {{a.compCity}}, {{a.compState}}, {{a.compZip}}
 				li(data-ng-show="a.compEmail") <b>Company Email:</b> {{a.compEmail}}
 				li(data-ng-show="a.compPhone") <b>Company Phone:</b> {{a.compPhone}}
 				li.edit <a data-ng-click="edit('StepFour')"> Edit </a>
