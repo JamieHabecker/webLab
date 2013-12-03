@@ -17,7 +17,7 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 					}
 				}
 			};
-		}])
+}])
 
 .directive('btn', function(){
 			return{
@@ -46,24 +46,21 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 			}
 })
 
-.directive('prmcolr', function(){
+.directive('pcolor', function(){
 			return{
 				restrict: 'A',
-				template: "<label>Primary Color<span class='reqText'>Required</span></label><input type='text' name='vprmcolr' data-ng-model='vprmcolr' data-ng-required='true' placeholder='Primary Color'>" +
-						"<p data-ng-show='form.vprmcolr.$invalid && form.vprmcolr.$dirty'>You must enter the vehicles primary color</p>"
+				template: "<label>Primary Color<span class='reqText'>Required</span></label><input type='text' name='vpc' data-ng-model='vpc' required='true' placeholder='Primary Color'>" +
+						"<p data-ng-show='form.vpc.$invalid && form.vpc.$dirty'>You must enter the vehicles primary color</p>"
 			}
 })
 
-.directive('seccolr', function(){
+.directive('scolor', function(){
 			return{
 				restrict: 'A',
-				scope:{
-					req: "="
-				},
-				template: "<label>Secondary Color<span class='reqText' data-ng-show='req'>Required</span></label><input type='text' name='vseccolr' data-ng-model='vseccolr' data-ng-required='req' placeholder='Secondary Color'>" +
-						"<p data-ng-show='form.vseccolr.$invalid && form.vseccolr.$dirty'>You must enter the vehicles secondary color</p>",
-			link: function(scope){
-				scope.req= scope.req;
+				template: "<label>Secondary Color<span class='reqText' data-ng-show='req'>Required</span></label><input type='text' name='vsc' data-ng-model='vsc' placeholder='Secondary Color'>" +
+						"<p data-ng-show='form.vsc.$invalid && form.vsc.$dirty'>You must enter the vehicles secondary color</p>",
+			link: function(scope, ele, attr){
+				scope.req= attr.req;
 			}
 			}
 })
@@ -71,13 +68,10 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 .directive('model', function(){
 			return{
 				restrict: 'A',
-				scope:{
-					req : "="
-				},
 				template: "<label>Model<span class='reqText' data-ng-show='req'>Required</span></label><input type='text' data-ng-required='req' name='vmodel' data-ng-model='vmodel' placeholder='Model'>" +
 						"<p data-ng-show='form.vmodel.$invalid && form.vmodel.$dirty'>You must enter the vehicles model</p>",
-				link: function(scope){
-					scope.req= scope.req;
+				link: function(scope,ele,attr){
+					scope.req= attr.req;
 				}
 			}
 })
@@ -85,13 +79,10 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 .directive('make', function(){
 			return{
 				restrict: 'A',
-				scope:{
-					req : "="
-				},
 				template: "<label>Make<span class='reqText' data-ng-show='req'>Required</span></label><input type='text' data-ng-required='req' name='vmake' data-ng-model='vmake' placeholder='Make'>" +
 						"<p data-ng-show='form.vmake.$invalid && form.vmake.$dirty'>You must enter the vehicles model</p>",
-				link: function(scope){
-					scope.req= scope.req;
+				link: function(scope,ele,attr){
+					scope.req= attr.req;
 				}
 			}
 		})
@@ -99,11 +90,10 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 .directive('vin', function(){
 			return{
 				restrict: 'A',
-				template: "<label>Last Four of VIN<span class='reqText'>Required</span></label><input type='text' name='thevin' data-ng-model='thevin' data-ng-pattern='vinR' required='true' placeholder='VIN'>" +
-						"<p data-ng-show='form.thevin.$invalid && form.thevin.$dirty'>You must enter the last four VIN</p>",
+				template: "<label>Last Four of VIN<span class='reqText'>Required</span></label><input type='text' name='vvin' data-ng-model='vvin' data-ng-pattern='vinR' required='true' placeholder='VIN'>" +
+						"<p data-ng-show='form.vvin.$invalid && form.vvin.$dirty'>You must enter the last four VIN</p>",
 				link: function(scope){
 					scope.vinR= /^(\d){4}$/;
-					//scope.textR= /^[a-zA-Z]+$/;
 				}
 			}
 		})
