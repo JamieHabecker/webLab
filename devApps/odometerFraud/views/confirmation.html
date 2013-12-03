@@ -2,7 +2,7 @@
 <article class="g17 confirmation">
   <h3 class="formTitle">Please verify the following information</h3>
   <div>
-    <div data-ng-repeat="a in theData" class="yInfo">
+    <div data-ng-repeat="a in theData" data-ng-show="a.firstname" class="yInfo">
       <h3>Your Information:</h3>
       <ul>
         <li><b>Your Name:</b> {{a.firstname}} {{a.lastname}}</li>
@@ -23,7 +23,7 @@
         <li class="edit"><a data-ng-click="edit('StepFour')"> Edit </a></li>
       </ul>
     </div>
-    <div data-ng-repeat="a in theData" class="vInfo">
+    <div data-ng-repeat="a in theData" data-ng-show="a.year" class="vInfo">
       <h3>Vehicle Information</h3>
       <ul>
         <li><b>Year:</b> {{a.year}}</li>

@@ -2,11 +2,7 @@ article.g17
 	div
 		h3.formTitle Complainant/Victim Information
 		form(novalidate, name="form")
-			.formField.firstName
-				label First Name<span class="reqText">Required
-				input(type="text",name="firstname",data-ng-model="firstname",required="true",placeholder="First Name")
-				p(data-ng-show="form.firstname.$invalid && form.firstname.$dirty")
-					You must enter your first name
+			.formField.firstName(firstname, req="true")
 			.formField.lastName
 				label Last Name<span class="reqText">Required
 				input(type="text",name="lastname",data-ng-model="lastname",required="true",placeholder="Last Name")
@@ -22,12 +18,8 @@ article.g17
 				input(type="text",name="city",data-ng-model="city",required="true",placeholder="City")
 				p(data-ng-show="form.city.$invalid && form.city.$dirty")
 					You must enter your city
-			.formField.state(states, def="Select a State")
-			.formField.zip
-				label Zip<span class="reqText">Required
-				input(type="text",name="zip",data-ng-model="zip",required="true",placeholder="Zip")
-				p(data-ng-show="form.zip.$invalid && form.zip.$dirty")
-					You must enter your address
+			.formField.state(states,req="true")
+			.formField.zip(zip)
 			.continue
 				div(btn,act="Continue")
 			portalcancel

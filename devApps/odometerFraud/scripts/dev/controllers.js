@@ -48,17 +48,13 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 
 }])
 
-.controller('DisclaimerController', ['$scope','$location', function($scope, $location){
+.controller('DisclaimerController', ['$scope','$location','complete', function($scope, $location,complete){
 	$scope.next = function(){
 		$location.path('/StepOne')
 	}
 }])
 
-.controller('StepOneController', ['$scope','$location', function($scope, $location){
-
-			//var limit = 1024 * 1024 * 5; // 5 MB
-			//var remSpace = limit - unescape(encodeURIComponent(JSON.stringify(sessionStorage))).length;
-			//console.log(remSpace)
+.controller('StepOneController', ['$scope','$location','complete', function($scope, $location,complete){
 	if(sessionStorage.type){
 		var a = sessionStorage.type;
 			if(a === "1"){
@@ -86,6 +82,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 			sessionStorage.an = false;	
 			$location.path("/StepTwo")
 		}else{
+			sessionStorage.removeItem("an");
 			$location.path("/StepFour")
 		}
 		
@@ -98,7 +95,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 	 	var p = JSON.parse(data);
 	 	var formFill = {
 	 		fillIt : function() {
-	 			$scope.firstname= p.firstname;
+	 			$scope.fn= p.firstname;
 	 			$scope.lastname  = p.lastname;
 	 			$scope.address  = p.address;
 	 			$scope.city  = p.city;
@@ -111,9 +108,12 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 		 $scope.current="Select a State";
 	 }
 	$scope.next= function(){
-		sessionStorage.state = $scope.state.code;
+		if($scope.state !== undefined){
+			sessionStorage.state = $scope.state.code;
+		}else{
+		}
 		var stepTwo = {
-			firstname : $scope.firstname,
+			firstname : $scope.fn,
 			lastname : $scope.lastname,
 			address : $scope.address,
 			city: $scope.city,
@@ -269,53 +269,71 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 			var state = sessionStorage.state;
 			var compState = sessionStorage.compState;
 			var two,three,four,five,six,cdTwo,cdThree,cdFour,cdFive,cdSix;
-			if(sessionStorage.stepTwo){
-				two = sessionStorage.getItem('stepTwo')
-				three = sessionStorage.getItem('stepThree');
-				four = sessionStorage.getItem('stepFour');
-				five = sessionStorage.getItem('stepFive');
-				six = sessionStorage.getItem('stepSix');
-				cdTwo = JSON.parse(two);
-				cdThree = JSON.parse(three);
-				cdFour = JSON.parse(four);
-				cdFive = JSON.parse(five);
-				cdSix = JSON.parse(six);
-				data = {
-					firstname  : cdTwo.firstname,
-					lastname  : cdTwo.lastname,
-					address  : cdTwo.address,
-					city : cdTwo.city,
-					zip : cdTwo.zip,
-					state: state,
-					email : cdThree.email,
-					phone : cdThree.phone,
-					conPref : cdThree.conPref,
-					compName : cdFour.compName,
-					compAddress: cdFour.compAddress,
-					compCity: cdFour.compCity,
-					compState: compState,
-					compZip: cdFour.compZip,
-					compEmail: cdFour.compEmail,
-					compPhone: cdFour.compPhone,
-					year: cdFive.year,
-					make: cdFive.make,
-					model: cdFive.model,
-					vin: cdFive.vin,
-					plate: cdFive.plate,
-					prmColor: cdFive.prmColor,
-					secColor: cdFive.secColor,
-					details: cdSix.details
-				};
+			if(sessionStorage.stepSix){
+				if(sessionStorage.an === false){
+					two = sessionStorage.getItem('stepTwo');
+					three = sessionStorage.getItem('stepThree');
+					four = sessionStorage.getItem('stepFour');
+					six = sessionStorage.getItem('stepSix');
+					five = sessionStorage.getItem('stepFive');
+					cdTwo = JSON.parse(two);
+					cdThree = JSON.parse(three);
+					cdFour = JSON.parse(four);
+					cdFive = JSON.parse(five);
+					cdSix = JSON.parse(six);
+					data = {
+						firstname  : cdTwo.firstname,
+						lastname  : cdTwo.lastname,
+						address  : cdTwo.address,
+						city : cdTwo.city,
+						zip : cdTwo.zip,
+						state: state,
+						email : cdThree.email,
+						phone : cdThree.phone,
+						conPref : cdThree.conPref,
+						compName : cdFour.compName,
+						compAddress: cdFour.compAddress,
+						compCity: cdFour.compCity,
+						compState: compState,
+						compZip: cdFour.compZip,
+						compEmail: cdFour.compEmail,
+						compPhone: cdFour.compPhone,
+						year: cdFive.year,
+						make: cdFive.make,
+						model: cdFive.model,
+						vin: cdFive.vin,
+						plate: cdFive.plate,
+						prmColor: cdFive.prmColor,
+						secColor: cdFive.secColor,
+						details: cdSix.details
+					};
+				}else{
+					four = sessionStorage.getItem('stepFour');
+					six = sessionStorage.getItem('stepSix');
+					cdFour = JSON.parse(four);
+					cdSix = JSON.parse(six);
+					data = {
+						compName : cdFour.compName,
+						compAddress: cdFour.compAddress,
+						compCity: cdFour.compCity,
+						compState: compState,
+						compZip: cdFour.compZip,
+						compEmail: cdFour.compEmail,
+						compPhone: cdFour.compPhone,
+						details: cdSix.details
+					};
+				}
 				$scope.theData = [data];
 			}else{
+				sessionStorage.complete = false;
 				$location.path('/')
 			}
-			sessionStorage.complete = true;
 			$scope.edit = function(x){
 				console.log(x)
 				$location.path('/' + x)
 			}
 			$scope.next= function(){
+				sessionStorage.complete = true;
 				$location.path('/Complete')
 			}
 }])
@@ -556,5 +574,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
             }
         }
         })
-        
-     
+
+//var limit = 1024 * 1024 * 5; // 5 MB
+//var remSpace = limit - unescape(encodeURIComponent(JSON.stringify(sessionStorage))).length;
+//console.log(remSpace)

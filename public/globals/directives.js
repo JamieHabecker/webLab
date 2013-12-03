@@ -4,9 +4,10 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 .directive('states',['StateFactory',function(StateFactory){
 			return{
 				restrict: "A",
-				template: "<label>State<span class='reqText'>Required</label><select data-ng-model='state' data-ng-click='setState()' data-ng-options='c.State for c in states'>" +
+				template: "<label>State<span class='reqText' data-ng-show='req'>Required</label><select data-ng-model='state' data-ng-click='setState()' data-ng-options='c.State for c in states'>" +
 						"<option value=''>{{current}}</option></select>",
-				link: function(scope, elm, attrs){
+				link: function(scope, elm, attr){
+					scope.req= attr.req;
 					StateFactory.menu({},{}, statescb, stateserr);
 					function statescb(data){
 						scope.states = data;
@@ -30,6 +31,16 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 			}
 	})
 
+.directive('zip', function(){
+			return{
+				restrict: 'A',
+				template: "<label>Zip<span class='reqText'>Required</span></label><input type='text' name='zip' data-ng-model='zip' data-ng-pattern='zipR' required='true' placeholder='ZIP'>" +
+						"<p data-ng-show='form.zip.$invalid && form.zip.$dirty'>You must enter your zip code</p>",
+				link: function(scope){
+					scope.zipR= /^\d{6}$/;
+				}
+			}
+		})
 .directive('year', function(){
 			return{
 				restrict: 'A',
@@ -73,6 +84,17 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 				restrict: 'A',
 				template: "<label>Model<span class='reqText' data-ng-show='req'>Required</span></label><input type='text' data-ng-required='req' name='vmodel' data-ng-model='vmodel' placeholder='Model'>" +
 						"<p data-ng-show='form.vmodel.$invalid && form.vmodel.$dirty'>You must enter the vehicles model</p>",
+				link: function(scope,ele,attr){
+					scope.req= attr.req;
+				}
+			}
+})
+
+.directive('firstname', function(){
+			return{
+				restrict: 'A',
+				template: "<label>First Name<span class='reqText' data-ng-show='req'>Required</span></label><input type='text' data-ng-required='req' name='fn' data-ng-model='fn' placeholder='First Name'>" +
+						"<p data-ng-show='form.fn.$invalid && form.fn.$dirty'>You must enter your first name</p>",
 				link: function(scope,ele,attr){
 					scope.req= attr.req;
 				}

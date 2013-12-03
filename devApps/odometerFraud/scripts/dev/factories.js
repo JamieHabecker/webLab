@@ -8,11 +8,7 @@ angular.module("factories", [])
 })
 
 .factory('complete', function(){
-			if(sessionStorage.complete){
-				return true
-			}else{
-				return
-			}
+			return false;
 		})
 
 .factory('ContactFactory',['$resource', function($resource) {

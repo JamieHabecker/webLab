@@ -1,7 +1,7 @@
 article.g17.confirmation
 	h3.formTitle Please verify the following information
 	div
-		div.yInfo(data-ng-repeat="a in theData")
+		div.yInfo(data-ng-repeat="a in theData", data-ng-show="a.firstname")
 			h3 Your Information:
 			ul
 				li <b>Your Name:</b> {{a.firstname}} {{a.lastname}}
@@ -18,7 +18,7 @@ article.g17.confirmation
 				li(data-ng-show="a.compEmail") <b>Company Email:</b> {{a.compEmail}}
 				li(data-ng-show="a.compPhone") <b>Company Phone:</b> {{a.compPhone}}
 				li.edit <a data-ng-click="edit('StepFour')"> Edit </a>
-		div.vInfo(data-ng-repeat="a in theData")
+		div.vInfo(data-ng-repeat="a in theData", data-ng-show="a.year")
 			h3 Vehicle Information
 			ul
 				li <b>Year:</b> {{a.year}}
