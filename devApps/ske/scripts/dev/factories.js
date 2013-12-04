@@ -1,3 +1,5 @@
+var devCon = "//10.156.147.121/";
+
 angular.module("factories", [])
 
 
@@ -23,7 +25,7 @@ angular.module("factories", [])
 
 
 .factory('knowledgeFactory',['$resource', function($resource) {
-    var baseUrl = "////10.156.147.131/SampleKnowledgeExam/Default.aspx/GetQuestions";
+    var baseUrl = devCon+ "/SampleKnowledgeExam/Default.aspx/GetQuestions";
     return $resource(baseUrl, {}, {
         skeQuestions : {
             method : 'POST',

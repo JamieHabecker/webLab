@@ -160,6 +160,11 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 	$scope.zip = /^\d\d\d\d\d$/;
 	$scope.email= /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 	if(sessionStorage.stepFour){
+		if(sessionStorage.compState){
+			$scope.current = sessionStorage.compState;
+		}else{
+			$scope.current = "Select a State";
+		}
 		var data = sessionStorage.getItem('stepFour');
 		var p = JSON.parse(data);
 		var formFill = {
@@ -167,7 +172,6 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 				$scope.compName= p.compName;
 				$scope.compAddress = p.compAddress;
 				$scope.compCity  = p.compCity;
-				$scope.current = sessionStorage.compState;
 				$scope.compZip = p.compZip;
 				$scope.compEmail = p.compEmail;
 				$scope.compPhone = p.compPhone;
@@ -178,6 +182,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 		$scope.current = "Select a State";
 	}
 	$scope.next= function(){
+		console.log(complete)
 		if($scope.state !== undefined){
 			sessionStorage.compState = $scope.state.State;
 		}

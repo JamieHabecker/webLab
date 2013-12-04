@@ -13,7 +13,7 @@ angular.module("factories", [])
 		})
 
 .factory('ContactFactory',['$resource', function($resource) {
-    var baseUrl = "/apps/ContactUs/Default.aspx/SendFields";
+    var baseUrl = "//10.156.147.131/apps/ContactUs/Default.aspx/SendFields";
     return $resource(baseUrl, {}, {
         contactInfo : {
             method : 'Post',

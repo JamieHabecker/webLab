@@ -1,0 +1,292 @@
+html.no-js{
+  h2{
+    display:none;
+  }
+}
+body.knowledgePortal{
+	div.noscript{
+		padding:2em;
+		width:50%;
+		margin:0 auto;
+		background:#fff;
+		border:2px solid #ACCBE0;
+		border-radius:5px;
+		font-size:1em;
+		line-height: 1.3em;
+	}
+	div.mainContent{
+		padding:0;
+  }
+
+  div.attempts{
+    background:#72E587;
+    text-align:center;
+    padding:0;
+    margin:0 auto;
+    margin-bottom:8px;
+    @include bottomShadowLight;
+    border-radius:5px;
+
+    p{
+      padding:0.5em;
+      border:1px solid #aaaaaa;
+      border-radius:5px;
+      background:none;
+    }
+  }
+  div.h{
+    display:none;
+  }
+  div.s{
+    display:block;
+  }
+  ul.radioList{
+    margin:0;
+    padding:0;
+    li{
+      border-top:1px solid #ccc;
+      background:#f1f1f1;
+      border-left:1px solid #aaaaaa;
+      border-right:1px solid #aaaaaa;
+      border-bottom:1px solid #fff;
+      font-size:1em;
+      color:#333;
+      cursor:pointer;
+      overflow:hidden;
+      &:first-child{
+        border-top:1px solid #aaaaaa;
+        border-radius:5px 5px 0px 0px;
+      }
+      &:last-child{
+        border-bottom:1px solid #aaaaaa;
+        border-radius:0px 0px 5px 5px;
+      }
+      &.q1{
+        border-top:1px solid #aaaaaa;
+        border-radius:5px 5px 0px 0px;
+      }
+			.q1,.q2,.q3,.q4{
+				&:hover{
+				background: #FFFDC4;
+				cursor:pointer;
+				}
+			}
+      label{
+        padding:1em;
+        background:#eee;
+        &:hover{
+          cursor:pointer;
+        }
+        &.selected{
+          background:#72E587 !important;
+          transition: background .1s ease-in-out;
+          -moz-transition: background .1s ease-in-out;
+          -webkit-transition: background .1s ease-in-out;
+        }
+        &.wrong{
+          background:#F97777 !important;
+          transition: background .25s ease-in-out;
+          -moz-transition: background .25s ease-in-out;
+          -webkit-transition: background .25s ease-in-out;
+        }
+        &.removeWrong{
+          background:none;
+          transition: background 1s ease-in-out;
+          -moz-transition: background 1s ease-in-out;
+          -webkit-transition: background 1s ease-in-out;
+        }
+        &.theQ{
+          font-size:1.1em\9;
+          margin-bottom:5px;
+          margin-top:13px;
+          opacity:1 !important;
+          background:none !important;
+        }
+        & > span{
+          padding-top:5px;
+          text-align:center;
+          display:block;
+        }
+      }
+      input{
+        margin-right:5px;
+        span{
+          padding-left:2em;
+        }
+      }
+      a{
+        padding:1em;
+        display:block;
+        font-weight:bold;
+        padding-left:0;
+        color:#444;
+        text-shadow: -1px -1px 1px #eee;
+        text-decoration:none;
+        &:before{
+          background:url("/img/skeIcons_Artboard.png") no-repeat;
+          content: "";
+          display: block;
+          float: left;
+          height: 50px;
+          width: 72px;
+          z-index: 3000;
+          margin-top:-15px;
+        }
+        &.signs:before{
+          background-position:0px 0px;
+        }
+        &.general:before{
+          background-position:0 -52px;
+        }
+
+
+        &.motorcycle:before{
+          background-position:0 -105px;
+        }
+        &.dealerSales:before{
+          background-position:0 -153px;
+        }
+        &.commercial:before{
+          background-position:0 -201px;
+        }
+        &.dealerOperator:before{
+          background-position:0 -153px;
+        }
+        &:after {
+          display: inline-block;
+          content: "";
+          width: 15px;
+          height: 25px;
+          background: transparent url('/img/ui-icons_444444_256x240.png') no-repeat;
+          background-position: -45px -18px;
+          z-index: 9999;
+          float: right;
+          margin-top: -3px;
+        }
+      }
+      &.question{
+        background:none;
+        border:none;
+        margin-bottom:0;
+        padding-bottom:0;
+        label{
+          font-size:1.1rem;
+          font-size:1.1em\9;
+          line-height:1.2rem;
+          padding-top:0;
+          background:none;
+          border:none;
+          padding-bottom:0;
+          cursor:none;
+          opacity:1 !important;
+        }
+      }
+      &.signs{
+        img{
+          max-width:70% !important;
+        }
+      }
+    }
+  }
+ul.menu{
+	li{
+		&:hover{
+			background: #FFFDC4;
+		}
+	}
+}
+ div.complete{
+    padding:1em;
+    padding-top:0.5em;
+    h2{
+      padding-left:0;
+			color:$blueDarker;
+    }
+    div.incorrect{
+      background:#eeeeee;
+      border:1px solid #aaaaaa;
+      padding:1em;
+      padding-top:0;
+      overflow: auto;
+      border-radius:3px;
+      ul{
+        padding:0;
+        margin:0;
+        li{
+          margin-bottom:1.2em;
+					list-style-type: none;
+          a{
+            text-decoration:underline;
+            cursor:pointer;
+            &.orgBtn{
+              width:92% !important;
+            }
+          }
+					&:last-child{
+						text-align:right;
+					}
+        }
+      }
+    }
+  }
+
+}
+
+
+@media screen and(min-width:800px){
+body.knowledgePortal{
+	ul.radioList{
+		li{
+			img{
+				max-width:19% !important;
+			}
+		}
+	}
+	div.complete{
+		div.incorrect{
+			width:70%;
+			margin:0 auto;
+			ul{
+				li{
+					a{
+						&.orgBtn{
+							width:30% !important;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+}
+
+html.touch{
+	nav a:hover{
+		background:#788E9C;
+	}
+}
+
+html.no-touch {
+	body.knowledgePortal{
+		ul.radioList{
+			li.question:hover{
+				background:none;
+			}
+			li.question{
+				label:hover{
+					background:none;
+				}
+			}
+			li:hover{
+				background:#FFFDC4;
+			}
+			li{
+				label:hover{
+					background:#FFFDC4;
+				}
+			}
+		}
+	}
+
+}
+
