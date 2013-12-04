@@ -17,29 +17,25 @@ body.knowledgePortal{
 	div.mainContent{
 		padding:0;
   }
-
-  div.attempts{
-    background:#72E587;
-    text-align:center;
-    padding:0;
-    margin:0 auto;
-    margin-bottom:8px;
-    @include bottomShadowLight;
-    border-radius:5px;
-
-    p{
-      padding:0.5em;
-      border:1px solid #aaaaaa;
-      border-radius:5px;
-      background:none;
-    }
-  }
   div.h{
     display:none;
   }
   div.s{
     display:block;
   }
+	div.attempts{
+		background:#72E587;
+		text-align:center;
+		padding:0;
+		margin:0 auto;
+		padding-bottom:1em;
+		p{
+			padding:0.5em;
+			border-radius:5px;
+			background:none;
+			margin:0;
+		}
+	}
   ul.radioList{
     margin:0;
     padding:0;

@@ -102,7 +102,7 @@ angular.module("KnowledgePortal", ['ngResource','directives','dmvPortalConfig','
         $('div.attempts').css("background","#72E587");
         $scope.one = true;
         sessionStorage.attempts = attempts.length;
-        $rootScope.attempts = "You are allowed " + attempts.length + " wrong answers!";
+        $scope.attempts = "You are allowed " + attempts.length + " wrong answers!";
         $scope.data = data;
         switch(true){
         case type === "S" : $scope.type = "Driver's License: Part 1 - Traffic Signs";
@@ -129,7 +129,6 @@ angular.module("KnowledgePortal", ['ngResource','directives','dmvPortalConfig','
     
     
     function successcb(data){
-			console.log(data)
     $scope.questions = true;
     $scope.one = data.lQuestionansAnswers[0];
     $scope.two = data.lQuestionansAnswers[1];
@@ -141,7 +140,6 @@ angular.module("KnowledgePortal", ['ngResource','directives','dmvPortalConfig','
     $scope.eight = data.lQuestionansAnswers[7];
     $scope.nine = data.lQuestionansAnswers[8];
     $scope.ten = data.lQuestionansAnswers[9];
-    
     $scope.q = function(y, i, z){
         var right;
         var x = "q" + (y + 1);
@@ -160,15 +158,10 @@ angular.module("KnowledgePortal", ['ngResource','directives','dmvPortalConfig','
     setAnimate(x,answer, el, nexEl,right, z);
   };
  }
-    
-    
-    
- function errorcb(data) {
-        $scope.err = data.status
-    }
-    
-    
-    function setAnimate(x,answer, el, nexEl, right, z){
+			function errorcb(data) {
+				$scope.err = data.status
+			}
+	function setAnimate(x,answer, el, nexEl, right, z){
 			console.log(nexEl)
        var r = right + 1;
        var x = "." + x;
@@ -232,13 +225,13 @@ angular.module("KnowledgePortal", ['ngResource','directives','dmvPortalConfig','
        }
        
      if(n === 2){
-                $rootScope.attempts = n + " wrong answers remaining"
+                $scope.attempts = n + " wrong answers remaining"
                 $("div.attempts").css("background" , "yellow")
         }else if(n === 1){
-                $rootScope.attempts = n + " wrong answer remaining";
+                $scope.attempts = n + " wrong answer remaining";
                 $("div.attempts").css("background" , "#F97777")
             }else if(n === 0){
-                $rootScope.attempts = "Sorry, you've failed";
+                $scope.attempts = "Sorry, you've failed";
                 sessionStorage.attempts = -1
                 
             }

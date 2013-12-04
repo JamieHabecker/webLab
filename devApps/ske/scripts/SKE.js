@@ -27328,7 +27328,6 @@ angular.module('ngResource', ['ng']).
     
     
     function successcb(data){
-			console.log(data)
     $scope.questions = true;
     $scope.one = data.lQuestionansAnswers[0];
     $scope.two = data.lQuestionansAnswers[1];
@@ -27340,7 +27339,6 @@ angular.module('ngResource', ['ng']).
     $scope.eight = data.lQuestionansAnswers[7];
     $scope.nine = data.lQuestionansAnswers[8];
     $scope.ten = data.lQuestionansAnswers[9];
-    
     $scope.q = function(y, i, z){
         var right;
         var x = "q" + (y + 1);
@@ -27359,15 +27357,10 @@ angular.module('ngResource', ['ng']).
     setAnimate(x,answer, el, nexEl,right, z);
   };
  }
-    
-    
-    
- function errorcb(data) {
-        $scope.err = data.status
-    }
-    
-    
-    function setAnimate(x,answer, el, nexEl, right, z){
+			function errorcb(data) {
+				$scope.err = data.status
+			}
+	function setAnimate(x,answer, el, nexEl, right, z){
 			console.log(nexEl)
        var r = right + 1;
        var x = "." + x;
@@ -27697,7 +27690,9 @@ angular.module('ngResource', ['ng']).
         return directiveDefinitionObject;
     });
 
-}]); ;angular.module("factories", [])
+}]); ;var devCon = "//10.156.147.121/";
+
+angular.module("factories", [])
 
 
 .factory('questionsMissed', function(){
@@ -27722,7 +27717,7 @@ angular.module('ngResource', ['ng']).
 
 
 .factory('knowledgeFactory',['$resource', function($resource) {
-    var baseUrl = "////10.156.147.131/SampleKnowledgeExam/Default.aspx/GetQuestions";
+    var baseUrl = devCon+ "/SampleKnowledgeExam/Default.aspx/GetQuestions";
     return $resource(baseUrl, {}, {
         skeQuestions : {
             method : 'POST',

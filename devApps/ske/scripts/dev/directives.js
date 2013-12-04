@@ -1,13 +1,10 @@
 angular.module("directives", [])
 
 
-.directive('loginDetails', function () {
-      return {
-         restrict: "A",
-         replace: true,
-         scope:{
-             number : "@number"
-         },
-         templateUrl:"views/directiveTemplates/loginDetails.html" 
-        }
-     })
+.directive('attempts', function () {
+			return {
+				restrict: "A",
+				replace:true,
+				template:"<div><p style='font-weight:bold;font-size:1em;'>{{attemps}}</p></div>"
+			}
+})
