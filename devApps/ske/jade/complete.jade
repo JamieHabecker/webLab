@@ -1,0 +1,24 @@
+article.g17
+	div
+		h3.formTitle {{type}}
+		.complete
+			.incorrect
+				h2(data-ng-show="!correct") Sorry - you answered incorrectly 3 times!
+				h2(data-ng-show="correct") You got {{total}} answers correct out of 10.
+				ul
+					li: a(data-ng-click="mainMenu()") Take a Different Test
+					li(style='margin-bottom:5px;') <b>Learn More</b>
+					li(data-ng-show="M")
+						a(data-ng-click='motorcycle()') Virginia Motorcycle Manual
+					li(data-ng-show="C")
+						a(data-ng-click='commercial()') Virginia Commercial Driver’s Manual
+					li(data-ng-show="D")
+						a(data-ng-click='dealerM()') Dealer Manual
+					li(data-ng-show="D")
+						a(data-ng-click='dealerG()') Dealer/Salesperson Study Guide
+					li(data-ng-hide="D || M || C", data-ng-show="S")
+						a(data-ng-click='driversManual()') Virginia Driver’s Manual
+					li(data-ng-show="S")
+						a(data-ng-click='manualS()') El Manual de Conductor de Virginia
+					li
+						a(class="orgBtn", data-ng-click="tryAgain()") Try Again

@@ -1,0 +1,131 @@
+
+<div data-ng-show="number" class="attempts"></div>
+<article class="g17">
+  <div>
+    <h3 data-ng-show="questions" class="formTitle">{{type}}</h3>
+    <h3 data-ng-show="!nine.Question" class="formTitle">Randomizing Sample Questions...</h3>
+    <form novalidate="novalidate" name="form">
+      <div class="question1">
+        <ul class="radioList">
+          <li class="question signs">
+            <label class="theQ">{{one.Question}}</label><img src="/img/{{one.Picture}}"/>
+          </li>
+          <li data-ng-repeat="an in one.AnswerOptions" class="q{{$index + 1}}">
+            <label class="q{{$index+1}}">
+              <input type="radio" name="one" data-ng-model="answer0" data-ng-Click="q($index,one.AnswerOptions, 1)" data-ng-value="{{Answer + ($index +1)}}"/>{{an.Answer}} <span>
+            </label>
+          </li>
+        </ul>
+      </div>
+      <div data-ng-show="questTwo" class="question2">
+        <ul class="radioList">
+          <li class="question signs">
+            <label class="theQ">{{two.Question}}</label><img src="/img/{{two.Picture}}"/>
+          </li>
+          <li data-ng-repeat="an in two.AnswerOptions" class="q{{$index + 1}}">
+            <label class="q{{$index+1}}">
+              <input type="radio" name="q2" data-ng-model="answer1" data-ng-Click="q($index,two.AnswerOptions, 2)" data-ng-value="{{Answer + ($index +1)}}"/>{{an.Answer}} <span>
+            </label>
+          </li>
+        </ul>
+      </div>
+      <div data-ng-show="questThree" class="question3">
+        <ul class="radioList">
+          <li class="question signs">
+            <label class="theQ">{{three.Question}}</label><img src="/img/{{three.Picture}}"/>
+          </li>
+          <li data-ng-repeat="an in three.AnswerOptions" class="q{{$index + 1}}">
+            <label class="q{{$index+1}}">
+              <input type="radio" name="q3" data-ng-model="q3" data-ng-Click="q($index,three.AnswerOptions, 3)" data-ng-value="{{Answer + ($index +1)}}"/>{{an.Answer}} <span>
+            </label>
+          </li>
+        </ul>
+      </div>
+      <div data-ng-show="questFour" class="question4">
+        <ul class="radioList">
+          <li class="question signs">
+            <label class="theQ">{{four.Question}}</label><img src="/img/{{four.Picture}}"/>
+          </li>
+          <li data-ng-repeat="an in four.AnswerOptions" class="q{{$index + 1}}">
+            <label class="q{{$index+1}}">
+              <input type="radio" name="q4" data-ng-model="q4" data-ng-Click="q($index,four.AnswerOptions, 4)" data-ng-value="{{Answer + ($index +1)}}"/>{{an.Answer}} <span>
+            </label>
+          </li>
+        </ul>
+      </div>
+      <div data-ng-show="questFive" class="question5">
+        <ul class="radioList">
+          <li class="question signs">
+            <label class="theQ">{{five.Question}}</label><img src="/img/{{five.Picture}}"/>
+          </li>
+          <li data-ng-repeat="an in four.AnswerOptions" class="q{{$index + 1}}">
+            <label class="q{{$index+1}}">
+              <input type="radio" name="q5" data-ng-model="q5" data-ng-Click="q($index,five.AnswerOptions, 5)" data-ng-value="{{Answer + ($index +1)}}"/>{{an.Answer}} <span>
+            </label>
+          </li>
+        </ul>
+      </div>
+      <div data-ng-show="questSix" class="question6">
+        <ul class="radioList">
+          <li class="question signs">
+            <label class="theQ">{{six.Question}}</label><img src="/img/{{six.Picture}}"/>
+          </li>
+          <li data-ng-repeat="an in six.AnswerOptions" class="q{{$index + 1}}">
+            <label class="q{{$index+1}}">
+              <input type="radio" name="q6" data-ng-model="q6" data-ng-Click="q($index,six.AnswerOptions, 6)" data-ng-value="{{Answer + ($index +1)}}"/>{{an.Answer}} <span>
+            </label>
+          </li>
+        </ul>
+      </div>
+      <div data-ng-show="questSeven" class="question7">
+        <ul class="radioList">
+          <li class="question signs">
+            <label class="theQ">{{seven.Question}}</label><img src="/img/{{seven.Picture}}"/>
+          </li>
+          <li data-ng-repeat="an in seven.AnswerOptions" class="q{{$index + 1}}">
+            <label class="q{{$index+1}}">
+              <input type="radio" name="q7" data-ng-model="q7" data-ng-Click="q($index,seven.AnswerOptions, 7)" data-ng-value="{{Answer + ($index +1)}}"/>{{an.Answer}} <span>
+            </label>
+          </li>
+        </ul>
+      </div>
+      <div data-ng-show="questEight" class="question8">
+        <ul class="radioList">
+          <li class="question signs">
+            <label class="theQ">{{eight.Question}}</label><img src="/img/{{eight.Picture}}"/>
+          </li>
+          <li data-ng-repeat="an in four.AnswerOptions" class="q{{$index + 1}}">
+            <label class="q{{$index+1}}">
+              <input type="radio" name="q8" data-ng-model="q8" data-ng-Click="q($index,eight.AnswerOptions, 8)" data-ng-value="{{Answer + ($index +1)}}"/>{{an.Answer}} <span>
+            </label>
+          </li>
+        </ul>
+      </div>
+      <div data-ng-show="questNine" class="question9">
+        <ul class="radioList">
+          <li class="question signs">
+            <label class="theQ">{{nine.Question}}</label><img src="/img/{{nine.Picture}}"/>
+          </li>
+          <li data-ng-repeat="an in nine.AnswerOptions" class="q{{$index + 1}}">
+            <label class="q{{$index+1}}">
+              <input type="radio" name="q9" data-ng-model="q9" data-ng-Click="q($index,nine.AnswerOptions, 9)" data-ng-value="{{Answer + ($index +1)}}"/>{{an.Answer}} <span>
+            </label>
+          </li>
+        </ul>
+      </div>
+      <div data-ng-show="questTen" class="question10">
+        <ul class="radioList">
+          <li class="question signs">
+            <label class="theQ">{{ten.Question}}</label><img src="/img/{{ten.Picture}}"/>
+          </li>
+          <li data-ng-repeat="an in four.AnswerOptions" class="q{{$index + 1}}">
+            <label class="q{{$index+1}}">
+              <input type="radio" name="q10" data-ng-model="q10" data-ng-Click="q($index,ten.AnswerOptions, 10)" data-ng-value="{{Answer + ($index +1)}}"/>{{an.Answer}} <span>
+            </label>
+          </li>
+        </ul>
+      </div>
+      <portalcancel></portalcancel>
+    </form>
+  </div>
+</article>

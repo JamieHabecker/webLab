@@ -1,0 +1,115 @@
+<div class="mainContent">
+	<div class="content singleContainer" style="overflow: hidden;padding-bottom:1em;">
+		<h3 ng-show="questions">{{type}}</h3>
+		<h3 ng-show="!nine.Question">Randomizing Sample Questions...</h3>
+		<span ng-show="!nine.Question"></span>
+		<form novalidate name="form" ng-show="nine.Picture">
+			
+			<div class="question1">
+			<ul class="radioList">
+				<li class="question signs"><label class="theQ">{{one.Question}}</label><img src="/img/{{one.Picture}}"></li>
+				<li ng-repeat="an in one.AnswerOptions" class="q{{$index + 1}}">
+					<label class="q{{$index + 1}}">
+					<input type="radio" name="one" ng-model="answer0" ng-Click="q($index,one.AnswerOptions, 1)"  ng-value="{{Answer + ($index +1)}}">{{an.Answer}}<span></span></input>
+					</label>
+				</li>	
+			</ul>
+			</div>
+
+			<div class="question2" ng-show="questTwo">
+				<ul class="radioList">
+					<li class="question signs"><label class="theQ">{{two.Question}}</label><img src="/img/{{two.Picture}}"></li>
+					<li ng-repeat="an in two.AnswerOptions" class="q{{$index + 1}}">
+					<label class="q{{$index + 1}}">
+					<input  type="radio" name="q2" ng-model="answer1" ng-Click="q($index,two.AnswerOptions, 2)" name="two"  ng-value="{{Answer + ($index +1)}}">{{an.Answer}}<span></span></input>
+					</label>
+				</li>	
+			</ul>
+			</div>
+			<div class="question3" ng-show="questThree">
+				<ul class="radioList">
+					<li class="question signs"><label class="theQ">{{three.Question}}</label><img src= "/img/{{three.Picture}}"></li>
+					<li ng-repeat="an in three.AnswerOptions" class="q{{$index + 1}}">
+					<label class="q{{$index + 1}}">
+					<input  type="radio" name="q3" ng-model="q3" ng-Click="q($index,three.AnswerOptions, 3)" name="three"  ng-value="{{Answer + ($index +1)}}">{{an.Answer}}<span></span></input>
+					</label>
+				</li>	
+			</ul>
+			</div>
+			<div class="question4" ng-show="questFour">
+				<ul class="radioList">
+					<li class="question signs"><label class="theQ">{{four.Question}}</label><img src= "/img/{{four.Picture}}"></li>
+					<li ng-repeat="an in four.AnswerOptions" class="q{{$index + 1}}">
+					<label class="q{{$index + 1}}">
+					<input  type="radio" name="q4" ng-model="q4" ng-Click="q($index,four.AnswerOptions, 4)" name="four"  ng-value="{{Answer + ($index +1)}}">{{an.Answer}}<span></span></input>
+					</label>
+				</li>	
+			</ul>
+			</div>
+			<div class="question5" ng-show="questFive">
+				<ul class="radioList">
+					<li class="question signs"><label class="theQ">{{five.Question}}</label><img src="/img/{{five.Picture}}"></li>
+					<li ng-repeat="an in five.AnswerOptions" class="q{{$index + 1}}">
+					<label class="q{{$index + 1}}">
+					<input  type="radio" name="q5" ng-model="q5" ng-Click="q($index,five.AnswerOptions, 5)" name="five"  ng-value="{{Answer + ($index +1)}}">{{an.Answer}}<span></span></input>
+					</label>
+				</li>	
+			</ul>
+			</div>
+			<div class="question6" ng-show="questSix">
+				<ul class="radioList">
+					<li class="question signs"><label class="theQ">{{six.Question}}</label><img src="/img/{{six.Picture}}"></li>
+					<li ng-repeat="an in six.AnswerOptions" class="q{{$index + 1}}">
+					<label class="q{{$index + 1}}">
+					<input  type="radio" name="q6" ng-model="q6" ng-Click="q($index,six.AnswerOptions, 6)" name="six"  ng-value="{{Answer + ($index +1)}}">{{an.Answer}}<span></span></input>
+					</label>
+				</li>	
+			</ul>
+			</div>
+			<div class="question7" ng-show="questSeven">
+				<ul class="radioList">
+					<li class="question signs"><label class="theQ">{{seven.Question}}</label><img src="/img/{{seven.Picture}}"></li>
+					<li ng-repeat="an in seven.AnswerOptions" class="q{{$index + 1}}">
+					<label class="q{{$index + 1}}">
+					<input  type="radio" name="q7" ng-model="q7" ng-Click="q($index,seven.AnswerOptions, 7)" name="seven"  ng-value="{{Answer + ($index +1)}}">{{an.Answer}}<span></span></input>
+					</label>
+				</li>	
+			</ul>
+			</div>
+			<div class="question8" ng-show="questEight">
+				<ul class="radioList">
+					<li class="question signs"><label class="theQ">{{eight.Question}}</label><img src="/img/{{eight.Picture}}"></li>
+					<li ng-repeat="an in eight.AnswerOptions" class="q{{$index + 1}}">
+					<label class="q{{$index + 1}}">
+					<input  type="radio" name="q8" ng-model="q8" ng-Click="q($index,eight.AnswerOptions, 8)" name="eight"  ng-value="{{Answer + ($index +1)}}">{{an.Answer}}<span></span></input>
+					</label>
+				</li>	
+			</ul>
+			</div>
+			<div class="question9" ng-show="questNine">
+				<ul class="radioList">
+					<li class="question signs"><label class="theQ">{{nine.Question}}</label><img src="/img/{{nine.Picture}}"></li>
+					<li ng-repeat="an in nine.AnswerOptions" class="q{{$index + 1}}">
+					<label class="q{{$index + 1}}">
+					<input  type="radio" name="q9" ng-model="q9" ng-Click="q($index,nine.AnswerOptions, 9)" name="nine"  ng-value="{{Answer + ($index +1)}}">{{an.Answer}}<span></span></input>
+					</label>
+				</li>	
+			</ul>
+			</div>
+			<div class="question10" ng-show="questTen">
+				<ul class="radioList">
+					<li class="question signs"><label class="signs">{{ten.Question}}</label><img src="/img/{{ten.Picture}}"></li>
+					<li ng-repeat="an in ten.AnswerOptions" class="q{{$index + 1}}">
+					<label class="q{{$index + 1}}">
+					<input  type="radio" name="q10" ng-model="q10" ng-Click="q($index,ten.AnswerOptions, 10)" name="ten"  ng-value="{{Answer + ($index +1)}}">{{an.Answer}}<span style="margin-left:1em;"></span></input>
+					</label>
+				</li>	
+			</ul>
+			</div>
+		</form>
+		<h2 class="loaderText err" style="background:none;" ng-show="err">{{err}}</h2>
+		<portalcancel ng-show="type"></portalcancel>
+	</div>
+
+</div>
+
