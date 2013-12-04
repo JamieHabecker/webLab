@@ -19,13 +19,9 @@ header {
 h1 {
     text-align: center;
     color: #E9F2FB;
-    text-shadow: -4px 4px 0px #000000;
+    text-shadow: 4px 3px 6px #000000;
     margin: 0;
     padding: 0;
-}
-
-p {
-  padding-left: 60px;
 }
 
 .hdrlinks {
@@ -50,13 +46,10 @@ a {
   color: #E9F2FB;
 }
 
-footer {
+.footer {
   text-align: center;
-  background: #333333;
+  background: #333;
   color: #E9F2FB;
-  word-spacing: 40px;
-  height: 40px;
   padding: 10px;
-
 }
 }
