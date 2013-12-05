@@ -116,7 +116,7 @@ jade: {
         copy: {            
             release: {
                 files: {
-                    '../../public/ske/': ['scripts/ske.min.js','scripts/shims/*','views/*','index.html', 'img/*']
+                    '../../public/ske/': ['scripts/ske.min.js','scripts/shims/*','views/*.html','index.html', 'img/*']
                 }
             }
         },
