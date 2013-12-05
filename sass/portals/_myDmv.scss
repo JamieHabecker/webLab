@@ -10,13 +10,14 @@
   background: #ccc;
 }
 
-header {
-  background: #800000;
+.header {
+  font-size: 1.2em;
+	background: #800000;
   height: 140px;
   padding-top:40px;
 }
 
-h1 {
+.header h1 {
     text-align: center;
     color: #E9F2FB;
     text-shadow: 4px 3px 6px #000000;
@@ -24,24 +25,20 @@ h1 {
     padding: 0;
 }
 
-.hdrlinks {
-  text-align: right;
+.headernav ul {
+	list-style-type: none;
+	text-align: right;
   padding-top: 50px;
   padding-right: 20px;
   padding-bottom: 0;
 }
-
-ul {
-  list-style-type: none;
-}
-
-li {
+.headernav li {
   display: inline;
   padding-right: 25px;
   padding-bottom: 0;
 }
 
-a {
+.headernav a {
   text-decoration: none;
   color: #E9F2FB;
 }
@@ -50,6 +47,6 @@ a {
   text-align: center;
   background: #333;
   color: #E9F2FB;
-  padding: 10px;
+	padding: .5px;
 }
 }
