@@ -27301,7 +27301,7 @@ angular.module('ngResource', ['ng']).
         $('div.attempts').css("background","#72E587");
         $scope.one = true;
         sessionStorage.attempts = attempts.length;
-        $rootScope.attempts = "You are allowed " + attempts.length + " wrong answers!";
+        $scope.attempts = "You are allowed " + attempts.length + " wrong answers!";
         $scope.data = data;
         switch(true){
         case type === "S" : $scope.type = "Driver's License: Part 1 - Traffic Signs";
@@ -27327,74 +27327,73 @@ angular.module('ngResource', ['ng']).
     knowledgeFactory.skeQuestions({}, $scope.data, successcb, errorcb);
     
     
-    function successcb(data){
-    $scope.questions = true;
-    $scope.one = data.lQuestionansAnswers[0];
-    $scope.two = data.lQuestionansAnswers[1];
-    $scope.three = data.lQuestionansAnswers[2];
-    $scope.four = data.lQuestionansAnswers[3];
-    $scope.five = data.lQuestionansAnswers[4];
-    $scope.six = data.lQuestionansAnswers[5];
-    $scope.seven = data.lQuestionansAnswers[6];
-    $scope.eight = data.lQuestionansAnswers[7];
-    $scope.nine = data.lQuestionansAnswers[8];
-    $scope.ten = data.lQuestionansAnswers[9];
-    $scope.q = function(y, i, z){
-        var right;
-        var x = "q" + (y + 1);
-        var el = $("div.question" + z);
-        var nexEl = $("div.question" + (z + 1));
-        if(z === 10){
-            nexEl = "summary";
-        }
-        var c = i;
-        var answer =  c[y].CorrectAnswer;
-        angular.forEach(c, function(value, key){
-        if(value.CorrectAnswer === true){
-            right = key;
-        }
-    });
-    setAnimate(x,answer, el, nexEl,right, z);
-  };
- }
+	function successcb(data){
+		$scope.questions = true;
+		$scope.one = data.lQuestionansAnswers[0];
+		$scope.two = data.lQuestionansAnswers[1];
+		$scope.three = data.lQuestionansAnswers[2];
+		$scope.four = data.lQuestionansAnswers[3];
+		$scope.five = data.lQuestionansAnswers[4];
+		$scope.six = data.lQuestionansAnswers[5];
+		$scope.seven = data.lQuestionansAnswers[6];
+		$scope.eight = data.lQuestionansAnswers[7];
+		$scope.nine = data.lQuestionansAnswers[8];
+		$scope.ten = data.lQuestionansAnswers[9];
+		$scope.q = function(y, i, z){
+			var right;
+			var x = "q" + (y + 1);
+			var el = $("div.question" + z);
+			var nexEl = $("div.question" + (z + 1));
+			if(z === 10){
+				nexEl = "summary";
+			}
+			var c = i;
+			var answer =  c[y].CorrectAnswer;
+			angular.forEach(c, function(value, key){
+				if(value.CorrectAnswer === true){
+					right = key;
+				}
+			});
+			setAnimate(x,answer, el, nexEl,right, z);
+		};
+	}
 			function errorcb(data) {
 				$scope.err = data.status
 			}
 	function setAnimate(x,answer, el, nexEl, right, z){
-			console.log(nexEl)
-       var r = right + 1;
-       var x = "." + x;
-       var a = $(".q" + r);
-       var totalWrong;
-       var n;
-       var scroll = function() {
-           var e = $("html,body");
-           id = $("body.knowledgePortal");
-           e.animate({scrollTop: $(id).offset().top}, "fast");
-           return false;
-    };
-       if(answer === true){
-           if(sessionStorage.attempts == -1){
-                $location.path('/Complete')
-            }
-           $(x).addClass("selected");
-           $("label:not(.selected) > input").prop('disabled', true);
-           $('label' + x + ' > span').text("Correct Answer")
-           if(nexEl === "summary"){
-               $location.path("/Complete")
-           }else{
-               setTimeout(function(){
-               el.fadeOut(500, function(){
-                   nexEl.fadeIn(500);
-                   $('label').removeClass("selected").css({"opacity" : "1"});
-                   $("input").prop('disabled',false);
-                    $('label > span').text("")
-                   }); 
-                   $('li,label').removeClass("wrong");
-               }, 800);
-             }
-      }else{
-            numberWrong.push(1);
+		var r = right + 1;
+		var x = "." + x;
+		var a = $(".q" + r);
+		var totalWrong;
+		var n;
+		var scroll = function() {
+			var e = $("html,body");
+			id = $("body.knowledgePortal");
+			e.animate({scrollTop: $(id).offset().top}, "fast");
+			return false;
+		};
+		if(answer === true){
+			if(sessionStorage.attempts == -1){
+				$location.path('/Complete')
+			}
+			$(x).addClass("selected");
+			$("label:not(.selected) > input").prop('disabled', true);
+			$('label' + x + ' > span').text("Correct Answer")
+			if(nexEl === "summary"){
+				$location.path("/Complete")
+			}else{
+				setTimeout(function(){
+					el.fadeOut(300, function(){
+						nexEl.fadeIn(300);
+						$('label').removeClass("selected").css({"opacity" : "1"});
+						$("input").prop('disabled',false);
+						$('label > span').text("")
+					});
+					$('li,label').removeClass("wrong");
+				},800);
+			}
+		}else{
+			numberWrong.push(1);
             totalWrong = numberWrong.length;
             attempts.pop();
             n = attempts.length;
@@ -27424,13 +27423,13 @@ angular.module('ngResource', ['ng']).
        }
        
      if(n === 2){
-                $rootScope.attempts = n + " wrong answers remaining"
+                $scope.attempts = n + " wrong answers remaining"
                 $("div.attempts").css("background" , "yellow")
         }else if(n === 1){
-                $rootScope.attempts = n + " wrong answer remaining";
+                $scope.attempts = n + " wrong answer remaining";
                 $("div.attempts").css("background" , "#F97777")
             }else if(n === 0){
-                $rootScope.attempts = "Sorry, you've failed";
+                $scope.attempts = "Sorry, you've failed";
                 sessionStorage.attempts = -1
                 
             }
@@ -27577,16 +27576,13 @@ angular.module('ngResource', ['ng']).
 ;angular.module("directives", [])
 
 
-.directive('loginDetails', function () {
-      return {
-         restrict: "A",
-         replace: true,
-         scope:{
-             number : "@number"
-         },
-         templateUrl:"views/directiveTemplates/loginDetails.html" 
-        }
-     })
+.directive('attempts', function () {
+			return {
+				restrict: "A",
+				replace:true,
+				template:"<div><p style='font-weight:bold;font-size:1em;'>{{attemps}}</p></div>"
+			}
+})
 ;angular.module("dmvPortalConfig", [])
 
 .config(['$provide','$httpProvider','$compileProvider', function($provide, $httpProvider, $compileProvider) {

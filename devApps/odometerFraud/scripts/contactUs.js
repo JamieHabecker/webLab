@@ -27247,17 +27247,13 @@ angular.module('ngResource', ['ng']).
 
 }])
 
-.controller('DisclaimerController', ['$scope','$location', function($scope, $location){
+.controller('DisclaimerController', ['$scope','$location','complete', function($scope, $location,complete){
 	$scope.next = function(){
 		$location.path('/StepOne')
 	}
 }])
 
-.controller('StepOneController', ['$scope','$location', function($scope, $location){
-
-			//var limit = 1024 * 1024 * 5; // 5 MB
-			//var remSpace = limit - unescape(encodeURIComponent(JSON.stringify(sessionStorage))).length;
-			//console.log(remSpace)
+.controller('StepOneController', ['$scope','$location','complete', function($scope, $location,complete){
 	if(sessionStorage.type){
 		var a = sessionStorage.type;
 			if(a === "1"){
@@ -27285,6 +27281,7 @@ angular.module('ngResource', ['ng']).
 			sessionStorage.an = false;	
 			$location.path("/StepTwo")
 		}else{
+			sessionStorage.removeItem("an");
 			$location.path("/StepFour")
 		}
 		
@@ -27292,13 +27289,12 @@ angular.module('ngResource', ['ng']).
 }])
 
 .controller('StepTwoController', ['$scope','$location','$timeout','complete', function($scope, $location, $timeout, complete){
-	var a;
 	 if(sessionStorage.stepTwo){
 	 	var data = sessionStorage.getItem('stepTwo');
 	 	var p = JSON.parse(data);
 	 	var formFill = {
 	 		fillIt : function() {
-	 			$scope.firstname= p.firstname;
+	 			$scope.fn= p.firstname;
 	 			$scope.lastname  = p.lastname;
 	 			$scope.address  = p.address;
 	 			$scope.city  = p.city;
@@ -27307,13 +27303,16 @@ angular.module('ngResource', ['ng']).
 	 			}
 	 		};
 	 	$timeout(formFill.fillIt, 100);
-   }
-	$scope.next= function(x){
+   }else{
+		 $scope.current="Select a State";
+	 }
+	$scope.next= function(){
 		if($scope.state !== undefined){
-			sessionStorage.state = $scope.state.State;
+			sessionStorage.state = $scope.state.code;
+		}else{
 		}
 		var stepTwo = {
-			firstname : $scope.firstname,
+			firstname : $scope.fn,
 			lastname : $scope.lastname,
 			address : $scope.address,
 			city: $scope.city,
@@ -27360,6 +27359,11 @@ angular.module('ngResource', ['ng']).
 	$scope.zip = /^\d\d\d\d\d$/;
 	$scope.email= /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 	if(sessionStorage.stepFour){
+		if(sessionStorage.compState){
+			$scope.current = sessionStorage.compState;
+		}else{
+			$scope.current = "Select a State";
+		}
 		var data = sessionStorage.getItem('stepFour');
 		var p = JSON.parse(data);
 		var formFill = {
@@ -27367,17 +27371,19 @@ angular.module('ngResource', ['ng']).
 				$scope.compName= p.compName;
 				$scope.compAddress = p.compAddress;
 				$scope.compCity  = p.compCity;
-				$scope.current = sessionStorage.compState;
 				$scope.compZip = p.compZip;
 				$scope.compEmail = p.compEmail;
 				$scope.compPhone = p.compPhone;
 			}
 			};
 		$timeout(formFill.fillIt, 100);
+	}else{
+		$scope.current = "Select a State";
 	}
 	$scope.next= function(){
+		console.log(complete)
 		if($scope.state !== undefined){
-		sessionStorage.compState = $scope.state.State;
+			sessionStorage.compState = $scope.state.State;
 		}
 		var stepFour = {
 			compName : $scope.compName,
@@ -27392,6 +27398,8 @@ angular.module('ngResource', ['ng']).
 			$location.path("/Verify")
 		}else if(sessionStorage.an){
 			$location.path("/StepFive")
+		}else if(sessionStorage.an && complete){
+			$location.path("/Verify")
 		}else{
 		$location.path("/StepSix")
 		}
@@ -27414,9 +27422,6 @@ angular.module('ngResource', ['ng']).
 					}
 				};
 				$timeout(formFill.fillIt, 100);
-				if(complete){
-					$scope.rt = true;
-				}
 	}
 	$scope.next= function(){
 		console.log($scope.vsc)
@@ -27464,54 +27469,91 @@ angular.module('ngResource', ['ng']).
 .controller('VerifyController', ['$scope','$location', function($scope,$location){
 			var state = sessionStorage.state;
 			var compState = sessionStorage.compState;
-			sessionStorage.complete = true;
-			two = sessionStorage.getItem('stepTwo');
-			three = sessionStorage.getItem('stepThree');
-			four = sessionStorage.getItem('stepFour');
-			five = sessionStorage.getItem('stepFive');
-			six = sessionStorage.getItem('stepSix');
-			cdTwo = JSON.parse(two);
-			cdThree = JSON.parse(three);
-			cdFour = JSON.parse(four);
-			cdFive = JSON.parse(five);
-			cdSix = JSON.parse(six)
+			var two,three,four,five,six,cdTwo,cdThree,cdFour,cdFive,cdSix;
+			if(sessionStorage.stepSix){
+				four = sessionStorage.getItem('stepFour');
+				six = sessionStorage.getItem('stepSix');
+				cdFour = JSON.parse(four);
+				cdSix = JSON.parse(six);
+				if(sessionStorage.an){
+					two = sessionStorage.getItem('stepTwo');
+					three = sessionStorage.getItem('stepThree');
+					five = sessionStorage.getItem('stepFive');
+					cdTwo = JSON.parse(two);
+					cdThree = JSON.parse(three);
+					cdFive = JSON.parse(five);
+					data = {
+						pc: "true",
+						firstname  : cdTwo.firstname,
+						lastname  : cdTwo.lastname,
+						address  : cdTwo.address,
+						city : cdTwo.city,
+						zip : cdTwo.zip,
+						state: state,
+						email : cdThree.email,
+						phone : cdThree.phone,
+						conPref : cdThree.conPref,
+						compName : cdFour.compName,
+						compAddress: cdFour.compAddress,
+						compCity: cdFour.compCity,
+						compState: compState,
+						compZip: cdFour.compZip,
+						compEmail: cdFour.compEmail,
+						compPhone: cdFour.compPhone,
+						year: cdFive.year,
+						make: cdFive.make,
+						model: cdFive.model,
+						vin: cdFive.vin,
+						plate: cdFive.plate,
+						prmColor: cdFive.prmColor,
+						secColor: cdFive.secColor,
+						details: cdSix.details
+					};
+					$scope.theData = [data];
+					console.log($scope.theData)
+				}else{
+					data = {
+						pc: "false",
+						compName : cdFour.compName,
+						compAddress: cdFour.compAddress,
+						compCity: cdFour.compCity,
+						compState: compState,
+						compZip: cdFour.compZip,
+						compEmail: cdFour.compEmail,
+						compPhone: cdFour.compPhone,
+						details: cdSix.details
+					};
+					$scope.theData = [data];
+				}
+			}else{
+				sessionStorage.complete = false;
+				$location.path('/')
+			}
 			$scope.edit = function(x){
-				console.log(x)
+				sessionStorage.complete = true;
 				$location.path('/' + x)
 			}
-			data = {
-				firstname  : cdTwo.firstname,
-				lastname  : cdTwo.lastname,
-				address  : cdTwo.address,
-				city : cdTwo.city,
-				zip : cdTwo.zip,
-				state: state,
-				email : cdThree.email,
-				phone : cdThree.phone,
-				conPref : cdThree.conPref,
-				compName : cdFour.compName,
-				compAddress: cdFour.compAddress,
-				compCity: cdFour.compCity,
-				compState: compState,
-				compZip: cdFour.compZip,
-				compEmail: cdFour.compEmail,
-				compPhone: cdFour.compPhone,
-				year: cdFive.year,
-				make: cdFive.make,
-				model: cdFive.model,
-				vin: cdFive.vin,
-				plate: cdFive.plate,
-				prmColor: cdFive.prmColor,
-				secColor: cdFive.secColor,
-				details: cdSix.details
-			};
-			$scope.theData = [data];
 			$scope.next= function(){
+				var DTO ={
+					"oOdometerFraudFields":data
+				};
+					sessionStorage.setItem('data', JSON.stringify(data));
+					ContactFactory.contactInfo({}, DTO, successcb, errorcb);
+			}
+			function successcb(data){
 				$location.path('/Complete')
+			}
+			function errorcb(data){
+				$scope.err = data.status
 			}
 }])
 
-
+.controller('CompleteController', ['$scope','complete', function($scope, complete){
+			sessionStorage.clear();
+			$scope.next = function(){
+				window.location.replace("/");
+			}
+}])
 
 
 
@@ -27745,8 +27787,10 @@ angular.module('ngResource', ['ng']).
             }
         }
         })
-        
-     ;var base = "views/directiveTemplates/";
+
+//var limit = 1024 * 1024 * 5; // 5 MB
+//var remSpace = limit - unescape(encodeURIComponent(JSON.stringify(sessionStorage))).length;
+//console.log(remSpace);var base = "views/directiveTemplates/";
 angular.module("directives", [])
 
 
@@ -27939,23 +27983,20 @@ angular.module("directives", [])
 
 }]); ;angular.module("factories", [])
 
-
-
-
 .factory('message', function() {
     return []
 })
 
 .factory('complete', function(){
 			if(sessionStorage.complete){
-				return true
+				return true;
 			}else{
-				return
+				return false;
 			}
 		})
 
 .factory('ContactFactory',['$resource', function($resource) {
-    var baseUrl = "/apps/ContactUs/Default.aspx/SendFields";
+    var baseUrl = "//10.156.147.131/apps/odometerfraud/Default.aspx/SendFields";
     return $resource(baseUrl, {}, {
         contactInfo : {
             method : 'Post',

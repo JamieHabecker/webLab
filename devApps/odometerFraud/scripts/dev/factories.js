@@ -5,7 +5,7 @@ angular.module("factories", [])
 })
 
 .factory('complete', function(){
-			if(sessionStorage.complete){
+			if(sessionStorage.complete == true){
 				return true;
 			}else{
 				return false;
@@ -13,7 +13,7 @@ angular.module("factories", [])
 		})
 
 .factory('ContactFactory',['$resource', function($resource) {
-    var baseUrl = "//10.156.147.131/apps/ContactUs/Default.aspx/SendFields";
+    var baseUrl = "//10.156.147.131/odometerfraud/Default.aspx/SendFields";
     return $resource(baseUrl, {}, {
         contactInfo : {
             method : 'Post',
