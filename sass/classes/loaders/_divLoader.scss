@@ -1,0 +1,11 @@
+span.loader{
+	float:none;
+	display:block;
+	width:20%;
+	margin:0 auto;
+	height:3em;
+	background: url('/img/spin.gif') no-repeat top;
+	margin-top:2em;
+	text-align:center;
+	color:$blueDarker;
+}

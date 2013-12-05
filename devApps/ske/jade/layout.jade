@@ -21,10 +21,10 @@ html.no-js(lang='en')
 				You are using an **outdated browser**. 
 				Please [upgrade your browser](https://browsehappy.com) or
 				[activate Google Chrome](http://www.google.com/chromeframe/?redirect=true) to improve your experience.
-		
-		ul.vaNav(data-ng-include="'http://localhost/globals/includes/vaNav.html'")
+
+		div(vanav)
 		section.site
-			header.dmvHeader.g16(data-ng-include="'http://localhost/globals/includes/dmvHeaderPlain.html'")
+			header(plainheader)
 			block content
 			
 		block scripts

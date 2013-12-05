@@ -19,6 +19,27 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 			};
 }])
 
+.directive('vanav', function() {
+			return {
+				restrict: 'A',
+				replace: true,
+				template: "<ul class='vaNav'><li><a href='http://www.virginia.gov'><img src='/img/vaLogo.jpg'/></a></li>" +
+				"<li class='one'><a href='http://www.virginia.gov/government/state-employees/agency-directory' title='Virginia agency websites'>Agencies</a></li>" +
+				"<li class='two'><a href='http://www.governor.virginia.gov' title='Virginia Governor'>Governor</a></li>" +
+				"<li class='five'><a href='http://www.virginia.gov/search' title='Search Virginia.gov'> Search Virginia.gov</a></li></ul>"
+			};
+})
+
+.directive('plainheader', function() {
+			return {
+				restrict: 'A',
+				replace: true,
+				template: "<header class='dmvHeader g16'><div class='logo first'><a href='/'><img src='/img/dmvLogo.png' alt='DMV HOME' /></a></div></header>"
+			};
+})
+
+
+
 .directive('btn', function(){
 			return{
 			restrict: 'A',
@@ -152,3 +173,25 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 				replace: true
 			};
 		})
+
+
+
+
+/*
+ .directive('vanav', function() {
+ return {
+ controller: function ($scope){
+ if(window.location.href.indexOf(":3") !==-1){
+ var host = "http://localhost/globals/includes/vaNav.html";
+ $scope.strr = host;
+ }else{
+ var host = window.location.host + '/globals/includes/vaNav.html';
+ $scope.strr = host;
+ }
+ },
+ scope:{},
+ restrict: 'A',
+ replace: true,
+ template: "<ul class='vaNav' data-ng-include='strr'></ul>"
+ };
+ })*/
