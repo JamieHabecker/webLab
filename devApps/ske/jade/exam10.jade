@@ -46,7 +46,7 @@ article.g17
 					li.question.signs
 						label.theQ {{five.Question}}
 						img(src="img/{{five.Picture}}")
-					li(data-ng-repeat="an in four.AnswerOptions", class="q{{$index + 1}}")
+					li(data-ng-repeat="an in five.AnswerOptions", class="q{{$index + 1}}")
 						label(class='q{{$index+1}}')
 							input(type="radio", name="q5", data-ng-model="q5", data-ng-Click="q($index,five.AnswerOptions, 5)", data-ng-value="{{Answer + ($index +1)}}")
 							{{an.Answer}} <span>
@@ -73,7 +73,7 @@ article.g17
 					li.question.signs
 						label.theQ {{eight.Question}}
 						img(src="img/{{eight.Picture}}")
-					li(data-ng-repeat="an in four.AnswerOptions", class="q{{$index + 1}}")
+					li(data-ng-repeat="an in eight.AnswerOptions", class="q{{$index + 1}}")
 						label(class='q{{$index+1}}')
 							input(type="radio", name="q8", data-ng-model="q8", data-ng-Click="q($index,eight.AnswerOptions, 8)", data-ng-value="{{Answer + ($index +1)}}")
 							{{an.Answer}} <span>
@@ -91,7 +91,7 @@ article.g17
 					li.question.signs
 						label.theQ {{ten.Question}}
 						img(src="img/{{ten.Picture}}")
-					li(data-ng-repeat="an in four.AnswerOptions", class="q{{$index + 1}}")
+					li(data-ng-repeat="an in ten.AnswerOptions", class="q{{$index + 1}}")
 						label(class='q{{$index+1}}')
 							input(type="radio", name="q10", data-ng-model="q10", data-ng-Click="q($index,ten.AnswerOptions, 10)", data-ng-value="{{Answer + ($index +1)}}")
 							{{an.Answer}} <span>

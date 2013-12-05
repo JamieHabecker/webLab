@@ -1,7 +1,6 @@
 module.exports = function(grunt){
 	grunt.initConfig({
 
-
 watch: {
 			sass:{
 				files:['../sass/**/*.scss','../../sass/**/**/*.scss', 'sass/*.scss'],
@@ -25,28 +24,28 @@ bump:{
   files:['package.json']
 },
 
-
 connect:{
-    all:{
-        options:{
-            port:330,
-						hostname: "10.156.147.183",
-            middleware: function(connect, options){
-                 return [
-                    require('grunt-contrib-livereload/lib/utils').livereloadSnippet,
-                    // Serve the project folder
-                    connect.static(options.base)
-                ];
-            }
-        }
+	all:{
+		options:{
+		port:330,
+		hostname: "10.156.147.183",
+		middleware: function(connect, options){
+			return [
+				require('grunt-contrib-livereload/lib/utils').livereloadSnippet,
+					// Serve the project folder
+          connect.static(options.base)
+        ];
     }
+  	}
+	}
 
 },
+
 open: {
-    all: {
-    // Gets the port from the connect configuration
-    path: 'http://localhost:<%= connect.all.options.port%>'
-    }
+	all: {
+		// Gets the port from the connect configuration
+		path: 'http://localhost:<%= connect.all.options.port%>'
+	}
 },
 
  
