@@ -62,7 +62,7 @@ open: {
 				separator: ';' 
 			},
 			dist:{
-				src: ['scripts/vendor/jquery-1.10.2.js','scripts/vendor/angular.js','scripts/vendor/resource.js','scripts/vendor/underscore.js','scripts/dev/*js'], //Using mini match for your scripts to concatenate
+				src: ['scripts/vendor/jquery-1.10.2.js','scripts/vendor/angular.js','scripts/vendor/resource.js','scripts/vendor/underscore.js','scripts/dev/*js','scripts/vendor/ga.js'], //Using mini match for your scripts to concatenate
                 dest: 'scripts/SKE.js' //where to output the script
 			}
 		},
@@ -112,17 +112,17 @@ jade: {
 
  clean: {
             options: { force: true },
-            release: ['../../ske/']
+            release: ['../../public/ske/']
         },
         copy: {            
             release: {
                 files: {
-                    '../../ske/': ['scripts/ske.min.js','scripts/shims/*','css/*','views/*','views/directiveTemplates/*','index.html', 'img/*']
+                    '../../public/ske/': ['scripts/ske.min.js','scripts/shims/*','views/*','index.html', 'img/*']
                 }
             }
         },
  usemin: {
-            html: ['../../ske/index.html']
+            html: ['../../public/ske/index.html']
     }
        
 	

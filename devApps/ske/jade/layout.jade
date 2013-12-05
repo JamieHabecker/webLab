@@ -22,25 +22,28 @@ html.no-js(lang='en')
 				Please [upgrade your browser](https://browsehappy.com) or
 				[activate Google Chrome](http://www.google.com/chromeframe/?redirect=true) to improve your experience.
 		
-		ul.vaNav(data-ng-include="'http://localhost/globals/includes/vaNav.html'")
+		ul.vaNav(data-ng-include="'/globals/includes/vaNav.html'")
 		section.site
-			header.dmvHeader.g16(data-ng-include="'http://localhost/globals/includes/dmvHeaderPlain.html'")
+			header.dmvHeader.g16(data-ng-include="'/globals/includes/dmvHeaderPlain.html'")
 			block content
 			
 		block scripts
 		
-		<!-- build:js scripts/contactUs.min.js -->
+		<!-- build:js scripts/ske.min.js -->
 		script(src="scripts/vendor/jquery-1.10.2.js")
 		script(src="scripts/vendor/angular.js")
 		script(src="scripts/vendor/resource.js")
 		script(src="scripts/vendor/ngSanitize.js")
 		script(src="scripts/vendor/underscore.js")
 		script(src="scripts/dev/controllers.js")
-		script(src="http://localhost/globals/directives.js")
-		script(src="http://localhost/globals/controllers.js")
-		script(src="http://localhost/globals/factories.js")
 		script(src="scripts/dev/factories.js")
 		script(src="scripts/dev/directives.js")
 		script(src="scripts/dev/dmvPortalConfig.js")
 		script(src="scripts/vendor/ga.js")
+		<!-- endbuild -->
+
+		<!-- build:js /globals/globals.min.js -->
+		script(src="http://localhost/globals/directives.js")
+		script(src="http://localhost/globals/controllers.js")
+		script(src="http://localhost/globals/factories.js")
 		<!-- endbuild -->
