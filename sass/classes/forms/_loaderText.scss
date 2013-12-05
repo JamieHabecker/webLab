@@ -1,0 +1,13 @@
+h2.loaderText{
+	float:none;
+	display:block;
+	width:20%;
+	margin:0 auto;
+	background: url('/img/spin.gif') no-repeat top right;
+	padding-right: 1.5em;
+	text-align:center;
+	color:$blueDarker;
+	&.err{
+		padding-top:0;
+	}
+}

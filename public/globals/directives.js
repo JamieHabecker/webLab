@@ -22,14 +22,25 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 .directive('btn', function(){
 			return{
 			restrict: 'A',
-			template: '<button data-ng-disabled="form.$invalid" data-ng-click="next()">{{action}}</button>',
+			template: '<button data-ng-disabled="form.$invalid" data-ng-show="!isloading" data-ng-click="next()">{{action}}</button>',
 			replace: true,
 			link: function(scope,ele,attr){
-				console.log(attr)
 				scope.action= attr.act;
 			}
 			}
 	})
+
+		.directive('loader', function(){
+			return{
+				restrict: 'A',
+				template: '<h2 class="loaderText" data-ng-show="isloading"> Sending Information</h2>',
+				replace: true,
+				link: function(scope,ele,attr){
+					scope.isloading= false;
+				}
+			}
+		})
+
 
 .directive('zip', function(){
 			return{

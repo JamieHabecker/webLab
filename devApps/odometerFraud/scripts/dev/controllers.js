@@ -9,7 +9,6 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 		controller : 'DisclaimerController',
 		templateUrl : 'views/disclaimer.html'
 	})
-
 	.when('/StepOne', {
 		controller : 'StepOneController',
 		templateUrl : 'views/stepOne.html'
@@ -331,6 +330,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 				$location.path('/' + x)
 			}
 			$scope.next= function(){
+				$scope.isloading = true;
 				var DTO ={
 					"oOdometerFraudFields":data
 				};
