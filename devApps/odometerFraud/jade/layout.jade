@@ -22,9 +22,9 @@ html.no-js(lang='en')
 				Please [upgrade your browser](https://browsehappy.com) or
 				[activate Google Chrome](http://www.google.com/chromeframe/?redirect=true) to improve your experience.
 		
-		div(vaNav)
+		vaNav
 		section.site
-			header(plainheader)
+			plainheader
 			block content
 			
 		block scripts
@@ -36,11 +36,14 @@ html.no-js(lang='en')
 		script(src="scripts/vendor/ngSanitize.js")
 		script(src="scripts/vendor/underscore.js")
 		script(src="scripts/dev/controllers.js")
-		script(src="http://localhost/globals/directives.js")
-		script(src="http://localhost/globals/controllers.js")
-		script(src="http://localhost/globals/factories.js")
 		script(src="scripts/dev/factories.js")
 		script(src="scripts/dev/directives.js")
 		script(src="scripts/dev/dmvPortalConfig.js")
 		script(src="scripts/vendor/ga.js")
+		<!-- endbuild -->
+
+		<!-- build:js /globals/globals.min.js -->
+		script(src="http://localhost/globals/directives.js")
+		script(src="http://localhost/globals/controllers.js")
+		script(src="http://localhost/globals/factories.js")
 		<!-- endbuild -->

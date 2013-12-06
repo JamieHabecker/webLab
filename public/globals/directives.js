@@ -19,22 +19,22 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 			};
 }])
 
-.directive('vanav', function() {
+.directive('vanav',[ function() {
 			return {
-				restrict: 'A',
-				replace: true,
+				restrict: 'EA',
 				template: "<ul class='vaNav'><li><a href='http://www.virginia.gov'><img src='/img/vaLogo.jpg'/></a></li>" +
 				"<li class='one'><a href='http://www.virginia.gov/government/state-employees/agency-directory' title='Virginia agency websites'>Agencies</a></li>" +
 				"<li class='two'><a href='http://www.governor.virginia.gov' title='Virginia Governor'>Governor</a></li>" +
-				"<li class='five'><a href='http://www.virginia.gov/search' title='Search Virginia.gov'> Search Virginia.gov</a></li></ul>"
+				"<li class='five'><a href='http://www.virginia.gov/search' title='Search Virginia.gov'>Search Virginia.gov</a></li></ul>",
+				replace: true
 			};
-})
+}])
 
 .directive('plainheader', function() {
 			return {
-				restrict: 'A',
-				replace: true,
-				template: "<header class='dmvHeader g16'><div class='logo first'><a href='/'><img src='/img/dmvLogo.png' alt='DMV HOME' /></a></div></header>"
+				restrict: 'EA',
+				template: "<header class='dmvHeader g16'><div class='logo first'><a href='/'><img src='/img/dmvLogo.png' alt='DMV HOME' /></a></div></header>",
+				replace: true
 			};
 })
 
