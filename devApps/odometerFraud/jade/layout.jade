@@ -4,8 +4,8 @@ html.no-js(lang='en')
 		meta(charset='utf-8')
 		meta(http-equiv="X-UA-Compatible",content="IE=edge,chrome=1")
 		meta(name="viewport",content="width=device-width,initial-scale=1")
-		meta(name="description",content="Virginia DMV Search")
-		
+		meta(name="description",content="Virginia DMV Odometer Fraud Complaint Form")
+
 		title Virginia DMV Odometer Fraud
 		
 		link(rel='stylesheet', href='/css/main.css')
@@ -28,22 +28,22 @@ html.no-js(lang='en')
 			block content
 			
 		block scripts
-		
+
+		<!-- build:js /globals/globals.min.js -->
+		script(src="http://localhost/globals/vendor/jquery-1.10.2.js")
+		script(src="http://localhost/globals/vendor/angular.js")
+		script(src="http://localhost/globals/vendor/resource.js")
+		script(src="http://localhost/globals/vendor/ngSanitize.js")
+		script(src="http://localhost/globals/vendor/underscore.js")
+		script(src="http://localhost/globals/directives.js")
+		script(src="http://localhost/globals/controllers.js")
+		script(src="http://localhost/globals/factories.js")
+		script(src="http://localhost/globals/vendor/ga.js")
+		<!-- endbuild -->
+
 		<!-- build:js scripts/contactUs.min.js -->
-		script(src="scripts/vendor/jquery-1.10.2.js")
-		script(src="scripts/vendor/angular.js")
-		script(src="scripts/vendor/resource.js")
-		script(src="scripts/vendor/ngSanitize.js")
-		script(src="scripts/vendor/underscore.js")
 		script(src="scripts/dev/controllers.js")
 		script(src="scripts/dev/factories.js")
 		script(src="scripts/dev/directives.js")
 		script(src="scripts/dev/dmvPortalConfig.js")
-		script(src="scripts/vendor/ga.js")
-		<!-- endbuild -->
-
-		<!-- build:js /globals/globals.min.js -->
-		script(src="http://localhost/globals/directives.js")
-		script(src="http://localhost/globals/controllers.js")
-		script(src="http://localhost/globals/factories.js")
 		<!-- endbuild -->

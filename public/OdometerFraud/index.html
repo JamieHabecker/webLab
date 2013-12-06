@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="description" content="Virginia DMV Search">
-    <title>DMV Search</title>
+    <meta name="description" content="Virginia DMV Odometer Fraud Complaint Form">
+    <title>Virginia DMV Odometer Fraud</title>
     <link rel="stylesheet" href="/css/main.css">
     <script src="scripts/shims/mod.min.js"></script>
     <!--if lt IE 9-->
@@ -17,12 +17,13 @@ Please <a href="https://browsehappy.com">upgrade your browser</a> or
 <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome</a> to improve your experience.</p>
 
     <![endif]-->
-    <ul data-ng-include="'http://localhost/globals/includes/vaNav.html'" class="vaNav"></ul>
+    <vaNav></vaNav>
     <section class="site">
-      <header data-ng-include="'http://localhost/globals/includes/dmvHeaderPlain.html'" class="dmvHeader g16"></header>
+      <plainheader></plainheader>
       <div data-ng-view  data-ng-animate="{enter: 'an-enter'}" class="content g16">
         <h2 style="text-align:center">Preparing Portal...</h2>
       </div>
+    <script src="/globals/globals.min.js"></script>
     <script src="scripts/contactUs.min.js"></script>
   </body>
 </html>

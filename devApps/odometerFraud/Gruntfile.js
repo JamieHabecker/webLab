@@ -53,8 +53,9 @@ grunt.initConfig({
 	options: {
 		separator: ';'
 	},
+
 	dist:{
-		src:['scripts/vendor/jquery-1.10.2.js','scripts/vendor/angular.js','scripts/vendor/resource.js','scripts/vendor/underscore.js','scripts/dev/*js'], //Using mini match for your scripts to concatenate
+		src:['scripts/dev/*.js'], //Using mini match for your scripts to concatenate
 		dest:'scripts/contactUs.js' //where to output the script
 		}
 },
@@ -122,7 +123,6 @@ grunt.initConfig({
 	usemin:{
 		html:['../../public/OdometerFraud/index.html']
 }
-
 });
 
 	grunt.loadNpmTasks('grunt-contrib-jshint');
@@ -152,7 +152,6 @@ grunt.registerTask('server', [
 //build task
 grunt.registerTask('build', [
 	'compass',
-	'concat',
 	'uglify',
 	'clean',
 	'copy',

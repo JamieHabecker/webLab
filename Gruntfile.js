@@ -60,8 +60,8 @@ concat:{
 		separator: ';'
 	},
 	dist:{
-		src: ['scripts/vendor/jquery-1.10.2.js','scripts/vendor/angular.js','scripts/vendor/resource.js','scripts/vendor/underscore.js','scripts/dev/*js'], //Using mini match for your scripts to concatenate
-		dest: 'scripts/contactUs.js' //where to output the script
+		src: ['public/globals/vendor/jquery-1.10.2.js','public/globals/vendor/angular.js','public/globals/vendor/resource.js','public/globals/vendor/underscore.js','public/globals/*.js'], //Using mini match for your scripts to concatenate
+		dest: 'public/globals/globals.js' //where to output the script
 	}
 },
 		
@@ -85,7 +85,7 @@ compass: {
 uglify: {
     dest: {
       files: {
-        'public/globals/globals.min.js': ['public/globals/*.js']
+        'public/globals/globals.min.js': ['public/globals/globals.js']
       }
     }
 },

@@ -51,7 +51,20 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 			}
 	})
 
-		.directive('loader', function(){
+
+.directive('mod', function(){
+			return{
+				restrict: 'EA',
+				template: '<script src="shims/mod.min.js"></script>',
+				replace: true,
+				link: function(scope,ele,attr){
+					scope.isloading= false;
+				}
+			}
+})
+
+
+.directive('loader', function(){
 			return{
 				restrict: 'A',
 				template: '<h2 class="loaderText" data-ng-show="isloading"> Sending Information</h2>',
@@ -60,7 +73,7 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 					scope.isloading= false;
 				}
 			}
-		})
+})
 
 
 .directive('zip', function(){
