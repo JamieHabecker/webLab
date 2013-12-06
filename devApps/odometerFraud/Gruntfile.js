@@ -152,6 +152,7 @@ grunt.registerTask('server', [
 //build task
 grunt.registerTask('build', [
 	'compass',
+	'concat',
 	'uglify',
 	'clean',
 	'copy',
