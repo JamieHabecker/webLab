@@ -30,22 +30,14 @@ html.no-js(lang='en')
 			block content
 			
 		block scripts
+
+		<!-- build:js /globals/globals.min.js -->
+		script(src="http://localhost/globals/globals.js")
+		<!-- endbuild -->
 		
 		<!-- build:js scripts/ske.min.js -->
-		script(src="scripts/vendor/jquery-1.10.2.js")
-		script(src="scripts/vendor/angular.js")
-		script(src="scripts/vendor/resource.js")
-		script(src="scripts/vendor/ngSanitize.js")
-		script(src="scripts/vendor/underscore.js")
 		script(src="scripts/dev/controllers.js")
 		script(src="scripts/dev/factories.js")
 		script(src="scripts/dev/directives.js")
 		script(src="scripts/dev/dmvPortalConfig.js")
-		script(src="scripts/vendor/ga.js")
-		<!-- endbuild -->
-
-		<!-- build:js /globals/globals.min.js -->
-		script(src="http://localhost/globals/directives.js")
-		script(src="http://localhost/globals/controllers.js")
-		script(src="http://localhost/globals/factories.js")
 		<!-- endbuild -->

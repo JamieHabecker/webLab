@@ -1,7 +1,7 @@
-/*
+
     var _gaq = _gaq || [];
     var testKey = 'qeTest', storage = window.sessionStorage;
-  _gaq.push(['_setAccount', 'UA-38638778-1']);
+  _gaq.push(['_setAccount', 'UA-xxxxxxx-1']);
   _gaq.push(['_trackPageview']);
     (function() {
     var s, ga = document.createElement('script'); 
@@ -21,7 +21,3 @@
         else
             throw error;
     }
-	
-
-
-*/
