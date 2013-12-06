@@ -58,7 +58,7 @@ if ('development' == app.get('env')) {
 
 
 
-app.get('weblab', routes.index);
+app.get('/', routes.index);
 
 
 
