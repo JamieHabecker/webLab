@@ -4,21 +4,22 @@
 // #DEA82A
 body.webLab{
 	//background:#202828;
-	background: #4D4A47;
-	background:#424242;
+	//background: #4D4A47;
+	//background:#424242;
+	background:#EAE9E8;
 	margin:0;
 	padding:0;
 	color:#424242;
 	.webLabHeader{
-		background:#3299BB;
+		//background:#3299BB;
 		margin:0 auto;
 		padding:0;
-		border-bottom:3px solid #3299BB;
+		border-bottom:1px dotted #3299BB;
 		h1{
-			padding:1em;
-			padding-bottom:0.5em;
+			padding:1em 0em 0em 0em;
 			margin:0;
 			color:#EAE9E8;
+			color:#3299BB;
 			border-bottom:1px solid #EAE9E8;
 		}
 	}
@@ -29,10 +30,11 @@ body.webLab{
 		border-radius:0;
 		width:100%;
 		margin-bottom:0;
-		border-bottom:3px solid #BCBCBC;
+		overflow: hidden;
+		//border-bottom:3px solid #BCBCBC;
 		a{
 			&.bakBtn{
-				width:40%;
+				width:80%;
 				display:block;
 				text-align:center;
 				margin:0 auto;
@@ -58,12 +60,11 @@ body.webLab{
 		div{
 			width:98%;
 			margin:0 auto;
-			//background:#BCBCBC;
-			padding:0.5em 0;
+			border-bottom:1px solid #BCBCBC;
 			margin-top:0.5em;
 			ul{
 				li{
-					list-style-type: none;
+					list-style-type: disc;
 					line-height:2em;
 					&.dev{
 						color:$grayLight;
@@ -78,13 +79,9 @@ body.webLab{
 				padding:0;
 				margin:0;
 				font-size:2em;
-				&.labName{
-					//font-size:1.5em;
-					color:#424242;
-					font-weight:bold;
-				}
 			}
 		}
+
 	}
 	h2{
 		margin:0;
@@ -101,6 +98,15 @@ body.webLab{
 	p{
 		padding:1em;
 		padding-top:0;
+		&.labName{
+			//font-size:1.5em;
+			color:#424242;
+			font-size:2em;
+			font-weight:bold;
+			padding:0;
+			margin:0;
+			padding-top:0.5em;
+		}
 	}
 	div.noscript{
 		padding:2em;
@@ -113,12 +119,12 @@ body.webLab{
 		line-height: 1.3em;
 	}
 	footer{
-		background:#BCBCBC;
-		border-top:1px solid #EAE9E8;
+		//background:#BCBCBC;
+		//border-top:1px solid #3299BB;
 		margin:0 auto;
 		clear:both;
 		padding:0.8em 0em;
-		text-align:center;
+		text-align:right;
 		small{
 			display:block;
 		}
@@ -133,6 +139,11 @@ body.webLab{
 			width:70%;
 			amrgin:0 auto;
 		}
+			a{
+				&.bakBtn{
+					width:20%;
+				}
+			}
 		}
 
 	}
