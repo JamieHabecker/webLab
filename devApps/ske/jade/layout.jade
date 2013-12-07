@@ -4,38 +4,28 @@ html.no-js(lang='en')
 		meta(charset='utf-8')
 		meta(http-equiv="X-UA-Compatible",content="IE=edge,chrome=1")
 		meta(name="viewport",content="width=device-width,initial-scale=1")
-		meta(name="description",content="Virginia DMV Search")
-		
-		title Virginia DMV Sample Knowledge Exams
-		
+		meta(name="description",content="Virginia DMV Odometer Fraud Complaint Form")
+		title Virginia DMV Odometer Fraud Complaint Form
 		link(rel='stylesheet', href='/css/main.css')
 		script(src="scripts/shims/mod.min.js")
-
 		//if lt IE 9
 			script(src="scripts/shims/respond.min.js")
-		
 	body#ng-app.knowledgePortal(data-ng-app='KnowledgePortal')
-		
 		//if lt IE 8
 			:markdown
-				You are using an **outdated browser**. 
+				You are using an **outdated browser**.
 				Please [upgrade your browser](https://browsehappy.com) or
 				[activate Google Chrome](http://www.google.com/chromeframe/?redirect=true) to improve your experience.
-
-		vanav
-
+		vaNav
 		section.site
 			plainheader
-
 			block content
-			
 		block scripts
-
 		<!-- build:js /globals/globals.min.js -->
+		//script(src="http://localhost/globals/globals.js")
 		script(src="http://localhost/globals/globals.js")
 		<!-- endbuild -->
-		
-		<!-- build:js scripts/ske.min.js -->
+		<!-- build:js scripts/contactUs.min.js -->
 		script(src="scripts/dev/controllers.js")
 		script(src="scripts/dev/factories.js")
 		script(src="scripts/dev/directives.js")

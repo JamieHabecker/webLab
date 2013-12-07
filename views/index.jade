@@ -1,5 +1,4 @@
 extends layout
-
 block content
-  h1= title
-  p Welcome to #{title}
+	.content.g16.weblabcontent(data-ng-view  data-ng-animate="{enter: 'an-enter'}")
+		h2(style="text-align:center") Preparing Portal...

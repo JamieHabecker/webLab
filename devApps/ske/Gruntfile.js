@@ -28,7 +28,8 @@ connect:{
 	all:{
 		options:{
 		port:330,
-		hostname: "10.156.147.183",
+		//hostname: "10.156.147.183",
+		hostname: "localhost",
 		middleware: function(connect, options){
 			return [
 				require('grunt-contrib-livereload/lib/utils').livereloadSnippet,

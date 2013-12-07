@@ -27219,11 +27219,7 @@ angular.module('ngResource', ['ng']).
             alert('Please make sure you have private browsing turned off in your Safari settings to use this form.');
         else
             throw error;
-    }
-	
-
-
-;angular.module("globalControllers", [])
+    };angular.module("globalControllers", [])
 
 .controller('PortalCancelController',['$scope',function($scope){
 	$scope.portalCancel = function(){
@@ -27271,6 +27267,13 @@ angular.module('ngResource', ['ng']).
 			};
 })
 
+.directive('weblabheader', function() {
+			return {
+				restrict: 'EA',
+				template: "<header class='webLabHeader g16'><h1>WebLab</h1></header>",
+				replace: true
+			};
+})
 
 
 .directive('btn', function(){

@@ -8,5 +8,8 @@ section.site{
 	div.content{
 		margin:0 auto;
 		margin-top:1em;
+		&.weblabcontent{
+			margin-top:0;
+		}
 	}
 }

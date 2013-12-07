@@ -27240,7 +27240,7 @@ angular.module('ngResource', ['ng']).
         templateUrl : 'views/complete.html'
     })
     .otherwise({
-        redirectTo : '/SampleKnowledgeExam'
+        redirectTo : '/'
     });
 
 }])

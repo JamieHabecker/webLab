@@ -1,0 +1,140 @@
+// #8C6938
+//<a href="http://www.colourlovers.com/palette/148712/Gamebookers" target="_blank"><img src="http://www.colourlovers.com/images/badges/p/148/148712_Gamebookers.png" style="width: 240px; height: 120px; border: 0 none;" alt="Gamebookers" /></a><br /><span style="font-size: 10px; color: #5e5e5e;"><a href="http://www.colourlovers.com/color" target="_blank" style="font-size: 10px; color: #5e5e5e;">Color</a> by <a href="http://www.colourlovers.com/" target="_blank" style="font-size: 10px; color: #5e5e5e;">COLOURlovers</a></span>
+// #F26D00
+// #DEA82A
+body.webLab{
+	//background:#202828;
+	background: #4D4A47;
+	background:#424242;
+	margin:0;
+	padding:0;
+	color:#424242;
+	.webLabHeader{
+		background:#3299BB;
+		margin:0 auto;
+		padding:0;
+		border-bottom:3px solid #3299BB;
+		h1{
+			padding:1em;
+			padding-bottom:0.5em;
+			margin:0;
+			color:#EAE9E8;
+			border-bottom:1px solid #EAE9E8;
+		}
+	}
+	article{
+		box-shadow:none;
+		border:none;
+		background:#EAE9E8;
+		border-radius:0;
+		width:100%;
+		margin-bottom:0;
+		border-bottom:3px solid #BCBCBC;
+		a{
+			&.bakBtn{
+				width:40%;
+				display:block;
+				text-align:center;
+				margin:0 auto;
+				margin-bottom:2em;
+				margin-top:2em;
+				//float:right;
+				//margin-right:3em;
+				&:after{
+					background-position: -96px -16px;
+					background:none;
+				}
+				&:before{
+					background: url("/img/ui-icons_ffffff_256x240.png") no-repeat;
+					background-position: -96px -16px;
+					content: "";
+					display: inline-block;
+					height: 13px;
+					width: 15px;
+					z-index: 9999;
+				}
+			}
+		}
+		div{
+			width:98%;
+			margin:0 auto;
+			//background:#BCBCBC;
+			padding:0.5em 0;
+			margin-top:0.5em;
+			ul{
+				li{
+					list-style-type: none;
+					line-height:2em;
+					&.dev{
+						color:$grayLight;
+					}
+					a{
+						color:#424242;
+					}
+				}
+			}
+			p{
+				//padding-bottom:0;
+				padding:0;
+				margin:0;
+				font-size:2em;
+				&.labName{
+					//font-size:1.5em;
+					color:#424242;
+					font-weight:bold;
+				}
+			}
+		}
+	}
+	h2{
+		margin:0;
+		padding:0;
+		border-radius:3px 3px 0px 0px;
+		border-bottom:1px solid #ccc;
+		padding:1em;
+		color:#EAE9E8;
+		//color:#3299BB;
+		//background:#456D79;
+		background:#FF9900;
+		background:#3299BB;
+}
+	p{
+		padding:1em;
+		padding-top:0;
+	}
+	div.noscript{
+		padding:2em;
+		width:50%;
+		margin:0 auto;
+		background:#fff;
+		border:2px solid #ACCBE0;
+		border-radius:5px;
+		font-size:1em;
+		line-height: 1.3em;
+	}
+	footer{
+		background:#BCBCBC;
+		border-top:1px solid #EAE9E8;
+		margin:0 auto;
+		clear:both;
+		padding:0.8em 0em;
+		text-align:center;
+		small{
+			display:block;
+		}
+	}
+
+}
+
+@media screen and (min-width:758px){
+	body.webLab{
+		article{
+		div{
+			width:70%;
+			amrgin:0 auto;
+		}
+		}
+
+	}
+
+}

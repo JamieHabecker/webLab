@@ -38,6 +38,13 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 			};
 })
 
+.directive('weblabheader', function() {
+			return {
+				restrict: 'EA',
+				template: "<header class='webLabHeader g16'><h1>WebLab</h1></header>",
+				replace: true
+			};
+})
 
 
 .directive('btn', function(){

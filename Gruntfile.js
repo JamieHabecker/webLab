@@ -2,19 +2,19 @@ module.exports = function(grunt){
 	grunt.initConfig({
 		watch: {
 			sass:{
-				files:['sass/*.scss', 'sass/**/*.scss', 'sass/**/**/*.scss'],
+				files:['sass/main.scss', 'sass/**/*.scss', 'sass/**/**/*.scss'],
 				tasks:['compass']
 			},
 			javascript:{
-				files:['public/globals/*.js'],
-				tasks:['uglify']
+				files:['public/globals/**/*.js'],
+				tasks:['concat','uglify']
 			},
 			all :{
-				files: ['*.html','devApps/**/jade/*.jade','devApps/**/scripts/dev/*.js' ],
+				files: ['index.html'],
 				tasks:[]
 			},
 			jade: {
-				files: ['*.jade'],
+				files: ['views/*.jade'],
 				tasks: ['jade']
 			},
 			options:{
@@ -30,8 +30,10 @@ module.exports = function(grunt){
 		connect:{
 			all:{
 				options:{
-					port:8000,
-					hostname: "10.156.147.183",
+					port:333,
+					//hostname: "10.156.147.183" work
+					hostname: "10.156.9.236",
+					//hostname:"NG00207667",
 					middleware: function(connect,options){
 						return [
 							require('grunt-contrib-livereload/lib/utils').livereloadSnippet,
@@ -70,8 +72,7 @@ compass: {
 		sassDir: 'sass/',
 		cssDir: 'public/css/',
 		imageDir: 'img/',
-		outputStyle: 'compressed',
- 		importPath: '/Users/bpq63476/Desktop/webLab/'
+		outputStyle: 'compressed'
 		//relativeAssets: false
 		},
 	server: {
@@ -100,7 +101,11 @@ jade: {
 			}
 		},
 		files: {
-			"index.html": ["index.jade"]
+			"index.html": ["views/index.jade"],
+			"public/views/home.html": ["views/home.jade"],
+			"public/views/dmvnow.html": ["views/dmvnow.jade"],
+			"public/views/webservices.html": ["views/webservices.jade"],
+			"public/views/mydmv.html": ["views/mydmv.jade"]
 		}
 	}
 },  
@@ -145,8 +150,6 @@ clean: {
 grunt.registerTask('server', [
 		'compass',
 		'jade',
-		'connect',
-		'open',
 		'watch'
   ]);
   
