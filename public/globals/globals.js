@@ -27318,7 +27318,7 @@ angular.module('ngResource', ['ng']).
 				template: "<label>Zip<span class='reqText'>Required</span></label><input type='text' name='zip' data-ng-model='zip' data-ng-pattern='zipR' required='true' placeholder='ZIP'>" +
 						"<p data-ng-show='form.zip.$invalid && form.zip.$dirty'>You must enter your zip code</p>",
 				link: function(scope){
-					scope.zipR= /^\d{6}$/;
+					scope.zipR= /^\d{5}$/;
 				}
 			}
 		})
