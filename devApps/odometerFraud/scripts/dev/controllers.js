@@ -338,6 +338,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 					ContactFactory.contactInfo({}, DTO, successcb, errorcb);
 			}
 			function successcb(data){
+				sessionStorage.refNumber = data.ComplaintId
 				$location.path('/Complete')
 			}
 			function errorcb(data){
@@ -346,6 +347,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 }])
 
 .controller('CompleteController', ['$scope','complete', function($scope, complete){
+			$scope.ref= "[#" + sessionStorage.refNumber + "]";
 			sessionStorage.clear();
 			$scope.next = function(){
 				window.location.replace("/");
