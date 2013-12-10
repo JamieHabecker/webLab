@@ -2,7 +2,7 @@ article.g17.confirmation
 	h3.formTitle Please verify the following information
 	div
 		.yInfo(data-ng-repeat="a in theData", data-ng-show="a.firstname")
-			h3 Your Information:
+			h3 Your Information
 			ul
 				li <b>Your Name:</b> {{a.firstname}} {{a.lastname}}
 				li <b>Your Address:</b> {{a.address}}, {{a.city}}, {{a.state}}, {{a.zip}}
@@ -11,7 +11,7 @@ article.g17.confirmation
 				li <b>Contact Preference:</b> {{a.conPref}}
 				li.edit <a data-ng-click="edit('StepTwo')"> Edit </a>
 		.bInfo(data-ng-repeat="a in theData")
-			h3 Company Information:
+			h3 Company Information
 			ul
 				li <b>Company/Suspect Name:</b> {{a.compName}}
 				li(data-ng-show="a.compAddress || a.compCity || a.compState || a.compZip") <b>Company Address:</b> {{a.compAddress}}, {{a.compCity}}, {{a.compState}}, {{a.compZip}}
