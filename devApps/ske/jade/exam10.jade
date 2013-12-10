@@ -4,7 +4,7 @@ article.g17
 	div
 		h3.formTitle(data-ng-show="questions") {{type}}
 		h3.formTitle(data-ng-show="!nine.Question") Randomizing Sample Questions...
-		span(class="loader", data-ng-show="!four.Question")
+		<span class="loader" data-ng-show="!four.Question"></span>
 		form(novalidate, name="form")
 			.question1
 				ul.radioList

@@ -1,3 +1,4 @@
 node-modules/
 .project
 .sass-cache
+app.js
