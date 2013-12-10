@@ -1,4 +1,4 @@
-var devCon = "http://10.156.147.121/";
+
 
 angular.module("factories", [])
 
@@ -25,14 +25,14 @@ angular.module("factories", [])
 
 
 .factory('knowledgeFactory',['$resource', function($resource) {
-    var baseUrl = devCon+ "/SampleKnowledgeExam/Default.aspx/GetQuestions";
-    return $resource(baseUrl, {}, {
-        skeQuestions : {
-            method : 'POST',
-						crossDomain: true,
-            url : baseUrl
-        }
-    });
+	var baseUrl = "http://10.156.147.121:4040\:4040/SampleKnowledgeExam/Default.aspx/GetQuestions";
+	return $resource(baseUrl, {}, {
+		skeQuestions : {
+		method : 'POST',
+		crossDomain: true,
+		url : baseUrl
+		}
+	});
 }]);
 
 
