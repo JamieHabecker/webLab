@@ -27438,8 +27438,6 @@ angular.module('ngResource', ['ng']).
 			}
 })
 
-
-
 		.directive('make', function(){
 			return{
 				restrict: 'A',
@@ -27453,10 +27451,9 @@ angular.module('ngResource', ['ng']).
 
 		.directive('companyname', function(){
 			return{
-				restrict: "AE",
+				restrict: "A",
 				template:"<label>Company/Suspect Name<span class='reqText' data-ng-show='req'>Required</span></label><input type='text' name='compName' data-ng-model='compName' required='req' placeholder='Company Name'>" +
 				"<p data-ng-show='form.compName.$invalid && form.compName.$dirty'>You must enter your address</p>",
-				replace:true,
 				link: function(scope,ele,attr){
 					scope.req= attr.req;
 				}
