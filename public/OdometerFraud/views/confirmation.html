@@ -3,7 +3,7 @@
   <h3 class="formTitle">Please verify the following information</h3>
   <div>
     <div data-ng-repeat="a in theData" data-ng-show="a.firstname" class="yInfo">
-      <h3>Your Information:</h3>
+      <h3>Your Information</h3>
       <ul>
         <li><b>Your Name:</b> {{a.firstname}} {{a.lastname}}</li>
         <li><b>Your Address:</b> {{a.address}}, {{a.city}}, {{a.state}}, {{a.zip}}</li>
@@ -14,7 +14,7 @@
       </ul>
     </div>
     <div data-ng-repeat="a in theData" class="bInfo">
-      <h3>Company Information:</h3>
+      <h3>Company Information</h3>
       <ul>
         <li><b>Company/Suspect Name:</b> {{a.compName}}</li>
         <li data-ng-show="a.compAddress || a.compCity || a.compState || a.compZip"><b>Company Address:</b> {{a.compAddress}}, {{a.compCity}}, {{a.compState}}, {{a.compZip}}</li>
