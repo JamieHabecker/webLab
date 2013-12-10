@@ -7,7 +7,7 @@ angular.module("KnowledgePortal", ['ngResource','directives','dmvPortalConfig','
      $httpProvider.defaults.headers.get = {
         'Accept' : 'application/json, text/javascript, */*'
    };
-		$http.defaults.useXDomain = true
+		$httpProvider.defaults.useXDomain = true
     $routeProvider
     .when('/SampleKnowledgeExam', {
         controller : 'SKEController',
