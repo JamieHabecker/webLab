@@ -6,8 +6,8 @@
 var express = require('express');
 var db = require('./model/db');
 var routes = require('./routes');
-var user= require('./routes/user');
-var project= require('./routes/project');
+//var user= require('./routes/user');
+//var project= require('./routes/project');
 var http = require('http');
 var path = require('path');
 var app = express();
@@ -41,8 +41,8 @@ app.set('view engine', 'jade');
 
 
 
-app.use(express.cookieParser());
-app.use(express.session({secret: '1234567890QWERTY'}));
+//app.use(express.cookieParser());
+//app.use(express.session({secret: '1234567890QWERTY'}));
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.json());
