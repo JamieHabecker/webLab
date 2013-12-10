@@ -238,13 +238,12 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 				scope:{
 					req: "=req"
 				},
-				template:"<label>Company/Suspect Name<span class='reqText' data-ng-show='req'>Required</span></label><input type='text' name='compName' data-ng-model='compName' required='req' placeholder='Company Name'>" +
-				"<p data-ng-show='form.compName.$invalid && form.compName.$dirty'>You must enter your address</p>"
+				template:"<label id='la'>Company/Suspect Name<span class='reqText' data-ng-show='req'>Required</span></label><input type='text' name='compName' data-ng-model='compName' required='req' placeholder='Company Name'>" +
+				"<p data-ng-show='$parent.form.compName.$invalid && $parent.form.compName.$dirty'>You must enter your address</p>"
 			}
 		})
 
-
-.directive('vin', function(){
+.directive('vin',function(){
 			return{
 				restrict: 'AE',
 				scope:{
@@ -257,8 +256,6 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 				}
 			}
 		})
-
-
 
 .directive('return', function(){
 			return{

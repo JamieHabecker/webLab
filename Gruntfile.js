@@ -6,7 +6,7 @@ module.exports = function(grunt){
 				tasks:['compass']
 			},
 			javascript:{
-				files:['public/globals/**/*.js', 'public/globals/scripts/*.js'],
+				files:['public/globals/scripts/*.js'],
 				tasks:['concat','uglify']
 			},
 			all :{
@@ -152,6 +152,8 @@ clean: {
 grunt.registerTask('server', [
 		'compass',
 		'jade',
+	'concat',
+	'uglify',
 		'watch'
   ]);
   
