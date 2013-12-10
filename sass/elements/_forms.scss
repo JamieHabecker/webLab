@@ -8,6 +8,7 @@ input, textarea{
 input{
 	height:2em;
 }
+
 input[type="text"], input[type="password"],input[type="date"],input[type="email"],select{
 	width:100%;
 	margin:0 auto;
@@ -135,6 +136,9 @@ input.ng-invalid.ng-dirty:focus {
 	background:#fff9d3;
 	background:none\9;
 }
+
+
+
 input.ng-valid.ng-dirty{
 	background-color: #BFFFC6;
 	background:none\9;
@@ -142,8 +146,6 @@ input.ng-valid.ng-dirty{
 input.ng-pristine.ng-valid{
 	background-color: #eee;
 }
-
-
 
 input[type="checkbox"]{
 	border:1px solid #ccc;
