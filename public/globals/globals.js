@@ -27396,7 +27396,7 @@ angular.module('ngResource', ['ng']).
 
 .directive('address', function(){
 			return{
-				restrict: 'A',
+				restrict: 'AE',
 				template: "<label>Address<span class='reqText' data-ng-show='req'>Required</span></label><input type='text' name='address' data-ng-model='address' data-ng-required='{{req}}' placeholder='Address'>" +
 				"<p data-ng-show='form.address.$invalid && form.address.$dirty'>You must enter an address</p>",
 				replace: true,
