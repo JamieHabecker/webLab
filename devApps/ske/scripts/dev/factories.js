@@ -1,4 +1,4 @@
-var devCon = "//10.156.147.121/";
+var devCon = "http://10.156.147.121/";
 
 angular.module("factories", [])
 
