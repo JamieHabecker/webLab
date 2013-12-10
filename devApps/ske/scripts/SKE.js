@@ -27206,6 +27206,7 @@ angular.module('ngResource', ['ng']).
      $httpProvider.defaults.headers.get = {
         'Accept' : 'application/json, text/javascript, */*'
    };
+		$http.defaults.useXDomain = true
     $routeProvider
     .when('/SampleKnowledgeExam', {
         controller : 'SKEController',
@@ -27717,6 +27718,7 @@ angular.module("factories", [])
     return $resource(baseUrl, {}, {
         skeQuestions : {
             method : 'POST',
+						crossDomain: true,
             url : baseUrl
         }
     });
