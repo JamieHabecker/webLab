@@ -3,8 +3,8 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 
 .directive('states',['StateFactory',function(StateFactory){
 			return{
-				restrict: "A",
-				template: "<label>State<span class='reqText' data-ng-show='req'>Required</label><select data-ng-model='state' data-ng-click='setState()' data-ng-options='c.State for c in states'>" +
+				restrict: "AE",
+				template: "<label>State<span class='reqText' data-ng-show='req'>Required</span></label><select data-ng-model='state' data-ng-click='setState()' data-ng-options='c.State for c in states'>" +
 						"<option value=''>{{current}}</option></select>",
 				link: function(scope, elm, attr){
 					scope.req= attr.req;
