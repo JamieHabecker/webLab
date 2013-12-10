@@ -29,6 +29,7 @@ angular.module("factories", [])
     return $resource(baseUrl, {}, {
         skeQuestions : {
             method : 'POST',
+						crossDomain: true,
             url : baseUrl
         }
     });
