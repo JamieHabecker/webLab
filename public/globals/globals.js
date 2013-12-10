@@ -27358,7 +27358,7 @@ angular.module('ngResource', ['ng']).
 					req: "=req"
 				},
 				template: "<label>Primary Color<span class='reqText'>Required</span></label><input type='text' name='vpc' data-ng-model='vpc' required='true' placeholder='Primary Color'>" +
-						"<p data-ng-show='form.vpc.$invalid && form.vpc.$dirty'>You must enter the vehicles primary color</p>"
+						"<p data-ng-show='form.vpc.$invalid && form.vpc.$dirty'>You must enter the vehicle primary color</p>"
 			}
 })
 
@@ -27369,7 +27369,7 @@ angular.module('ngResource', ['ng']).
 					req: "=req"
 				},
 				template: "<label>Secondary Color<span class='reqText' data-ng-show='req'>Required</span></label><input type='text' name='vsc' data-ng-model='vsc' placeholder='Secondary Color'>" +
-						"<p data-ng-show='form.vsc.$invalid && form.vsc.$dirty'>You must enter the vehicles secondary color</p>"
+						"<p data-ng-show='form.vsc.$invalid && form.vsc.$dirty'>You must enter the vehicle secondary color</p>"
 			}
 })
 
@@ -27380,7 +27380,7 @@ angular.module('ngResource', ['ng']).
 					req: "=req"
 				},
 				template: "<label>Model<span class='reqText' data-ng-show='req'>Required</span></label><input type='text' data-ng-required='req' name='vmodel' data-ng-model='vmodel' placeholder='Model'>" +
-						"<p data-ng-show='form.vmodel.$invalid && form.vmodel.$dirty'>You must enter the vehicles model</p>"
+						"<p data-ng-show='form.vmodel.$invalid && form.vmodel.$dirty'>You must enter the vehicle model</p>"
 			}
 })
 
