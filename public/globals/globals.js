@@ -27232,8 +27232,8 @@ angular.module('ngResource', ['ng']).
 
 .directive('states',['StateFactory',function(StateFactory){
 			return{
-				restrict: "A",
-				template: "<label>State<span class='reqText' data-ng-show='req'>Required</label><select data-ng-model='state' data-ng-click='setState()' data-ng-options='c.State for c in states'>" +
+				restrict: "AE",
+				template: "<label>State<span class='reqText' data-ng-show='req'>Required</span></label><select data-ng-model='state' data-ng-click='setState()' data-ng-options='c.State for c in states'>" +
 						"<option value=''>{{current}}</option></select>",
 				link: function(scope, elm, attr){
 					scope.req= attr.req;
@@ -27399,6 +27399,7 @@ angular.module('ngResource', ['ng']).
 				restrict: 'A',
 				template: "<label>Address<span class='reqText' data-ng-show='req'>Required</span></label><input type='text' name='address' data-ng-model='address' data-ng-required='{{req}}' placeholder='Address'>" +
 				"<p data-ng-show='form.address.$invalid && form.address.$dirty'>You must enter an address</p>",
+				replace: true,
 				link: function(scope,ele,attr){
 					console.log(attr.req)
 					scope.req= attr.req;
@@ -27454,9 +27455,13 @@ angular.module('ngResource', ['ng']).
 
 		.directive('companyname', function(){
 			return{
-				restrict: "A",
-				template:"<label>Company/Suspect Name<span class='reqText'>Required</span></label><input type='text' name='compName' data-ng-model='compName' required='req' placeholder='Company Name'>" +
-				"<p data-ng-show='form.compName.$invalid && form.compName.$dirty'>You must enter your address</p>"
+				restrict: "AE",
+				template:"<label>Company/Suspect Name<span class='reqText' data-ng-show='req'>Required</span></label><input type='text' name='compName' data-ng-model='compName' required='req' placeholder='Company Name'>" +
+				"<p data-ng-show='form.compName.$invalid && form.compName.$dirty'>You must enter your address</p>",
+				replace:true,
+				link: function(scope,ele,attr){
+					scope.req= attr.req;
+				}
 			}
 		})
 
