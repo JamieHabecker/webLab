@@ -156,8 +156,6 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 }])
 
 .controller('StepFourController', ['$scope','$location','$timeout','complete', function($scope, $location,$timeout, complete){
-	$scope.zip = /^\d\d\d\d\d$/;
-	$scope.email= /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 	if(sessionStorage.stepFour){
 		if(sessionStorage.compState){
 			$scope.current = sessionStorage.compState;
@@ -170,10 +168,10 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 			fillIt : function() {
 				$scope.compName= p.compName;
 				$scope.compAddress = p.compAddress;
-				$scope.compCity  = p.compCity;
-				$scope.compZip = p.compZip;
-				$scope.compEmail = p.compEmail;
-				$scope.compPhone = p.compPhone;
+				$scope.city  = p.city;
+				$scope.zip = p.zip;
+				$scope.email = p.email;
+				$scope.phone = p.phone;
 			}
 			};
 		$timeout(formFill.fillIt, 100);
@@ -181,17 +179,17 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 		$scope.current = "Select a State";
 	}
 	$scope.next= function(){
-		console.log(complete)
+		//console.log(complete)
 		if($scope.state !== undefined){
 			sessionStorage.compState = $scope.state.State;
 		}
 		var stepFour = {
 			compName : $scope.compName,
 			compAddress : $scope.compAddress,
-			compCity : $scope.compCity,
-			compZip : $scope.compZip,
-			compEmail : $scope.compEmail,
-			compPhone : $scope.compPhone
+			city : $scope.city,
+			zip : $scope.zip,
+			email : $scope.email,
+			phone : $scope.phone
 		};
 		sessionStorage.setItem('stepFour', JSON.stringify(stepFour));
 		if(complete){
@@ -306,7 +304,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 						details: cdSix.details
 					};
 					$scope.theData = [data];
-					console.log($scope.theData)
+					//console.log($scope.theData)
 				}else{
 					data = {
 						pc: "false",

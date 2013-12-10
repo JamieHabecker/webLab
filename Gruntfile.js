@@ -6,7 +6,7 @@ module.exports = function(grunt){
 				tasks:['compass']
 			},
 			javascript:{
-				files:['public/globals/**/*.js'],
+				files:['public/globals/**/*.js', 'public/globals/scripts/*.js'],
 				tasks:['concat','uglify']
 			},
 			all :{
@@ -105,7 +105,9 @@ jade: {
 			"public/views/home.html": ["views/home.jade"],
 			"public/views/dmvnow.html": ["views/dmvnow.jade"],
 			"public/views/webservices.html": ["views/webservices.jade"],
-			"public/views/mydmv.html": ["views/mydmv.jade"]
+			"public/views/mydmv.html": ["views/mydmv.jade"],
+			"public/views/userForm.html": ["views/userForm.jade"],
+			"public/views/contributors.html": ["views/contributors.jade"]
 		}
 	}
 },  
