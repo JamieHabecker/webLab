@@ -3,23 +3,17 @@ article.g17
 		h3.formTitle Complainant/Victim Information
 		form(novalidate, name="form")
 			.formField.firstName(firstname, req="true")
-			.formField.lastName
-				label Last Name<span class="reqText">Required
-				input(type="text",name="lastname",data-ng-model="lastname",required="true",placeholder="Last Name")
-				p(data-ng-show="form.lastname.$invalid && form.lastname.$dirty")
-					You must enter your last name
-			.formField.address
-				label Address<span class="reqText">Required
-				input(type="text",name="address",data-ng-model="address",required="true",placeholder="Address")
-				p(data-ng-show="form.address.$invalid && form.address.$dirty")
-					You must enter your address
-			.formField.city
-				label City<span class="reqText">Required
-				input(type="text",name="city",data-ng-model="city",required="true",placeholder="City")
-				p(data-ng-show="form.city.$invalid && form.city.$dirty")
-					You must enter your city
+
+			.formField.lastName(lastname, req="true")
+
+			.formField.address(address, req="true")
+
+			.formField.city(city, req="true")
+
 			.formField.state(states,req="true")
-			.formField.zip(zip)
+
+			.formField.zip(zip, req="true")
+
 			.continue
 				div(btn,act="Continue")
 			portalcancel

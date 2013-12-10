@@ -27315,7 +27315,7 @@ angular.module('ngResource', ['ng']).
 .directive('zip', function(){
 			return{
 				restrict: 'A',
-				template: "<label>Zip<span class='reqText'>Required</span></label><input type='text' name='zip' data-ng-model='zip' data-ng-pattern='zipR' required='true' placeholder='ZIP'>" +
+				template: "<label>Zip<span class='reqText' data-ng-show='req'>Required</span></label><input type='text' name='zip' data-ng-model='zip' data-ng-pattern='zipR' data-ng-required='{{req}}' placeholder='ZIP'>" +
 						"<p data-ng-show='form.zip.$invalid && form.zip.$dirty'>You must enter your zip code</p>",
 				link: function(scope){
 					scope.zipR= /^\d{5}$/;
@@ -27383,7 +27383,65 @@ angular.module('ngResource', ['ng']).
 			}
 })
 
-.directive('make', function(){
+.directive('lastname', function(){
+			return{
+				restrict: 'A',
+				template: "<label>Last Name<span class='reqText' data-ng-show='req'>Required</span></label><input type='text' data-ng-required='req' name='ln' data-ng-model='lastname' placeholder='Last Name'>" +
+						"<p data-ng-show='form.lastname.$invalid && form.lastname.$dirty'>You must enter your last name</p>",
+				link: function(scope,ele,attr){
+					scope.req= attr.req;
+				}
+			}
+})
+
+.directive('address', function(){
+			return{
+				restrict: 'A',
+				template: "<label>Address<span class='reqText' data-ng-show='req'>Required</span></label><input type='text' name='address' data-ng-model='address' data-ng-required='{{req}}' placeholder='Address'>" +
+				"<p data-ng-show='form.address.$invalid && form.address.$dirty'>You must enter an address</p>",
+				link: function(scope,ele,attr){
+					console.log(attr.req)
+					scope.req= attr.req;
+				}
+			}
+})
+
+.directive('email', function(){
+			return{
+				restrict: 'A',
+				template: "<label>Email<span class='reqText' data-ng-show='req'>Required</span></label><input type='text' name='email' data-ng-model='email' data-ng-required='{{req}}' data-ng-pattern='/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/' placeholder='Email'>" +
+				"<p data-ng-show='form.email.$invalid && form.email.$dirty'>You must enter an email</p>",
+				link: function(scope,ele,attr){
+					scope.req= attr.req;
+				}
+		}
+})
+
+.directive('phone',function(){
+			return{
+				restrict:'A',
+				template:"<label>Phone<span class='reqText' data-ng-show='req'>Required</span></label><input type='text' name='phone' data-ng-maxlength='12' data-ng-model='phone' data-ng-required='{{req}}' data-ng-pattern='/[0-9-\-]{12,}/' placeholder='555-555-1212'>" +
+				"<p data-ng-show='form.phone.$invalid && form.phone.$dirty'>You must enter a valid phone number (ex.555-555-1212)</p>",
+				link: function(scope,ele,attr){
+					scope.req= attr.req;
+				}
+		}
+		})
+
+.directive('city', function(){
+			return{
+				restrict: 'A',
+				template: "<label>City<span class='reqText' data-ng-show='req'>Required</span></label><input type='text' name='city' data-ng-model='city' data-ng-required='{{req}}' placeholder='City'>" +
+						"<p data-ng-show='form.city.$invalid && form.city.$dirty'>You must enter your city</p>",
+				link: function(scope,ele,attr){
+				scope.req= attr.req;
+			}
+			}
+})
+
+
+
+		.directive('make', function(){
 			return{
 				restrict: 'A',
 				template: "<label>Make<span class='reqText' data-ng-show='req'>Required</span></label><input type='text' data-ng-required='req' name='vmake' data-ng-model='vmake' placeholder='Make'>" +
@@ -27393,6 +27451,17 @@ angular.module('ngResource', ['ng']).
 				}
 			}
 		})
+
+		.directive('companyname', function(){
+			return{
+				restrict: "A",
+				template:"<label>Company/Suspect Name<span class='reqText'>Required</span></label><input type='text' name='compName' data-ng-model='compName' required='req' placeholder='Company Name'>" +
+				"<p data-ng-show='form.compName.$invalid && form.compName.$dirty'>You must enter your address</p>"
+			}
+		})
+
+
+
 
 .directive('vin', function(){
 			return{
@@ -27404,6 +27473,19 @@ angular.module('ngResource', ['ng']).
 				}
 			}
 		})
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .directive('return', function(){
 			return{

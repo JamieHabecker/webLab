@@ -12,15 +12,20 @@ angular.module("factories", [])
 			}
 		})
 
-.factory('ContactFactory',['$resource', function($resource) {
-    var baseUrl = "//10.156.147.121/odometerfraud/Default.aspx/SendFields";
-    return $resource(baseUrl, {}, {
-        contactInfo : {
-            method : 'Post',
-            url : baseUrl
-        }
-    });
-}]);
+
+.factory('UserFactory',['$resource', function($resource) {
+			var baseUrl = "//localhost/user/new";
+			return $resource(baseUrl, {}, {
+				user : {
+					method : 'Get',
+					url : "//localhost/"
+				},
+				create : {
+					method : 'Post',
+					url : baseUrl
+				}
+			});
+}])
 
 
 

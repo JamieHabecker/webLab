@@ -10,102 +10,67 @@ angular.module("webLab", ['ngResource','directives','dmvPortalConfig','globals',
 		templateUrl : 'views/home.html'
 	})
 	.when('/DMVNow', {
-				controller : 'DisclaimerController',
+				//controller : 'DisclaimerController',
 				templateUrl : 'views/dmvnow.html'
 	})
 	.when('/WebServices', {
-				controller : 'DisclaimerController',
+				//controller : 'DisclaimerController',
 				templateUrl : 'views/webservices.html'
 	})
 	.when('/myDMV', {
-				controller : 'DisclaimerController',
+				//controller : 'DisclaimerController',
 				templateUrl : 'views/myDMV.html'
 			})
+	.when('/Contributors', {
+				controller : 'ContributorsController',
+				templateUrl : 'views/contributors.html'
+	})
+	.when('/SignUp', {
+				controller : 'SignUpController',
+				templateUrl : 'views/userForm.html'
+	})
 	.otherwise({
 		redirectTo : '/'
 	});
 
 }])
 
-.controller('DisclaimerController', ['$scope','$location','complete', function($scope, $location,complete){
-	$scope.next = function(){
-		$location.path('/StepOne')
-	}
-}])
-
-.controller('StepOneController', ['$scope','$location','complete', function($scope, $location,complete){
-	if(sessionStorage.type){
-		var a = sessionStorage.type;
-			if(a === "1"){
-				$scope.comType = "1";
-			}else{
-				$scope.comType = "2";
+.controller('SignUpController', ['$scope','UserFactory', function($scope, UserFactory){
+	$scope.next= function(){
+		var data ={
+			name: $scope.fn,
+			email: $scope.email
+		}
+		console.log(data)
+		UserFactory.create({},data, successcb, errorcb);
+}
+			function successcb(data){
+					console.log(data)
 			}
-		$scope.checkIt = false;
-	}else{
-		$scope.checkIt = true;
-	}
-	$scope.one= function(){
-		sessionStorage.type = "1";
-		$scope.checkIt = false;
-	}
-	$scope.two= function(){
-		sessionStorage.type = "2";
-		$scope.checkIt = true;
-	}
-	$scope.check= function(){
-		$scope.checkIt = false;
-	}
-	$scope.next= function(){
-		if($scope.comType === "1" || $scope.an === "Yes"){
-			sessionStorage.an = false;
-			$location.path("/StepTwo")
-		}else{
-			sessionStorage.removeItem("an");
-			$location.path("/StepFour")
-		}
-		
-	}
+			function errorcb(err){
+			console.log(err)
+			}
 }])
 
-.controller('StepTwoController', ['$scope','$location','$timeout','complete', function($scope, $location, $timeout, complete){
-	 if(sessionStorage.stepTwo){
-	 	var data = sessionStorage.getItem('stepTwo');
-	 	var p = JSON.parse(data);
-	 	var formFill = {
-	 		fillIt : function() {
-	 			$scope.fn= p.firstname;
-	 			$scope.lastname  = p.lastname;
-	 			$scope.address  = p.address;
-	 			$scope.city  = p.city;
-	 			$scope.current = sessionStorage.state;
-	 			$scope.zip = p.zip
-	 			}
-	 		};
-	 	$timeout(formFill.fillIt, 100);
-   }else{
-		 $scope.current="Select a State";
-	 }
-	$scope.next= function(){
-		if($scope.state !== undefined){
-			sessionStorage.state = $scope.state.code;
-		}else{
-		}
-		var stepTwo = {
-			firstname : $scope.fn,
-			lastname : $scope.lastname,
-			address : $scope.address,
-			city: $scope.city,
-			zip: $scope.zip
-			};
-		sessionStorage.setItem('stepTwo', JSON.stringify(stepTwo));
-		if(complete){
-			$location.path("/Verify")
-		}else{
-			$location.path("/StepThree")
-		}
-	}
+.controller('DisclaimerController', ['$scope','$location','UserFactory', function($scope,$location,UserFactory){
+			UserFactory.user({},{}, successcb, errorcb);
+			function successcb(data){
+				if(sessionStorage.id === "yes"){
+					$location.path("/Contributors")
+				}
+			}
+			function errorcb(err){
+				console.log(err)
+			}
 }])
+
+.controller('ContributorsController', ['$scope',function($scope){
+
+
+
+
+}])
+
 
 .controller('StepThreeController', ['$scope','$location','$timeout','complete', function($scope, $location, $timeout, complete){
 	if(sessionStorage.stepThree){
@@ -331,6 +296,9 @@ angular.module("webLab", ['ngResource','directives','dmvPortalConfig','globals',
 				window.location.replace("/");
 			}
 }])
+
+
+
 
 
 .animation('an-enter', function() {

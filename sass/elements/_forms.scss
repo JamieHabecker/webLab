@@ -97,10 +97,15 @@ select{
 	select{
 		background:none;
 	}
+	input.ng-dirty.ng-invalid{
+		background:none;
+	}
 	textarea{
 		min-height:8em;
 	}
-}  
+}
+
+
 
 input[type="radio"].ng-valid.ng-pristine, input[type="checkbox"].ng-valid.ng-pristine{
 	background:none;
@@ -127,9 +132,11 @@ background-color: #FCA4A7;
 
 input.ng-invalid.ng-dirty:focus {
 	background:#fff9d3;
+	background:none\9;
 }
 input.ng-valid.ng-dirty{
-background-color: #BFFFC6;
+	background-color: #BFFFC6;
+	background:none\9;
 }
 input.ng-pristine.ng-valid{
 	background-color: #eee;

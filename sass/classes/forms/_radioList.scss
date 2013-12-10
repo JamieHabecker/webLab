@@ -19,20 +19,18 @@ ul.radioList{
 				cursor:pointer;
 			}
 			input{
-				width:3%;
 				display:inline-block;
 				margin-top:-5px;
 				float:left;
+				background:none !important;
 			}
 			&:hover{
 			background:#FFF9D3;
 		}
-		&.selected{
-			background:#BFFFC6
-		}
 		span{
 			display:inline-block;
 			width:95%;
+			margin-left:0.5em;
 			}
 		}
 	}
