@@ -2,12 +2,11 @@ angular.module("KnowledgePortal", ['ngResource','directives','dmvPortalConfig','
 
 
 
-
 .config(['$routeProvider','$locationProvider','$httpProvider', function($routeProvider,$locationProvider, $httpProvider){
-     $httpProvider.defaults.headers.get = {
-        'Accept' : 'application/json, text/javascript, */*'
-   };
-		$httpProvider.defaults.useXDomain = true
+	$httpProvider.defaults.headers.get = {
+		'Accept' : 'application/json, text/javascript, */*'
+};
+			$httpProvider.defaults.useXDomain = true
     $routeProvider
     .when('/SampleKnowledgeExam', {
         controller : 'SKEController',
@@ -48,7 +47,6 @@ angular.module("KnowledgePortal", ['ngResource','directives','dmvPortalConfig','
 }])
 
 
-
 .controller('SKEController',['$scope','$rootScope','knowledgeFactory','$location','numberWrong','questionsMissed','theExam', function($scope,$rootScope,knowledgeFactory,$location,numberWrong,questionsMissed,theExam) {
     $scope.isloading = false;
     $rootScope.attempts = false;
@@ -80,8 +78,6 @@ angular.module("KnowledgePortal", ['ngResource','directives','dmvPortalConfig','
             $location.path("/Dealer/Operator License")
     };
 }])
-
-
 
 
 

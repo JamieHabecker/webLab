@@ -223,7 +223,7 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 		.directive('companyname', function(){
 			return{
 				restrict: "A",
-				template:"<label>Company/Suspect Name<span class='reqText' data-ng-show='req'>Required</span></label><input type='text' name='compName' data-ng-model='compName' required='req' placeholder='Company Name'>" +
+				template:"<label>Company/Suspect Name<span class='reqText' data-ng-show='{{req}}'>Required</span></label><input type='text' name='compName' data-ng-model='compName' required='req' placeholder='Company Name'>" +
 				"<p data-ng-show='form.compName.$invalid && form.compName.$dirty'>You must enter your address</p>",
 				link: function(scope,ele,attr){
 					scope.req= attr.req;
@@ -244,17 +244,6 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 				}
 			}
 		})
-
-
-
-
-
-
-
-
-
-
-
 
 
 
