@@ -107,7 +107,6 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 		 $scope.current="Select a State";
 	 }
 	$scope.next= function(){
-		console.log($scope.fn)
 		if($scope.state !== undefined){
 			sessionStorage.state = $scope.state.code;
 		}else{
@@ -180,7 +179,6 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 		$scope.current = "Select a State";
 	}
 	$scope.next= function(){
-		//console.log(complete)
 		if($scope.state !== undefined){
 			sessionStorage.compState = $scope.state.State;
 		}
@@ -206,7 +204,6 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 }])
 
 .controller('StepFiveController', ['$scope','$location','$timeout','complete',function($scope, $location,$timeout,complete){
-console.log(complete)
 			if(sessionStorage.stepFive){
 		var data = sessionStorage.getItem('stepFive');
 		var p = JSON.parse(data);
@@ -306,7 +303,6 @@ console.log(complete)
 						details: cdSix.details
 					};
 					$scope.theData = [data];
-					//console.log($scope.theData)
 				}else{
 					data = {
 						pc: "false",
