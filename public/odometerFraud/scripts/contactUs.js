@@ -107,6 +107,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 		 $scope.current="Select a State";
 	 }
 	$scope.next= function(){
+		console.log($scope.fn)
 		if($scope.state !== undefined){
 			sessionStorage.state = $scope.state.code;
 		}else{

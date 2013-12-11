@@ -27233,10 +27233,11 @@ angular.module('ngResource', ['ng']).
 .directive('states',['StateFactory',function(StateFactory){
 			return{
 				restrict: "AE",
-				template: "<label>State<span class='reqText' data-ng-show='r'>Required</span></label><select data-ng-model='state' data-ng-click='setState()' data-ng-options='c.State for c in states'><option value=''>{{current}}</option></select>",
+				template: "<label>State<span class='reqText' data-ng-show='stateReq'>Required</span></label><select data-ng-model='state' data-ng-click='setState()' data-ng-options='c.State for c in states'><option value=''>{{current}}</option></select>",
 				link: function(scope, elm, attr){
+					scope.stateReq= false;
 						if(attr.req){
-							scope.r = true;
+							scope.stateReq = true;
 						}
 					StateFactory.menu({},{}, statescb, stateserr);
 					function statescb(data){
@@ -27316,12 +27317,13 @@ angular.module('ngResource', ['ng']).
 .directive('zip', function(){
 			return{
 				restrict: 'AE',
-				template: "<div data-ng-form='zi'><label>Zip<span class='reqText' data-ng-show='r'>Required</span></label><input type='text' name='zip' data-ng-model='zip' data-ng-pattern='zipR' data-ng-required='r' placeholder='ZIP'>" +
+				template: "<div data-ng-form='zi'><label>Zip<span class='reqText' data-ng-show='zipReq'>Required</span></label><input type='text' name='zip' data-ng-model='zip' data-ng-pattern='zipR' data-ng-required='zipReq' placeholder='ZIP'>" +
 						"<p data-ng-show='zi.zip.$invalid && zi.zip.$dirty'>You must enter your zip code</p></div>",
-				link: function(scope){
-					scope.zipR= /^\d{5}$/;
+				link: function(scope,ele,attr){
+						scope.zipR= /^\d{5}$/;
+					scope.zipReq= false;
 						if(attr.req){
-							scope.r = true;
+							scope.zipReq= true;
 						}
 				}
 			}
@@ -27330,10 +27332,14 @@ angular.module('ngResource', ['ng']).
 .directive('year', function(){
 			return{
 				restrict: 'AE',
-				template: "<div data-ng-form='vy'><label>Year<span class='reqText'>Required</span></label><input type='text' name='vyear' data-ng-model='vyear' data-ng-pattern='vyearR' required='true' placeholder='YYYY'>" +
+				template: "<div data-ng-form='vy'><label>Year<span class='reqText' data-ng-show='yearReq'>Required</span></label><input type='text' name='vyear' data-ng-model='vyear' data-ng-pattern='vyearR' data-ng-required='yearReq' placeholder='YYYY'>" +
 						"<p data-ng-show='form.vyear.$invalid && form.vyear.$dirty'>You must enter the vehicles year</p></div>",
-				link: function(scope){
+				link: function(scope,ele,attr){
 				scope.vyearR= /^(19|20)\d{2}$/;
+					scope.yearReq= false;
+					if(attr.req){
+						scope.yearReq= true;
+					}
 				}
 			}
 })
@@ -27341,24 +27347,42 @@ angular.module('ngResource', ['ng']).
 .directive('plate', function(){
 			return{
 				restrict: 'AE',
-				template: "<div dtat-ng-form='vp'><label>Plate<span class='reqText'>Required</span></label><input type='text' data-ng-maxlength='8' name='vplate' data-ng-model='vplate' data-ng-maxlength='8' required='true' placeholder='License Plate'>" +
-						"<p data-ng-show='vp.vplate.$invalid && vp.vplate.$dirty'>You must enter the vehicles license plate</p></div>"
+				template: "<div dtat-ng-form='vp'><label>Plate<span class='reqText' data-ng-required='plateReq'>Required</span></label><input type='text' data-ng-maxlength='8' name='vplate' data-ng-model='vplate' data-ng-maxlength='8' data-ng-required='plateReq' placeholder='License Plate'>" +
+						"<p data-ng-show='vp.vplate.$invalid && vp.vplate.$dirty'>You must enter the vehicles license plate</p></div>",
+				link: function(scope,ele,attr){
+					scope.plateReq= false;
+					if(attr.req){
+						scope.plateReq= true;
+					}
+				}
 			}
 })
 
 .directive('pcolor', function(){
 			return{
 				restrict: 'AE',
-				template: "<div dtat-ng-form='vcp'><label>Primary Color<span class='reqText'>Required</span></label><input type='text' name='vpc' data-ng-model='vpc' required='true' placeholder='Primary Color'>" +
-						"<p data-ng-show='vcp.vpc.$invalid && vcp.vpc.$dirty'>You must enter the vehicle primary color</p></div>"
+				template: "<div dtat-ng-form='vcp'><label>Primary Color<span class='reqText' data-ng-show='pcolorReq'>Required</span></label><input type='text' name='vpc' data-ng-model='vpc' data-ng-required='pcolorReq' placeholder='Primary Color'>" +
+						"<p data-ng-show='vcp.vpc.$invalid && vcp.vpc.$dirty'>You must enter the vehicle primary color</p></div>",
+				link: function(scope,ele,attr){
+					scope.pcolorReq= false;
+					if(attr.req){
+						scope.pcolorReq= true;
+					}
+				}
 			}
 })
 
 .directive('scolor', function(){
 			return{
 				restrict: 'AE',
-				template: "<div data-ng-form='vcs'><label>Secondary Color<span class='reqText' data-ng-show='req'>Required</span></label><input type='text' name='vsc' data-ng-model='vsc' placeholder='Secondary Color'>" +
-						"<p data-ng-show='vcs.vsc.$invalid && vcs.vsc.$dirty'>You must enter the vehicle secondary color</p></div>"
+				template: "<div data-ng-form='vcs'><label>Secondary Color<span class='reqText' data-ng-show='scolorReq'>Required</span></label><input type='text' name='vsc' data-ng-model='vsc' data-ng-required='scolorReq' placeholder='Secondary Color'>" +
+						"<p data-ng-show='vcs.vsc.$invalid && vcs.vsc.$dirty'>You must enter the vehicle secondary color</p></div>",
+				link: function(scope,ele,attr){
+					scope.scolorReq= false;
+					if(attr.req){
+						scope.scolorReq= true;
+					}
+				}
 			}
 })
 
@@ -27366,18 +27390,25 @@ angular.module('ngResource', ['ng']).
 			return{
 				restrict: 'AE',
 				template: "<div data-ng-form='mo'><label>Model<span class='reqText' data-ng-show='req'>Required</span></label><input type='text' data-ng-required='req' name='vmodel' data-ng-model='vmodel' placeholder='Model'>" +
-						"<p data-ng-show='mo.vmodel.$invalid && mo.vmodel.$dirty'>You must enter the vehicle model</p></div>"
+						"<p data-ng-show='mo.vmodel.$invalid && mo.vmodel.$dirty'>You must enter the vehicle model</p></div>",
+				link: function(scope,ele,attr){
+					scope.modelReq= false;
+					if(attr.req){
+						scope.modelReq= true;
+					}
+				}
 			}
 })
 
 .directive('firstname', function(){
 			return{
 				restrict: 'AE',
-				template: "<div data-ng-form='fi'><label>First Name<span class='reqText' data-ng-show='r'>Required</span></label><input type='text' data-ng-required='r' name='fn' data-ng-model='fn' placeholder='First Name'>" +
+				template: "<div data-ng-form='fi'><label>First Name<span class='reqText' data-ng-show='fname'>Required</span></label><input type='text' data-ng-required='fname' name='fn' data-ng-model='fn' placeholder='First Name'>" +
 						"<p data-ng-show='fi.fn.$invalid && fi.fn.$dirty'>You must enter your first name</p></div>",
 				link: function(scope, ele, attr){
+					scope.fname= false;
 					if(attr.req){
-						scope.r = true;
+						scope.fname = true;
 					}
 				}
 			}
@@ -27386,11 +27417,12 @@ angular.module('ngResource', ['ng']).
 .directive('lastname', function(){
 			return{
 				restrict: 'AE',
-				template: "<div data-ng-form='la'><label>Last Name<span class='reqText' data-ng-show='r'>Required</span></label><input type='text' data-ng-required='r' name='lastname' data-ng-model='lastname' placeholder='Last Name'>" +
+				template: "<div data-ng-form='la'><label>Last Name<span class='reqText' data-ng-show='lname'>Required</span></label><input type='text' data-ng-required='lname' name='lastname' data-ng-model='lastname' placeholder='Last Name'>" +
 						"<p data-ng-show='la.lastname.$invalid && la.lastname.$dirty'>You must enter your last name</p></div>",
 				link: function(scope, ele, attr){
+					scope.lname = false;
 					if(attr.req){
-						scope.r = true;
+						scope.lname = true;
 					}
 				}
 			}
@@ -27399,11 +27431,12 @@ angular.module('ngResource', ['ng']).
 .directive('address', function(){
 			return{
 				restrict: 'AE',
-				template: "<div data-ng-form='add'><label>Address<span class='reqText' data-ng-show='r'>Required</span></label><input type='text' name='address' data-ng-model='address' data-ng-required='r' placeholder='Address'>" +
+				template: "<div data-ng-form='add'><label>Address<span class='reqText' data-ng-show='addressReq'>Required</span></label><input type='text' name='address' data-ng-model='address' data-ng-required='addressReq' placeholder='Address'>" +
 						"<p data-ng-show='add.address.$invalid && add.address.$dirty'>You must enter an address</p></div>",
 				link: function(scope, ele, attr){
+					scope.addressReq= false;
 					if(attr.req){
-						scope.r = true;
+						scope.addressReq= true;
 					}
 				}
 			}
@@ -27412,12 +27445,13 @@ angular.module('ngResource', ['ng']).
 .directive('email', function(){
 			return{
 				restrict: 'AE',
-				template: "<div data-ng-form='em'><label>Email<span class='reqText' data-ng-show='r'>Required</span></label><input type='text' name='email' data-ng-model='email' data-ng-required='r' data-ng-pattern='emailR' placeholder='Email'>" +
+				template: "<div data-ng-form='em'><label>Email<span class='reqText' data-ng-show='emailReq'>Required</span></label><input type='text' name='email' data-ng-model='email' data-ng-required='emailReq' data-ng-pattern='emailR' placeholder='Email'>" +
 				"<p data-ng-show='em.email.$invalid && em.email.$dirty'>You must enter an email</p></div>",
 				link: function(scope, ele, attr){
 					scope.emailR= /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+					scope.emailReq= false;
 					if(attr.req){
-						scope.r = true;
+						scope.emailReq= true;
 					}
 				}
 		}
@@ -27426,19 +27460,28 @@ angular.module('ngResource', ['ng']).
 .directive('phone',function(){
 			return{
 				restrict:'AE',
-				template:"<div data-ng-form='ph'><label>Phone<span class='reqText' data-ng-show='req'>Required</span></label><input type='text' name='phone' data-ng-maxlength='12' data-ng-model='phone' data-ng-required='{{req}}' data-ng-pattern='/[0-9-\-]{12,}/' placeholder='555-555-1212'>" +
-				"<p data-ng-show='ph.phone.$invalid && ph.phone.$dirty'>You must enter a valid phone number (ex.555-555-1212)</p></div>"
+				template:"<div data-ng-form='ph'><label>Phone<span class='reqText' data-ng-show='phoneReq'>Required</span></label><input type='text' name='phone' data-ng-maxlength='12' data-ng-model='phone' data-ng-required='phoneReq' data-ng-pattern='phoneR' placeholder='555-555-1212'>" +
+				"<p data-ng-show='ph.phone.$invalid && ph.phone.$dirty'>You must enter a valid phone number (ex.555-555-1212)</p></div>",
+				link: function(scope, ele, attr){
+					scope.phoneR= /[0-9-\-]{12,}/;
+					scope.phoneReq= false;
+					if(attr.req){
+						scope.phoneReq= true;
+					}
+				}
+
 		}
 		})
 
 .directive('city', function(){
 			return{
 				restrict: 'AE',
-				template: "<div data-ng-form='ci'><label>City<span class='reqText' data-ng-show='r'>Required</span></label><input type='text' name='city' data-ng-model='city' data-ng-required='r' placeholder='City'>" +
+				template: "<div data-ng-form='ci'><label>City<span class='reqText' data-ng-show='cityReq'>Required</span></label><input type='text' name='city' data-ng-model='city' data-ng-required='cityReq' placeholder='City'>" +
 						"<p data-ng-show='ci.city.$invalid && ci.city.$dirty'>You must enter your city</p></div>",
 				link: function(scope, ele, attr){
+					scope.cityReq= false;
 					if(attr.req){
-						scope.r = true;
+						scope.cityReq = true;
 					}
 				}
 			}
@@ -27447,24 +27490,26 @@ angular.module('ngResource', ['ng']).
 .directive('make', function(){
 			return{
 				restrict: 'AE',
-				template: "<div data-ng-form='vma'></div><label>Make<span class='reqText' data-ng-show='r'>Required</span></label><input type='text' data-ng-required='r' name='vmake' data-ng-model='vmake' placeholder='Make'>" +
+				template: "<div data-ng-form='vma'></div><label>Make<span class='reqText' data-ng-show='vmakeReq'>Required</span></label><input type='text' data-ng-required='vmakeReq' name='vmake' data-ng-model='vmake' placeholder='Make'>" +
 						"<p data-ng-show='vma.vmake.$invalid && vma.vmake.$dirty'>You must enter the vehicles model</p></div>",
 				link: function(scope, ele, attr){
+					scope.vmakeReq= false;
 					if(attr.req){
-						scope.r = true;
+						scope.vmakeReq = true;
 					}
 				}
 			}
 })
 
-.directive('companyname', function(){
+.directive('compname', function(){
 			return{
 				restrict: "AE",
-				template:"<div data-ng-form='comp'><label id='la'>Company/Suspect Name<span class='reqText' data-ng-show='r'>Required</span></label><input type='text' name='compName' data-ng-model='compName' data-ng-required='r' placeholder='Company Name'>" +
+				template:"<div data-ng-form='comp'><label>Company/Suspect Name<span class='reqText' data-ng-show='compReq'>Required</span></label><input type='text' name='compName' data-ng-model='compName' data-ng-required='compReq' placeholder='Company Name'>" +
 				"<p data-ng-show='comp.compName.$invalid && comp.compName.$dirty'>You must enter your address</p>",
 				link: function(scope, ele, attr){
+					scope.compReq= false;
 					if(attr.req){
-						scope.r = true;
+						scope.compReq= true;
 					}
 				}
 			}
@@ -27473,12 +27518,13 @@ angular.module('ngResource', ['ng']).
 .directive('vin',function(){
 			return{
 				restrict: 'AE',
-				template: "<div data-ng-form='vvi'><label>Last Four of VIN<span class='reqText' data-ng-show='r'>Required</span></label><input type='text' name='vvin' data-ng-model='vvin' data-ng-pattern='vinR' data-ng-required='r' placeholder='VIN'>" +
+				template: "<div data-ng-form='vvi'><label>Last Four of VIN<span class='reqText' data-ng-show='vinReq'>Required</span></label><input type='text' name='vvin' data-ng-model='vvin' data-ng-pattern='vinR' data-ng-required='vinReq' placeholder='VIN'>" +
 						"<p data-ng-show='vvi.vvin.$invalid && vvi.vvin.$dirty'>You must enter the last four VIN</p>",
 				link: function(scope){
 					scope.vinR= /^(\d){4}$/;
+					scope.vinReq= false;
 						if(attr.req){
-							scope.r = true;
+							scope.vinReq= true;
 						}
 				}
 			}
