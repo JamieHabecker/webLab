@@ -25,16 +25,14 @@ angular.module("factories", [])
 
 
 .factory('knowledgeFactory',['$resource', function($resource) {
-	var baseUrl = "http://10.156.147.121:4040\:4040/SampleKnowledgeExam/Default.aspx/GetQuestions";
+	var baseUrl = "http://10.156.147.121:4040\:4040/WebServicesBackEnd/SampleKnowledgeExam.aspx/GetQuestions";
 	return $resource(baseUrl, {}, {
 		skeQuestions : {
 		method : 'POST',
-		crossDomain: true,
 		url : baseUrl
 		}
 	});
 }]);
-
 
 
 

@@ -27201,12 +27201,11 @@ angular.module('ngResource', ['ng']).
 
 
 
-
 .config(['$routeProvider','$locationProvider','$httpProvider', function($routeProvider,$locationProvider, $httpProvider){
-     $httpProvider.defaults.headers.get = {
-        'Accept' : 'application/json, text/javascript, */*'
-   };
-		$httpProvider.defaults.useXDomain = true
+	$httpProvider.defaults.headers.get = {
+		'Accept' : 'application/json, text/javascript, */*'
+};
+			$httpProvider.defaults.useXDomain = true
     $routeProvider
     .when('/SampleKnowledgeExam', {
         controller : 'SKEController',
@@ -27247,7 +27246,6 @@ angular.module('ngResource', ['ng']).
 }])
 
 
-
 .controller('SKEController',['$scope','$rootScope','knowledgeFactory','$location','numberWrong','questionsMissed','theExam', function($scope,$rootScope,knowledgeFactory,$location,numberWrong,questionsMissed,theExam) {
     $scope.isloading = false;
     $rootScope.attempts = false;
@@ -27279,8 +27277,6 @@ angular.module('ngResource', ['ng']).
             $location.path("/Dealer/Operator License")
     };
 }])
-
-
 
 
 
@@ -27687,11 +27683,11 @@ angular.module('ngResource', ['ng']).
         return directiveDefinitionObject;
     });
 
-}]); ;var devCon = "http://10.156.147.121/";
+}]); ;
 
 angular.module("factories", [])
 
-
+.constant("baseUrl","http://10.156.147.121:4040\:4040")
 .factory('questionsMissed', function(){
     return [];
 })
@@ -27714,14 +27710,13 @@ angular.module("factories", [])
 
 
 .factory('knowledgeFactory',['$resource', function($resource) {
-    var baseUrl = devCon+ "/SampleKnowledgeExam/Default.aspx/GetQuestions";
-    return $resource(baseUrl, {}, {
-        skeQuestions : {
-            method : 'POST',
-						crossDomain: true,
-            url : baseUrl
-        }
-    });
+	var url = baseUrl + "/WebServicesBackEnd/SampleKnowledgeExam.aspx/GetQuestions";
+	return $resource(baseUrl, {}, {
+		skeQuestions : {
+		method : 'POST',
+		url : url
+		}
+	});
 }]);
 
 

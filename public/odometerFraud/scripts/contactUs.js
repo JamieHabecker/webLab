@@ -107,7 +107,6 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 		 $scope.current="Select a State";
 	 }
 	$scope.next= function(){
-		console.log($scope.fn)
 		if($scope.state !== undefined){
 			sessionStorage.state = $scope.state.code;
 		}else{
@@ -168,7 +167,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 		var formFill = {
 			fillIt : function() {
 				$scope.compName= p.compName;
-				$scope.compAddress = p.compAddress;
+				$scope.address = p.compAddress;
 				$scope.city  = p.city;
 				$scope.zip = p.zip;
 				$scope.email = p.email;
@@ -180,13 +179,12 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 		$scope.current = "Select a State";
 	}
 	$scope.next= function(){
-		//console.log(complete)
 		if($scope.state !== undefined){
 			sessionStorage.compState = $scope.state.State;
 		}
 		var stepFour = {
 			compName : $scope.compName,
-			compAddress : $scope.compAddress,
+			compAddress : $scope.address,
 			city : $scope.city,
 			zip : $scope.zip,
 			email : $scope.email,
@@ -206,7 +204,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 }])
 
 .controller('StepFiveController', ['$scope','$location','$timeout','complete',function($scope, $location,$timeout,complete){
-	if(sessionStorage.stepFive){
+			if(sessionStorage.stepFive){
 		var data = sessionStorage.getItem('stepFive');
 		var p = JSON.parse(data);
 		var formFill = {
@@ -290,11 +288,11 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 						conPref : cdThree.conPref,
 						compName : cdFour.compName,
 						compAddress: cdFour.compAddress,
-						compCity: cdFour.compCity,
+						compCity: cdFour.city,
 						compState: compState,
-						compZip: cdFour.compZip,
-						compEmail: cdFour.compEmail,
-						compPhone: cdFour.compPhone,
+						compZip: cdFour.zip,
+						compEmail: cdFour.email,
+						compPhone: cdFour.phone,
 						year: cdFive.year,
 						make: cdFive.make,
 						model: cdFive.model,
@@ -305,7 +303,6 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 						details: cdSix.details
 					};
 					$scope.theData = [data];
-					//console.log($scope.theData)
 				}else{
 					data = {
 						pc: "false",
@@ -409,14 +406,6 @@ angular.module("directives", [])
                                           
 
 
-.directive('button', function(){
-    return{
-        restrict: 'E',
-        compile: function(element, attributes){
-            element.addClass('orgBtn')
-        }
-    };
-})
 
 
 
@@ -569,8 +558,9 @@ angular.module("directives", [])
     return []
 })
 
+
 .factory('complete', function(){
-			if(sessionStorage.complete == true){
+			if(sessionStorage.complete == 'true'){
 				return true;
 			}else{
 				return false;
