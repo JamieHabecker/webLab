@@ -286,7 +286,7 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 .directive('compname', function(){
 			return{
 				restrict: "AE",
-				template:"<div data-ng-form='comp'><label>Make<span class='reqText' data-ng-show='compReq'>Required</span></label><input type='text' name='compName' data-ng-model='compName' data-ng-required='compReq' placeholder='Company Name'>" +
+				template:"<div data-ng-form='comp'><label>Company/Suspect Name<span class='reqText' data-ng-show='compReq'>Required</span></label><input type='text' name='compName' data-ng-model='compName' data-ng-required='compReq' placeholder='Company Name'>" +
 				"<p data-ng-show='comp.compName.$invalid && comp.compName.$dirty'>You must enter your address</p>",
 				link: function(scope, ele, attr){
 					scope.compReq= false;
