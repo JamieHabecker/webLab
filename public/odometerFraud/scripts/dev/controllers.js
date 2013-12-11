@@ -168,7 +168,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 		var formFill = {
 			fillIt : function() {
 				$scope.compName= p.compName;
-				$scope.compAddress = p.compAddress;
+				$scope.address = p.compAddress;
 				$scope.city  = p.city;
 				$scope.zip = p.zip;
 				$scope.email = p.email;
@@ -186,7 +186,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 		}
 		var stepFour = {
 			compName : $scope.compName,
-			compAddress : $scope.compAddress,
+			compAddress : $scope.address,
 			city : $scope.city,
 			zip : $scope.zip,
 			email : $scope.email,
@@ -291,11 +291,11 @@ console.log(complete)
 						conPref : cdThree.conPref,
 						compName : cdFour.compName,
 						compAddress: cdFour.compAddress,
-						compCity: cdFour.compCity,
+						compCity: cdFour.city,
 						compState: compState,
-						compZip: cdFour.compZip,
-						compEmail: cdFour.compEmail,
-						compPhone: cdFour.compPhone,
+						compZip: cdFour.zip,
+						compEmail: cdFour.email,
+						compPhone: cdFour.phone,
 						year: cdFive.year,
 						make: cdFive.make,
 						model: cdFive.model,
