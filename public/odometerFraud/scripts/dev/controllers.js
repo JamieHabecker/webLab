@@ -206,7 +206,8 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 }])
 
 .controller('StepFiveController', ['$scope','$location','$timeout','complete',function($scope, $location,$timeout,complete){
-	if(sessionStorage.stepFive){
+console.log(complete)
+			if(sessionStorage.stepFive){
 		var data = sessionStorage.getItem('stepFive');
 		var p = JSON.parse(data);
 		var formFill = {

@@ -3,12 +3,19 @@ article.g17
 		h3.formTitle Vehicle Information
 		form(novalidate, name="form")
 			.formField.year(year,req)
+
 			.formField.make(make,req)
+
 			.formField.model(model,req)
-			.formField.vin(vin)
-			.formField.plate(plate)
-			.formField.prmColr(pcolor)
-			.formField.secColr(scolor,req)
+
+			.formField.vin(vin,req)
+
+			.formField.plate(plate,req)
+
+			.formField.prmColr(pcolor,req)
+
+			.formField.secColr(scolor)
+
 			.continue
 				div(btn,act="Continue")
 			portalcancel

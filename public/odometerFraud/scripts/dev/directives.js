@@ -35,14 +35,6 @@ angular.module("directives", [])
                                           
 
 
-.directive('button', function(){
-    return{
-        restrict: 'E',
-        compile: function(element, attributes){
-            element.addClass('orgBtn')
-        }
-    };
-})
 
 
 

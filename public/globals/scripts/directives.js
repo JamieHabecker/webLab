@@ -62,6 +62,15 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 	})
 
 
+		.directive('button', function(){
+			return{
+				restrict: 'E',
+				compile: function(element, attributes){
+					element.addClass('orgBtn')
+				}
+			};
+		})
+
 .directive('mod', function(){
 			return{
 				restrict: 'EA',
@@ -105,7 +114,7 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 			return{
 				restrict: 'AE',
 				template: "<div data-ng-form='vy'><label>Year<span class='reqText' data-ng-show='yearReq'>Required</span></label><input type='text' name='vyear' data-ng-model='vyear' data-ng-pattern='vyearR' data-ng-required='yearReq' placeholder='YYYY'>" +
-						"<p data-ng-show='form.vyear.$invalid && form.vyear.$dirty'>You must enter the vehicles year</p></div>",
+						"<p data-ng-show='vy.vyear.$invalid && vy.vyear.$dirty'>You must enter the vehicles year</p></div>",
 				link: function(scope,ele,attr){
 				scope.vyearR= /^(19|20)\d{2}$/;
 					scope.yearReq= false;
@@ -119,7 +128,7 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 .directive('plate', function(){
 			return{
 				restrict: 'AE',
-				template: "<div dtat-ng-form='vp'><label>Plate<span class='reqText' data-ng-required='plateReq'>Required</span></label><input type='text' data-ng-maxlength='8' name='vplate' data-ng-model='vplate' data-ng-maxlength='8' data-ng-required='plateReq' placeholder='License Plate'>" +
+				template: "<div data-ng-form='vp'><label>Plate<span class='reqText' data-ng-required='plateReq'>Required</span></label><input type='text' data-ng-maxlength='8' name='vplate' data-ng-model='vplate' data-ng-maxlength='8' data-ng-required='plateReq' placeholder='License Plate'>" +
 						"<p data-ng-show='vp.vplate.$invalid && vp.vplate.$dirty'>You must enter the vehicles license plate</p></div>",
 				link: function(scope,ele,attr){
 					scope.plateReq= false;
@@ -133,8 +142,8 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 .directive('pcolor', function(){
 			return{
 				restrict: 'AE',
-				template: "<div dtat-ng-form='vcp'><label>Primary Color<span class='reqText' data-ng-show='pcolorReq'>Required</span></label><input type='text' name='vpc' data-ng-model='vpc' data-ng-required='pcolorReq' placeholder='Primary Color'>" +
-						"<p data-ng-show='vcp.vpc.$invalid && vcp.vpc.$dirty'>You must enter the vehicle primary color</p></div>",
+				template: "<div data-ng-form='primcolor'><label>Primary Color<span class='reqText' data-ng-show='pcolorReq'>Required</span></label><input type='text' name='vpc' data-ng-model='vpc' data-ng-required='pcolorReq' placeholder='Primary Color'>" +
+						"<p data-ng-show='primcolor.vpc.$invalid && primcolor.vpc.$dirty'>You must enter the vehicle primary color</p></div>",
 				link: function(scope,ele,attr){
 					scope.pcolorReq= false;
 					if(attr.req){
@@ -161,7 +170,7 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 .directive('model', function(){
 			return{
 				restrict: 'AE',
-				template: "<div data-ng-form='mo'><label>Model<span class='reqText' data-ng-show='req'>Required</span></label><input type='text' data-ng-required='req' name='vmodel' data-ng-model='vmodel' placeholder='Model'>" +
+				template: "<div data-ng-form='mo'><label>Model<span class='reqText' data-ng-show='modelReq'>Required</span></label><input type='text' data-ng-required='modelReq' name='vmodel' data-ng-model='vmodel' placeholder='Model'>" +
 						"<p data-ng-show='mo.vmodel.$invalid && mo.vmodel.$dirty'>You must enter the vehicle model</p></div>",
 				link: function(scope,ele,attr){
 					scope.modelReq= false;
@@ -259,24 +268,25 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 			}
 })
 
+
 .directive('make', function(){
 			return{
-				restrict: 'AE',
-				template: "<div data-ng-form='vma'></div><label>Make<span class='reqText' data-ng-show='vmakeReq'>Required</span></label><input type='text' data-ng-required='vmakeReq' name='vmake' data-ng-model='vmake' placeholder='Make'>" +
-						"<p data-ng-show='vma.vmake.$invalid && vma.vmake.$dirty'>You must enter the vehicles model</p></div>",
+				restrict: "AE",
+				template:"<div data-ng-form='make'><label>Make<span class='reqText' data-ng-show='makeReq'>Required</span></label><input type='text' name='vmake' data-ng-model='vmake' data-ng-required='makeReq' placeholder='Company Name'>" +
+						"<p data-ng-show='make.vmake.$invalid && make.vmake.$dirty'>You must enter the vehicle make</p>",
 				link: function(scope, ele, attr){
-					scope.vmakeReq= false;
+					scope.makeReq= false;
 					if(attr.req){
-						scope.vmakeReq = true;
+						scope.makeReq= true;
 					}
 				}
 			}
-})
+		})
 
 .directive('compname', function(){
 			return{
 				restrict: "AE",
-				template:"<div data-ng-form='comp'><label>Company/Suspect Name<span class='reqText' data-ng-show='compReq'>Required</span></label><input type='text' name='compName' data-ng-model='compName' data-ng-required='compReq' placeholder='Company Name'>" +
+				template:"<div data-ng-form='comp'><label>Make<span class='reqText' data-ng-show='compReq'>Required</span></label><input type='text' name='compName' data-ng-model='compName' data-ng-required='compReq' placeholder='Company Name'>" +
 				"<p data-ng-show='comp.compName.$invalid && comp.compName.$dirty'>You must enter your address</p>",
 				link: function(scope, ele, attr){
 					scope.compReq= false;
