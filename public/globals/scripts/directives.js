@@ -41,22 +41,6 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 			};
 })
 
-.directive('dev', function() {
-			return {
-				restrict: 'EA',
-				template: "<script src='{{src}}'></script>",
-				replace: true,
-				link: function(scope,ele,attr){
-					if(localStorage.development == true){
-						scope.src= 'http://10.156.147.121/globals/globals.js'
-					}else if(localStorage.mine == true){
-						scope.src= 'http://localhost/globals/globals.js'
-					}else{
-						scope.src= '/globals/globals.js'
-					}
-				}
-			};
-})
 
 .directive('weblabheader', function() {
 			return {
