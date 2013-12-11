@@ -4,6 +4,7 @@ angular.module("factories", [])
     return []
 })
 
+
 .factory('complete', function(){
 			if(sessionStorage.complete === 'true'){
 				return true;
