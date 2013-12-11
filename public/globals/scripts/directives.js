@@ -244,10 +244,13 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 .directive('vin',function(){
 			return{
 				restrict: 'AE',
-				template: "<div data-ng-form='vvi'><label>Last Four of VIN<span class='reqText' data-ng-show='req'>Required</span></label><input type='text' name='vvin' data-ng-model='vvin' data-ng-pattern='vinR' data-ng-required='req' placeholder='VIN'>" +
+				template: "<div data-ng-form='vvi'><label>Last Four of VIN<span class='reqText' data-ng-show='r'>Required</span></label><input type='text' name='vvin' data-ng-model='vvin' data-ng-pattern='vinR' data-ng-required='r' placeholder='VIN'>" +
 						"<p data-ng-show='vvi.vvin.$invalid && vvi.vvin.$dirty'>You must enter the last four VIN</p>",
 				link: function(scope){
 					scope.vinR= /^(\d){4}$/;
+						if(attr.req){
+							scope.r = true;
+						}
 				}
 			}
 		})

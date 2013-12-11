@@ -27447,26 +27447,39 @@ angular.module('ngResource', ['ng']).
 .directive('make', function(){
 			return{
 				restrict: 'AE',
-				template: "<div data-ng-form='vma'></div><label>Make<span class='reqText' data-ng-show='req'>Required</span></label><input type='text' data-ng-required='req' name='vmake' data-ng-model='vmake' placeholder='Make'>" +
-						"<p data-ng-show='vma.vmake.$invalid && vma.vmake.$dirty'>You must enter the vehicles model</p></div>"
+				template: "<div data-ng-form='vma'></div><label>Make<span class='reqText' data-ng-show='r'>Required</span></label><input type='text' data-ng-required='r' name='vmake' data-ng-model='vmake' placeholder='Make'>" +
+						"<p data-ng-show='vma.vmake.$invalid && vma.vmake.$dirty'>You must enter the vehicles model</p></div>",
+				link: function(scope, ele, attr){
+					if(attr.req){
+						scope.r = true;
+					}
+				}
 			}
 })
 
 .directive('companyname', function(){
 			return{
 				restrict: "AE",
-				template:"<div data-ng-form='comp'><label id='la'>Company/Suspect Name<span class='reqText' data-ng-show='req'>Required</span></label><input type='text' name='compName' data-ng-model='compName' data-ng-required='req' placeholder='Company Name'>" +
-				"<p data-ng-show='comp.compName.$invalid && comp.compName.$dirty'>You must enter your address</p>"
+				template:"<div data-ng-form='comp'><label id='la'>Company/Suspect Name<span class='reqText' data-ng-show='r'>Required</span></label><input type='text' name='compName' data-ng-model='compName' data-ng-required='r' placeholder='Company Name'>" +
+				"<p data-ng-show='comp.compName.$invalid && comp.compName.$dirty'>You must enter your address</p>",
+				link: function(scope, ele, attr){
+					if(attr.req){
+						scope.r = true;
+					}
+				}
 			}
 })
 
 .directive('vin',function(){
 			return{
 				restrict: 'AE',
-				template: "<div data-ng-form='vvi'><label>Last Four of VIN<span class='reqText' data-ng-show='req'>Required</span></label><input type='text' name='vvin' data-ng-model='vvin' data-ng-pattern='vinR' data-ng-required='req' placeholder='VIN'>" +
+				template: "<div data-ng-form='vvi'><label>Last Four of VIN<span class='reqText' data-ng-show='r'>Required</span></label><input type='text' name='vvin' data-ng-model='vvin' data-ng-pattern='vinR' data-ng-required='r' placeholder='VIN'>" +
 						"<p data-ng-show='vvi.vvin.$invalid && vvi.vvin.$dirty'>You must enter the last four VIN</p>",
 				link: function(scope){
 					scope.vinR= /^(\d){4}$/;
+						if(attr.req){
+							scope.r = true;
+						}
 				}
 			}
 		})

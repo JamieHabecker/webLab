@@ -2,13 +2,13 @@ article.g17
 	div
 		h3.formTitle Vehicle Information
 		form(novalidate, name="form")
-			.formField.year(year)
-			.formField.make(make, req="true")
-			.formField.model(model, req="true")
+			.formField.year(year,req)
+			.formField.make(make,req)
+			.formField.model(model,req)
 			.formField.vin(vin)
 			.formField.plate(plate)
 			.formField.prmColr(pcolor)
-			.formField.secColr(scolor req="false")
+			.formField.secColr(scolor,req)
 			.continue
 				div(btn,act="Continue")
 			portalcancel
