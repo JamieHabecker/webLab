@@ -41,6 +41,23 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 			};
 })
 
+.directive('dev', function() {
+			return {
+				restrict: 'EA',
+				template: "<script src='{{src}}'></script>",
+				replace: true,
+				link: function(scope,ele,attr){
+					if(localStorage.development == true){
+						scope.src= 'http://10.156.147.121/globals/globals.js'
+					}else if(localStorage.mine == true){
+						scope.src= 'http://localhost/globals/globals.js'
+					}else{
+						scope.src= '/globals/globals.js'
+					}
+				}
+			};
+})
+
 .directive('weblabheader', function() {
 			return {
 				restrict: 'EA',
@@ -291,7 +308,7 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 				restrict: 'AE',
 				template: "<div data-ng-form='vvi'><label>Last Four of VIN<span class='reqText' data-ng-show='vinReq'>Required</span></label><input type='text' name='vvin' data-ng-model='vvin' data-ng-pattern='vinR' data-ng-required='vinReq' placeholder='VIN'>" +
 						"<p data-ng-show='vvi.vvin.$invalid && vvi.vvin.$dirty'>You must enter the last four VIN</p>",
-				link: function(scope){
+				link: function(scope,ele,attr){
 					scope.vinR= /^(\d){4}$/;
 					scope.vinReq= false;
 						if(attr.req){
