@@ -11,13 +11,12 @@ header.dmvHeader{
 @media screen and (max-width:420px){
 	div.logo{
 		width:$seventeen;
-		a{
-			text-align:center;
-			display:block;
 		img{
 			max-width:60%;
+			display:block;
+			margin:0 auto;
 		}
-		}
+
 	}
 }
 @media screen and (min-width:421px){
