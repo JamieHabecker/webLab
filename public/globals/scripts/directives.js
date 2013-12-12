@@ -86,7 +86,7 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 .directive('loader', function(){
 			return{
 				restrict: 'A',
-				template: '<h2 class="loaderText" data-ng-show="isloading"> Sending Information</h2>',
+				template: '<h2 class="loaderText" data-ng-show="isloading">Submitting...</h2>',
 				replace: true,
 				link: function(scope,ele,attr){
 					scope.isloading= false;
