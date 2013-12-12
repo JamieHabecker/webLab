@@ -27687,7 +27687,7 @@ angular.module('ngResource', ['ng']).
 
 angular.module("factories", [])
 
-.constant("baseUrl","http://10.156.147.121:4040\:4040")
+
 .factory('questionsMissed', function(){
     return [];
 })
@@ -27710,15 +27710,14 @@ angular.module("factories", [])
 
 
 .factory('knowledgeFactory',['$resource', function($resource) {
-	var url = baseUrl + "/WebServicesBackEnd/SampleKnowledgeExam.aspx/GetQuestions";
+	var baseUrl = "http://10.156.147.121:4040\:4040/WebServicesBackEnd/SampleKnowledgeExam.aspx/GetQuestions";
 	return $resource(baseUrl, {}, {
 		skeQuestions : {
 		method : 'POST',
-		url : url
+		url : baseUrl
 		}
 	});
 }]);
-
 
 
 
