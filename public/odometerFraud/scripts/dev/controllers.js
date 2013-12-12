@@ -47,13 +47,13 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 
 }])
 
-.controller('DisclaimerController', ['$scope','$location','complete', function($scope, $location,complete){
+.controller('DisclaimerController', ['$scope','$location', function($scope, $location){
 	$scope.next = function(){
 		$location.path('/StepOne')
 	}
 }])
 
-.controller('StepOneController', ['$scope','$location','complete', function($scope, $location,complete){
+.controller('StepOneController', ['$scope','$location', function($scope, $location){
 	if(sessionStorage.type){
 		var a = sessionStorage.type;
 			if(a === "1"){
@@ -88,7 +88,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 	}
 }])
 
-.controller('StepTwoController', ['$scope','$location','$timeout','complete', function($scope, $location, $timeout, complete){
+.controller('StepTwoController', ['$scope','$location','$timeout', function($scope, $location, $timeout){
 	 if(sessionStorage.stepTwo){
 	 	var data = sessionStorage.getItem('stepTwo');
 	 	var p = JSON.parse(data);
@@ -119,7 +119,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 			zip: $scope.zip
 			};
 		sessionStorage.setItem('stepTwo', JSON.stringify(stepTwo));
-		if(complete){
+		if(sessionStorage.complete){
 			$location.path("/Verify")
 		}else{
 			$location.path("/StepThree")
@@ -127,7 +127,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 	}
 }])
 
-.controller('StepThreeController', ['$scope','$location','$timeout','complete', function($scope, $location, $timeout, complete){
+.controller('StepThreeController', ['$scope','$location','$timeout', function($scope, $location, $timeout){
 	if(sessionStorage.stepThree){
 	 	var data = sessionStorage.getItem('stepThree');
 	 	var p = JSON.parse(data); 
@@ -147,7 +147,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 			conPref : $scope.conPref
 			};
 		sessionStorage.setItem('stepThree', JSON.stringify(stepThree));
-		if(complete){
+		if(sessionStorage.complete){
 			$location.path("/Verify")
 		}else{
 			$location.path("/StepFour")
@@ -155,7 +155,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 	}
 }])
 
-.controller('StepFourController', ['$scope','$location','$timeout','complete', function($scope, $location,$timeout, complete){
+.controller('StepFourController', ['$scope','$location','$timeout', function($scope, $location,$timeout){
 	if(sessionStorage.stepFour){
 		if(sessionStorage.compState){
 			$scope.current = sessionStorage.compState;
@@ -191,7 +191,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 			phone : $scope.phone
 		};
 		sessionStorage.setItem('stepFour', JSON.stringify(stepFour));
-		if(complete){
+		if(sessionStorage.complete){
 			$location.path("/Verify")
 		}else if(sessionStorage.an){
 			$location.path("/StepFive")
@@ -203,7 +203,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 	}
 }])
 
-.controller('StepFiveController', ['$scope','$location','$timeout','complete',function($scope, $location,$timeout,complete){
+.controller('StepFiveController', ['$scope','$location','$timeout',function($scope, $location,$timeout){
 			if(sessionStorage.stepFive){
 		var data = sessionStorage.getItem('stepFive');
 		var p = JSON.parse(data);
@@ -231,7 +231,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 			secColor: $scope.vsc
 		}
 		sessionStorage.setItem('stepFive', JSON.stringify(stepFive));
-		if(complete){
+		if(sessionStorage.complete){
 			$location.path("/Verify")
 		}else{
 		$location.path('/StepSix')
@@ -239,7 +239,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 	}
 }])
 
-.controller('StepSixController', ['$scope','$location','$timeout','complete', function($scope, $location,$timeout,complete){
+.controller('StepSixController', ['$scope','$location','$timeout', function($scope, $location,$timeout){
 	if(sessionStorage.stepSix){
 		var data = sessionStorage.getItem('stepSix');
 		var p = JSON.parse(data);
@@ -318,11 +318,11 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 					$scope.theData = [data];
 				}
 			}else{
-				sessionStorage.complete = false;
+				sessionStorage.clear();
 				$location.path('/')
 			}
 			$scope.edit = function(x){
-				sessionStorage.complete = true;
+				sessionStorage.complete = "yes";
 				$location.path('/' + x)
 			}
 			$scope.next= function(){

@@ -27583,7 +27583,7 @@ angular.module('ngResource', ['ng']).
 ;angular.module("globalFactories", [])
 
 .factory('complete', function(){
-			if(sessionStorage.complete === 'true'){
+			if(sessionStorage.complete === "yes"){
 				return true;
 			}else{
 				return false;
