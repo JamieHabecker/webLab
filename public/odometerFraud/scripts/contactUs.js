@@ -568,7 +568,7 @@ angular.module("directives", [])
 		})
 
 .factory('ContactFactory',['$resource', function($resource) {
-    var baseUrl = "http://10.156.147.121:4040\:4040/odometerfraud/Default.aspx/SendFields";
+    var baseUrl = "http://10.156.147.121:443\:443/odometerfraud/Default.aspx/SendFields";
     return $resource(baseUrl, {}, {
         contactInfo : {
             method : 'Post',
