@@ -330,8 +330,47 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 			};
 		})
 
+.directive('detail', function(){
+			return{
+				restrict:'AE',
+				template:'<div data-ng-form="deti"><label>Details<span class="reqText" data-ng-show="detailsReq">Required</span></label>' +
+						'<textarea name="details" data-ng-model="details"  data-ng-maxlength="500" data-ng-change="change()" data-ng-required="detailsReq" placeholder="Details"></textarea>' +
+						'<p data-ng-show="deti.details.$invalid && deti.details.dirty">You must enter details</p>' +
+						'<p ng-show="deti.details.$error.maxlength">You have exceeded the maximum amount of characters</p>' +
+						'<p ng-show="deti.details.$valid">{{left}}</p></div>',
+				link: function(scope,ele,attr){
+					scope.detailsReq= false;
+					if(attr.req){
+						scope.detailsReq= true;
+				}
+					scope.change = function() {
+						var a = scope.details;
+						if(a) {
+							scope.left = 500 - a.length + " characters remaining";
+						}else{
+							scope.left = "500 character limit";
+						}
+					}
+			}
+		}
+})
 
 
+
+
+/*
+		.formField.text
+label Complaint Details<span class="reqText">Required</span>
+textarea(name="details",data-ng-model="details",required="true",placeholder="Complaint Details")
+p(data-ng-show="form.details.$invalid && form.details.$dirty") You must enter the details of your complaint
+$scope.change = function() {
+	var a = $scope.description;
+	if (a) {
+		$scope.left = 500 - a.length + " chracters remaining";
+	} else {
+		$scope.left = "500 character limit";
+	}
+};
 
 /*
  .directive('vanav', function() {

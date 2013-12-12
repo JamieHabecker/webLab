@@ -2,10 +2,7 @@ article.g17
 	div
 		h3.formTitle Complaint Detail Information <span>(provide as much detail as possible)</span>
 		form(novalidate, name="form")
-			.formField.text
-				label Complaint Details<span class="reqText">Required</span>
-				textarea(name="details",data-ng-model="details",required="true",placeholder="Complaint Details")
-				p(data-ng-show="form.details.$invalid && form.details.$dirty") You must enter the details of your complaint
+			.formField.text(detail,req)
 			.continue
 				div(btn, act="Continue")
 			portalcancel
