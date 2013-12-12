@@ -27343,7 +27343,7 @@ angular.module('ngResource', ['ng']).
 			return{
 				restrict: 'AE',
 				template: "<div data-ng-form='vy'><label>Year<span class='reqText' data-ng-show='yearReq'>Required</span></label><input type='text' name='vyear' data-ng-model='vyear' data-ng-pattern='vyearR' data-ng-required='yearReq' placeholder='YYYY'>" +
-						"<p data-ng-show='vy.vyear.$invalid && vy.vyear.$dirty'>You must enter the vehicles year</p></div>",
+						"<p data-ng-show='vy.vyear.$invalid && vy.vyear.$dirty'>You must enter the vehicle year</p></div>",
 				link: function(scope,ele,attr){
 				scope.vyearR= /^(19|20)\d{2}$/;
 					scope.yearReq= false;
@@ -27358,7 +27358,7 @@ angular.module('ngResource', ['ng']).
 			return{
 				restrict: 'AE',
 				template: "<div data-ng-form='vp'><label>Plate<span class='reqText' data-ng-required='plateReq'>Required</span></label><input type='text' data-ng-maxlength='8' name='vplate' data-ng-model='vplate' data-ng-maxlength='8' data-ng-required='plateReq' placeholder='License Plate'>" +
-						"<p data-ng-show='vp.vplate.$invalid && vp.vplate.$dirty'>You must enter the vehicles license plate</p></div>",
+						"<p data-ng-show='vp.vplate.$invalid && vp.vplate.$dirty'>You must enter the vehicle license plate</p></div>",
 				link: function(scope,ele,attr){
 					scope.plateReq= false;
 					if(attr.req){
