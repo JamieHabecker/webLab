@@ -47,13 +47,13 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 
 }])
 
-.controller('DisclaimerController', ['$scope','$location','complete', function($scope, $location,complete){
+.controller('DisclaimerController', ['$scope','$location', function($scope, $location){
 	$scope.next = function(){
 		$location.path('/StepOne')
 	}
 }])
 
-.controller('StepOneController', ['$scope','$location','complete', function($scope, $location,complete){
+.controller('StepOneController', ['$scope','$location', function($scope, $location){
 	if(sessionStorage.type){
 		var a = sessionStorage.type;
 			if(a === "1"){
@@ -88,7 +88,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 	}
 }])
 
-.controller('StepTwoController', ['$scope','$location','$timeout','complete', function($scope, $location, $timeout, complete){
+.controller('StepTwoController', ['$scope','$location','$timeout', function($scope, $location, $timeout){
 	 if(sessionStorage.stepTwo){
 	 	var data = sessionStorage.getItem('stepTwo');
 	 	var p = JSON.parse(data);
@@ -119,15 +119,11 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 			zip: $scope.zip
 			};
 		sessionStorage.setItem('stepTwo', JSON.stringify(stepTwo));
-		if(complete){
-			$location.path("/Verify")
-		}else{
 			$location.path("/StepThree")
-		}
 	}
 }])
 
-.controller('StepThreeController', ['$scope','$location','$timeout','complete', function($scope, $location, $timeout, complete){
+.controller('StepThreeController', ['$scope','$location','$timeout', function($scope, $location, $timeout){
 	if(sessionStorage.stepThree){
 	 	var data = sessionStorage.getItem('stepThree');
 	 	var p = JSON.parse(data); 
@@ -147,7 +143,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 			conPref : $scope.conPref
 			};
 		sessionStorage.setItem('stepThree', JSON.stringify(stepThree));
-		if(complete){
+		if(sessionStorage.complete){
 			$location.path("/Verify")
 		}else{
 			$location.path("/StepFour")
@@ -155,7 +151,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 	}
 }])
 
-.controller('StepFourController', ['$scope','$location','$timeout','complete', function($scope, $location,$timeout, complete){
+.controller('StepFourController', ['$scope','$location','$timeout', function($scope, $location,$timeout){
 	if(sessionStorage.stepFour){
 		if(sessionStorage.compState){
 			$scope.current = sessionStorage.compState;
@@ -167,7 +163,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 		var formFill = {
 			fillIt : function() {
 				$scope.compName= p.compName;
-				$scope.address = p.compAddress;
+				$scope.address = p.address;
 				$scope.city  = p.city;
 				$scope.zip = p.zip;
 				$scope.email = p.email;
@@ -184,14 +180,14 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 		}
 		var stepFour = {
 			compName : $scope.compName,
-			compAddress : $scope.address,
+			address : $scope.address,
 			city : $scope.city,
 			zip : $scope.zip,
 			email : $scope.email,
 			phone : $scope.phone
 		};
 		sessionStorage.setItem('stepFour', JSON.stringify(stepFour));
-		if(complete){
+		if(sessionStorage.complete){
 			$location.path("/Verify")
 		}else if(sessionStorage.an){
 			$location.path("/StepFive")
@@ -203,7 +199,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 	}
 }])
 
-.controller('StepFiveController', ['$scope','$location','$timeout','complete',function($scope, $location,$timeout,complete){
+.controller('StepFiveController', ['$scope','$location','$timeout',function($scope, $location,$timeout){
 			if(sessionStorage.stepFive){
 		var data = sessionStorage.getItem('stepFive');
 		var p = JSON.parse(data);
@@ -231,7 +227,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 			secColor: $scope.vsc
 		}
 		sessionStorage.setItem('stepFive', JSON.stringify(stepFive));
-		if(complete){
+		if(sessionStorage.complete){
 			$location.path("/Verify")
 		}else{
 		$location.path('/StepSix')
@@ -239,7 +235,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 	}
 }])
 
-.controller('StepSixController', ['$scope','$location','$timeout','complete', function($scope, $location,$timeout,complete){
+.controller('StepSixController', ['$scope','$location','$timeout', function($scope, $location,$timeout){
 	if(sessionStorage.stepSix){
 		var data = sessionStorage.getItem('stepSix');
 		var p = JSON.parse(data);
@@ -287,7 +283,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 						phone : cdThree.phone,
 						conPref : cdThree.conPref,
 						compName : cdFour.compName,
-						compAddress: cdFour.compAddress,
+						compAddress: cdFour.address,
 						compCity: cdFour.city,
 						compState: compState,
 						compZip: cdFour.zip,
@@ -307,22 +303,22 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 					data = {
 						pc: "false",
 						compName : cdFour.compName,
-						compAddress: cdFour.compAddress,
-						compCity: cdFour.compCity,
+						compAddress: cdFour.address,
+						compCity: cdFour.city,
 						compState: compState,
-						compZip: cdFour.compZip,
-						compEmail: cdFour.compEmail,
-						compPhone: cdFour.compPhone,
+						compZip: cdFour.zip,
+						compEmail: cdFour.email,
+						compPhone: cdFour.phone,
 						details: cdSix.details
 					};
 					$scope.theData = [data];
 				}
 			}else{
-				sessionStorage.complete = false;
+				sessionStorage.clear();
 				$location.path('/')
 			}
 			$scope.edit = function(x){
-				sessionStorage.complete = true;
+				sessionStorage.complete = "yes";
 				$location.path('/' + x)
 			}
 			$scope.next= function(){
@@ -558,14 +554,6 @@ angular.module("directives", [])
     return []
 })
 
-
-.factory('complete', function(){
-			if(sessionStorage.complete == 'true'){
-				return true;
-			}else{
-				return false;
-			}
-		})
 
 .factory('ContactFactory',['$resource', function($resource) {
     var baseUrl = "http://10.156.147.121:443\:443/odometerfraud/Default.aspx/SendFields";

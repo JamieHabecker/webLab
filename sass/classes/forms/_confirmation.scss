@@ -24,7 +24,7 @@ article.confirmation{
       padding-left:1em;
       padding-top:1em;
     }
-    border-bottom:1px solid #cccccc;
+    border-bottom:1px solid $grayLighter;
   }
   div.details{
     p{
@@ -43,10 +43,11 @@ article.confirmation{
     div.yInfo, div.bInfo, div.vInfo, div.details{
       padding:0;
       min-height:19em;
-      width:49%;
-      background:$grayLighter;
+      width:48.7%;
       float:left;
       margin-bottom:2%;
+			border-bottom:none;
+			border:1px solid $grayLighter;
     }
       div.bInfo, div.details{
         margin-left:1%;

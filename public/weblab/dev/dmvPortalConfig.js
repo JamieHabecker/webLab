@@ -25,7 +25,6 @@ angular.module("dmvPortalConfig", [])
 			}
 			return promise.then(function(response) {
 				var check = response.headers('x-auth-token');
-				console.log(check);
 				if(response){
 					$('h2.loadingMessage').fadeOut(1040);
 				}

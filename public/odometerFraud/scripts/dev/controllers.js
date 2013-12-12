@@ -119,11 +119,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 			zip: $scope.zip
 			};
 		sessionStorage.setItem('stepTwo', JSON.stringify(stepTwo));
-		if(sessionStorage.complete){
-			$location.path("/Verify")
-		}else{
 			$location.path("/StepThree")
-		}
 	}
 }])
 

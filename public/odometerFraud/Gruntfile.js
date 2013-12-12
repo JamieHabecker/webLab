@@ -109,19 +109,19 @@ grunt.initConfig({
 
 	clean:{
 	 options: { force: true },
-	 release: ['../../public/OdometerFraud/']
+	 release: ['../../public/releases/OdometerFraud/']
  },
 
 	copy:{
 	release:{
 		files: {
-			'../../public/OdometerFraud/': ['scripts/contactUs.min.js','scripts/shims/*','views/*.html','index.html']
+			'../../public/releases/OdometerFraud/': ['scripts/contactUs.min.js','scripts/shims/*','views/*.html','index.html']
 		}
 	}
 },
 
 	usemin:{
-		html:['../../public/OdometerFraud/index.html']
+		html:['../../public/releases/OdometerFraud/index.html']
 }
 });
 
