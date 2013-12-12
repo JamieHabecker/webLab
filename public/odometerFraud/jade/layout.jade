@@ -1,22 +1,19 @@
 !!! html
-html.no-js(lang='en')
+html#ng-app.no-js(lang='en', data-ng-app='odomFraud')
 	head
 		meta(charset='utf-8')
-		meta(http-equiv="X-UA-Compatible",content="IE=edge,chrome=1")
-		meta(name="viewport",content="width=device-width,initial-scale=1")
+		meta(devicemeta)
+		meta(compatmeta)
 		meta(name="description",content="Virginia DMV Odometer Fraud Complaint Form")
 		title Virginia DMV Odometer Fraud Complaint Form
 		link(rel='stylesheet', href='/css/main.css')
-		script(src="scripts/shims/mod.min.js")
+		script(shims)
 		//if lt IE 9
-			script(src="scripts/shims/respond.min.js")
+			script(respond)
 
-	body#ng-app.odomFraud(data-ng-app='odomFraud')
+	body.odomFraud
 		//if lt IE 8
-			:markdown
-				You are using an **outdated browser**.
-				Please [upgrade your browser](https://browsehappy.com) or
-				[activate Google Chrome](http://www.google.com/chromeframe/?redirect=true) to improve your experience.
+			div(browsehappy)
 
 		vaNav
 
@@ -24,7 +21,6 @@ html.no-js(lang='en')
 			plainheader
 			block content
 		block scripts
-
 
 
 		<!-- build:js /globals/globals.min.js -->

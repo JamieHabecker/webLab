@@ -27584,9 +27584,72 @@ angular.module('ngResource', ['ng']).
 		}
 })
 
+.directive('appTitle', function(){
+			return{
+				restrict:'AE',
+				transclude: true,
+				template: '<title>Virginia DMV Odometer Fraud Complaint Form</title>',
+			}
+})
+
+.directive('devicemeta', function(){
+			return{
+				restrict:'AE',
+				template:'<meta name="viewport" content="width=device-width,initial-scale=1">',
+				replace:true
+			}
+		})
+
+.directive('compatmeta', function(){
+			return{
+				restrict:'AE',
+				template:'<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">',
+				replace:true
+			}
+})
 
 
+//script(src="scripts/shims/mod.min.js")
 
+.directive('shims', function(){
+	return{
+		restrict: 'AE',
+		template:'<script src="scripts/shims/mod.min.js"></script>',
+		replace:true
+	}
+})
+
+.directive('respond', function(){
+			return{
+				restrict:'AE',
+				template:'<script src="scripts/shims/respond.min.js></script>"',
+				replace: true
+			}
+		})
+
+.directive('browsehappy', function(){
+	return{
+		restrict: 'AE',
+		template: '<p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>'
+	}
+})
+
+
+		/*
+.directive('metahead', function(){
+			return{
+				restrict:'AE',
+				template: '<meta charset="utf-8">' +
+					'<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">' +
+					'<meta name="viewport" content="width=device-width,initial-scale=1">' +
+					'<meta name="description" content="Virginia DMV Odometer Fraud Complaint Form">' +
+					'<link rel="stylesheet" href="/css/main.css">' +
+					'<script src="scripts/shims/mod.min.js"></script></head>',
+				replace:true
+			}
+		})
+//if lt IE 9
+//script(src="scripts/shims/respond.min.js")'
 /*
 		.formField.text
 label Complaint Details<span class="reqText">Required</span>
