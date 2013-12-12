@@ -167,7 +167,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 		var formFill = {
 			fillIt : function() {
 				$scope.compName= p.compName;
-				$scope.address = p.compAddress;
+				$scope.address = p.address;
 				$scope.city  = p.city;
 				$scope.zip = p.zip;
 				$scope.email = p.email;
@@ -184,7 +184,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 		}
 		var stepFour = {
 			compName : $scope.compName,
-			compAddress : $scope.address,
+			address : $scope.address,
 			city : $scope.city,
 			zip : $scope.zip,
 			email : $scope.email,
@@ -287,7 +287,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 						phone : cdThree.phone,
 						conPref : cdThree.conPref,
 						compName : cdFour.compName,
-						compAddress: cdFour.compAddress,
+						compAddress: cdFour.address,
 						compCity: cdFour.city,
 						compState: compState,
 						compZip: cdFour.zip,
@@ -307,12 +307,12 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 					data = {
 						pc: "false",
 						compName : cdFour.compName,
-						compAddress: cdFour.compAddress,
-						compCity: cdFour.compCity,
+						compAddress: cdFour.address,
+						compCity: cdFour.city,
 						compState: compState,
-						compZip: cdFour.compZip,
-						compEmail: cdFour.compEmail,
-						compPhone: cdFour.compPhone,
+						compZip: cdFour.zip,
+						compEmail: cdFour.email,
+						compPhone: cdFour.phone,
 						details: cdSix.details
 					};
 					$scope.theData = [data];
