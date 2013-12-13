@@ -90,9 +90,6 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 }])
 
 .controller('StepTwoController', ['$scope','$location','$timeout', function($scope, $location, $timeout){
-	if(!sessionStorage.stepOne){
-		$location.path("/");
-	}
 	 if(sessionStorage.stepTwo){
 	 	var data = sessionStorage.getItem('stepTwo');
 	 	var p = JSON.parse(data);
