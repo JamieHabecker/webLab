@@ -1,0 +1,21 @@
+article.g17
+	div
+		h3.formTitle Contact Us Step 2 of 3
+		form(novalidate, name="form")
+			.vehicles(data-ng-show="vehicles")
+				.formField.title.gen(vehtitle,req)
+				.formField.vin.sec(vin,req)
+				.formField.plate.gen(plate,req)
+				.formField.custnumber.sec(custnumber,req)
+				.formField.details(detail, req)
+				.continue
+					div(btn,act="Continue")
+				portalcancel
+
+		form(novalidate, name="form")
+			.driver(data-ng-show="!vehicles")
+				.formField.custnumber(custnumber,req)
+				.formField.details(detail,req)
+				.continue
+					div(btn,act="Continue")
+				portalcancel

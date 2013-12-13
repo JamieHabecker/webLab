@@ -1,0 +1,30 @@
+article.g17.confirmation
+	h3.formTitle Please verify the following information
+	div
+		.yInfo(data-ng-repeat="a in theData", data-ng-show="a.firstname")
+			h3 Your Information
+			ul
+				li <b>Name:</b> {{a.firstname}} {{a.lastname}}
+				li <b>Email:</b> {{a.email}}
+				li <b>Phone:</b> {{a.phone}}
+				li(data-ng-show="a.subject !== 'ot'")<b>Subject:</b> {{subj}}
+				li.edit(data-ng-show='!isloading') <a data-ng-click="edit('/')"> Edit </a>
+		.vInfo(data-ng-repeat="a in theData", data-ng-show="a.year")
+			h3 Vehicle Information
+			ul
+				li <b>Year:</b> {{a.year}}
+				li <b>Make:</b> {{a.make}}
+				li <b>Model:</b> {{a.model}}
+				li <b>Last Four of VIN:</b> {{a.vin}}
+				li <b>License Plate:</b> {{a.plate}}
+				li <b>Primary Color:</b> {{a.prmColor}}
+				li(data-ng-show="a.secColor") <b>Secondary Color:</b> {{a.secColor}}
+				li.edit(data-ng-show='!isloading') <a data-ng-click="edit('StepFive')"> Edit </a>
+		.details.verify(data-ng-repeat="a in theData")
+			h3 Details
+			p {{a.details}}
+			ul
+				li.edit(data-ng-show='!isloading') <a data-ng-click="edit('StepSix')"> Edit </a>
+		.continue
+			div(btn,act="Submit")
+			div(loader)
