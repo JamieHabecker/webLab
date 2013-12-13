@@ -1,8 +1,5 @@
 [
-	{
-		"code": "VA",
-		"State": "Virginia"
-	}, {
+ {
 		"code": "AL",
 		"State": "Alabama"
 	}, {
@@ -149,7 +146,12 @@
 	}, {
 		"code": "UT",
 		"State": "Utah"
-	}, {
+	},
+	{
+		"code": "VA",
+		"State": "Virginia"
+	},
+	{
 		"code": "VT",
 		"State": "Vermont"
 	}, {

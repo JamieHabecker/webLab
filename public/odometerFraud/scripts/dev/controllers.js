@@ -48,6 +48,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 }])
 
 .controller('DisclaimerController', ['$scope','$location', function($scope, $location){
+
 	$scope.next = function(){
 		$location.path('/StepOne')
 	}
@@ -98,19 +99,13 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 	 			$scope.lastname  = p.lastname;
 	 			$scope.address  = p.address;
 	 			$scope.city  = p.city;
-	 			$scope.current = sessionStorage.state;
 	 			$scope.zip = p.zip
 	 			}
 	 		};
 	 	$timeout(formFill.fillIt, 100);
    }else{
-		 $scope.current="Select a State";
 	 }
 	$scope.next= function(){
-		if($scope.state !== undefined){
-			sessionStorage.state = $scope.state.code;
-		}else{
-		}
 		var stepTwo = {
 			firstname : $scope.fn,
 			lastname : $scope.lastname,
@@ -124,6 +119,9 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 }])
 
 .controller('StepThreeController', ['$scope','$location','$timeout', function($scope, $location, $timeout){
+	if(!sessionStorage.stepTwo){
+		$location.path("/")
+	}
 	if(sessionStorage.stepThree){
 	 	var data = sessionStorage.getItem('stepThree');
 	 	var p = JSON.parse(data); 
@@ -153,11 +151,6 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 
 .controller('StepFourController', ['$scope','$location','$timeout', function($scope, $location,$timeout){
 	if(sessionStorage.stepFour){
-		if(sessionStorage.compState){
-			$scope.current = sessionStorage.compState;
-		}else{
-			$scope.current = "Select a State";
-		}
 		var data = sessionStorage.getItem('stepFour');
 		var p = JSON.parse(data);
 		var formFill = {
@@ -171,13 +164,8 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 			}
 			};
 		$timeout(formFill.fillIt, 100);
-	}else{
-		$scope.current = "Select a State";
 	}
 	$scope.next= function(){
-		if($scope.state !== undefined){
-			sessionStorage.compState = $scope.state.State;
-		}
 		var stepFour = {
 			compName : $scope.compName,
 			address : $scope.address,
@@ -259,6 +247,9 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 			var state = sessionStorage.state;
 			var compState = sessionStorage.compState;
 			var two,three,four,five,six,cdTwo,cdThree,cdFour,cdFive,cdSix;
+			if(!sessionStorage.stepSix){
+				$location.path('/')
+			}
 			if(sessionStorage.stepSix){
 				four = sessionStorage.getItem('stepFour');
 				six = sessionStorage.getItem('stepSix');

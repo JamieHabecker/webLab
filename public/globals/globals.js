@@ -27233,9 +27233,39 @@ angular.module('ngResource', ['ng']).
 .directive('states',['StateFactory',function(StateFactory){
 			return{
 				restrict: "AE",
-				template: "<label>State<span class='reqText' data-ng-show='stateReq'>Required</span></label><select data-ng-model='state' data-ng-click='setState()' data-ng-options='c.State for c in states'><option value=''>{{current}}</option></select>",
+				template: "<div data-ng-form='stateFrm'><label>State<span class='reqText' data-ng-show='stateReq'>Required</span></label><select data-ng-model='state' data-ng-change='setState()' data-ng-options='c.State for c in states'><option value=''>{{current}}</option></select></div>",
 				link: function(scope, elm, attr){
 					scope.stateReq= false;
+					var type= attr.type;
+					if(sessionStorage.compState || sessionStorage.state){
+						if(sessionStorage.compState && type === 'company'){
+							console.log("yes")
+						 scope.current = sessionStorage.compState;
+						}
+						if(sessionStorage.state && type === 'personal'){
+							console.log("yes")
+							scope.current = sessionStorage.state;
+						}
+					}else{
+						scope.current = "Virginia";
+						sessionStorage.state= 'Virginia';
+						sessionStorage.stateCode= 'VA'
+					}
+					scope.setState = function(){
+						if(scope.state == null){
+							sessionStorage.state= 'Virginia';
+							sessionStorage.stateCode= 'VA'
+						}else{
+							if(type === 'personal' && sessionStorage.state){
+								sessionStorage.state= scope.state.State;
+								sessionStorage.stateCode= scope.state.code;
+							}
+							if(type === 'company' && sessionStorage.compState){
+								sessionStorage.compState= scope.state.State;
+								sessionStorage.compStateCode= scope.state.code;
+							}
+						}
+					}
 						if(attr.req){
 							scope.stateReq = true;
 						}
@@ -27371,7 +27401,7 @@ angular.module('ngResource', ['ng']).
 .directive('plate', function(){
 			return{
 				restrict: 'AE',
-				template: "<div data-ng-form='vp'><label>Plate<span class='reqText' data-ng-show='plateReq'>Required</span></label><input type='text' data-ng-maxlength='8' name='vplate' data-ng-model='vplate' data-ng-maxlength='8' data-ng-required='plateReq' placeholder='License Plate'>" +
+				template: "<div data-ng-form='vp'><label>Plate<span class='reqText' data-ng-required='plateReq'>Required</span></label><input type='text' data-ng-maxlength='8' name='vplate' data-ng-model='vplate' data-ng-maxlength='8' data-ng-required='plateReq' placeholder='License Plate'>" +
 						"<p data-ng-show='vp.vplate.$invalid && vp.vplate.$dirty'>You must enter the vehicle license plate</p></div>",
 				link: function(scope,ele,attr){
 					scope.plateReq= false;
