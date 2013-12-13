@@ -27237,39 +27237,31 @@ angular.module('ngResource', ['ng']).
 				link: function(scope, elm, attr){
 					scope.stateReq= false;
 					var type= attr.type;
-
-
-
-					if(sessionStorage.compState || sessionStorage.state){
-						if(sessionStorage.compState && type === 'company'){
-							console.log("yes")
-						 scope.current = sessionStorage.compState;
-						}
-						if(sessionStorage.state && type === 'personal'){
-							console.log("yes")
-							scope.current = sessionStorage.state;
-						}
+					if(sessionStorage.getItem("state"+type)){
+						scope.current= sessionStorage.getItem("state" + type);
 					}else{
 						scope.current = "Virginia";
-						sessionStorage.state= 'Virginia';
-						sessionStorage.stateCode= 'VA'
+						sessionStorage.setItem("state" + type, "Virginia");
+						sessionStorage.setItem("stateCode" + type, "VA");
 					}
 
 
 
 					scope.setState = function(){
 						if(scope.state == null){
-							sessionStorage.state= 'Virginia';
-							sessionStorage.stateCode= 'VA'
+							sessionStorage.setItem("state" + type, "Virginia");
+							sessionStorage.setItem("stateCode" + type, "VA");
 						}else{
-							if(type === 'personal' && sessionStorage.state){
-								sessionStorage.state= scope.state.State;
-								sessionStorage.stateCode= scope.state.code;
-							}
-							if(type === 'company' && sessionStorage.compState){
-								sessionStorage.compState= scope.state.State;
-								sessionStorage.compStateCode= scope.state.code;
-							}
+							//if(type === 'personal'){
+								sessionStorage.setItem("state" + type, scope.state.State);
+								sessionStorage.setItem("stateCode" + type, scope.state.code);
+								//sessionStorage.state= scope.state.State;
+								//sessionStorage.stateCode= scope.state.code;
+							//}
+							//if(type === 'company'){
+								//sessionStorage.compState= scope.state.State;
+								//sessionStorage.compStateCode= scope.state.code;
+							//}
 						}
 					}
 						if(attr.req){

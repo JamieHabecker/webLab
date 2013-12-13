@@ -244,8 +244,8 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 }])
 
 .controller('VerifyController', ['$scope','$location','ContactFactory', function($scope,$location,ContactFactory){
-			var state = sessionStorage.state;
-			var compState = sessionStorage.compState;
+			var state = sessionStorage.stateCodestepTwo;
+			var compState = sessionStorage.stateCodestepFour;
 			var two,three,four,five,six,cdTwo,cdThree,cdFour,cdFive,cdSix;
 			if(!sessionStorage.stepSix){
 				$location.path('/')
