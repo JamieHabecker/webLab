@@ -8,6 +8,9 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 				link: function(scope, elm, attr){
 					scope.stateReq= false;
 					var type= attr.type;
+
+
+
 					if(sessionStorage.compState || sessionStorage.state){
 						if(sessionStorage.compState && type === 'company'){
 							console.log("yes")
@@ -22,6 +25,9 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 						sessionStorage.state= 'Virginia';
 						sessionStorage.stateCode= 'VA'
 					}
+
+
+
 					scope.setState = function(){
 						if(scope.state == null){
 							sessionStorage.state= 'Virginia';
