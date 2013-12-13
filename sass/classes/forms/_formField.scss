@@ -27,7 +27,8 @@ div.formField{
 		width:49%;
 		float:left;
 	}
-	div.address, div.radio, div.vin, div.prmColr, div.city{
+
+	div.address, div.radio, div.vin, div.prmColr, div.city, div.cl{
 		clear:left;
 	}
 	div.city, div.state, div.zip, div.make, div.model, div.year{
@@ -36,11 +37,25 @@ div.formField{
 	}
 	div.lastName, div.state, div.zip, div.phone,div.address.gen, div.make, div.model, div.plate, div.secColr{
 		margin-left:2%;
+		float:left;
 	}
+
 	div.gen{
+		 width:49%;
+		 float:left;
+		 clear:left;
+		 margin-left:0;
+	 }
+	div.sec{
 		width:49%;
 		float:left;
+		margin-left:2%;
 		clear:none;
+	}
+	div.sing{
+		width:100%;
+		clear:left;
+		float:left;
 	}
 }
 

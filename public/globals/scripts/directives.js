@@ -61,15 +61,14 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 			}
 	})
 
-
-		.directive('button', function(){
+.directive('button', function(){
 			return{
 				restrict: 'E',
 				compile: function(element, attributes){
 					element.addClass('orgBtn')
 				}
 			};
-		})
+})
 
 .directive('mod', function(){
 			return{
@@ -125,10 +124,25 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 			}
 })
 
+.directive('vehtitle', function(){
+			return{
+				restrict:'AE',
+				template: '<div data-ng-form="vehtitleFrm"><label>Vehicle Title Number<span class="reqText" data-ng-show="vehtitleReq">Required</span></label>' +
+						'<input type="text"  name="title" ng-minlength="8" ng-maxlength="10" ng-model="title" data-ng-required="vehtitleReq" data-ng-pattern="vehtitleR"  placeholder="Title">' +
+						'<p ng-show="vehtitleFrm.title.$invalid && vehtitleFrm.title.$dirty">You must enter a valid title number</p></div>',
+				link: function(scope,ele,attr){
+					scope.vehtitleR= /^\d+$/;
+					scope.vehtitleReq= false;
+					if(attr.req){
+						scope.vehtitleReq= true;
+				}
+		}
+	}
+})
 .directive('plate', function(){
 			return{
 				restrict: 'AE',
-				template: "<div data-ng-form='vp'><label>Plate<span class='reqText' data-ng-required='plateReq'>Required</span></label><input type='text' data-ng-maxlength='8' name='vplate' data-ng-model='vplate' data-ng-maxlength='8' data-ng-required='plateReq' placeholder='License Plate'>" +
+				template: "<div data-ng-form='vp'><label>Plate<span class='reqText' data-ng-show='plateReq'>Required</span></label><input type='text' data-ng-maxlength='8' name='vplate' data-ng-model='vplate' data-ng-maxlength='8' data-ng-required='plateReq' placeholder='License Plate'>" +
 						"<p data-ng-show='vp.vplate.$invalid && vp.vplate.$dirty'>You must enter the vehicle license plate</p></div>",
 				link: function(scope,ele,attr){
 					scope.plateReq= false;
@@ -204,6 +218,21 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 					scope.lname = false;
 					if(attr.req){
 						scope.lname = true;
+					}
+				}
+			}
+})
+
+.directive('custnumber',function(){
+			return{
+				restrict: 'AE',
+				template: "<div data-ng-form='cnfrm'><label>Customer Number<span class='reqText' data-ng-show='custnumReq'>Required</span></label><input type='text' data-ng-required='custnumReq' name='customernumber' data-ng-model='customernumber' data-ng-pattern='custnumR' placeholder='Customer Number'>" +
+						"<p data-ng-show='cnfrm.customernumber.$invalid && cnfrm.customernumber.$dirty'>You must enter your customer number</p></div>",
+				link: function(scope, ele, attr){
+					scope.custnumR = /^([\w\-]{9,12})+$/;
+					scope.custnumReq = false;
+					if(attr.req){
+						scope.custnumReq = true;
 					}
 				}
 			}
@@ -301,7 +330,7 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 			return{
 				restrict: 'AE',
 				template: "<div data-ng-form='vvi'><label>Last Four of VIN<span class='reqText' data-ng-show='vinReq'>Required</span></label><input type='text' name='vvin' data-ng-model='vvin' data-ng-pattern='vinR' data-ng-required='vinReq' placeholder='VIN'>" +
-						"<p data-ng-show='vvi.vvin.$invalid && vvi.vvin.$dirty'>You must enter the last four VIN</p>",
+						"<p data-ng-show='vvi.vvin.$invalid && vvi.vvin.$dirty'>Enter last 4 digits of Vehicle Identification Number</p>",
 				link: function(scope,ele,attr){
 					scope.vinR= /^(\d){4}$/;
 					scope.vinReq= false;
@@ -354,3 +383,25 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 			}
 		}
 })
+
+.directive('contactsubj', function(){
+	return{
+		restrict:'AE',
+		template:'<div data-ng-form="conFrm"><label>Subject<span class="reqText">Required</span></label>'+
+				'<select id="sub" data-ng-change="setText(subject)" data-ng-model="subject" required="true" style="background:#eee;" name="subject">' +
+					'<option value="">Choose a Subject</option><option value="di" data="Driver Information">Driver Information</option><option value="vi">Vehicle Information</option>' +
+			'<option value="su">Suspension</option><option value="ot">Online Transaction</option><option value="gq">General Question</option>' +
+					'<option value="co">Comments</option><option value="ti">Technical Information</option><option value="ot">Other</option></select>' +
+			'<p data-ng-show="conFrm.subject.$invalid && conFrm.subject.$dirty">Required</p></div>'
+	}
+})
+
+
+
+
+
+
+
+
+
+
