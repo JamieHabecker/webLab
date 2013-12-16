@@ -1,0 +1,9 @@
+article
+	p.labName User Sign-Up
+	div
+		form(novalidate, name="form")
+			label Full Name
+			input(type='text', name='fn', data-ng-model='fn')
+			label Email
+			input(type='text', name='email', data-ng-model='email')
+		button(data-ng-click='next()',value='Submit')
