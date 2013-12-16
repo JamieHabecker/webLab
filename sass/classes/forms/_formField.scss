@@ -29,12 +29,18 @@ div.formField{
 		float:left;
 		margin-left:2%;
 	}
+	div.state{
+		select{
+			width:98%;
+		}
+	}
 	div.city,div.year{
 		margin-left:0;
 	}
 	div.gen{
 		 width:49%;
 		 float:left;
+		clear:left;
 		 margin-left:0;
 	 }
 
@@ -50,6 +56,12 @@ div.formField{
 		clear:left;
 		float:left;
 		input{
+			width:98%;
+		}
+		select{
+			width:98%;
+		}
+		textarea{
 			width:98%;
 		}
 	}

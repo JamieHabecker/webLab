@@ -2,15 +2,15 @@ article.g17
 	div
 		h3.formTitle Contact Us Step 1 of 3
 		form(novalidate, name="form")
-			.formField.firstName(firstname,req)
+			.formField.firstName.gen(firstname,req)
 
-			.formField.lastName(lastname,req)
+			.formField.lastName.sec(lastname,req)
 
-			.formField.email(email,req)
+			.formField.email.gen(email,req)
 
-			.formField.phone(phone,req)
+			.formField.phone.sec(phone,req)
 
-			.formField.subject(contactsubj,req)
+			.formField.subject.sing(contactsubj,req)
 			.continue
 				div(btn,act="Continue")
 			portalcancel

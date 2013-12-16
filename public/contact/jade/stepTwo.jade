@@ -7,15 +7,15 @@ article.g17
 				.formField.vin.sec(vin,req)
 				.formField.plate.gen(plate,req)
 				.formField.custnumber.sec(custnumber,req)
-				.formField.details(detail, req)
+				.formField.details.sing(detail, req)
 				.continue
 					div(btn,act="Continue")
 				portalcancel
 
 		form(novalidate, name="form")
 			.driver(data-ng-show="!vehicles")
-				.formField.custnumber(custnumber,req)
-				.formField.details(detail,req)
+				.formField.custnumber.sing(custnumber,req)
+				.formField.details.sing(detail,req)
 				.continue
 					div(btn,act="Continue")
 				portalcancel
