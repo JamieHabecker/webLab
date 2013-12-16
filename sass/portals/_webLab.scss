@@ -73,6 +73,16 @@ body.webLab{
 						color:#424242;
 					}
 				}
+				&.sub{
+					margin-top:0;
+					padding-top:0;
+					li{
+						display:inline-block;
+						a{
+							margin-right:1em;
+						}
+					}
+				}
 			}
 			p{
 				//padding-bottom:0;
