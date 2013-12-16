@@ -1,5 +1,6 @@
 form{
-	padding:0em 1em;
+	width:97%;
+	margin:0 auto;
 }
 input, textarea{
 	background:#eee;
@@ -58,6 +59,7 @@ input[type="color"],
     border: 1px solid #CCCCCC;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
     transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+		width:96%;
 }
 textarea:focus,
 input[type="text"]:focus,
@@ -168,37 +170,6 @@ textarea.ng-dirty.ng-valid-required.ng-invalid.ng-invalid-maxlength{
 
 
 
-
-
-
-
-
-
-@media screen and (min-width:310px){
-	textarea,select,
-	input[type="text"],
-	input[type="date"],
-	input[type="checkbox"],
-	input[type="password"],
-	input[type="datetime"],
-	input[type="datetime-local"],
-	input[type="date"],
-	input[type="month"],
-	input[type="time"],
-	input[type="week"],
-	input[type="number"],
-	input[type="email"],
-	input[type="url"],
-	input[type="search"],
-	input[type="tel"],
-	input[type="color"],
-	.uneditable-input {
-		width:97%;
-	}
-	div.radio{
-		width:98%;
-	}
-}
 
 
 

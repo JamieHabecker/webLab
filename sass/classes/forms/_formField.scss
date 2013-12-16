@@ -22,31 +22,25 @@ div.formField{
 	
 }
 
-@media screen and (min-width:758px){
-	div.firstName, div.lastName, div.email, div.phone, div.gen, div.vin, div.plate, div.prmColr, div.secColr{
-		width:50%;
-		float:left;
-	}
 
-	div.address, div.radio, div.vin, div.prmColr, div.city, div.cl{
-		clear:left;
-	}
+@media screen and (min-width:758px){
 	div.city, div.state, div.zip, div.make, div.model, div.year{
 		width:32%;
 		float:left;
-		margin-left:1.4%;
+		margin-left:2%;
 	}
 	div.city,div.year{
 		margin-left:0;
 	}
 	div.gen{
-		 width:50%;
+		 width:49%;
 		 float:left;
-		 clear:left;
 		 margin-left:0;
 	 }
+
 	div.sec{
-		width:50%;
+		width:49%;
+		margin-left:2%;
 		float:left;
 		clear:none;
 	}
@@ -55,6 +49,9 @@ div.formField{
 		margin-left:0;
 		clear:left;
 		float:left;
+		input{
+			width:98%;
+		}
 	}
 }
 
