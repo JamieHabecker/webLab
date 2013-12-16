@@ -85,8 +85,9 @@ input[type="color"]:focus,
 
 select{
 	background:#eee;
-	padding-top:10px;
-	padding-bottom:3px;
+	height:4em;
+	padding-top:15px;
+	padding-bottom:15px;
 	padding-right:3px;
 	option{
 		&:first-child{
