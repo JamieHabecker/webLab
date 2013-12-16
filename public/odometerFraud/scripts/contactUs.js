@@ -48,6 +48,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 }])
 
 .controller('DisclaimerController', ['$scope','$location', function($scope, $location){
+
 	$scope.next = function(){
 		$location.path('/StepOne')
 	}
@@ -98,24 +99,20 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 	 			$scope.lastname  = p.lastname;
 	 			$scope.address  = p.address;
 	 			$scope.city  = p.city;
-	 			$scope.current = sessionStorage.state;
 	 			$scope.zip = p.zip
+				$scope.current= sessionStorage.statetwo;
 	 			}
 	 		};
 	 	$timeout(formFill.fillIt, 100);
-   }else{
-		 $scope.current="Select a State";
-	 }
+   }
 	$scope.next= function(){
-		if($scope.state !== undefined){
-			sessionStorage.state = $scope.state.code;
-		}else{
-		}
 		var stepTwo = {
 			firstname : $scope.fn,
 			lastname : $scope.lastname,
 			address : $scope.address,
 			city: $scope.city,
+			state: sessionStorage.statetwo,
+			stateCode: sessionStorage.stateCodetwo,
 			zip: $scope.zip
 			};
 		sessionStorage.setItem('stepTwo', JSON.stringify(stepTwo));
@@ -124,6 +121,9 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 }])
 
 .controller('StepThreeController', ['$scope','$location','$timeout', function($scope, $location, $timeout){
+	if(!sessionStorage.stepTwo){
+		$location.path("/")
+	}
 	if(sessionStorage.stepThree){
 	 	var data = sessionStorage.getItem('stepThree');
 	 	var p = JSON.parse(data); 
@@ -153,11 +153,6 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 
 .controller('StepFourController', ['$scope','$location','$timeout', function($scope, $location,$timeout){
 	if(sessionStorage.stepFour){
-		if(sessionStorage.compState){
-			$scope.current = sessionStorage.compState;
-		}else{
-			$scope.current = "Select a State";
-		}
 		var data = sessionStorage.getItem('stepFour');
 		var p = JSON.parse(data);
 		var formFill = {
@@ -171,18 +166,15 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 			}
 			};
 		$timeout(formFill.fillIt, 100);
-	}else{
-		$scope.current = "Select a State";
 	}
 	$scope.next= function(){
-		if($scope.state !== undefined){
-			sessionStorage.compState = $scope.state.State;
-		}
 		var stepFour = {
 			compName : $scope.compName,
 			address : $scope.address,
 			city : $scope.city,
 			zip : $scope.zip,
+			state: sessionStorage.statefour,
+			stateCode: sessionStorage.stateCodefour,
 			email : $scope.email,
 			phone : $scope.phone
 		};
@@ -200,7 +192,10 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 }])
 
 .controller('StepFiveController', ['$scope','$location','$timeout',function($scope, $location,$timeout){
-			if(sessionStorage.stepFive){
+		if(!sessionStorage.stepFour){
+			$location.path("/");
+		}
+		if(sessionStorage.stepFive){
 		var data = sessionStorage.getItem('stepFive');
 		var p = JSON.parse(data);
 		var formFill = {
@@ -236,6 +231,9 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 }])
 
 .controller('StepSixController', ['$scope','$location','$timeout', function($scope, $location,$timeout){
+	if(!sessionStorage.stepFour){
+		$location.path("/");
+	}
 	if(sessionStorage.stepSix){
 		var data = sessionStorage.getItem('stepSix');
 		var p = JSON.parse(data);
@@ -256,9 +254,12 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 }])
 
 .controller('VerifyController', ['$scope','$location','ContactFactory', function($scope,$location,ContactFactory){
-			var state = sessionStorage.state;
-			var compState = sessionStorage.compState;
+			var state = sessionStorage.stateCodestepTwo;
+			var compState = sessionStorage.stateCodestepFour;
 			var two,three,four,five,six,cdTwo,cdThree,cdFour,cdFive,cdSix;
+			if(!sessionStorage.stepSix){
+				$location.path('/')
+			}
 			if(sessionStorage.stepSix){
 				four = sessionStorage.getItem('stepFour');
 				six = sessionStorage.getItem('stepSix');
@@ -347,21 +348,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 }])
 
 
-.animation('an-enter', function() {
-        return {
-            setup : function(myElement) {
-                myElement.css({ 'opacity': 0.3 });
-                return {}; //if you want to share some dat between the set and start return it it can be anything
-            },
-            start : function(myElement, done, data) {
-                myElement.animate({
-                    'opacity' : 1
-                }, 300, function(){
-                    done()
-                });
-            }
-        }
-        })
+
 
 //var limit = 1024 * 1024 * 5; // 5 MB
 //var remSpace = limit - unescape(encodeURIComponent(JSON.stringify(sessionStorage))).length;
@@ -556,7 +543,7 @@ angular.module("directives", [])
 
 
 .factory('ContactFactory',['$resource', function($resource) {
-    var baseUrl = "http://10.156.147.121:443\:443/odometerfraud/Default.aspx/SendFields";
+    var baseUrl = "http://10.156.147.121:443\:443/WebServicesBackEnd/OdometerFraud/SendFields";
     return $resource(baseUrl, {}, {
         contactInfo : {
             method : 'Post',

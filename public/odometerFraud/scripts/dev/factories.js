@@ -6,7 +6,7 @@ angular.module("factories", [])
 
 
 .factory('ContactFactory',['$resource', function($resource) {
-    var baseUrl = "http://10.156.147.121:443\:443/odometerfraud/Default.aspx/SendFields";
+    var baseUrl = "http://10.156.147.121:443\:443/WebServicesBackEnd/OdometerFraud/SendFields";
     return $resource(baseUrl, {}, {
         contactInfo : {
             method : 'Post',
