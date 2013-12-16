@@ -48,7 +48,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 }])
 
 .controller('DisclaimerController', ['$scope','$location', function($scope, $location){
-
+	sessionStorage.clear();
 	$scope.next = function(){
 		$location.path('/StepOne')
 	}
@@ -90,6 +90,9 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 }])
 
 .controller('StepTwoController', ['$scope','$location','$timeout', function($scope, $location, $timeout){
+			if(!sessionStorage.type){
+				$location.path("/StepOne")
+			}
 	 if(sessionStorage.stepTwo){
 	 	var data = sessionStorage.getItem('stepTwo');
 	 	var p = JSON.parse(data);
