@@ -154,6 +154,7 @@ grunt.registerTask('build', [
 	'compass',
 	'concat',
 	'uglify',
+	'jade',
 	'clean',
 	'copy',
 	'usemin'

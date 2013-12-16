@@ -112,27 +112,21 @@ jade: {
 	}
 },  
 
-/*
+
 clean: {
-            options: { force: true },
-            release: ['../../contactus/']
+	options: {
+		force: true
+	},
+	release: ['public/scripts/']
         },
         copy: {            
             release: {
                 files: {
-                    '../../contactus/': ['scripts/contactUs.min.js','scripts/shims/*','css/*','views/*','views/directiveTemplates/*','index.html', 'img/*']
+                    'public/scripts/': ['public/globals/globals.min.js']
                 }
             }
-        },
-*/
- usemin: {
-            html: ['../../contactus/index.html']
-    }
-       
-	
-	
-	
-	});
+}
+});
 
 	grunt.loadNpmTasks('grunt-contrib-jshint');
 	grunt.loadNpmTasks('grunt-contrib-connect');
@@ -148,24 +142,23 @@ clean: {
 	grunt.loadNpmTasks('grunt-bump');
 	
 
-  //dev task
+//dev task
 grunt.registerTask('server', [
-		'compass',
-		'jade',
+	'compass',
+	'jade',
 	'concat',
 	'uglify',
-		'watch'
-  ]);
-  
-  //build task
-  grunt.registerTask('build', [
-  'compass',
-  'concat',
-   'uglify',
-    'clean',
-    'copy',
-    'usemin'
-  ]);
+	'watch'
+]);
+
+//build task
+grunt.registerTask('build', [
+	'compass',
+	'concat',
+	'uglify',
+	'clean',
+	'copy'
+]);
 
 };
 
