@@ -7,33 +7,17 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 				template: "<div data-ng-form='stateFrm'><label>State<span class='reqText' data-ng-show='stateReq'>Required</span></label><select data-ng-model='state' data-ng-change='setState()' data-ng-options='c.State for c in states'><option value=''>{{current}}</option></select></div>",
 				link: function(scope, elm, attr){
 					scope.stateReq= false;
-					var type= attr.type;
-					if(sessionStorage.getItem("state"+type)){
-						scope.current= sessionStorage.getItem("state" + type);
+					var num= attr.num;
+					if(sessionStorage.getItem("state" + num)){
+						scope.current= sessionStorage.getItem("state" + num);
 					}else{
 						scope.current = "Virginia";
-						sessionStorage.setItem("state" + type, "Virginia");
-						sessionStorage.setItem("stateCode" + type, "VA");
+						sessionStorage.setItem("stateCode" + num, "VA");
+						sessionStorage.setItem("state" + num, "Virginia");
 					}
-
-
-
 					scope.setState = function(){
-						if(scope.state == null){
-							sessionStorage.setItem("state" + type, "Virginia");
-							sessionStorage.setItem("stateCode" + type, "VA");
-						}else{
-							//if(type === 'personal'){
-								sessionStorage.setItem("state" + type, scope.state.State);
-								sessionStorage.setItem("stateCode" + type, scope.state.code);
-								//sessionStorage.state= scope.state.State;
-								//sessionStorage.stateCode= scope.state.code;
-							//}
-							//if(type === 'company'){
-								//sessionStorage.compState= scope.state.State;
-								//sessionStorage.compStateCode= scope.state.code;
-							//}
-						}
+					sessionStorage.setItem("state" + num, scope.state.State);
+					sessionStorage.setItem("stateCode" + num, scope.state.code);
 					}
 						if(attr.req){
 							scope.stateReq = true;
