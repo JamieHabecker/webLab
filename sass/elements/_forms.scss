@@ -109,11 +109,9 @@ select{
 }
 
 
-
 input[type="radio"].ng-valid.ng-pristine, input[type="checkbox"].ng-valid.ng-pristine{
 	background:none;
 }
-
 
 
 button[disabled]{
@@ -137,7 +135,6 @@ input.ng-invalid.ng-dirty:focus {
 	background:#fff9d3;
 	background:none\9;
 }
-
 
 
 input.ng-valid.ng-dirty{
@@ -166,24 +163,3 @@ textarea.ng-valid-maxlength.ng-dirty.ng-invalid.ng-invalid-required {
 textarea.ng-dirty.ng-valid-required.ng-invalid.ng-invalid-maxlength{
 	 background: none repeat scroll 0 0 #FCE3E4;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
