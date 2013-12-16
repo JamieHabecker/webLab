@@ -10,8 +10,6 @@ input{
 }
 
 input[type="text"], input[type="password"],input[type="date"],input[type="email"],select{
-	width:100%;
-	margin:0 auto;
 	height:3em;
 	border-radius:5px;
 	border:1px solid #ccc;
@@ -165,3 +163,55 @@ textarea.ng-valid-maxlength.ng-dirty.ng-invalid.ng-invalid-required {
 textarea.ng-dirty.ng-valid-required.ng-invalid.ng-invalid-maxlength{
 	 background: none repeat scroll 0 0 #FCE3E4;
 }
+
+
+
+
+
+
+
+
+
+
+
+@media screen and (min-width:310px){
+	textarea,select,
+	input[type="text"],
+	input[type="date"],
+	input[type="checkbox"],
+	input[type="password"],
+	input[type="datetime"],
+	input[type="datetime-local"],
+	input[type="date"],
+	input[type="month"],
+	input[type="time"],
+	input[type="week"],
+	input[type="number"],
+	input[type="email"],
+	input[type="url"],
+	input[type="search"],
+	input[type="tel"],
+	input[type="color"],
+	.uneditable-input {
+		width:97%;
+	}
+	div.radio{
+		width:98%;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

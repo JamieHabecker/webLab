@@ -24,7 +24,7 @@ div.formField{
 
 @media screen and (min-width:758px){
 	div.firstName, div.lastName, div.email, div.phone, div.gen, div.vin, div.plate, div.prmColr, div.secColr{
-		width:49%;
+		width:50%;
 		float:left;
 	}
 
@@ -34,26 +34,25 @@ div.formField{
 	div.city, div.state, div.zip, div.make, div.model, div.year{
 		width:32%;
 		float:left;
+		margin-left:1.4%;
 	}
-	div.lastName, div.state, div.zip, div.phone,div.address.gen, div.make, div.model, div.plate, div.secColr{
-		margin-left:2%;
-		float:left;
+	div.city,div.year{
+		margin-left:0;
 	}
-
 	div.gen{
-		 width:49%;
+		 width:50%;
 		 float:left;
 		 clear:left;
 		 margin-left:0;
 	 }
 	div.sec{
-		width:49%;
+		width:50%;
 		float:left;
-		margin-left:2%;
 		clear:none;
 	}
 	div.sing{
 		width:100%;
+		margin-left:0;
 		clear:left;
 		float:left;
 	}
