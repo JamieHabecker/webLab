@@ -7,7 +7,7 @@ article.confirmation{
       line-height:2em;
     }
   }
-  div.yInfo, div.bInfo, div.vInfo, div.details{
+  div.yInfo, div.bInfo, div.vInfo, div.details, div.radio{
     width:97%;
     margin:0 auto;
     ul{
@@ -26,6 +26,9 @@ article.confirmation{
     }
     border-bottom:1px solid $grayLighter;
   }
+	div.radio{
+		border-bottom:none;
+	}
   div.details{
     p{
       margin:1em;
@@ -71,7 +74,8 @@ article.confirmation{
 				clear:left;
 				padding-top:0;
 				padding:0;
-				margin:0;
+				width:100%;
+				border-bottom:none;
 			}
     }
   }

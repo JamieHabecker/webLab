@@ -24,7 +24,7 @@ article.g17.confirmation
 			p {{a.description}}
 			ul
 				li.edit(data-ng-show='!isloading') <a data-ng-click="edit('StepTwo')"> Edit </a>
-		.formField.radio(yesno,req)
+		.formField.radio.yesno(yesno,req)
 		.continue
 			div(Btn,act="Submit", dis="{{dis}}")
 			div(loader)

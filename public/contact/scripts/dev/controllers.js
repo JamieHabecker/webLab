@@ -60,6 +60,7 @@ angular.module("KnowledgePortal", ['ngResource','directives','dmvPortalConfig','
 				};
 				if($scope.subject === "vi"){
 					sessionStorage.vehicles = true;
+					sessionStorage.removeItem("complete");
 				}
 				if($scope.subject === "di" || $scope.subject === "vi" || $scope.subject === "su"){
 					sessionStorage.drivers = true;

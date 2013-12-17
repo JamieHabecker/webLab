@@ -19,6 +19,11 @@ div.formField{
 		margin-left:0.5em;
 		
 	}
+	&.yesno{
+		label.last{
+			border-bottom:none;
+		}
+	}
 	
 }
 

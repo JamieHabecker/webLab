@@ -416,7 +416,7 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 		restrict: 'AE',
 		template: '<label>Response Requested? <span class="reqText" data-ng-show="respReq">Required</span>' +
 					'<ul class="radioList"><li><label><input type="radio" name="resp" data-ng-model="resp" value="Yes" data-ng-change="addResponse(resp)"><span>Yes</span></label>' +
-					'<label><input type="radio" name="resp" data-ng-model="resp" value="No" data-ng-change="addResponse(resp)"><span>No</span></label>' +
+					'<label class="last"><input type="radio" name="resp" data-ng-model="resp" value="No" data-ng-change="addResponse(resp)"><span>No</span></label>' +
 					'<p data-ng-show="form.$invalid">Required</p>',
 		link: function(scope,ele,attr){
 			scope.respReq= false;
