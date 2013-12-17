@@ -8,23 +8,23 @@ article.g17.confirmation
 				li <b>Email:</b> {{a.email}}
 				li <b>Phone:</b> {{a.phone}}
 				li(data-ng-show="a.subject !== 'ot'")<b>Subject:</b> {{subj}}
-				li.edit(data-ng-show='!isloading') <a data-ng-click="edit('/')"> Edit </a>
-		.vInfo(data-ng-repeat="a in theData", data-ng-show="a.year")
+				li.edit(data-ng-show='!isloading') <a data-ng-click="edit('ContactUs')"> Edit </a>
+		.vInfo.sec(data-ng-repeat="a in theData", data-ng-show="a.vin")
 			h3 Vehicle Information
 			ul
-				li <b>Year:</b> {{a.year}}
-				li <b>Make:</b> {{a.make}}
-				li <b>Model:</b> {{a.model}}
-				li <b>Last Four of VIN:</b> {{a.vin}}
+				li <b>Title:</b> {{a.title}}
+				li <b>Last four of VIN:</b> {{a.vin}}
 				li <b>License Plate:</b> {{a.plate}}
-				li <b>Primary Color:</b> {{a.prmColor}}
+				li <b>Customer Number:</b> {{a.custnumber}}
 				li(data-ng-show="a.secColor") <b>Secondary Color:</b> {{a.secColor}}
-				li.edit(data-ng-show='!isloading') <a data-ng-click="edit('StepFive')"> Edit </a>
-		.details.verify(data-ng-repeat="a in theData")
+				li.edit(data-ng-show='!isloading') <a data-ng-click="edit('StepTwo')"> Edit </a>
+		.details.verify(data-ng-repeat="a in theData", class="{{vary}}")
 			h3 Details
-			p {{a.details}}
+			form(name="form")
+			p {{a.description}}
 			ul
-				li.edit(data-ng-show='!isloading') <a data-ng-click="edit('StepSix')"> Edit </a>
+				li.edit(data-ng-show='!isloading') <a data-ng-click="edit('StepTwo')"> Edit </a>
+		.formField.radio(yesno,req)
 		.continue
-			div(btn,act="Submit")
+			div(Btn,act="Submit", dis="{{dis}}")
 			div(loader)

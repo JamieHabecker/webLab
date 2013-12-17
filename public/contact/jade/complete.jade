@@ -1,11 +1,7 @@
-article.g17
-	div.disclaimer
+article.g17.complete
 		h3.formTitle Contact Us - Complete!
 		div(data-ng-repeat="a in theData")
-			h2 Thanks for your inquiry, {{a.firstname}}. <span data-ng-show="a.getEmail === 'yes'">You will receive an email verification shortly.</span>
-			div
-				p
-					<span(data-ng-show="a.response === 'no'"You indicated that no response is necessary to your email.</span>
-					<span data-ng-show="a.response === 'yes'">We will respond to your email as soon as possible.</span>
-		.continue
-			div(btn,act="All Online Services")
+			h2 Thanks for your inquiry, {{a.firstname}}. <span>You will receive an email verification shortly.</span>
+			p <span data-ng-show="a.response === 'No'">You indicated that no response is necessary to your email.</span><span data-ng-show="a.response === 'Yes'">We will respond to your email as soon as possible.</span>
+			.continue
+				div(btn,act="All Online Services")

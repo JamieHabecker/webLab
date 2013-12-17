@@ -65,13 +65,15 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 .directive('btn', function(){
 			return{
 			restrict: 'A',
-			template: '<button data-ng-disabled="form.$invalid" data-ng-show="!isloading" data-ng-click="next()">{{action}}</button>',
+			template: '<button data-ng-disabled="form.$invalid || dis === \'true\'" data-ng-show="!isloading" data-ng-click="next()">{{action}}</button>',
 			replace: true,
 			link: function(scope,ele,attr){
 				scope.action= attr.act;
+				scope.dis= attr.dis;
 			}
 			}
 	})
+
 
 .directive('button', function(){
 			return{
@@ -409,11 +411,18 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 })
 
 
-
-
-
-
-
-
-
-
+.directive('yesno', function(){
+	return{
+		restrict: 'AE',
+		template: '<label>Response Requested? <span class="reqText" data-ng-show="respReq">Required</span>' +
+					'<ul class="radioList"><li><label><input type="radio" name="resp" data-ng-model="resp" value="Yes" data-ng-change="addResponse(resp)"><span>Yes</span></label>' +
+					'<label><input type="radio" name="resp" data-ng-model="resp" value="No" data-ng-change="addResponse(resp)"><span>No</span></label>' +
+					'<p data-ng-show="form.$invalid">Required</p>',
+		link: function(scope,ele,attr){
+			scope.respReq= false;
+			if(attr.req){
+				scope.respReq= true;
+			}
+		}
+	}
+})

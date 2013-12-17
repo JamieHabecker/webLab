@@ -83,51 +83,34 @@ angular.module("KnowledgePortal", ['ngResource','directives','dmvPortalConfig','
 			if(sessionStorage.drivers){
 				$scope.drivers = true;
 			}
-   if(sessionStorage.stepTwo){
-       var two = sessionStorage.getItem('stepTwo');
-       var cdTwo = JSON.parse(two);
-       var formFill = {
-        fillIt : function() {
-                $scope.title = cdTwo.title;
-                $scope.vin = cdTwo.vin;
-                 $scope.plate = cdTwo.plate;
-                $scope.custnumber = cdTwo.custnumber;
-                $scope.description = cdTwo.description;
-            }
-        }
-     $timeout(formFill.fillIt, 100);
-   
-   }
-   
-    $scope.next = function(){
-        var stepTwo = {
-            title : $scope.title,
-            vin : $scope.vin,
-            plate : $scope.plate,
-            custnumber : $scope.custnumber,
-            description :  $scope.description
-        };
-        sessionStorage.setItem('stepTwo', JSON.stringify(stepTwo));
-        $location.path("/Verify")
-    };
-     $scope.back = function() {
-        $location.path("/StepOne")
-    };
-  
-    $scope.change = function() {
-        var a = $scope.description;
-        if (a) {
-            $scope.left = 500 - a.length + " chracters remaining";
-        } else {
-            $scope.left = "500 character limit";
-        }
-    };
-    
-    
-    
-   
-        //$scope.mail = cdOne.email
-    
+			if(sessionStorage.stepTwo){
+				var two = sessionStorage.getItem('stepTwo');
+				var cdTwo = JSON.parse(two);
+				var formFill = {
+					fillIt : function() {
+						$scope.title = cdTwo.title;
+						$scope.vvin = cdTwo.vin;
+						$scope.vplate = cdTwo.plate;
+						$scope.customernumber = cdTwo.custnumber;
+						$scope.details = cdTwo.description;
+					}
+				}
+				$timeout(formFill.fillIt, 100);
+			}
+			$scope.next = function(){
+				var stepTwo = {
+					title : $scope.title,
+					vin : $scope.vvin,
+					plate : $scope.vplate,
+					custnumber : $scope.customernumber,
+					description :  $scope.details
+				};
+				sessionStorage.setItem('stepTwo', JSON.stringify(stepTwo));
+				$location.path("/Verify")
+			};
+			$scope.back = function() {
+				$location.path("/StepOne")
+			};
 }])
 
 .controller('VerifyController',['$scope','$location','ContactFactory', function($scope, $location, ContactFactory){
@@ -136,7 +119,13 @@ angular.module("KnowledgePortal", ['ngResource','directives','dmvPortalConfig','
 			var cdOne;
 			var cdTwo;
 			var data;
+			$scope.dis= true;
 			$scope.verify = true;
+			if(sessionStorage.vehicles){
+				$scope.vary= "sing"
+			}else{
+				$scope.vary= "sec"
+			}
 			if(!sessionStorage.stepOne && !sessionStorage.stepTwo){
 				$location.path("/StepOne");
 			}else{
@@ -168,63 +157,51 @@ angular.module("KnowledgePortal", ['ngResource','directives','dmvPortalConfig','
 				$scope.mail = data.email;
 				$scope.theData = [data];
 				var DTO ={
-         "oContactUsFields":data 
-         
-        };
-        $scope.addResponse = function(x) {
-           
-         data.response = x;
-        
-    };
-    $scope.addEmail = function(y) {
-          data.getEmail = y;
-    };
-    }
+					"oContactUsFields":data
+				};
+				$scope.addResponse = function(x) {
+					data.response = x;
+					$scope.dis= false;
+				};
+			}
 			$scope.edit = function(x){
-				sessionStorage.complete = "yes";
+				console.log(x)
 				$location.path('/' + x)
 			}
     $scope.next = function(){
-         $scope.isloading = true;
-          sessionStorage.setItem('data', JSON.stringify(data));
-        //ContactFactory.contactInfo({}, DTO, successcb, errorcb);
+			$scope.isloading = true;
+			sessionStorage.setItem('data', JSON.stringify(data));
+			ContactFactory.contactInfo({}, DTO, successcb, errorcb);
 			$location.path("/Complete")
-    };
-    $scope.goTo = function(x){
-        $location.path(x) 
-    };
-     function successcb(data){
-         $scope.verify = false;
-         $location.path('/Complete');
-         //sessionStorage.clear();
-         
-     }
-     function errorcb(data){
-          $scope.err = data.status
-     }
+		};
+			function successcb(data){
+				$scope.verify = false;
+				$location.path('/Complete');
+			}
+			function errorcb(data){
+				$scope.err = data.status
+			}
 }])
 
 .controller('CompleteController',['$scope','$location','$timeout', function($scope, $location, $timeout){
-    var theData;
-    var formFill;
-    if(!sessionStorage.stepOne && !sessionStorage.stepTwo && !sessionStorage.data){
-      //$location.path("/Complete");
-   }else{
-        theData = sessionStorage.getItem('data');
-        data = JSON.parse(theData);
-        $scope.theData = [data];
-        _gaq.push(['_trackEvent', 'Contact Form Completed!', 'ContactUs']);
-         formFill = {
-        fillIt : function() {
-                sessionStorage.clear();
-            }
-        }
-     $timeout(formFill.fillIt, 1500);
-        
-          $scope.goHome = function(x){
-        sessionStorage.clear();
-        window.location.replace(x);
-    }; 
-   }
-
+			var theData;
+			var formFill;
+			if(!sessionStorage.stepOne && !sessionStorage.stepTwo && !sessionStorage.data){
+				$location.path("/ContactUs");
+			}else{
+				theData = sessionStorage.getItem('data');
+				sessionStorage.complete = "yes";
+				data = JSON.parse(theData);
+				$scope.theData = [data];
+				_gaq.push(['_trackEvent', 'Contact Form Completed!', 'ContactUs']);
+				formFill = {
+					fillIt : function() {
+					sessionStorage.clear();
+					}
+				}
+				$timeout(formFill.fillIt, 1500);
+			}
+			$scope.next = function(){
+				window.location.replace("/");
+			}
 }])

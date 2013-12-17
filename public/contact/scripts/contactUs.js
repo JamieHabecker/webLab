@@ -208,7 +208,7 @@ angular.module("KnowledgePortal", ['ngResource','directives','dmvPortalConfig','
     var theData;
     var formFill;
     if(!sessionStorage.stepOne && !sessionStorage.stepTwo && !sessionStorage.data){
-      $location.path("/StepOne");
+      //$location.path("/Complete");
    }else{
         theData = sessionStorage.getItem('data');
         data = JSON.parse(theData);
@@ -227,26 +227,7 @@ angular.module("KnowledgePortal", ['ngResource','directives','dmvPortalConfig','
     }; 
    }
 
-}])
-
-
-.animation('an-enter', function() {
-        return {
-            setup : function(myElement) {
-                myElement.css({ 'opacity': 0.3 });
-                return {}; //if you want to share some dat between the set and start return it it can be anything
-            },
-            start : function(myElement, done, data) {
-                myElement.animate({
-                    'opacity' : 1
-                }, 300, function(){
-                    done()
-                });
-            }
-        }
-        })
-        
-     ;var base = "views/directiveTemplates/";
+}]);var base = "views/directiveTemplates/";
 angular.module("directives", [])
 
 

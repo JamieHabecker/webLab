@@ -9,31 +9,31 @@
         <li><b>Email:</b> {{a.email}}</li>
         <li><b>Phone:</b> {{a.phone}}</li>
         <li data-ng-show="a.subject !== 'ot'"><b>Subject:</b> {{subj}}</li>
-        <li data-ng-show="!isloading" class="edit"><a data-ng-click="edit('/')"> Edit </a></li>
+        <li data-ng-show="!isloading" class="edit"><a data-ng-click="edit('ContactUs')"> Edit </a></li>
       </ul>
     </div>
-    <div data-ng-repeat="a in theData" data-ng-show="a.year" class="vInfo">
+    <div data-ng-repeat="a in theData" data-ng-show="a.vin" class="vInfo sec">
       <h3>Vehicle Information</h3>
       <ul>
-        <li><b>Year:</b> {{a.year}}</li>
-        <li><b>Make:</b> {{a.make}}</li>
-        <li><b>Model:</b> {{a.model}}</li>
-        <li><b>Last Four of VIN:</b> {{a.vin}}</li>
+        <li><b>Title:</b> {{a.title}}</li>
+        <li><b>Last four of VIN:</b> {{a.vin}}</li>
         <li><b>License Plate:</b> {{a.plate}}</li>
-        <li><b>Primary Color:</b> {{a.prmColor}}</li>
+        <li><b>Customer Number:</b> {{a.custnumber}}</li>
         <li data-ng-show="a.secColor"><b>Secondary Color:</b> {{a.secColor}}</li>
-        <li data-ng-show="!isloading" class="edit"><a data-ng-click="edit('StepFive')"> Edit </a></li>
+        <li data-ng-show="!isloading" class="edit"><a data-ng-click="edit('StepTwo')"> Edit </a></li>
       </ul>
     </div>
-    <div data-ng-repeat="a in theData" class="details verify">
+    <div data-ng-repeat="a in theData" class="details verify {{vary}}">
       <h3>Details</h3>
-      <p>{{a.details}}</p>
+      <form name="form"></form>
+      <p>{{a.description}}</p>
       <ul>
-        <li data-ng-show="!isloading" class="edit"><a data-ng-click="edit('StepSix')"> Edit </a></li>
+        <li data-ng-show="!isloading" class="edit"><a data-ng-click="edit('StepTwo')"> Edit </a></li>
       </ul>
     </div>
+    <div yesno="yesno" req="req" class="formField radio"></div>
     <div class="continue">
-      <div btn="btn" act="Submit"></div>
+      <div Btn="Btn" act="Submit" dis="{{dis}}"></div>
       <div loader="loader"></div>
     </div>
   </div>
