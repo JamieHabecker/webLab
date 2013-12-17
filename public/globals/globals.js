@@ -27513,10 +27513,10 @@ angular.module('ngResource', ['ng']).
 .directive('phone',function(){
 			return{
 				restrict:'AE',
-				template:"<div data-ng-form='ph'><label>Phone<span class='reqText' data-ng-show='phoneReq'>Required</span></label><input type='text' name='phone'  data-ng-model='phone' data-ng-required='phoneReq' data-ng-pattern='phoneR' placeholder='555-555-1212'>" +
-				"<p data-ng-show='ph.phone.$invalid && ph.phone.$dirty'>You must enter a valid phone number (ex.555-555-1212)</p></div>",
+				template:"<div data-ng-form='ph'><label>Phone<span class='reqText' data-ng-show='phoneReq'>Required</span></label><input type='text' name='phone'  data-ng-model='phone' data-ng-required='phoneReq' data-ng-pattern='phoneR' placeholder='5555551212'>" +
+				"<p data-ng-show='ph.phone.$invalid && ph.phone.$dirty'>You must enter a valid phone number (ex.5555551212)</p></div>",
 				link: function(scope, ele, attr){
-					scope.phoneR=/^[2-9]{1}[0-9\-]{11}$/;
+					scope.phoneR=/^[2-9]{1}[0-9]{9}$/;
 					scope.phoneReq= false;
 					if(attr.req){
 						scope.phoneReq= true;

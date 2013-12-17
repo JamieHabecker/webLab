@@ -121,6 +121,7 @@ angular.module("KnowledgePortal", ['ngResource','directives','dmvPortalConfig','
 			var data;
 			$scope.dis= true;
 			$scope.verify = true;
+			sessionStorage.complete = "yes";
 			if(sessionStorage.vehicles){
 				$scope.vary= "sing"
 			}else{
@@ -150,7 +151,7 @@ angular.module("KnowledgePortal", ['ngResource','directives','dmvPortalConfig','
 			if(cdOne.subject === 'ot'){
 				data.realSubject = undefined;
 			}
-			if(cdOne.phone !== undefined && cdOne.phone.indexOf('804-555') !==-1){
+			if(cdOne.phone !== undefined && cdOne.phone.indexOf('555-555') !==-1){
 				data.phone = undefined;
 			}
 				$scope.subj = sessionStorage.subj;
@@ -189,7 +190,6 @@ angular.module("KnowledgePortal", ['ngResource','directives','dmvPortalConfig','
 				$location.path("/ContactUs");
 			}else{
 				theData = sessionStorage.getItem('data');
-				sessionStorage.complete = "yes";
 				data = JSON.parse(theData);
 				$scope.theData = [data];
 				_gaq.push(['_trackEvent', 'Contact Form Completed!', 'ContactUs']);
