@@ -56,7 +56,7 @@ grunt.initConfig({
 
 	dist:{
 		src:['scripts/dev/*.js'], //Using mini match for your scripts to concatenate
-		dest:'scripts/contactUs.js' //where to output the script
+		dest:'scripts/odomFraud.js' //where to output the script
 		}
 },
 
@@ -79,7 +79,7 @@ grunt.initConfig({
 	uglify: {
 	dest: {
 		files: {
-			'scripts/contactUs.min.js': ['scripts/contactUs.js']
+			'scripts/odomFraud.min.js': ['scripts/odomFraud.js']
 		}
 	}
 },
@@ -115,7 +115,7 @@ grunt.initConfig({
 	copy:{
 	release:{
 		files: {
-			'../../public/releases/OdometerFraud/': ['scripts/contactUs.min.js','scripts/shims/*','views/*.html','index.html']
+			'../../public/releases/OdometerFraud/': ['scripts/odomFraud.min.js','scripts/shims/mod.min.js','scripts/shims/respond.min.js','views/*.html','index.html']
 		}
 	}
 },
