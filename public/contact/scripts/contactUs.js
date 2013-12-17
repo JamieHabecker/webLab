@@ -187,7 +187,8 @@ angular.module("KnowledgePortal", ['ngResource','directives','dmvPortalConfig','
     $scope.next = function(){
          $scope.isloading = true;
           sessionStorage.setItem('data', JSON.stringify(data));
-        ContactFactory.contactInfo({}, DTO, successcb, errorcb);
+        //ContactFactory.contactInfo({}, DTO, successcb, errorcb);
+			$location.path("/Complete")
     };
     $scope.goTo = function(x){
         $location.path(x) 
@@ -491,7 +492,7 @@ angular.module("directives", [])
 
 
 .factory('ContactFactory',['$resource', function($resource) {
-    var baseUrl = "/apps/ContactUs/Default.aspx/SendFields";
+    var baseUrl = "http://10.156.147.121:443\:443/WebServicesBackEnd/ContactUs.aspx/SendFields";
     return $resource(baseUrl, {}, {
         contactInfo : {
             method : 'Post',
