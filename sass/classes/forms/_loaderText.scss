@@ -1,7 +1,7 @@
 h2.loaderText{
 	float:none;
 	display:block;
-	width:20%;
+	width:45%;
 	margin:0 auto;
 	background: url('/img/spin.gif') no-repeat top right;
 	padding-right: 1.5em;
@@ -9,5 +9,12 @@ h2.loaderText{
 	color:$blueDarker;
 	&.err{
 		padding-top:0;
+	}
+}
+
+
+@media screen and (min-width:758px){
+	h2.loaderText{
+		width:20%;
 	}
 }
