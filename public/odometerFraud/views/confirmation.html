@@ -13,7 +13,7 @@
         <li data-ng-show="!isloading" class="edit"><a data-ng-click="edit('StepTwo')"> Edit </a></li>
       </ul>
     </div>
-    <div data-ng-repeat="a in theData" class="bInfo">
+    <div data-ng-repeat="a in theData" class="bInfo {{vary}}">
       <h3>Company Information</h3>
       <ul>
         <li><b>Company/Suspect Name:</b> {{a.compName}}</li>
@@ -36,7 +36,7 @@
         <li data-ng-show="!isloading" class="edit"><a data-ng-click="edit('StepFive')"> Edit </a></li>
       </ul>
     </div>
-    <div data-ng-repeat="a in theData" class="details">
+    <div data-ng-repeat="a in theData" class="details {{vary2}}">
       <h3>Details</h3>
       <p>{{a.details}}</p>
       <ul>
