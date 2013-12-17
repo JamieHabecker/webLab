@@ -269,6 +269,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 				cdFour = JSON.parse(four);
 				cdSix = JSON.parse(six);
 				if(sessionStorage.an){
+					$scope.vary= "sec";
 					two = sessionStorage.getItem('stepTwo');
 					three = sessionStorage.getItem('stepThree');
 					five = sessionStorage.getItem('stepFive');
@@ -304,6 +305,8 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 					};
 					$scope.theData = [data];
 				}else{
+					$scope.vary= "gen";
+					$scope.vary2= "sec"
 					data = {
 						pc: "false",
 						compName : cdFour.compName,
