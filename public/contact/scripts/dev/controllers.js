@@ -172,7 +172,6 @@ angular.module("KnowledgePortal", ['ngResource','directives','dmvPortalConfig','
 			$scope.isloading = true;
 			sessionStorage.setItem('data', JSON.stringify(data));
 			ContactFactory.contactInfo({}, DTO, successcb, errorcb);
-			$location.path("/Complete")
 		};
 			function successcb(data){
 				$scope.verify = false;
