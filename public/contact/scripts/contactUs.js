@@ -92,7 +92,7 @@ angular.module("KnowledgePortal", ['ngResource','directives','dmvPortalConfig','
 						$scope.title = cdTwo.title;
 						$scope.vvin = cdTwo.vin;
 						$scope.vplate = cdTwo.plate;
-						$scope.customernumber = cdTwo.custnumber;
+						$scope.customernum= cdTwo.custnumber;
 						$scope.details = cdTwo.description;
 					}
 				}
@@ -103,7 +103,7 @@ angular.module("KnowledgePortal", ['ngResource','directives','dmvPortalConfig','
 					title : $scope.title,
 					vin : $scope.vvin,
 					plate : $scope.vplate,
-					custnumber : $scope.customernumber,
+					custnumber : $scope.customernum,
 					description :  $scope.details
 				};
 				sessionStorage.setItem('stepTwo', JSON.stringify(stepTwo));
@@ -152,7 +152,7 @@ angular.module("KnowledgePortal", ['ngResource','directives','dmvPortalConfig','
 			if(cdOne.subject === 'ot'){
 				data.realSubject = undefined;
 			}
-			if(cdOne.phone !== undefined && cdOne.phone.indexOf('555-555') !==-1){
+			if(cdOne.phone !== undefined && cdOne.phone.indexOf('555555') !==-1){
 				data.phone = undefined;
 			}
 				$scope.subj = sessionStorage.subj;
@@ -448,8 +448,8 @@ angular.module("directives", [])
 
 
 .factory('ContactFactory',['$resource', function($resource) {
-    //var baseUrl = "http://10.156.147.121:443\:443/WebServicesBackEnd/ContactUs.aspx/SendFields";
-		var baseUrl = "/apps/WebServicesBackEnd/ContactUs.aspx/SendFields";
+    var baseUrl = "http://10.156.147.121:443\:443/WebServicesBackEnd/ContactUs.aspx/SendFields";
+		//var baseUrl = "/apps/WebServicesBackEnd/ContactUs.aspx/SendFields";
     return $resource(baseUrl, {}, {
         contactInfo : {
             method : 'Post',

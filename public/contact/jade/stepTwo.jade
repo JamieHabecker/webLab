@@ -1,21 +1,17 @@
 article.g17
 	div
 		h3.formTitle Contact Us Step 2 of 3
-		form(novalidate, name="form")
-			.vehicles(data-ng-show="vehicles")
-				.formField.title.gen(vehtitle,req)
-				.formField.vin.sec(vin,req)
-				.formField.plate.gen(plate,req)
-				.formField.custnumber.sec(custnumber,req)
+		form(novalidate, name="form2", data-ng-show="vehicles")
+			.vehicles
+				.formField.title.gen(vehtitle,req, data-ng-show="vehicles")
+				.formField.vin.sec(vin,req, data-ng-show="vehicles")
+				.formField.plate.sing(plate,req, data-ng-show="vehicles")
 				.formField.details.sing(detail, req)
 				.continue
-					div(btn,act="Continue")
+					div(btn,act="Continue", formname="form2")
 				portalcancel
-
-		form(novalidate, name="form")
-			.driver(data-ng-show="!vehicles")
-				.formField.custnumber.sing(custnumber,req)
-				.formField.details.sing(detail,req)
+		form(novalidate, name="form", data-ng-show="!vehicles")
+				.formField.details.sing(detail, req)
 				.continue
 					div(btn,act="Continue")
 				portalcancel

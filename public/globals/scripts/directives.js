@@ -65,11 +65,16 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 .directive('btn', function(){
 			return{
 			restrict: 'A',
-			template: '<button data-ng-disabled="form.$invalid || dis === \'true\'" data-ng-show="!isloading" data-ng-click="next()">{{action}}</button>',
+			template: '<button data-ng-disabled="{{formName}}.$invalid || dis === \'true\'" data-ng-show="!isloading" data-ng-click="next()">{{action}}</button>',
 			replace: true,
 			link: function(scope,ele,attr){
 				scope.action= attr.act;
 				scope.dis= attr.dis;
+				if(attr.formname){
+					scope.formName= attr.formname;
+				}else{
+					scope.formName= "form"
+				}
 			}
 			}
 	})
@@ -241,7 +246,7 @@ angular.module("globals", ['globalFactories', 'globalControllers'])
 			return{
 				restrict: 'AE',
 				template: "<div data-ng-form='cnfrm'><label>Customer Number<span class='reqText' data-ng-show='custnumReq'>Required</span></label><input type='text' data-ng-required='custnumReq' name='customernumber' data-ng-model='customernumber' data-ng-pattern='custnumR' placeholder='Customer Number'>" +
-						"<p data-ng-show='cnfrm.customernumber.$invalid && cnfrm.customernumber.$dirty'>You must enter your customer number</p></div>",
+						"<p data-ng-show='cnfrm.customernumber.$invalid && cnfrm.customernumber.$dirty '>You must enter your customer number</p></div>",
 				link: function(scope, ele, attr){
 					scope.custnumR = /^([\w\-]{9,12})+$/;
 					scope.custnumReq = false;

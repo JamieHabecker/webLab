@@ -6,17 +6,16 @@ article.g17.confirmation
 			ul
 				li <b>Name:</b> {{a.firstname}} {{a.lastname}}
 				li <b>Email:</b> {{a.email}}
-				li <b>Phone:</b> {{a.phone}}
+				li(data-ng-show="a.phone") <b>Phone:</b> {{a.phone}}
+				li <b>Customer Number:</b> {{a.custnumber}}
 				li(data-ng-show="a.subject !== 'ot'")<b>Subject:</b> {{subj}}
 				li.edit(data-ng-show='!isloading') <a data-ng-click="edit('ContactUs')"> Edit </a>
-		.vInfo.sec(data-ng-repeat="a in theData", data-ng-show="a.vin")
+		.vInfo.sec(data-ng-repeat="a in theData", data-ng-show="a.title")
 			h3 Vehicle Information
 			ul
 				li <b>Title:</b> {{a.title}}
 				li <b>Last four of VIN:</b> {{a.vin}}
 				li <b>License Plate:</b> {{a.plate}}
-				li <b>Customer Number:</b> {{a.custnumber}}
-				li(data-ng-show="a.secColor") <b>Secondary Color:</b> {{a.secColor}}
 				li.edit(data-ng-show='!isloading') <a data-ng-click="edit('StepTwo')"> Edit </a>
 		.details.verify(data-ng-repeat="a in theData", class="{{vary}}")
 			h3 Details
