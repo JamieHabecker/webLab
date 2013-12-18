@@ -115,7 +115,7 @@ grunt.initConfig({
 	copy:{
 	release:{
 		files: {
-			'../../public/releases/OdometerFraud/': ['scripts/odomFraud.min.js','scripts/shims/mod.min.js','scripts/shims/respond.min.js','views/*.html','index.html']
+			'../../public/releases/OdometerFraud/': ['scripts/odomFraud.min.js','views/*.html','index.html']
 		}
 	}
 },
