@@ -55,185 +55,200 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 }])
 
 .controller('StepOneController', ['$scope','$location', function($scope, $location){
-	if(sessionStorage.type){
-		var a = sessionStorage.type;
-			if(a === "1"){
+			var type= sessionStorage.type;
+			if(type){
+				if(type === "1"){
 				$scope.comType = "1";
+				}else{
+					$scope.comType = "2";
+				}
+				$scope.checkIt = false;
 			}else{
-				$scope.comType = "2";
+				$scope.checkIt = true;
 			}
-		$scope.checkIt = false;
-	}else{
-		$scope.checkIt = true;
-	}
-	$scope.one= function(){
-		sessionStorage.type = "1";
-		$scope.checkIt = false;
-	}
-	$scope.two= function(){
-		sessionStorage.type = "2";
-		$scope.checkIt = true;
-	}
-	$scope.check= function(){
-		$scope.checkIt = false;
-	}
-	$scope.next= function(){
-		if($scope.comType === "1" || $scope.an === "Yes"){
-			sessionStorage.an = false;
-			$location.path("/StepTwo")
-		}else{
-			sessionStorage.removeItem("an");
-			$location.path("/StepFour")
+			$scope.one= function(){
+				sessionStorage.type = "1";
+				$scope.checkIt = false;
+			}
+			$scope.two= function(){
+				sessionStorage.type = "2";
+				$scope.checkIt = true;
+			}
+			$scope.check= function(){
+				$scope.checkIt = false;
+			}
+			$scope.next= function(){
+				if($scope.comType === "1" || $scope.an === "Yes"){
+				sessionStorage.an = false;
+				$location.path("/StepTwo")
+			}else{
+				sessionStorage.removeItem("an");
+				$location.path("/StepFour")
 		}
-		
 	}
 }])
 
 .controller('StepTwoController', ['$scope','$location','$timeout', function($scope, $location, $timeout){
-			if(!sessionStorage.type){
+			var type= sessionStorage.type;
+			var stepTwo= sessionStorage.stepTwo;
+			var current= sessionStorage.statetwo;
+			var stateCode= sessionStorage.stateCodetwo;
+			if(type === undefined){
 				$location.path("/StepOne")
 			}
-	 if(sessionStorage.stepTwo){
-	 	var data = sessionStorage.getItem('stepTwo');
-	 	var p = JSON.parse(data);
-	 	var formFill = {
-	 		fillIt : function() {
-	 			$scope.fn= p.firstname;
-	 			$scope.lastname  = p.lastname;
-	 			$scope.address  = p.address;
-	 			$scope.city  = p.city;
-	 			$scope.zip = p.zip
-				$scope.current= sessionStorage.statetwo;
-	 			}
-	 		};
-	 	$timeout(formFill.fillIt, 100);
-   }
-	$scope.next= function(){
-		var stepTwo = {
-			firstname : $scope.fn,
-			lastname : $scope.lastname,
-			address : $scope.address,
-			city: $scope.city,
-			state: sessionStorage.statetwo,
-			stateCode: sessionStorage.stateCodetwo,
-			zip: $scope.zip
-			};
-		sessionStorage.setItem('stepTwo', JSON.stringify(stepTwo));
-			$location.path("/StepThree")
-	}
+	 		if(stepTwo){
+	 			var data = sessionStorage.getItem('stepTwo');
+	 			var p = JSON.parse(data);
+	 			var formFill = {
+	 				fillIt : function() {
+	 					$scope.fn= p.firstname;
+	 					$scope.lastname  = p.lastname;
+	 					$scope.address  = p.address;
+	 					$scope.city  = p.city;
+	 					$scope.zip = p.zip
+						$scope.current= current;
+	 				}
+	 			};
+	 			$timeout(formFill.fillIt, 100);
+			 }
+			$scope.next= function(){
+				var stepTwo = {
+					firstname : $scope.fn,
+					lastname : $scope.lastname,
+					address : $scope.address,
+					city: $scope.city,
+					state: current,
+					stateCode: stateCode,
+					zip: $scope.zip
+				};
+				sessionStorage.setItem('stepTwo', JSON.stringify(stepTwo));
+				$location.path("/StepThree")
+			}
 }])
 
 .controller('StepThreeController', ['$scope','$location','$timeout', function($scope, $location, $timeout){
-	if(!sessionStorage.stepTwo){
-		$location.path("/")
-	}
-	if(sessionStorage.stepThree){
-	 	var data = sessionStorage.getItem('stepThree');
-	 	var p = JSON.parse(data); 
-	 	var formFill = {
-	 		fillIt : function() {
-	 			$scope.email= p.email;
-	 			$scope.phone = p.phone;
-	 			$scope.conPref  = p.conPref;
-	 			}
-	 		};
-	 	$timeout(formFill.fillIt, 100);
-   }
-	$scope.next= function(){
-		var stepThree = {
-			email : $scope.email,
-			phone : $scope.phone,
-			conPref : $scope.conPref
-			};
-		sessionStorage.setItem('stepThree', JSON.stringify(stepThree));
-		if(sessionStorage.complete){
-			$location.path("/Verify")
-		}else{
-			$location.path("/StepFour")
-		}
-	}
+			var stepTwo= sessionstorage.stepTwo;
+			var stepThree= sessionStorage.stepThree;
+			var complete= sessionStorage.complete;
+			if(stepTwo === undefined){
+				$location.path("/")
+			}
+			if(stepThree){
+	 			var data = sessionStorage.getItem('stepThree');
+	 			var p = JSON.parse(data);
+	 			var formFill = {
+	 				fillIt : function() {
+	 					$scope.email= p.email;
+	 					$scope.phone = p.phone;
+	 					$scope.conPref  = p.conPref;
+	 				}
+	 			};
+	 			$timeout(formFill.fillIt, 100);
+			}
+			$scope.next= function(){
+				var stepThree = {
+					email : $scope.email,
+					phone : $scope.phone,
+					conPref : $scope.conPref
+				};
+				sessionStorage.setItem('stepThree', JSON.stringify(stepThree));
+				if(complete){
+					$location.path("/Verify")
+				}else{
+					$location.path("/StepFour")
+				}
+			}
 }])
 
 .controller('StepFourController', ['$scope','$location','$timeout', function($scope, $location,$timeout){
-	if(sessionStorage.stepFour){
-		var data = sessionStorage.getItem('stepFour');
-		var p = JSON.parse(data);
-		var formFill = {
-			fillIt : function() {
-				$scope.compName= p.compName;
-				$scope.address = p.address;
-				$scope.city  = p.city;
-				$scope.zip = p.zip;
-				$scope.email = p.email;
-				$scope.phone = p.phone;
+			var stepFour= sessionStorage.stepFour;
+			var state= sessionStorage.stateFour;
+			var stateCode= sessionStorage.stateCodefour;
+			var complete= sessionStorage.complete;
+			var anonymous= sessionStorage.an;
+			if(stepFour){
+				var data = sessionStorage.getItem('stepFour');
+				var p = JSON.parse(data);
+				var formFill = {
+					fillIt : function() {
+						$scope.compName= p.compName;
+						$scope.address = p.address;
+						$scope.city  = p.city;
+						$scope.zip = p.zip;
+						$scope.email = p.email;
+						$scope.phone = p.phone;
+					}
+				};
+				$timeout(formFill.fillIt, 100);
 			}
-			};
-		$timeout(formFill.fillIt, 100);
-	}
-	$scope.next= function(){
-		var stepFour = {
-			compName : $scope.compName,
-			address : $scope.address,
-			city : $scope.city,
-			zip : $scope.zip,
-			state: sessionStorage.statefour,
-			stateCode: sessionStorage.stateCodefour,
-			email : $scope.email,
-			phone : $scope.phone
-		};
-		sessionStorage.setItem('stepFour', JSON.stringify(stepFour));
-		if(sessionStorage.complete){
-			$location.path("/Verify")
-		}else if(sessionStorage.an){
-			$location.path("/StepFive")
-		}else if(sessionStorage.an && complete){
-			$location.path("/Verify")
-		}else{
-		$location.path("/StepSix")
-		}
-	}
+			$scope.next= function(){
+				var stepFour = {
+					compName : $scope.compName,
+					address : $scope.address,
+					city : $scope.city,
+					zip : $scope.zip,
+					state: state,
+					stateCode: stateCode,
+					email : $scope.email,
+					phone : $scope.phone
+				};
+				sessionStorage.setItem('stepFour', JSON.stringify(stepFour));
+				if(sessionStorage.complete){
+					$location.path("/Verify")
+				}else if(anonymous){
+					$location.path("/StepFive")
+				}else if(anonymous && complete){
+					$location.path("/Verify")
+				}else{
+					$location.path("/StepSix")
+				}
+			}
 }])
 
 .controller('StepFiveController', ['$scope','$location','$timeout',function($scope, $location,$timeout){
-		if(!sessionStorage.stepFour){
-			$location.path("/");
-		}
-		if(sessionStorage.stepFive){
-		var data = sessionStorage.getItem('stepFive');
-		var p = JSON.parse(data);
-		var formFill = {
-			fillIt : function() {
-				$scope.vyear= p.year;
-				$scope.vmake = p.make;
-				$scope.vmodel  = p.model;
-				$scope.vvin = p.vin;
-				$scope.vplate = p.plate;
-				$scope.vpc = p.prmColor;
-				$scope.vsc = p.secColor;
+			var stepFour= sessionStorage.stepFour;
+			var stepFive= sessionStorage.stepFive;
+			var complete= sessionStorage.complete;
+			if(stepFour){
+				$location.path("/");
 			}
-		};
-		$timeout(formFill.fillIt, 100);
-	}
-	$scope.next= function(){
-		var stepFive = {
-			year: $scope.vyear,
-			make: $scope.vmake,
-			model: $scope.vmodel,
-			vin : $scope.vvin,
-			plate: $scope.vplate,
-			prmColor: $scope.vpc,
-			secColor: $scope.vsc
-		}
-		sessionStorage.setItem('stepFive', JSON.stringify(stepFive));
-		if(sessionStorage.complete){
-			$location.path("/Verify")
-		}else{
-		$location.path('/StepSix')
-		}
-	}
+			if(stepFive){
+				var data = sessionStorage.getItem('stepFive');
+				var p = JSON.parse(data);
+				var formFill = {
+					fillIt : function() {
+						$scope.vyear= p.year;
+						$scope.vmake = p.make;
+						$scope.vmodel  = p.model;
+						$scope.vvin = p.vin;
+						$scope.vplate = p.plate;
+						$scope.vpc = p.prmColor;
+						$scope.vsc = p.secColor;
+					}
+				};
+				$timeout(formFill.fillIt, 100);
+			}
+			$scope.next= function(){
+				var stepFive = {
+					year: $scope.vyear,
+					make: $scope.vmake,
+					model: $scope.vmodel,
+					vin : $scope.vvin,
+					plate: $scope.vplate,
+					prmColor: $scope.vpc,
+					secColor: $scope.vsc
+				}
+				sessionStorage.setItem('stepFive', JSON.stringify(stepFive));
+				if(complete){
+					$location.path("/Verify")
+				}else{
+					$location.path('/StepSix')
+				}
+			}
 }])
 
 .controller('StepSixController', ['$scope','$location','$timeout', function($scope, $location,$timeout){
+
 	if(!sessionStorage.stepFour){
 		$location.path("/");
 	}
