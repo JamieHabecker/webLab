@@ -27221,6 +27221,19 @@ angular.module('ngResource', ['ng']).
             throw error;
     };angular.module("globalControllers", [])
 
+.config(['$routeProvider','$locationProvider','$httpProvider', function($routeProvider,$locationProvider, $httpProvider){
+			$httpProvider.defaults.headers.get = {
+				'Accept' : 'application/json, text/javascript, */*'
+			};
+			$routeProvider
+					.when('/Error', {
+						controller: 'ErrorController',
+						templateUrl : '../views/error.html'
+					})
+		}])
+
+
+
 .controller('PortalCancelController',['$scope',function($scope){
 	$scope.portalCancel = function(){
 		sessionStorage.clear();
@@ -27228,7 +27241,20 @@ angular.module('ngResource', ['ng']).
 	};
 }])
 
-;angular.module("globals", ['globalFactories', 'globalControllers'])
+.controller('ErrorController', ['$scope', function($scope){
+			var err= sessionStorage.err;
+			if(err=== "500"){
+				$scope.error= "Sorry, the server is currently unavailable. Please try again later."
+			}
+			if(err=== "404"){
+				$scope.error= "Oops, it looks like either the  page or service could not be found. Please check the URL and try again."
+			}
+			$scope.next= function(){
+				window.location.replace("/");
+			}
+}])
+
+;angular.module("globals", ['globalConfig','globalFactories', 'globalControllers'])
 
 
 .directive('states',['StateFactory',function(StateFactory){
@@ -27660,7 +27686,52 @@ angular.module('ngResource', ['ng']).
 			}
 		}
 	}
-});angular.module("globalFactories", [])
+});angular.module("globalConfig", [])
+
+.config(['$provide','$httpProvider','$compileProvider', function($provide, $httpProvider, $compileProvider) {
+			var check;
+			var token;
+			$httpProvider.responseInterceptors.push(['$timeout','$q', 'message','$location', '$window', function($timeout, $q, message,$location, $window){
+			var redirectTo = {
+				Error: function() {
+					$location.path("/Error")
+				}
+			};
+				return function(promise) {
+					var a = sessionStorage.id;
+					return promise.then(function(response) {
+						$httpProvider.defaults.headers.get= {
+							'Accept' : 'application/json, text/javascript, */*'
+						}
+						$httpProvider.defaults.headers.post= {
+							'Accept' : 'application/json, text/javascript, */*',
+							"Content-Type" : "application/json; charset=utf-8"
+						}
+						$httpProvider.defaults.headers.put = {
+							'Accept' : 'application/json, text/javascript, */*',
+							"Content-Type" : "application/json; charset=utf-8"
+						}
+						return promise
+					},
+							function(errorResponse) {
+								sessionStorage.clear()
+								switch(errorResponse.status){
+									case 404:
+									sessionStorage.err= errorResponse.status;
+										$timeout(redirectTo.Error, 1000);
+										break;
+									case 500:
+										sessionStorage.err= errorResponse.status;
+										$timeout(redirectTo.Error, 1000);
+										break;
+									default:
+										showMessage('Error ' + errorResponse.status + ': ' + errorResponse.data, 'errorMessage', 20000);
+								}
+								return $q.reject(errorResponse);
+							});
+				};
+			}]);
+}]); ;angular.module("globalFactories", [])
 
 .factory('complete', function(){
 			if(sessionStorage.complete === "yes"){

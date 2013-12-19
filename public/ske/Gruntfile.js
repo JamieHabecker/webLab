@@ -117,7 +117,8 @@ jade: {
 					"index.html": ["jade/index.jade"],
 					"views/skeMenu.html": ["jade/skeMenu.jade"],
 					"views/exam10.html": ["jade/exam10.jade"],
-					"views/complete.html": ["jade/complete.jade"]
+					"views/complete.html": ["jade/complete.jade"],
+					"views/error.html": ["jade/error.jade"]
 				}
 			}
 		},

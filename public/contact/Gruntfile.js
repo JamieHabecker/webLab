@@ -95,14 +95,10 @@ grunt.initConfig({
 		files: {
 			"index.html": ["jade/index.jade"],
 			"views/stepOne.html": ["jade/stepOne.jade"],
-			"views/disclaimer.html" : ['jade/disclaimer.jade'],
 			"views/stepTwo.html" : ['jade/stepTwo.jade'],
-			"views/stepThree.html" : ['jade/stepThree.jade'],
-			"views/stepFour.html" : ['jade/stepFour.jade'],
-			"views/stepFive.html" : ['jade/stepFive.jade'],
-			"views/stepSix.html" : ['jade/stepSix.jade'],
 			"views/confirmation.html" : ['jade/confirmation.jade'],
-			"views/complete.html" : ['jade/complete.jade']
+			"views/complete.html" : ['jade/complete.jade'],
+			"views/error.html" : ['jade/error.jade']
 		}
 	}
 },

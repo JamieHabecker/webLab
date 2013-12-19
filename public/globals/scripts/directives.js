@@ -1,4 +1,4 @@
-angular.module("globals", ['globalFactories', 'globalControllers'])
+angular.module("globals", ['globalConfig','globalFactories', 'globalControllers'])
 
 
 .directive('states',['StateFactory',function(StateFactory){

@@ -1,4 +1,4 @@
-angular.module("KnowledgePortal", ['ngResource','directives','dmvPortalConfig','globals','factories']).value('$anchorScroll', angular.noop)
+angular.module("KnowledgePortal", ['ngResource','directives','globals','factories']).value('$anchorScroll', angular.noop)
 
 .config(['$routeProvider','$locationProvider','$httpProvider', function($routeProvider,$locationProvider, $httpProvider){
 			$httpProvider.defaults.headers.get = {
@@ -71,6 +71,7 @@ angular.module("KnowledgePortal", ['ngResource','directives','dmvPortalConfig','
 				sessionStorage.type ="O";
 				$location.path("/Dealer/Operator License")
 			};
+
 }])
 
 .controller('SignsController',['$scope','$rootScope','knowledgeFactory','$location','numberWrong','questionsMissed','theExam', function($scope,$rootScope,knowledgeFactory,$location,numberWrong, questionsMissed, theExam) {
@@ -301,6 +302,8 @@ angular.module("KnowledgePortal", ['ngResource','directives','dmvPortalConfig','
 				};
 			};
 }])
+
+
 
 
 
