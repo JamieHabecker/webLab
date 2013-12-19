@@ -127,7 +127,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 }])
 
 .controller('StepThreeController', ['$scope','$location','$timeout', function($scope, $location, $timeout){
-			var stepTwo= sessionstorage.stepTwo;
+			var stepTwo= sessionStorage.stepTwo;
 			var stepThree= sessionStorage.stepThree;
 			var complete= sessionStorage.complete;
 			if(stepTwo === undefined){
@@ -193,11 +193,13 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 					phone : $scope.phone
 				};
 				sessionStorage.setItem('stepFour', JSON.stringify(stepFour));
-				if(sessionStorage.complete){
+				if(complete){
 					$location.path("/Verify")
-				}else if(anonymous){
+				}
+				else if(anonymous === "false"){
 					$location.path("/StepFive")
-				}else if(anonymous && complete){
+				}
+				else if(anonymous === "true" && complete){
 					$location.path("/Verify")
 				}else{
 					$location.path("/StepSix")
@@ -209,7 +211,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 			var stepFour= sessionStorage.stepFour;
 			var stepFive= sessionStorage.stepFive;
 			var complete= sessionStorage.complete;
-			if(stepFour){
+			if(stepFour === undefined){
 				$location.path("/");
 			}
 			if(stepFive){
@@ -248,49 +250,51 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 }])
 
 .controller('StepSixController', ['$scope','$location','$timeout', function($scope, $location,$timeout){
-
-	if(!sessionStorage.stepFour){
-		$location.path("/");
-	}
-	if(sessionStorage.stepSix){
-		var data = sessionStorage.getItem('stepSix');
-		var p = JSON.parse(data);
-		var formFill = {
-			fillIt : function() {
-				$scope.details= p.details;
+			var stepFour= sessionStorage.stepFour;
+			var stepSix= sessionStorage.stepSix;
+			if(stepFour === undefined){
+				$location.path("/");
 			}
-		};
-		$timeout(formFill.fillIt, 100);
-	}
-	$scope.next= function(){
-		var stepSix = {
-			details : $scope.details
-		};
-		sessionStorage.setItem('stepSix', JSON.stringify(stepSix));
-		$location.path('/Verify')
-	}
+			if(stepSix){
+				var data = sessionStorage.getItem('stepSix');
+				var p = JSON.parse(data);
+				var formFill = {
+					fillIt : function() {
+						$scope.details= p.details;
+					}
+				};
+				$timeout(formFill.fillIt, 100);
+			}
+			$scope.next= function(){
+				var stepSix = {
+					details : $scope.details
+				};
+				sessionStorage.setItem('stepSix', JSON.stringify(stepSix));
+				$location.path('/Verify')
+			}
 }])
 
 .controller('VerifyController', ['$scope','$location','ContactFactory', function($scope,$location,ContactFactory){
-			var state = sessionStorage.stateCodestepTwo;
-			var compState = sessionStorage.stateCodestepFour;
-			var two,three,four,five,six,cdTwo,cdThree,cdFour,cdFive,cdSix;
-			if(!sessionStorage.stepSix){
+			var stepTwo= sessionStorage.stepTwo;
+			var stepThree= sessionStorage.stepThree;
+			var stepFour= sessionStorage.stepFour;
+			var stepFive= sessionStorage.stepFive;
+			var stepSix= sessionStorage.stepSix;
+			var state= sessionStorage.stateCodetwo;
+			var compStateCode= sessionStorage.stateCodefour;
+			var anonymous= sessionStorage.an;
+			if(stepSix === undefined){
 				$location.path('/')
 			}
-			if(sessionStorage.stepSix){
-				four = sessionStorage.getItem('stepFour');
-				six = sessionStorage.getItem('stepSix');
-				cdFour = JSON.parse(four);
-				cdSix = JSON.parse(six);
-				if(sessionStorage.an){
+			if(stepSix){
+				cdFour = JSON.parse(stepFour);
+				cdSix = JSON.parse(stepSix);
+				if(anonymous){
 					$scope.vary= "sec";
-					two = sessionStorage.getItem('stepTwo');
-					three = sessionStorage.getItem('stepThree');
-					five = sessionStorage.getItem('stepFive');
-					cdTwo = JSON.parse(two);
-					cdThree = JSON.parse(three);
-					cdFive = JSON.parse(five);
+					$scope.vary2= "sing";
+					cdTwo = JSON.parse(stepTwo);
+					cdThree = JSON.parse(stepThree);
+					cdFive = JSON.parse(stepFive);
 					data = {
 						pc: "true",
 						firstname  : cdTwo.firstname,
@@ -305,7 +309,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 						compName : cdFour.compName,
 						compAddress: cdFour.address,
 						compCity: cdFour.city,
-						compState: compState,
+						compState: compStateCode,
 						compZip: cdFour.zip,
 						compEmail: cdFour.email,
 						compPhone: cdFour.phone,
@@ -327,7 +331,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 						compName : cdFour.compName,
 						compAddress: cdFour.address,
 						compCity: cdFour.city,
-						compState: compState,
+						compState: compStateCode,
 						compZip: cdFour.zip,
 						compEmail: cdFour.email,
 						compPhone: cdFour.phone,
@@ -346,7 +350,7 @@ angular.module("odomFraud", ['ngResource','directives','dmvPortalConfig','global
 			$scope.next= function(){
 				$scope.isloading = true;
 				var DTO ={
-					"oOdometerFraudFields":data
+					"oOdometerFraudFields": data
 				};
 					sessionStorage.setItem('data', JSON.stringify(data));
 					ContactFactory.contactInfo({}, DTO, successcb, errorcb);
