@@ -1,4 +1,4 @@
-angular.module("KnowledgePortal", ['ngResource','directives','dmvPortalConfig','globals', 'factories']).value('$anchorScroll', angular.noop)
+angular.module("KnowledgePortal",['ngResource','directives','dmvPortalConfig','globals', 'factories']).value('$anchorScroll', angular.noop)
 
 .config(['$routeProvider','$locationProvider','$httpProvider', function($routeProvider,$locationProvider, $httpProvider){
 			$httpProvider.defaults.headers.get = {
