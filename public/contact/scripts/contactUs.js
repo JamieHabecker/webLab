@@ -51,7 +51,7 @@ angular.module("KnowledgePortal",['ngResource','directives','dmvPortalConfig','g
 				sessionStorage.subj = s;
 			};
 			$scope.next = function(){
-				_gaq.push(['_trackEvent', 'Contact Form Started!', 'ContactUs']);
+				_gaq.push(['_trackEvent', 'NEW Contact Form Started!', 'ContactUs']);
 				var stepOne = {
 					firstname : $scope.fn,
 					lastname : $scope.lastname,
@@ -468,8 +468,8 @@ angular.module("directives", [])
 
 
 .factory('ContactFactory',['$resource', function($resource) {
-    var baseUrl = "http://10.156.147.121:443\:443/WebServicesBackEnd/ContactUs.aspx/SendFields";
-		//var baseUrl = "/apps/WebServicesBackEnd/ContactUs.aspx/SendFields";
+    //var baseUrl = "http://10.156.147.121:443\:443/WebServicesBackEnd/ContactUs.aspx/SendFields";
+		var baseUrl = "/apps/WebServicesBackEnd/ContactUs.aspx/SendFields";
     return $resource(baseUrl, {}, {
         contactInfo : {
             method : 'Post',

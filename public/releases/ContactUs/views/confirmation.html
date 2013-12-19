@@ -7,19 +7,18 @@
       <ul>
         <li><b>Name:</b> {{a.firstname}} {{a.lastname}}</li>
         <li><b>Email:</b> {{a.email}}</li>
-        <li><b>Phone:</b> {{a.phone}}</li>
+        <li data-ng-show="a.phone"><b>Phone:</b> {{a.phone}}</li>
+        <li><b>Customer Number:</b> {{a.custnumber}}</li>
         <li data-ng-show="a.subject !== 'ot'"><b>Subject:</b> {{subj}}</li>
         <li data-ng-show="!isloading" class="edit"><a data-ng-click="edit('ContactUs')"> Edit </a></li>
       </ul>
     </div>
-    <div data-ng-repeat="a in theData" data-ng-show="a.vin" class="vInfo sec">
+    <div data-ng-repeat="a in theData" data-ng-show="a.title" class="vInfo sec">
       <h3>Vehicle Information</h3>
       <ul>
         <li><b>Title:</b> {{a.title}}</li>
         <li><b>Last four of VIN:</b> {{a.vin}}</li>
         <li><b>License Plate:</b> {{a.plate}}</li>
-        <li><b>Customer Number:</b> {{a.custnumber}}</li>
-        <li data-ng-show="a.secColor"><b>Secondary Color:</b> {{a.secColor}}</li>
         <li data-ng-show="!isloading" class="edit"><a data-ng-click="edit('StepTwo')"> Edit </a></li>
       </ul>
     </div>
