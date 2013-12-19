@@ -27,9 +27,9 @@ angular.module("KnowledgePortal", ['ngResource','directives','dmvPortalConfig','
 }])
 
 .controller('StepOneController', ['$scope','$location','$timeout', function($scope, $location, $timeout){
+	var stepOne = sessionStorage.stepOne;
 	sessionStorage.removeItem('vehicles');
-	sessionStorage.removeItem('drivers');
-	if(sessionStorage.stepOne){
+	if(stepOne){
 		var one = sessionStorage.getItem('stepOne');
 		var cdOne = JSON.parse(one);
 		var formFill = {
@@ -38,8 +38,8 @@ angular.module("KnowledgePortal", ['ngResource','directives','dmvPortalConfig','
 				$scope.fn  = cdOne.firstname;
 				$scope.lastname  = cdOne.lastname;
 				$scope.phone  = cdOne.phone;
-				$scope.suffix = cdOne.suffix;
 				$scope.subject = cdOne.subject;
+				$scope.customernumber= cdOne.custnumber;
 			}
 		};
 		$timeout(formFill.fillIt, 100);
@@ -51,19 +51,18 @@ angular.module("KnowledgePortal", ['ngResource','directives','dmvPortalConfig','
 			$scope.next = function(){
 				_gaq.push(['_trackEvent', 'Contact Form Started!', 'ContactUs']);
 				var stepOne = {
-					suffix : $scope.suffix,
 					firstname : $scope.fn,
 					lastname : $scope.lastname,
 					phone : $scope.phone,
 					email : $scope.email,
-					subject : $scope.subject
+					subject : $scope.subject,
+					custnumber: $scope.customernumber
 				};
 				if($scope.subject === "vi"){
 					sessionStorage.vehicles = true;
 					sessionStorage.removeItem("complete");
-				}
-				if($scope.subject === "di" || $scope.subject === "vi" || $scope.subject === "su"){
-					sessionStorage.drivers = true;
+				}else if($scope.subject !== "vi" && sessionStorage.vehicleInfo){
+					sessionStorage.removeItem("vehicleInfo")
 				}
 				sessionStorage.setItem('stepOne', JSON.stringify(stepOne));
 				if(sessionStorage.complete){
@@ -81,32 +80,50 @@ angular.module("KnowledgePortal", ['ngResource','directives','dmvPortalConfig','
 			if(sessionStorage.vehicles){
 				$scope.vehicles = true;
 			}
-			if(sessionStorage.drivers){
-				$scope.drivers = true;
-			}
-			if(sessionStorage.stepTwo){
-				var two = sessionStorage.getItem('stepTwo');
+
+
+
+			if(sessionStorage.vehicleInfo && sessionStorage.description){
+				var two = sessionStorage.getItem('vehicleInfo');
 				var cdTwo = JSON.parse(two);
 				var formFill = {
-					fillIt : function() {
-						$scope.title = cdTwo.title;
-						$scope.vvin = cdTwo.vin;
-						$scope.vplate = cdTwo.plate;
-						$scope.customernum= cdTwo.custnumber;
-						$scope.details = cdTwo.description;
+				fillIt : function() {
+					$scope.details = sessionStorage.description;
+					$scope.title = cdTwo.title;
+					$scope.vvin = cdTwo.vin;
+					$scope.vplate = cdTwo.plate;
 					}
 				}
 				$timeout(formFill.fillIt, 100);
+			}else if(!sessionStorage.vehicleInfo && sessionStorage.description){
+				var formFill = {
+				fillIt : function() {
+					$scope.details = sessionStorage.description;
+				}
+				}
+				$timeout(formFill.fillIt, 100);
+			}else{
+
 			}
+
+
+
+
+
+
+
+
+
+
 			$scope.next = function(){
-				var stepTwo = {
+				var vehicleInfo = {
 					title : $scope.title,
 					vin : $scope.vvin,
-					plate : $scope.vplate,
-					custnumber : $scope.customernum,
-					description :  $scope.details
+					plate : $scope.vplate
 				};
-				sessionStorage.setItem('stepTwo', JSON.stringify(stepTwo));
+				sessionStorage.custnumber= $scope.customernumber;
+				sessionStorage.description= $scope.details;
+				sessionStorage.setItem('vehicleInfo', JSON.stringify(vehicleInfo));
 				$location.path("/Verify")
 			};
 			$scope.back = function() {
@@ -119,11 +136,12 @@ angular.module("KnowledgePortal", ['ngResource','directives','dmvPortalConfig','
 			var two;
 			var cdOne;
 			var cdTwo;
-			var data;
+			var data={};
 			$scope.dis= true;
 			$scope.verify = true;
 			sessionStorage.complete = "yes";
 			if(sessionStorage.vehicles){
+				$scope.vehicles= true;
 				$scope.vary= "sing"
 			}else{
 				$scope.vary= "sec"
@@ -132,9 +150,7 @@ angular.module("KnowledgePortal", ['ngResource','directives','dmvPortalConfig','
 				$location.path("/StepOne");
 			}else{
 				one = sessionStorage.getItem('stepOne');
-				two = sessionStorage.getItem('stepTwo');
 				cdOne = JSON.parse(one);
-				cdTwo = JSON.parse(two);
 				data = {
 					firstname  : cdOne.firstname,
 					lastname  : cdOne.lastname,
@@ -143,12 +159,17 @@ angular.module("KnowledgePortal", ['ngResource','directives','dmvPortalConfig','
 					suffix : cdOne.suffix,
 					subject : cdOne.subject,
 					realSubject : sessionStorage.subj,
-					title : cdTwo.title,
-					vin : cdTwo.vin,
-					plate : cdTwo.plate,
-					custnumber : cdTwo.custnumber,
-					description : cdTwo.description
+					custnumber : cdOne.custnumber,
+					description : sessionStorage.description
 				};
+				if(sessionStorage.vehicleInfo){
+					two = sessionStorage.getItem('vehicleInfo');
+					cdTwo = JSON.parse(two);
+					data.title = cdTwo.title;
+					data.vin= cdTwo.vin;
+					data.plate= cdTwo.plate;
+				}else{
+				}
 			if(cdOne.subject === 'ot'){
 				data.realSubject = undefined;
 			}

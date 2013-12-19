@@ -17,6 +17,7 @@ article.confirmation{
         a{
           cursor:pointer;
           color:$orange;
+					text-decoration:underline;
         }
       }
     }
@@ -24,7 +25,7 @@ article.confirmation{
       padding-left:1em;
       padding-top:1em;
     }
-    border-bottom:1px solid $grayLighter;
+    border-bottom:1px solid #cccccc;
   }
 	div.radio{
 		border-bottom:none;
@@ -50,7 +51,7 @@ article.confirmation{
       float:left;
       margin-bottom:2%;
 			border-bottom:none;
-			border:1px solid $grayLighter;
+			border:1px solid #cccccc;
     }
 			div.details{
 				min-height:0;
