@@ -74,8 +74,8 @@ open: {
 				separator: ';' 
 			},
 			dist:{
-				src: ['scripts/vendor/jquery-1.10.2.js','scripts/vendor/angular.js','scripts/vendor/resource.js','scripts/vendor/underscore.js','scripts/dev/*js','scripts/vendor/ga.js'], //Using mini match for your scripts to concatenate
-                dest: 'scripts/SKE.js' //where to output the script
+				src: ['scripts/dev/*js'], //Using mini match for your scripts to concatenate
+				dest: 'scripts/SKE.js' //where to output the script
 			}
 		},
 compass: {
@@ -84,7 +84,7 @@ compass: {
         cssDir: 'css',
         imageDir: 'img',
         outputStyle: 'compressed',
-        importPath: '../../sass/',
+        importPath: '../../sass/'
       },
       server: {
         options: {
@@ -171,7 +171,6 @@ jade: {
 
 //build task
 grunt.registerTask('build', [
-	'bump',
 	'compass',
 	'concat',
 	'uglify',

@@ -1,0 +1,23 @@
+
+<article class="g17">
+  <div>
+    <h3 class="formTitle">{{type}}</h3>
+    <div class="complete">
+      <div class="incorrect">
+        <h2 data-ng-show="!correct">Sorry - you answered incorrectly 3 times!</h2>
+        <h2 data-ng-show="correct">You got {{total}} answers correct out of 10.</h2>
+        <ul>
+          <li><a data-ng-click="mainMenu()">Take a Different Test</a></li>
+          <li style="margin-bottom:5px;"><b>Learn More</b></li>
+          <li data-ng-show="M"><a data-ng-click="motorcycle()">Virginia Motorcycle Manual</a></li>
+          <li data-ng-show="C"><a data-ng-click="commercial()">Virginia Commercial Driver’s Manual</a></li>
+          <li data-ng-show="D"><a data-ng-click="dealerM()">Dealer Manual</a></li>
+          <li data-ng-show="D"><a data-ng-click="dealerG()">Dealer/Salesperson Study Guide</a></li>
+          <li data-ng-hide="D || M || C" data-ng-show="S"><a data-ng-click="driversManual()">Virginia Driver’s Manual</a></li>
+          <li data-ng-show="S"><a data-ng-click="manualS()">El Manual de Conductor de Virginia</a></li>
+          <li><a data-ng-click="tryAgain()" class="orgBtn">Try Again</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</article>
