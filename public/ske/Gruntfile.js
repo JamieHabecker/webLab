@@ -112,17 +112,17 @@ jade: {
 
  clean: {
             options: { force: true },
-            release: ['../../public/ske/']
+            release: ['../../public/releases/ske/']
         },
         copy: {            
             release: {
                 files: {
-                    '../../public/ske/': ['scripts/ske.min.js','scripts/shims/*','views/*.html','index.html', 'img/*']
+                    '../../public/releases/ske/': ['scripts/ske.min.js','views/*.html','index.html', 'img/*']
                 }
             }
         },
  usemin: {
-            html: ['../../public/ske/index.html']
+            html: ['../../public/releases/ske/index.html']
     }
        
 	
