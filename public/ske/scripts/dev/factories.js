@@ -25,7 +25,8 @@ angular.module("factories", [])
 })
 
 		.factory('knowledgeFactory',['$resource', function($resource) {
-		var baseUrl = "http://10.156.147.121:443\:443/WebServicesBackEnd/SampleKnowledgeExam.aspx/GetSKE";
+
+			var baseUrl = "http://10.156.147.121:443\:443/WebServicesBackEnd/SampleKnowledgeExam.aspx/GetSKE";
 		//var baseUrl = "/apps/WebServicesBackEnd/SampleKnowledgeExam.aspx/Getquestions";
 			return $resource(baseUrl, {}, {
 				skeQuestions : {
