@@ -1,0 +1,29 @@
+
+<article class="g17">
+  <div>
+    <h3 class="formTitle">Contact Us Step 2 of 3</h3>
+    <form novalidate="novalidate" name="form">
+      <div data-ng-show="vehicles" class="vehicles">
+        <div vehtitle="vehtitle" req="req" class="formField title gen"></div>
+        <div vin="vin" req="req" class="formField vin sec"></div>
+        <div plate="plate" req="req" class="formField plate gen"></div>
+        <div custnumber="custnumber" req="req" class="formField custnumber sec"></div>
+        <div detail="detail" req="req" class="formField details sing"></div>
+        <div class="continue">
+          <div btn="btn" act="Continue"></div>
+        </div>
+        <portalcancel></portalcancel>
+      </div>
+    </form>
+    <form novalidate="novalidate" name="form">
+      <div data-ng-show="!vehicles" class="driver">
+        <div custnumber="custnumber" req="req" class="formField custnumber sing"></div>
+        <div detail="detail" req="req" class="formField details sing"></div>
+        <div class="continue">
+          <div btn="btn" act="Continue"></div>
+        </div>
+        <portalcancel></portalcancel>
+      </div>
+    </form>
+  </div>
+</article>

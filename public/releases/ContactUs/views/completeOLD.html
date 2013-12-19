@@ -1,0 +1,29 @@
+<div class="mainContent">
+	<div class="content singleContainer" style="overflow: hidden;padding-bottom:1em;">
+		<h3>Contact Us - Complete!</h3>
+
+		<div data-ng-repeat="a in theData" style="height:7em;">
+			<h2>Thanks for your inquiry, {{a.firstname}}. <span data-ng-show="a.getEmail === 'yes'">You will receive an email verification shortly.</span></h2>
+			<div>
+				<p>
+					<span data-ng-show="a.response === 'no'">You indicated that no response is necessary to your email.</span>
+					<span data-ng-show="a.response === 'yes'">We will respond to your email as soon as possible.</span>
+				</p>
+
+			</div>
+		</div>
+
+		<div class="continue">
+			<button data-ng-show="!err" data-ng-click="goHome('http://dmvnew/home/')">
+				DMV Home
+			</button>
+
+		</div>
+
+		<h2 class="loaderText err" style="background:none;" data-ng-show="err">{{err}}</h2>
+
+
+	</div>
+
+</div>
+

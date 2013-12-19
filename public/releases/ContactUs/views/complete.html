@@ -1,0 +1,11 @@
+
+<article class="g17 complete">
+  <h3 class="formTitle">Contact Us - Complete!</h3>
+  <div data-ng-repeat="a in theData">
+    <h2>Thanks for your inquiry, {{a.firstname}}. <span>You will receive an email verification shortly.</span></h2>
+    <p><span data-ng-show="a.response === 'No'">You indicated that no response is necessary to your email.</span><span data-ng-show="a.response === 'Yes'">We will respond to your email as soon as possible.</span></p>
+    <div class="continue">
+      <div btn="btn" act="All Online Services"></div>
+    </div>
+  </div>
+</article>
