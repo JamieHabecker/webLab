@@ -11,7 +11,7 @@ input{
 }
 
 input[type="text"], input[type="password"],input[type="date"],input[type="email"],select{
-	height:3em;
+	height:2.5em;
 	border-radius:5px;
 	border:1px solid #ccc;
 	background:#eee;
@@ -86,9 +86,9 @@ input[type="color"]:focus,
 
 select{
 	background:#eee;
-	height:4em;
-	padding-top:15px;
-	padding-bottom:15px;
+	height:3em;
+	padding-top:13px;
+	padding-bottom:13px;
 	padding-right:3px;
 	option{
 		&:first-child{
