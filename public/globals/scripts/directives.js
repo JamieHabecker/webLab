@@ -245,7 +245,7 @@ angular.module("globals", ['globalConfig','globalFactories', 'globalControllers'
 .directive('custnumber',function(){
 			return{
 				restrict: 'AE',
-				template: "<div data-ng-form='cnfrm'><label>Customer Number<span class='reqText' data-ng-show='custnumReq'>Required</span></label><input type='text' data-ng-required='custnumReq' name='customernumber' data-ng-model='customernumber' data-ng-pattern='custnumR' placeholder='Customer Number'>" +
+				template: "<div data-ng-form='cnfrm'><label>Driver's License Number<span class='reqText' data-ng-show='custnumReq'>Required</span></label><input type='text' data-ng-required='custnumReq' name='customernumber' data-ng-model='customernumber' data-ng-pattern='custnumR' placeholder='Customer Identifier'>" +
 						"<p data-ng-show='cnfrm.customernumber.$invalid && cnfrm.customernumber.$dirty '>You must enter your customer number</p></div>",
 				link: function(scope, ele, attr){
 					scope.custnumR = /^([\w\-]{9,12})+$/;
@@ -431,3 +431,75 @@ angular.module("globals", ['globalConfig','globalFactories', 'globalControllers'
 		}
 	}
 })
+
+
+.directive('cal', function(){
+			return{
+				restrict: 'AE',
+				template: '<div data-ng-form="calFrm"><label>{{title}} <span class="reqText" data-ng-show="dateReq">Required</span></label><input data-ng-show="mobile" type="date" name="date" data-ng-model="date"  data-ng-required="{{dateReq}}"  placeholder="dd/mm/yyyy">' +
+						'<input data-ng-hide="mobile" type="date"  ui-date="dateOptions" name="date" data-ng-model="date"  ng-required="{{dateReq}}"  placeholder="dd/mm/yyyy">' +
+						'<p data-ng-show="calFrm.date.$invalid && calFrm.date.$dirty">You must enter a valid date</p></div>',
+				link: function(scope,ele,attr){
+					scope.dateReq= false;
+					scope.title= attr.title;
+
+					if(Modernizr.inputtypes.date) {
+						scope.mobile = true;
+					}
+					scope.dateOptions = {
+						changeYear : true,
+						changeMonth : true,
+						yearRange : '2012: +1',
+						showOptions : {
+							"fadeIn" : "slow"
+						}
+					};
+					if(attr.req){
+						scope.dateReq= true;
+					}
+				}
+	}
+})
+
+
+		.directive('opts',function(){
+			return{
+				restrict: 'AE',
+				scope: {},
+				template: "<div data-ng-form='optsFrm'><label>{{title}}<span class='reqText' data-ng-show='vinReq'>Required</span></label><select data-ng-model='opts' data-ng-change='optChange()' name='opts' data-ng-options='c for c in ops'><option value=''>Select One</option></select>" +
+						"<p data-ng-show='optsFrm.opts.$invalid && optsFrm.opts.$dirty'>Enter last 4 digits of Vehicle Identification Number</p>",
+				link: function(scope,ele,attr){
+					var b= attr.options.split(',')
+					scope.ops= b;
+					scope.optChange = function(){
+						console.log(scope.opts)
+					}
+					scope.title= attr.title;
+					scope.vinReq= false;
+					if(attr.req){
+						scope.vinReq= true;
+					}
+				}
+			}
+		})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
