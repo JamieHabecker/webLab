@@ -27228,7 +27228,7 @@ angular.module('ngResource', ['ng']).
 			$routeProvider
 					.when('/Error', {
 						controller: 'ErrorController',
-						templateUrl : '../views/error.html'
+						templateUrl : 'views/error.html'
 					})
 		}])
 
@@ -27244,10 +27244,10 @@ angular.module('ngResource', ['ng']).
 .controller('ErrorController', ['$scope', function($scope){
 			var err= sessionStorage.err;
 			if(err=== "500"){
-				$scope.error= "Sorry, the server is currently unavailable. Please try again later."
+				$scope.error= "Sorry, our server is currently unavailable. Please try again later."
 			}
 			if(err=== "404"){
-				$scope.error= "Oops, it looks like either the  page or service could not be found. Please check the URL and try again."
+				$scope.error= "Sorry, the requested page could not be found. Please check the URL and try again."
 			}
 			$scope.next= function(){
 				window.location.replace("/");

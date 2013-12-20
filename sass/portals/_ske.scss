@@ -66,7 +66,6 @@ body.knowledgePortal{
       }
 			.q1,.q2,.q3,.q4{
 				&:hover{
-				background: #FFFDC4;
 				cursor:pointer;
 				}
 			}
@@ -176,9 +175,13 @@ body.knowledgePortal{
           background:none;
           border:none;
           padding-bottom:0;
-          cursor:none;
           opacity:1 !important;
+					cursor:inherit;
         }
+				&:hover{
+					background:none;
+					cursor:inherit;
+				}
       }
       &.signs{
         img{
@@ -187,13 +190,7 @@ body.knowledgePortal{
       }
     }
   }
-ul.menu{
-	li{
-		&:hover{
-			background: #FFFDC4;
-		}
-	}
-}
+
  div.complete{
     padding:1em;
     padding-top:0.5em;
@@ -258,33 +255,30 @@ body.knowledgePortal{
 }
 }
 
-html.touch{
-	nav a:hover{
-		background:#788E9C;
-	}
-}
 
-html.no-touch {
-	body.knowledgePortal{
-		ul.radioList{
-			li.question:hover{
-				background:none;
-			}
-			li.question{
-				label:hover{
-					background:none;
-				}
-			}
-			li:hover{
+
+html.no-touch{
+	ul.menu{
+		li{
+			&:hover{
 				background:#FFFDC4;
-			}
-			li{
-				label:hover{
-					background:#FFFDC4;
-				}
 			}
 		}
 	}
-
+	ul.radioList{
+		li label{
+			&:hover{
+				background:#FFFDC4;
+			}
+		}
+	}
 }
-
+html.touch{
+	ul.menu{
+		li{
+			&:hover{
+				background:none;
+			}
+		}
+	}
+}
