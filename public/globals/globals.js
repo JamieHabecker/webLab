@@ -27501,10 +27501,10 @@ angular.module('ngResource', ['ng']).
 .directive('custnumber',function(){
 			return{
 				restrict: 'AE',
-				template: "<div data-ng-form='cnfrm'><label>Driver's License Number<span class='reqText' data-ng-show='custnumReq'>Required</span></label><input type='text' data-ng-required='custnumReq' name='customernumber' data-ng-model='customernumber' data-ng-pattern='custnumR' placeholder='Customer Identifier'>" +
-						"<p data-ng-show='cnfrm.customernumber.$invalid && cnfrm.customernumber.$dirty '>You must enter your customer number</p></div>",
+				template: "<div data-ng-form='cnfrm'><label>Driver's License Number or SSN<span class='reqText' data-ng-show='custnumReq'>Required</span></label><input type='text' data-ng-required='custnumReq' name='customernumber' data-ng-model='customernumber' data-ng-pattern='custnumR' placeholder='Customer Identifier'>" +
+						"<p data-ng-show='cnfrm.customernumber.$invalid && cnfrm.customernumber.$dirty '>You must enter your customer identifier</p></div>",
 				link: function(scope, ele, attr){
-					scope.custnumR = /^([\w\-]{9,12})+$/;
+					scope.custnumR= /^([a-zA-Z0-9\-]{9}|[a-zA-Z0-9\-]{11})+$/;
 					scope.custnumReq = false;
 					if(attr.req){
 						scope.custnumReq = true;
@@ -27667,7 +27667,7 @@ angular.module('ngResource', ['ng']).
 					'<option value="">Choose a Subject</option><option value="di" data="Driver Information">Driver Information</option><option value="vi">Vehicle Information</option>' +
 			'<option value="su">Suspension</option><option value="ot">Online Transaction</option><option value="gq">General Question</option>' +
 					'<option value="co">Comments</option><option value="ti">Technical Information</option><option value="ot">Other</option></select>' +
-			'<p data-ng-show="conFrm.subject.$invalid && conFrm.subject.$dirty">Required</p></div>'
+			'<p data-ng-show="conFrm.subject.$invalid && conFrm.subject.$dirty">Select a subject</p></div>'
 	}
 })
 

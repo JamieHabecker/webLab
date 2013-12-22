@@ -128,8 +128,8 @@ input{
 	background-color:#eee;
 }
 
-input.ng-invalid.ng-dirty, select.ng-invalid{
-background-color: #FCA4A7;
+input.ng-invalid.ng-dirty, select.ng-invalid.ng-dirty{
+background-color: #FCA4A7 !important;
 }
 
 input.ng-invalid.ng-dirty:focus {
@@ -138,9 +138,9 @@ input.ng-invalid.ng-dirty:focus {
 }
 
 
-input.ng-valid.ng-dirty{
-	background-color: #BFFFC6;
-	background:none\9;
+input.ng-valid.ng-dirty, select.ng-valid.ng-dirty{
+	background-color: #BFFFC6 !important;
+	background:none\9 !important;
 }
 input.ng-pristine.ng-valid{
 	background-color: #eee;
