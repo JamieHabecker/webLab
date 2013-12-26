@@ -21,7 +21,6 @@ angular.module("globals", ['globalConfig','globalFactories', 'globalControllers'
 							sessionStorage.setItem("stateCode" + num, scope.state.code);
 
 						}else{
-							console.log("hello")
 							scope.current = "Virginia";
 							sessionStorage.setItem("stateCode" + num, "VA");
 							sessionStorage.setItem("state" + num, "Virginia");
