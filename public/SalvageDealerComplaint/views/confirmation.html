@@ -23,7 +23,7 @@
         <li data-ng-show="!isloading" class="edit"><a data-ng-click="edit('StepFour')"> Edit </a></li>
       </ul>
     </div>
-    <div data-ng-repeat="a in theData" data-ng-show="a.year || a.make || a.model || a.vin" class="vInfo">
+    <div data-ng-repeat="a in theData" data-ng-show="a" class="vInfo">
       <h3>Vehicle Information</h3>
       <ul>
         <li data-ng-show="a.year"><b>Year:</b> {{a.year}}</li>

@@ -18,7 +18,7 @@ article.g17.confirmation
 				li(data-ng-show="a.compEmail") <b>Company Email:</b> {{a.compEmail}}
 				li(data-ng-show="a.compPhone") <b>Company Phone:</b> {{a.compPhone}}
 				li.edit(data-ng-show='!isloading') <a data-ng-click="edit('StepFour')"> Edit </a>
-		.vInfo(data-ng-repeat="a in theData", data-ng-show="a.year || a.make || a.model || a.vin")
+		.vInfo(data-ng-repeat="a in theData", data-ng-show="a")
 			h3 Vehicle Information
 			ul
 				li(data-ng-show="a.year") <b>Year:</b> {{a.year}}

@@ -312,8 +312,8 @@ angular.module("salvageComplaint", ['ngResource','directives','globals','ui.date
 						model: cdFive.model,
 						vin: cdFive.vin,
 						plate: cdFive.plate,
-						complDate: cdFive.date,
-						learned: cdFive.opts,
+						complDate: cdFive.complDate,
+						learned: cdFive.learned,
 						details: cdSix.details
 					};
 					$scope.theData = [data];
