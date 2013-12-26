@@ -342,7 +342,7 @@ angular.module("salvageComplaint", ['ngResource','directives','globals','ui.date
 			$scope.next= function(){
 				$scope.isloading = true;
 				var DTO ={
-					"oOdometerFraudFields": data
+					"oSalvageFields": data
 				};
 					sessionStorage.setItem('data', JSON.stringify(data));
 					ContactFactory.contactInfo({}, DTO, successcb, errorcb);
