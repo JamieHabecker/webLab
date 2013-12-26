@@ -1,0 +1,19 @@
+article.g17
+	div
+		h3.formTitle Complainant/Victim Information
+		form(novalidate, name="form")
+			.formField.firstName.gen(firstname,req)
+
+			.formField.lastName.sec(lastname,req)
+
+			.formField.address.sing(address,req)
+
+			.formField.city(city,req)
+
+			.formField.state(states,req,num="two")
+
+			.formField.zip(zip,req)
+
+			.continue
+				div(btn,act="Continue")
+			portalcancel

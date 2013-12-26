@@ -1,0 +1,14 @@
+article.g17
+	div
+		h3.formTitle Company/Suspect Information <span>(provide as much information as possible)</span>
+		form(novalidate, name="form")
+			.formField.companyName.gen(compname, req)
+			.formField.address.gen.sec(address)
+			.formField.city(city)
+			.formField.state(states, num='four')
+			.formField.zip(zip)
+			.formField.email.gen(email)
+			.formField.phone.sec(phone)
+			.continue
+				div(btn,act="Continue")
+			portalcancel

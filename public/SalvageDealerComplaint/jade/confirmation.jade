@@ -1,0 +1,39 @@
+article.g17.confirmation
+	h3.formTitle Please verify the following information
+	div
+		.yInfo(data-ng-repeat="a in theData", data-ng-show="a.firstname")
+			h3 Your Information
+			ul
+				li <b>Your Name:</b> {{a.firstname}} {{a.lastname}}
+				li <b>Your Address:</b> {{a.address}}, {{a.city}}, {{a.state}}, {{a.zip}}
+				li <b>Your Email:</b> {{a.email}}
+				li <b>Phone:</b> {{a.phone}}
+				li <b>Contact Preference:</b> {{a.conPref}}
+				li.edit(data-ng-show='!isloading') <a data-ng-click="edit('StepTwo')"> Edit </a>
+		.bInfo(data-ng-repeat="a in theData",class="{{vary}}")
+			h3 Company Information
+			ul
+				li <b>Company/Suspect Name:</b> {{a.compName}}
+				li(data-ng-show="a.compAddress || a.compCity || a.compState || a.compZip") <b>Company Address:</b> {{a.compAddress}}, {{a.compCity}}, {{a.compState}}, {{a.compZip}}
+				li(data-ng-show="a.compEmail") <b>Company Email:</b> {{a.compEmail}}
+				li(data-ng-show="a.compPhone") <b>Company Phone:</b> {{a.compPhone}}
+				li.edit(data-ng-show='!isloading') <a data-ng-click="edit('StepFour')"> Edit </a>
+		.vInfo(data-ng-repeat="a in theData", data-ng-show="a.year")
+			h3 Vehicle Information
+			ul
+				li <b>Year:</b> {{a.year}}
+				li <b>Make:</b> {{a.make}}
+				li <b>Model:</b> {{a.model}}
+				li <b>Last Four of VIN:</b> {{a.vin}}
+				li <b>License Plate:</b> {{a.plate}}
+				li <b>Primary Color:</b> {{a.prmColor}}
+				li(data-ng-show="a.secColor") <b>Secondary Color:</b> {{a.secColor}}
+				li.edit(data-ng-show='!isloading') <a data-ng-click="edit('StepFive')"> Edit </a>
+		.details(data-ng-repeat="a in theData", class="{{vary2}}")
+			h3 Details
+			p {{a.details}}
+			ul
+				li.edit(data-ng-show='!isloading') <a data-ng-click="edit('StepSix')"> Edit </a>
+		.continue
+			div(btn,act="Submit")
+			div(loader)
