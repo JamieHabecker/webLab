@@ -23,15 +23,15 @@
         <li data-ng-show="!isloading" class="edit"><a data-ng-click="edit('StepFour')"> Edit </a></li>
       </ul>
     </div>
-    <div data-ng-repeat="a in theData" data-ng-show="a.year" class="vInfo">
+    <div data-ng-repeat="a in theData" data-ng-show="a.year || a.make || a.model || a.vin" class="vInfo">
       <h3>Vehicle Information</h3>
       <ul>
-        <li><b>Year:</b> {{a.year}}</li>
-        <li><b>Make:</b> {{a.make}}</li>
-        <li><b>Model:</b> {{a.model}}</li>
-        <li><b>Last Four of VIN:</b> {{a.vin}}</li>
-        <li><b>License Plate:</b> {{a.plate}}</li>
-        <li><b>Primary Color:</b> {{a.prmColor}}</li>
+        <li data-ng-show="a.year"><b>Year:</b> {{a.year}}</li>
+        <li data-ng-show="a.make"><b>Make:</b> {{a.make}}</li>
+        <li data-ng-show="a.model"><b>Model:</b> {{a.model}}</li>
+        <li data-ng-show="a.vin"><b>Last Four of VIN:</b> {{a.vin}}</li>
+        <li data-ng-show="a.plate"><b>License Plate:</b> {{a.plate}}</li>
+        <li data-ng-show="a.prmColor"><b>Primary Color:</b> {{a.prmColor}}</li>
         <li data-ng-show="a.secColor"><b>Secondary Color:</b> {{a.secColor}}</li>
         <li data-ng-show="!isloading" class="edit"><a data-ng-click="edit('StepFive')"> Edit </a></li>
       </ul>

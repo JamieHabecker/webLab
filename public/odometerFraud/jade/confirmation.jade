@@ -18,15 +18,15 @@ article.g17.confirmation
 				li(data-ng-show="a.compEmail") <b>Company Email:</b> {{a.compEmail}}
 				li(data-ng-show="a.compPhone") <b>Company Phone:</b> {{a.compPhone}}
 				li.edit(data-ng-show='!isloading') <a data-ng-click="edit('StepFour')"> Edit </a>
-		.vInfo(data-ng-repeat="a in theData", data-ng-show="a.year")
+		.vInfo(data-ng-repeat="a in theData", data-ng-show="a.year || a.make || a.model || a.vin")
 			h3 Vehicle Information
 			ul
-				li <b>Year:</b> {{a.year}}
-				li <b>Make:</b> {{a.make}}
-				li <b>Model:</b> {{a.model}}
-				li <b>Last Four of VIN:</b> {{a.vin}}
-				li <b>License Plate:</b> {{a.plate}}
-				li <b>Primary Color:</b> {{a.prmColor}}
+				li(data-ng-show="a.year") <b>Year:</b> {{a.year}}
+				li(data-ng-show="a.make") <b>Make:</b> {{a.make}}
+				li(data-ng-show="a.model") <b>Model:</b> {{a.model}}
+				li(data-ng-show="a.vin") <b>Last Four of VIN:</b> {{a.vin}}
+				li(data-ng-show="a.plate") <b>License Plate:</b> {{a.plate}}
+				li(data-ng-show="a.prmColor") <b>Primary Color:</b> {{a.prmColor}}
 				li(data-ng-show="a.secColor") <b>Secondary Color:</b> {{a.secColor}}
 				li.edit(data-ng-show='!isloading') <a data-ng-click="edit('StepFive')"> Edit </a>
 		.details(data-ng-repeat="a in theData", class="{{vary2}}")

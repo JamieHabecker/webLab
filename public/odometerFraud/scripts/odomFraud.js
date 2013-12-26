@@ -291,7 +291,7 @@ angular.module("odomFraud", ['ngResource','directives','globals','factories'])//
 				cdSix = JSON.parse(stepSix);
 				if(anonymous){
 					$scope.vary= "sec";
-					$scope.vary2= "sing";
+					$scope.vary2= "sec";
 					cdTwo = JSON.parse(stepTwo);
 					cdThree = JSON.parse(stepThree);
 					cdFive = JSON.parse(stepFive);
