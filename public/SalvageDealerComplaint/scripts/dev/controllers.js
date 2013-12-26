@@ -284,8 +284,6 @@ angular.module("salvageComplaint", ['ngResource','directives','globals','ui.date
 				cdFour = JSON.parse(stepFour);
 				cdSix = JSON.parse(stepSix);
 				if(anonymous === "No"){
-					$scope.vary= "sec";
-					$scope.vary2= "sec";
 					cdTwo = JSON.parse(stepTwo);
 					cdThree = JSON.parse(stepThree);
 					cdFive = JSON.parse(stepFive);
@@ -318,8 +316,6 @@ angular.module("salvageComplaint", ['ngResource','directives','globals','ui.date
 					};
 					$scope.theData = [data];
 				}else{
-					$scope.vary= "gen";
-					$scope.vary2= "sec"
 					data = {
 						pc: "false",
 						compName : cdFour.compName,

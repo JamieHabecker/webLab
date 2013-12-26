@@ -290,8 +290,6 @@ angular.module("odomFraud", ['ngResource','directives','globals','factories'])//
 				cdFour = JSON.parse(stepFour);
 				cdSix = JSON.parse(stepSix);
 				if(anonymous){
-					$scope.vary= "sec";
-					$scope.vary2= "sec";
 					cdTwo = JSON.parse(stepTwo);
 					cdThree = JSON.parse(stepThree);
 					cdFive = JSON.parse(stepFive);
@@ -324,8 +322,6 @@ angular.module("odomFraud", ['ngResource','directives','globals','factories'])//
 					};
 					$scope.theData = [data];
 				}else{
-					$scope.vary= "gen";
-					$scope.vary2= "sec"
 					data = {
 						pc: "false",
 						compName : cdFour.compName,

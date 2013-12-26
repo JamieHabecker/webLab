@@ -10,7 +10,7 @@ article.g17.confirmation
 				li <b>Phone:</b> {{a.phone}}
 				li <b>Contact Preference:</b> {{a.conPref}}
 				li.edit(data-ng-show='!isloading') <a data-ng-click="edit('StepTwo')"> Edit </a>
-		.bInfo(data-ng-repeat="a in theData",class="{{vary}}")
+		.bInfo.sec(data-ng-repeat="a in theData")
 			h3 Company Information
 			ul
 				li <b>Company/Suspect Name:</b> {{a.compName}}
@@ -18,9 +18,10 @@ article.g17.confirmation
 				li(data-ng-show="a.compEmail") <b>Company Email:</b> {{a.compEmail}}
 				li(data-ng-show="a.compPhone") <b>Company Phone:</b> {{a.compPhone}}
 				li.edit(data-ng-show='!isloading') <a data-ng-click="edit('StepFour')"> Edit </a>
-		.vInfo(data-ng-repeat="a in theData", data-ng-show="a.year || a.make || a.model || a.vin")
+		.vInfo(data-ng-repeat="a in theData")
 			h3 Vehicle Information
 			ul
+				li(data-ng-show="!a.year && !a.make && !a.model && !a.vin && !a.plate && !a.prmColor && !a.secColor") <b>Nothing Entered</b>
 				li(data-ng-show="a.year") <b>Year:</b> {{a.year}}
 				li(data-ng-show="a.make") <b>Make:</b> {{a.make}}
 				li(data-ng-show="a.model") <b>Model:</b> {{a.model}}
@@ -29,7 +30,7 @@ article.g17.confirmation
 				li(data-ng-show="a.prmColor") <b>Primary Color:</b> {{a.prmColor}}
 				li(data-ng-show="a.secColor") <b>Secondary Color:</b> {{a.secColor}}
 				li.edit(data-ng-show='!isloading') <a data-ng-click="edit('StepFive')"> Edit </a>
-		.details(data-ng-repeat="a in theData", class="{{vary2}}")
+		.details.sec(data-ng-repeat="a in theData")
 			h3 Details
 			p {{a.details}}
 			ul

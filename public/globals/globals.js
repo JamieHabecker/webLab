@@ -27423,7 +27423,7 @@ angular.module('ngResource', ['ng']).
 .directive('plate', function(){
 			return{
 				restrict: 'AE',
-				template: "<div data-ng-form='vp'><label>Plate<span class='reqText' data-ng-required='plateReq'>Required</span></label><input type='text' data-ng-maxlength='8' name='vplate' data-ng-model='vplate' data-ng-maxlength='8' data-ng-required='plateReq' placeholder='License Plate'>" +
+				template: "<div data-ng-form='vp'><label>Plate<span class='reqText' data-ng-show='plateReq'>Required</span></label><input type='text' data-ng-maxlength='8' name='vplate' data-ng-model='vplate' data-ng-maxlength='8' data-ng-required='plateReq' placeholder='License Plate'>" +
 						"<p data-ng-show='vp.vplate.$invalid && vp.vplate.$dirty'>You must enter the vehicle license plate</p></div>",
 				link: function(scope,ele,attr){
 					scope.plateReq= false;
@@ -27698,12 +27698,13 @@ angular.module('ngResource', ['ng']).
 .directive('cal', function(){
 			return{
 				restrict: 'AE',
-				template: '<div data-ng-form="calFrm"><label>{{title}} <span class="reqText" data-ng-show="dateReq">Required</span></label><input data-ng-show="mobile" type="date" name="date" data-ng-model="date" data-ng-required="{{dateReq}}"  placeholder="dd/mm/yyyy">' +
-						'<input data-ng-hide="mobile" type="date"  ui-date="dateOptions" ui-date-format name="date" data-ng-model="date"  ng-required="{{dateReq}}"  placeholder="dd/mm/yyyy">' +
+				template: '<div data-ng-form="calFrm"><label>{{title}} <span class="reqText" data-ng-show="dateReq">Required</span></label><input data-ng-show="mobile" type="date" name="date" data-ng-model="date"  data-ng-required="{{dateReq}}"  placeholder="dd/mm/yyyy">' +
+						'<input data-ng-hide="mobile" type="date"  ui-date="dateOptions" name="date" data-ng-model="date"  ng-required="{{dateReq}}"  placeholder="dd/mm/yyyy">' +
 						'<p data-ng-show="calFrm.date.$invalid && calFrm.date.$dirty">You must enter a valid date</p></div>',
 				link: function(scope,ele,attr){
 					scope.dateReq= false;
 					scope.title= attr.title;
+
 					if(Modernizr.inputtypes.date) {
 						scope.mobile = true;
 					}
@@ -27723,23 +27724,30 @@ angular.module('ngResource', ['ng']).
 })
 
 
-		.directive('opts',function(){
+.directive('opts',function(){
 			return{
 				restrict: 'AE',
 				scope: {},
-				template: "<div data-ng-form='optsFrm'><label>{{title}}<span class='reqText' data-ng-show='vinReq'>Required</span></label><select data-ng-model='opts' data-ng-change='optChange(opts)' name='opts' data-ng-options='c for c in ops'><option value=''>Select One</option></select>" +
+				template: "<div data-ng-form='optsFrm'><label>{{title}}<span class='reqText' data-ng-show='vinReq'>Required</span></label><select data-ng-model='opts' data-ng-change='optChange(opts)' name='opts' data-ng-options='c for c in ops'><option value=''>{{current}}</option></select>" +
 						"<p data-ng-show='optsFrm.opts.$invalid && optsFrm.opts.$dirty'>Enter last 4 digits of Vehicle Identification Number</p>",
 				link: function(scope,ele,attr){
 					var t= attr.type;
 					var b= attr.options.split(',')
 					scope.ops= b;
+					scope.current= "select one"
 					if(sessionStorage.getItem("opts" + t)){
-						scope.opts= sessionStorage.getItem("opts" + t)
+						scope.opts= sessionStorage.getItem("opts" + t);
+						scope.current= sessionStorage.getItem("opts" + t);
 					}else{
-						sessionStorage.setItem("opts" + t, "Internet");
+						sessionStorage.setItem("opts" + t, "");
 					}
 					scope.optChange = function(x){
-						sessionStorage.setItem("opts" + t, x);
+						if(x === null){
+							sessionStorage.setItem("opts" + t, '');
+						}else{
+							sessionStorage.setItem("opts" + t, x);
+							scope.current= x;
+						}
 					}
 					scope.title= attr.title;
 					scope.vinReq= false;
@@ -27749,7 +27757,6 @@ angular.module('ngResource', ['ng']).
 				}
 			}
 		})
-
 
 
 

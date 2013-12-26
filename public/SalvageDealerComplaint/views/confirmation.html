@@ -13,7 +13,7 @@
         <li data-ng-show="!isloading" class="edit"><a data-ng-click="edit('StepTwo')"> Edit </a></li>
       </ul>
     </div>
-    <div data-ng-repeat="a in theData" class="bInfo {{vary}}">
+    <div data-ng-repeat="a in theData" class="bInfo sec">
       <h3>Company Information</h3>
       <ul>
         <li><b>Company/Suspect Name:</b> {{a.compName}}</li>
@@ -23,20 +23,21 @@
         <li data-ng-show="!isloading" class="edit"><a data-ng-click="edit('StepFour')"> Edit </a></li>
       </ul>
     </div>
-    <div data-ng-repeat="a in theData" data-ng-show="a" class="vInfo">
+    <div data-ng-repeat="a in theData" class="vInfo">
       <h3>Vehicle Information</h3>
       <ul>
+        <li data-ng-show="!a.year &amp;&amp; !a.make &amp;&amp; !a.model &amp;&amp; !a.vin &amp;&amp; !a.plate &amp;&amp; !a.complDate &amp;&amp; !a.learned || a.learned === 'N/A'"><b>Nothing Entered</b></li>
         <li data-ng-show="a.year"><b>Year:</b> {{a.year}}</li>
         <li data-ng-show="a.make"><b>Make:</b> {{a.make}}</li>
         <li data-ng-show="a.model"><b>Model:</b> {{a.model}}</li>
         <li data-ng-show="a.vin"><b>Last Four of VIN:</b> {{a.vin}}</li>
         <li data-ng-show="a.plate"><b>License Plate:</b> {{a.plate}}</li>
         <li data-ng-show="a.complDate"><b>When did you notice the violation?</b> {{a.complDate}}</li>
-        <li data-ng-show="a.learned"><b>How did you learn of the violation?</b> {{a.learned}}</li>
+        <li data-ng-show="a.learned !== 'N/A'"><b>How did you learn of the violation?</b> {{a.learned}}</li>
         <li data-ng-show="!isloading" class="edit"><a data-ng-click="edit('StepFive')"> Edit </a></li>
       </ul>
     </div>
-    <div data-ng-repeat="a in theData" class="details {{vary2}}">
+    <div data-ng-repeat="a in theData" class="details sec">
       <h3>Details</h3>
       <p>{{a.details}}</p>
       <ul>
