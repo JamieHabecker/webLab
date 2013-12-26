@@ -60,7 +60,7 @@ angular.module("odomFraud", ['ngResource','directives','globals','ui.date','fact
 				$scope.checkIt = true;
 			}else if(anonymous === "Yes"){
 				$scope.anonymous = "Yes";
-			}else if(anonymous === "No"){
+			}else{
 				$scope.anonymous = "No";
 			}
 			$scope.one= function(){
@@ -188,10 +188,10 @@ angular.module("odomFraud", ['ngResource','directives','globals','ui.date','fact
 				if(complete){
 					$location.path("/Verify")
 				}
-				else if(anonymous === "false"){
+				else if(anonymous === "No"){
 					$location.path("/StepFive")
 				}
-				else if(anonymous === "true" && complete){
+				else if(anonymous === "Yes" && complete){
 					$location.path("/Verify")
 				}else{
 					$location.path("/StepSix")
@@ -274,16 +274,16 @@ angular.module("odomFraud", ['ngResource','directives','globals','ui.date','fact
 			var stepSix= sessionStorage.stepSix;
 			var state= sessionStorage.stateCodetwo;
 			var compStateCode= sessionStorage.stateCodefour;
-			var anonymous= sessionStorage.an;
+			var anonymous= sessionStorage.anonymous;
 			if(stepSix === undefined){
 				$location.path('/')
 			}
 			if(stepSix){
 				cdFour = JSON.parse(stepFour);
 				cdSix = JSON.parse(stepSix);
-				if(anonymous === false){
+				if(anonymous === "No"){
 					$scope.vary= "sec";
-					$scope.vary2= "sing";
+					$scope.vary2= "sec";
 					cdTwo = JSON.parse(stepTwo);
 					cdThree = JSON.parse(stepThree);
 					cdFive = JSON.parse(stepFive);
