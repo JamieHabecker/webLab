@@ -16,8 +16,16 @@ angular.module("globals", ['globalConfig','globalFactories', 'globalControllers'
 						sessionStorage.setItem("state" + num, "Virginia");
 					}
 					scope.setState = function(){
-					sessionStorage.setItem("state" + num, scope.state.State);
-					sessionStorage.setItem("stateCode" + num, scope.state.code);
+						if(scope.state !== null){
+							sessionStorage.setItem("state" + num, scope.state.State);
+							sessionStorage.setItem("stateCode" + num, scope.state.code);
+
+						}else{
+							console.log("hello")
+							scope.current = "Virginia";
+							sessionStorage.setItem("stateCode" + num, "VA");
+							sessionStorage.setItem("state" + num, "Virginia");
+						}
 					}
 						if(attr.req){
 							scope.stateReq = true;
