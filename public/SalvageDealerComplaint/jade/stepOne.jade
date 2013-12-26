@@ -7,11 +7,11 @@ article.g17
 				ul.radioList
 					li
 						label
-							input(type="radio",name="type", data-ng-model="anonymous", value="Yes", data-ng-click='one()')
-							<span>Yes</span>
-						label
 							input(type="radio",name="type", data-ng-model="anonymous", value="No", data-ng-click='two()')
 							<span>No</span>
+						label
+							input(type="radio",name="type", data-ng-model="anonymous", value="Yes", data-ng-click='one()')
+							<span>Yes</span>
 			.continue
 				button(data-ng-disabled="checkIt", data-ng-click="next()") Continue
 			portalcancel

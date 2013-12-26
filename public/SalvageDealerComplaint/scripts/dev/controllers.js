@@ -199,7 +199,7 @@ angular.module("salvageComplaint", ['ngResource','directives','globals','ui.date
 			}
 }])
 
-.controller('StepFiveController', ['$scope','$location','$timeout',function($scope, $location,$timeout){
+.controller('StepFiveController', ['$scope','$location','$timeout','$filter',function($scope, $location,$timeout,$filter){
 			var stepFour= sessionStorage.stepFour;
 			var stepFive= sessionStorage.stepFive;
 			var complete= sessionStorage.complete;
@@ -216,21 +216,23 @@ angular.module("salvageComplaint", ['ngResource','directives','globals','ui.date
 						$scope.vmodel  = p.model;
 						$scope.vvin = p.vin;
 						$scope.vplate = p.plate;
-						$scope.vpc = p.prmColor;
-						$scope.vsc = p.secColor;
+						$scope.date = p.complDate;
+						$scope.opts = p.learned;
 					}
 				};
 				$timeout(formFill.fillIt, 100);
 			}
 			$scope.next= function(){
+				var a= $scope.date;
+				var b= $filter('date')(a,'longDate')
 				var stepFive = {
 					year: $scope.vyear,
 					make: $scope.vmake,
 					model: $scope.vmodel,
 					vin : $scope.vvin,
 					plate: $scope.vplate,
-					prmColor: $scope.vpc,
-					secColor: $scope.vsc
+					complDate: b,
+					learned: sessionStorage.getItem("optslearned")
 				}
 				sessionStorage.setItem('stepFive', JSON.stringify(stepFive));
 				if(complete){
