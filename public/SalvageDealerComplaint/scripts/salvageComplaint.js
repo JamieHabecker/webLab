@@ -342,7 +342,7 @@ angular.module("salvageComplaint", ['ngResource','directives','globals','ui.date
 			$scope.next= function(){
 				$scope.isloading = true;
 				var DTO ={
-					"oOdometerFraudFields": data
+					"oSalvageFields": data
 				};
 					sessionStorage.setItem('data', JSON.stringify(data));
 					ContactFactory.contactInfo({}, DTO, successcb, errorcb);
@@ -560,7 +560,7 @@ angular.module("directives", [])
 
 
 .factory('ContactFactory',['$resource', function($resource) {
-			var baseUrl = "http://10.156.147.121:443\:443/WebServicesBackEnd/OdometerFraud.aspx/SendFields";
+			var baseUrl = "http://10.156.147.121:443\:443/WebServicesBackEnd/SalvageComplaint.aspx/SendFields";
 		//var baseUrl = "/apps/WebServicesBackEnd/OdometerFraud.aspx/SendFields";
     return $resource(baseUrl, {}, {
         contactInfo : {
