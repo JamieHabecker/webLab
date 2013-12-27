@@ -26,7 +26,7 @@
     <div data-ng-repeat="a in theData" class="vInfo {{vary2}}">
       <h3>Vehicle Information</h3>
       <ul>
-        <!--li(data-ng-show='!a.year && !a.make && !a.model && !a.vin && !a.plate && !a.complDate && a.learned === "N/A" ') <b>Nothing Entered</b>-->
+        <li data-ng-show="!a.year &amp;&amp; !a.make &amp;&amp; !a.model &amp;&amp; !a.vin &amp;&amp; !a.plate &amp;&amp; !a.complDate &amp;&amp; a.learned == &quot;N/A&quot; "><b>Nothing Entered</b></li>
         <li data-ng-show="a.year"><b>Year:</b> {{a.year}}</li>
         <li data-ng-show="a.make"><b>Make:</b> {{a.make}}</li>
         <li data-ng-show="a.model"><b>Model:</b> {{a.model}}</li>

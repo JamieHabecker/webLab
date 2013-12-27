@@ -27480,7 +27480,7 @@ angular.module('ngResource', ['ng']).
 			return{
 				restrict: 'AE',
 				template: "<div data-ng-form='fi'><label>First Name<span class='reqText' data-ng-show='fname'>Required</span></label><input type='text' data-ng-required='fname' name='fn' data-ng-model='fn' placeholder='First Name'>" +
-						"<p data-ng-show='fi.fn.$invalid && fi.fn.$dirty'>You must enter your first name</p></div>",
+						"<p data-ng-show='fi.fn.$invalid && fi.fn.$dirty'>You must enter a first name</p></div>",
 				link: function(scope, ele, attr){
 					scope.fname= false;
 					if(attr.req){
@@ -27494,7 +27494,7 @@ angular.module('ngResource', ['ng']).
 			return{
 				restrict: 'AE',
 				template: "<div data-ng-form='la'><label>Last Name<span class='reqText' data-ng-show='lname'>Required</span></label><input type='text' data-ng-required='lname' name='lastname' data-ng-model='lastname' placeholder='Last Name'>" +
-						"<p data-ng-show='la.lastname.$invalid && la.lastname.$dirty'>You must enter your last name</p></div>",
+						"<p data-ng-show='la.lastname.$invalid && la.lastname.$dirty'>You must enter a last name</p></div>",
 				link: function(scope, ele, attr){
 					scope.lname = false;
 					if(attr.req){
@@ -27508,7 +27508,7 @@ angular.module('ngResource', ['ng']).
 			return{
 				restrict: 'AE',
 				template: "<div data-ng-form='cnfrm'><label>Driver's License Number or SSN<span class='reqText' data-ng-show='custnumReq'>Required</span></label><input type='text' data-ng-required='custnumReq' name='customernumber' data-ng-model='customernumber' data-ng-pattern='custnumR' placeholder='Customer Identifier'>" +
-						"<p data-ng-show='cnfrm.customernumber.$invalid && cnfrm.customernumber.$dirty '>You must enter your customer identifier</p></div>",
+						"<p data-ng-show='cnfrm.customernumber.$invalid && cnfrm.customernumber.$dirty '>You must enter a customer identifier</p></div>",
 				link: function(scope, ele, attr){
 					scope.custnumR= /^([a-zA-Z0-9\-]{9}|[a-zA-Z0-9\-]{11})+$/;
 					scope.custnumReq = false;

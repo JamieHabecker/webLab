@@ -341,7 +341,6 @@ angular.module("salvageComplaint", ['ngResource','globals','factories'])//.value
 				sessionStorage.complete = "yes";
 				$location.path('/' + x)
 			}
-			console.log(cdFive.complDate)
 			$scope.next= function(){
 				$scope.isloading = true;
 				var DTO ={

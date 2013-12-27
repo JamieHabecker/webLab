@@ -21,7 +21,7 @@ article.g17.confirmation
 		.vInfo(data-ng-repeat="a in theData", class="{{vary2}}")
 			h3 Vehicle Information
 			ul
-				//li(data-ng-show='!a.year && !a.make && !a.model && !a.vin && !a.plate && !a.complDate && a.learned === "N/A" ') <b>Nothing Entered</b>
+				li(data-ng-show='!a.year && !a.make && !a.model && !a.vin && !a.plate && !a.complDate && a.learned == "N/A" ') <b>Nothing Entered</b>
 				li(data-ng-show="a.year") <b>Year:</b> {{a.year}}
 				li(data-ng-show="a.make") <b>Make:</b> {{a.make}}
 				li(data-ng-show="a.model") <b>Model:</b> {{a.model}}
