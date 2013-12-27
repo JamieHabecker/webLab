@@ -208,14 +208,14 @@ angular.module("salvageComplaint", ['ngResource','globals','ui.date','factories'
 				var formFill = {
 					fillIt : function() {
 						$scope.vyear= p.year;
-						$scope.vmake = p.make;
-						$scope.vmodel  = p.model;
-						$scope.vvin = p.vin;
-						$scope.vplate = p.plate;
-						$scope.date = b;
+						$scope.vmake= p.make;
+						$scope.vmodel= p.model;
+						$scope.vvin= p.vin;
+						$scope.vplate= p.plate;
+						$scope.date= b;
 					}
 				};
-				$timeout(formFill.fillIt, 100);
+				$timeout(formFill.fillIt, 500);
 			}
 			$scope.next= function(){
 				var a= $scope.date;
@@ -341,6 +341,7 @@ angular.module("salvageComplaint", ['ngResource','globals','ui.date','factories'
 				sessionStorage.complete = "yes";
 				$location.path('/' + x)
 			}
+			console.log(cdFive.complDate)
 			$scope.next= function(){
 				$scope.isloading = true;
 				var DTO ={
