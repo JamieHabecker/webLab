@@ -290,8 +290,6 @@ angular.module("odomFraud", ['ngResource','directives','globals','factories'])//
 				cdFour = JSON.parse(stepFour);
 				cdSix = JSON.parse(stepSix);
 				if(anonymous){
-					$scope.vary= "sec";
-					$scope.vary2= "sec";
 					cdTwo = JSON.parse(stepTwo);
 					cdThree = JSON.parse(stepThree);
 					cdFive = JSON.parse(stepFive);
@@ -324,8 +322,6 @@ angular.module("odomFraud", ['ngResource','directives','globals','factories'])//
 					};
 					$scope.theData = [data];
 				}else{
-					$scope.vary= "gen";
-					$scope.vary2= "sec"
 					data = {
 						pc: "false",
 						compName : cdFour.compName,
@@ -387,7 +383,7 @@ angular.module("directives", [])
 .directive('placeholder', ['$timeout', function($timeout){
       if (navigator.userAgent.indexOf("MSIE") < 0) {
         return{
-            
+
         }
     }
    if(/MSIE (\d+\.\d+);/.test(navigator.userAgent)){
@@ -410,8 +406,8 @@ angular.module("directives", [])
                                                $(this).val($(this).attr('placeholder'));
                                                }});});
                                           }}}}}])
-                                          
-                                          
+
+
 
 
 
@@ -425,7 +421,7 @@ angular.module("directives", [])
         replace: true,
         templateUrl:base + "subjectSelect.html",
          link: function(scope, elm, attrs){
-            
+
          }
     };
 })
