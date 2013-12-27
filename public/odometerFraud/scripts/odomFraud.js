@@ -1,4 +1,4 @@
-angular.module("odomFraud", ['ngResource','directives','globals','factories'])//.value('$anchorScroll', angular.noop)
+angular.module("odomFraud", ['ngResource','globals','factories'])//.value('$anchorScroll', angular.noop)
 
 .config(['$routeProvider','$locationProvider','$httpProvider', function($routeProvider,$locationProvider, $httpProvider){
 	$httpProvider.defaults.headers.get = {
@@ -195,14 +195,8 @@ angular.module("odomFraud", ['ngResource','directives','globals','factories'])//
 				sessionStorage.setItem('stepFour', JSON.stringify(stepFour));
 				if(complete){
 					$location.path("/Verify")
-				}
-				else if(anonymous === "false"){
-					$location.path("/StepFive")
-				}
-				else if(anonymous === "true" && complete){
-					$location.path("/Verify")
 				}else{
-					$location.path("/StepSix")
+					$location.path("/StepFive")
 				}
 			}
 }])
@@ -322,6 +316,9 @@ angular.module("odomFraud", ['ngResource','directives','globals','factories'])//
 					};
 					$scope.theData = [data];
 				}else{
+					$scope.vary= "gen";
+					$scope.vary2= "sec";
+					$scope.vary3= "sing";
 					data = {
 						pc: "false",
 						compName : cdFour.compName,
@@ -373,190 +370,7 @@ angular.module("odomFraud", ['ngResource','directives','globals','factories'])//
 
 //var limit = 1024 * 1024 * 5; // 5 MB
 //var remSpace = limit - unescape(encodeURIComponent(JSON.stringify(sessionStorage))).length;
-//console.log(remSpace);var base = "views/directiveTemplates/";
-angular.module("directives", [])
-
-
-
-
-
-.directive('placeholder', ['$timeout', function($timeout){
-      if (navigator.userAgent.indexOf("MSIE") < 0) {
-        return{
-
-        }
-    }
-   if(/MSIE (\d+\.\d+);/.test(navigator.userAgent)){
-       var s = new Number(RegExp.$1);
-       if (s > 10) {
-           return
-           }else{
-               return {
-                   link: function(scope, elm, attrs){
-                       if (attrs.type === 'password'){
-                           return;
-                           }
-                           $timeout(function(){
-                               elm.val(attrs.placeholder).focus(function(){
-                                   if ($(this).val() == $(this).attr('placeholder')) {
-                                       $(this).val('');
-                                       }
-                                       }).blur(function(){
-                                           if ($(this).val() == ''){
-                                               $(this).val($(this).attr('placeholder'));
-                                               }});});
-                                          }}}}}])
-
-
-
-
-
-
-
-
-
-.directive('subject', function(){
-    return{
-        restrict: "E",
-        replace: true,
-        templateUrl:base + "subjectSelect.html",
-         link: function(scope, elm, attrs){
-
-         }
-    };
-})
-
-
-.directive('custnumber', ['$parse',function($parse, $templateCache){
-    return{
-        restrict: "A",
-        link: function(scope, elm, iAttrs, controller) {
-            var a = $('input').attr('name');
-            scope.$watch(a, function(value) {
-                if (!value) {
-                    return;
-                }
-                if(value.indexOf("-") !==-1 && value.length === 11){
-                     $parse(a).assign(scope, value.replace(/-/g, ''));
-                }
-            });
-        }
-    }
-}])
-
-
-
-
-
-
-
-
-
-
-
-;angular.module("dmvPortalConfig", [])
-
-.config(['$provide','$httpProvider','$compileProvider', function($provide, $httpProvider, $compileProvider) {
-    var check;
-    var y = window.location.host;
-    var elementsList = $();
-    var token;
-    var showMessage = function(content, cl, time, loading) {
-        var a = loading;
-        $('<h2>').addClass('message').addClass(cl).appendTo(elementsList).text(content);
-    };
-    $httpProvider.responseInterceptors.push(['$timeout','$q', 'message','$location', '$window', function($timeout, $q, message,$location, $window){
-         var redirectTo = {
-        SampleKnowledgeExam: function() {
-            $location.path("/SampleKnowledgeExam")
-        }
-    };
-        
-        return function(promise) {
-            var a = sessionStorage.id;
-            if ($('div.messagesList').length) {
-                $('div.messagesList').empty();
-                showMessage('Loading...', 'loadingMessage', 50000);
-            } else {
-                showMessage('Loading...', 'loadingMessage', 50000);
-            }
-            return promise.then(function(response) {
-                if (response) {
-                    $('h2.loadingMessage').fadeOut(1040);
-                }
-                check = response.headers('x-auth-token');
-                if (check !== null && check !== undefined) {
-                    token = response.headers('x-auth-token');
-                    sessionStorage.id = token;
-                    credStore.push(token);
-                    var toke = credStore.shift();
-
-                    $httpProvider.defaults.headers.common = {
-                        "X-Auth-Token" : toke
-
-                    };
-                    $httpProvider.defaults.headers.common = {
-                        'Accept' : 'application/json, text/plain, * / *'
-                    };
-
-                }
-
-                if (a) {
-
-                    $httpProvider.defaults.headers.get = {
-                        'Accept' : 'application/json, text/javascript, */*',
-                        
-
-                    }
-                    
-                    $httpProvider.defaults.headers.post = {
-                        'Accept' : 'application/json, text/javascript, */*',
-                        "Content-Type" : "application/json; charset=utf-8"
-
-                    }
-                     $httpProvider.defaults.headers.put = {
-                        'Accept' : 'application/json, text/javascript, */*',
-                        "Content-Type" : "application/json; charset=utf-8"
-
-                    }
-                }
-                return promise
-
-            }, function(errorResponse) {
-                var e = errorResponse.data;
-                switch(errorResponse.status){
-                    case 404:
-                        $('div.messagesList').empty();
-                        sessionStorage.clear()
-                        showMessage(e.STATUS, 'errorMessage', 20000);
-                        //$timeout(redirectTo.SampleKnowledgeExam, 2000);
-                        break;
-                    case 500:
-                        $('div.messagesList').empty();
-                        sessionStorage.clear()
-                        showMessage(e.STATUS, 'errorMessage', 20000);
-                        //$timeout(redirectTo.SampleKnowledgeExam, 2000);
-                        break;
-                    default:
-                        showMessage('Error ' + errorResponse.status + ': ' + errorResponse.data, 'errorMessage', 20000);
-                }
-                return $q.reject(errorResponse);
-            });
-        };
-    }]);
-    $compileProvider.directive('appMessages', function() {
-        var directiveDefinitionObject = {
-            restrict : 'A',
-            template : "<div></div>",
-            replace : true,
-            link : function(scope, element, attrs) {
-                elementsList.push($(element));
-            }
-        };
-        return directiveDefinitionObject;
-    });
-
-}]); ;angular.module("factories", [])
+//console.log(remSpace);angular.module("factories", [])
 
 .factory('message', function() {
     return []
