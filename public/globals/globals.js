@@ -27379,7 +27379,7 @@ angular.module('ngResource', ['ng']).
 			return{
 				restrict: 'AE',
 				template: "<div data-ng-form='zi'><label>Zip<span class='reqText' data-ng-show='zipReq'>Required</span></label><input type='text' name='zip' data-ng-model='zip' data-ng-pattern='zipR' data-ng-required='zipReq' placeholder='ZIP'>" +
-						"<p data-ng-show='zi.zip.$invalid && zi.zip.$dirty'>You must enter your zip code</p></div>",
+						"<p data-ng-show='zi.zip.$invalid && zi.zip.$dirty'>You must enter a zip code</p></div>",
 				link: function(scope,ele,attr){
 						scope.zipR= /^\d{5}$/;
 					scope.zipReq= false;
@@ -27568,7 +27568,7 @@ angular.module('ngResource', ['ng']).
 			return{
 				restrict: 'AE',
 				template: "<div data-ng-form='ci'><label>City<span class='reqText' data-ng-show='cityReq'>Required</span></label><input type='text' name='city' data-ng-model='city' data-ng-required='cityReq' placeholder='City'>" +
-						"<p data-ng-show='ci.city.$invalid && ci.city.$dirty'>You must enter your city</p></div>",
+						"<p data-ng-show='ci.city.$invalid && ci.city.$dirty'>You must enter a city</p></div>",
 				link: function(scope, ele, attr){
 					scope.cityReq= false;
 					if(attr.req){
@@ -27597,7 +27597,7 @@ angular.module('ngResource', ['ng']).
 			return{
 				restrict: "AE",
 				template:"<div data-ng-form='comp'><label>Company/Suspect Name<span class='reqText' data-ng-show='compReq'>Required</span></label><input type='text' name='compName' data-ng-model='compName' data-ng-required='compReq' placeholder='Company Name'>" +
-				"<p data-ng-show='comp.compName.$invalid && comp.compName.$dirty'>You must enter your address</p>",
+				"<p data-ng-show='comp.compName.$invalid && comp.compName.$dirty'>You must enter an address</p>",
 				link: function(scope, ele, attr){
 					scope.compReq= false;
 					if(attr.req){
