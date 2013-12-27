@@ -53,7 +53,6 @@ grunt.initConfig({
 	options: {
 		separator: ';'
 	},
-
 	dist:{
 		src:['scripts/dev/*.js'], //Using mini match for your scripts to concatenate
 		dest:'scripts/salvageComplaint.js' //where to output the script
@@ -116,7 +115,7 @@ grunt.initConfig({
 	copy:{
 	release:{
 		files: {
-			'../../public/releases/SalvageDealerComplaint/': ['scripts/odomFraud.min.js','views/*.html','index.html']
+			'../../public/releases/SalvageDealerComplaint/': ['scripts/salvageComplaint.min.js','views/*.html','index.html']
 		}
 	}
 },

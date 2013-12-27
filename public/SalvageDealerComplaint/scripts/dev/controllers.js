@@ -364,11 +364,4 @@ angular.module("salvageComplaint", ['ngResource','globals','factories'])//.value
 			$scope.next = function(){
 				window.location.replace("/");
 			}
-}])
-
-
-
-
-//var limit = 1024 * 1024 * 5; // 5 MB
-//var remSpace = limit - unescape(encodeURIComponent(JSON.stringify(sessionStorage))).length;
-//console.log(remSpace)
+}]);

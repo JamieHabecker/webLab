@@ -27254,7 +27254,7 @@ angular.module('ngResource', ['ng']).
 			}
 }])
 
-;angular.module("globals", ['globalConfig','globalFactories', 'globalControllers'])
+;angular.module("globals", ['globalConfig','globalFactories','globalControllers'])
 
 
 .directive('states',['StateFactory',function(StateFactory){

@@ -364,19 +364,11 @@ angular.module("salvageComplaint", ['ngResource','globals','factories'])//.value
 			$scope.next = function(){
 				window.location.replace("/");
 			}
-}])
-
-
-
-
-//var limit = 1024 * 1024 * 5; // 5 MB
-//var remSpace = limit - unescape(encodeURIComponent(JSON.stringify(sessionStorage))).length;
-//console.log(remSpace);angular.module("factories", [])
+}]);;angular.module("factories", [])
 
 .factory('message', function() {
     return []
 })
-
 
 .factory('ContactFactory',['$resource', function($resource) {
 		//var baseUrl = "http://10.156.147.121:443\:443/WebServicesBackEnd/SalvageComplaint.aspx/SendFields";

@@ -363,14 +363,8 @@ angular.module("odomFraud", ['ngResource','globals','factories'])//.value('$anch
 			$scope.next = function(){
 				window.location.replace("/");
 			}
-}])
-
-
-
-
-//var limit = 1024 * 1024 * 5; // 5 MB
-//var remSpace = limit - unescape(encodeURIComponent(JSON.stringify(sessionStorage))).length;
-//console.log(remSpace);angular.module("factories", [])
+}]);
+;angular.module("factories", [])
 
 .factory('message', function() {
     return []
@@ -378,8 +372,8 @@ angular.module("odomFraud", ['ngResource','globals','factories'])//.value('$anch
 
 
 .factory('ContactFactory',['$resource', function($resource) {
-		var baseUrl = "http://10.156.147.121:443\:443/WebServicesBackEnd/OdometerFraud.aspx/SendFields";
-		//var baseUrl = "/apps/WebServicesBackEnd/OdometerFraud.aspx/SendFields";
+		//var baseUrl = "http://10.156.147.121:443\:443/WebServicesBackEnd/OdometerFraud.aspx/SendFields";
+		var baseUrl = "/apps/WebServicesBackEnd/OdometerFraud.aspx/SendFields";
     return $resource(baseUrl, {}, {
         contactInfo : {
             method : 'Post',
