@@ -310,6 +310,9 @@ angular.module("salvageComplaint", ['ngResource','globals','ui.date','factories'
 					};
 					$scope.theData = [data];
 				}else{
+					$scope.vary= "gen";
+					$scope.vary2= "sec";
+					$scope.vary3= "sing";
 					data = {
 						pc: "false",
 						compName : cdFour.compName,
