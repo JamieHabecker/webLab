@@ -443,7 +443,7 @@ angular.module("globals", ['globalConfig','globalFactories', 'globalControllers'
 			return{
 				restrict: 'AE',
 				template: '<div data-ng-form="calFrm"><label>{{title}} <span class="reqText" data-ng-show="dateReq">Required</span></label><input data-ng-show="mobile" type="date" name="date" data-ng-model="date"  data-ng-required="{{dateReq}}"  placeholder="dd/mm/yyyy">' +
-						'<input data-ng-hide="mobile" type="date"  ui-date="dateOptions" name="date" data-ng-model="date"  ng-required="{{dateReq}}"  placeholder="dd/mm/yyyy">' +
+						'<input data-ng-hide="mobile" type="date"  ui-date="dateOptions" ui-date-format name="date" data-ng-model="date"  ng-required="{{dateReq}}"  placeholder="dd/mm/yyyy">' +
 						'<p data-ng-show="calFrm.date.$invalid && calFrm.date.$dirty">You must enter a valid date</p></div>',
 				link: function(scope,ele,attr){
 					scope.dateReq= false;
@@ -483,11 +483,11 @@ angular.module("globals", ['globalConfig','globalFactories', 'globalControllers'
 						scope.opts= sessionStorage.getItem("opts" + t);
 						scope.current= sessionStorage.getItem("opts" + t);
 					}else{
-						sessionStorage.setItem("opts" + t, "");
+						sessionStorage.setItem("opts" + t, "N/A");
 					}
 					scope.optChange = function(x){
-						if(x === null){
-							sessionStorage.setItem("opts" + t, '');
+						if(x === null || x === ""){
+							sessionStorage.setItem("opts" + t, 'N/A');
 						}else{
 							sessionStorage.setItem("opts" + t, x);
 							scope.current= x;
@@ -504,9 +504,31 @@ angular.module("globals", ['globalConfig','globalFactories', 'globalControllers'
 
 
 
-
-
-
+.directive('placeholder', ['$timeout', function($timeout){
+			if (navigator.userAgent.indexOf("MSIE") < 0) {
+				return{
+				}
+			}
+			if(/MSIE (\d+\.\d+);/.test(navigator.userAgent)){
+				var s = new Number(RegExp.$1);
+				if (s > 10) {
+					return;
+				}else{
+					return {
+						link: function(scope, elm, attrs){
+							if (attrs.type === 'password'){
+								return;
+							}
+							$timeout(function(){
+								elm.val(attrs.placeholder).focus(function(){
+									if ($(this).val() == $(this).attr('placeholder')) {
+										$(this).val('');
+									}
+								}).blur(function(){
+											if ($(this).val() == ''){
+												$(this).val($(this).attr('placeholder'));
+											}});});
+						}}}}}])
 
 
 

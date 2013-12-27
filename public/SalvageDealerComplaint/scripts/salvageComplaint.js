@@ -209,6 +209,8 @@ angular.module("salvageComplaint", ['ngResource','directives','globals','ui.date
 			if(stepFive){
 				var data = sessionStorage.getItem('stepFive');
 				var p = JSON.parse(data);
+				var a= p.complDate;
+				var b= $filter('date')(a,'longDate')
 				var formFill = {
 					fillIt : function() {
 						$scope.vyear= p.year;
@@ -216,7 +218,7 @@ angular.module("salvageComplaint", ['ngResource','directives','globals','ui.date
 						$scope.vmodel  = p.model;
 						$scope.vvin = p.vin;
 						$scope.vplate = p.plate;
-						$scope.date = p.complDate;
+						$scope.date = b;
 						$scope.opts = p.learned;
 					}
 				};
@@ -284,8 +286,6 @@ angular.module("salvageComplaint", ['ngResource','directives','globals','ui.date
 				cdFour = JSON.parse(stepFour);
 				cdSix = JSON.parse(stepSix);
 				if(anonymous === "No"){
-					$scope.vary= "sec";
-					$scope.vary2= "sec";
 					cdTwo = JSON.parse(stepTwo);
 					cdThree = JSON.parse(stepThree);
 					cdFive = JSON.parse(stepFive);
@@ -318,8 +318,6 @@ angular.module("salvageComplaint", ['ngResource','directives','globals','ui.date
 					};
 					$scope.theData = [data];
 				}else{
-					$scope.vary= "gen";
-					$scope.vary2= "sec"
 					data = {
 						pc: "false",
 						compName : cdFour.compName,

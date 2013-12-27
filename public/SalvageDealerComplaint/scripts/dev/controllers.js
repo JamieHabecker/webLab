@@ -1,4 +1,4 @@
-angular.module("salvageComplaint", ['ngResource','directives','globals','ui.date','factories'])//.value('$anchorScroll', angular.noop)
+angular.module("salvageComplaint", ['ngResource','globals','ui.date','factories'])//.value('$anchorScroll', angular.noop)
 
 .config(['$routeProvider','$locationProvider','$httpProvider', function($routeProvider,$locationProvider, $httpProvider){
 	$httpProvider.defaults.headers.get = {
@@ -209,6 +209,8 @@ angular.module("salvageComplaint", ['ngResource','directives','globals','ui.date
 			if(stepFive){
 				var data = sessionStorage.getItem('stepFive');
 				var p = JSON.parse(data);
+				var a= p.complDate;
+				var b= $filter('date')(a,'longDate')
 				var formFill = {
 					fillIt : function() {
 						$scope.vyear= p.year;
@@ -216,8 +218,8 @@ angular.module("salvageComplaint", ['ngResource','directives','globals','ui.date
 						$scope.vmodel  = p.model;
 						$scope.vvin = p.vin;
 						$scope.vplate = p.plate;
-						$scope.date = p.complDate;
-						$scope.opts = p.learned;
+						$scope.date = b;
+						//$scope.opts = p.learned;
 					}
 				};
 				$timeout(formFill.fillIt, 100);
@@ -231,8 +233,8 @@ angular.module("salvageComplaint", ['ngResource','directives','globals','ui.date
 					model: $scope.vmodel,
 					vin : $scope.vvin,
 					plate: $scope.vplate,
-					complDate: b,
-					learned: sessionStorage.getItem("optslearned")
+					complDate: b
+					//learned: sessionStorage.optslearned
 				}
 				sessionStorage.setItem('stepFive', JSON.stringify(stepFive));
 				if(complete){
@@ -311,7 +313,7 @@ angular.module("salvageComplaint", ['ngResource','directives','globals','ui.date
 						vin: cdFive.vin,
 						plate: cdFive.plate,
 						complDate: cdFive.complDate,
-						learned: cdFive.learned,
+						learned: sessionStorage.optslearned,
 						details: cdSix.details
 					};
 					$scope.theData = [data];

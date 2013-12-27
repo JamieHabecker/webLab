@@ -8,7 +8,7 @@ angular.module("directives", [])
 .directive('placeholder', ['$timeout', function($timeout){
       if (navigator.userAgent.indexOf("MSIE") < 0) {
         return{
-            
+
         }
     }
    if(/MSIE (\d+\.\d+);/.test(navigator.userAgent)){
@@ -31,8 +31,8 @@ angular.module("directives", [])
                                                $(this).val($(this).attr('placeholder'));
                                                }});});
                                           }}}}}])
-                                          
-                                          
+
+
 
 
 
@@ -46,7 +46,7 @@ angular.module("directives", [])
         replace: true,
         templateUrl:base + "subjectSelect.html",
          link: function(scope, elm, attrs){
-            
+
          }
     };
 })
