@@ -1,4 +1,4 @@
-angular.module("salvageComplaint", ['ngResource','globals','ui.date','factories'])//.value('$anchorScroll', angular.noop)
+angular.module("salvageComplaint", ['ngResource','globals','factories'])//.value('$anchorScroll', angular.noop)
 
 .config(['$routeProvider','$locationProvider','$httpProvider', function($routeProvider,$locationProvider, $httpProvider){
 	$httpProvider.defaults.headers.get = {
@@ -208,14 +208,14 @@ angular.module("salvageComplaint", ['ngResource','globals','ui.date','factories'
 				var formFill = {
 					fillIt : function() {
 						$scope.vyear= p.year;
-						$scope.vmake = p.make;
-						$scope.vmodel  = p.model;
-						$scope.vvin = p.vin;
-						$scope.vplate = p.plate;
-						$scope.date = b;
+						$scope.vmake= p.make;
+						$scope.vmodel= p.model;
+						$scope.vvin= p.vin;
+						$scope.vplate= p.plate;
+						$scope.date= b;
 					}
 				};
-				$timeout(formFill.fillIt, 100);
+				$timeout(formFill.fillIt, 500);
 			}
 			$scope.next= function(){
 				var a= $scope.date;
@@ -277,10 +277,10 @@ angular.module("salvageComplaint", ['ngResource','globals','ui.date','factories'
 			if(stepSix){
 				cdFour = JSON.parse(stepFour);
 				cdSix = JSON.parse(stepSix);
+				cdFive = JSON.parse(stepFive);
 				if(anonymous === "No"){
 					cdTwo = JSON.parse(stepTwo);
 					cdThree = JSON.parse(stepThree);
-					cdFive = JSON.parse(stepFive);
 					data = {
 						pc: "true",
 						firstname  : cdTwo.firstname,
@@ -322,7 +322,14 @@ angular.module("salvageComplaint", ['ngResource','globals','ui.date','factories'
 						compZip: cdFour.zip,
 						compEmail: cdFour.email,
 						compPhone: cdFour.phone,
-						details: cdSix.details
+						details: cdSix.details,
+						year: cdFive.year,
+						make: cdFive.make,
+						model: cdFive.model,
+						vin: cdFive.vin,
+						plate: cdFive.plate,
+						complDate: cdFive.complDate,
+						learned: sessionStorage.optslearned
 					};
 					$scope.theData = [data];
 				}
@@ -372,8 +379,8 @@ angular.module("salvageComplaint", ['ngResource','globals','ui.date','factories'
 
 
 .factory('ContactFactory',['$resource', function($resource) {
-			var baseUrl = "http://10.156.147.121:443\:443/WebServicesBackEnd/SalvageComplaint.aspx/SendFields";
-		//var baseUrl = "/apps/WebServicesBackEnd/OdometerFraud.aspx/SendFields";
+		//var baseUrl = "http://10.156.147.121:443\:443/WebServicesBackEnd/SalvageComplaint.aspx/SendFields";
+		var baseUrl = "/apps/WebServicesBackEnd/SalvageComplaint.aspx/SendFields";
     return $resource(baseUrl, {}, {
         contactInfo : {
             method : 'Post',

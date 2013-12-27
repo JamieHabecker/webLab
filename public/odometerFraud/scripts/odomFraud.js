@@ -378,7 +378,7 @@ angular.module("odomFraud", ['ngResource','globals','factories'])//.value('$anch
 
 
 .factory('ContactFactory',['$resource', function($resource) {
-			var baseUrl = "http://10.156.147.121:443\:443/WebServicesBackEnd/OdometerFraud.aspx/SendFields";
+		var baseUrl = "http://10.156.147.121:443\:443/WebServicesBackEnd/OdometerFraud.aspx/SendFields";
 		//var baseUrl = "/apps/WebServicesBackEnd/OdometerFraud.aspx/SendFields";
     return $resource(baseUrl, {}, {
         contactInfo : {

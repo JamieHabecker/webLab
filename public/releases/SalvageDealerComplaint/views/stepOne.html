@@ -1,0 +1,25 @@
+
+<article class="g17">
+  <div>
+    <h3 class="formTitle">Odometer Fraud Complaint Form - Step One</h3>
+    <form novalidate="novalidate" name="form">
+      <div class="formField radio">
+        <label>Do you wish to remain anonymous?</label>
+        <ul class="radioList">
+          <li>
+            <label>
+              <input type="radio" name="type" data-ng-model="anonymous" value="No" data-ng-click="two()"/><span>No</span>
+            </label>
+            <label>
+              <input type="radio" name="type" data-ng-model="anonymous" value="Yes" data-ng-click="one()"/><span>Yes</span>
+            </label>
+          </li>
+        </ul>
+      </div>
+      <div class="continue">
+        <button data-ng-disabled="checkIt" data-ng-click="next()">Continue</button>
+      </div>
+      <portalcancel></portalcancel>
+    </form>
+  </div>
+</article>
