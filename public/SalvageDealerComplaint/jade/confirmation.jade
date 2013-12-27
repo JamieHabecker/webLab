@@ -21,16 +21,16 @@ article.g17.confirmation
 		.vInfo(data-ng-repeat="a in theData", class="{{vary2}}")
 			h3 Vehicle Information
 			ul
-				li(data-ng-show="!a.year && !a.make && !a.model && !a.vin && !a.plate && !a.complDate && a.learned === \'N/A\'") <b>Nothing Entered</b>
+				//li(data-ng-show='!a.year && !a.make && !a.model && !a.vin && !a.plate && !a.complDate && a.learned === "N/A" ') <b>Nothing Entered</b>
 				li(data-ng-show="a.year") <b>Year:</b> {{a.year}}
 				li(data-ng-show="a.make") <b>Make:</b> {{a.make}}
 				li(data-ng-show="a.model") <b>Model:</b> {{a.model}}
 				li(data-ng-show="a.vin") <b>Last Four of VIN:</b> {{a.vin}}
 				li(data-ng-show="a.plate") <b>License Plate:</b> {{a.plate}}
 				li(data-ng-show="a.complDate") <b>When did you notice the violation?</b> {{a.complDate}}
-				li(data-ng-show="a.learned && a.learned !== \'N/A\'") <b>How did you learn of the violation?</b> {{a.learned}}
+				li(data-ng-show='a.learned && a.learned !== "N/A\"') <b>How did you learn of the violation?</b> {{a.learned}}
 				li.edit(data-ng-show="!isloading") <a data-ng-click="edit('StepFive')"> Edit </a>
-		.details.sec(data-ng-repeat="a in theData", calss="{{vary3}}")
+		.details.sec(data-ng-repeat="a in theData", class="{{vary3}}")
 			h3 Details
 			p {{a.details}}
 			ul

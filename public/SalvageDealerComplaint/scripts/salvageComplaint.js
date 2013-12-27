@@ -187,14 +187,8 @@ angular.module("salvageComplaint", ['ngResource','globals','ui.date','factories'
 				sessionStorage.setItem('stepFour', JSON.stringify(stepFour));
 				if(complete){
 					$location.path("/Verify")
-				}
-				else if(anonymous === "No"){
-					$location.path("/StepFive")
-				}
-				else if(anonymous === "Yes" && complete){
-					$location.path("/Verify")
 				}else{
-					$location.path("/StepSix")
+					$location.path("/StepFive")
 				}
 			}
 }])
@@ -204,7 +198,7 @@ angular.module("salvageComplaint", ['ngResource','globals','ui.date','factories'
 			var stepFive= sessionStorage.stepFive;
 			var complete= sessionStorage.complete;
 			if(stepFour === undefined){
-				//$location.path("/");
+				$location.path("/");
 			}
 			if(stepFive){
 				var data = sessionStorage.getItem('stepFive');
@@ -219,7 +213,6 @@ angular.module("salvageComplaint", ['ngResource','globals','ui.date','factories'
 						$scope.vvin = p.vin;
 						$scope.vplate = p.plate;
 						$scope.date = b;
-						//$scope.opts = p.learned;
 					}
 				};
 				$timeout(formFill.fillIt, 100);
@@ -234,7 +227,6 @@ angular.module("salvageComplaint", ['ngResource','globals','ui.date','factories'
 					vin : $scope.vvin,
 					plate: $scope.vplate,
 					complDate: b
-					//learned: sessionStorage.optslearned
 				}
 				sessionStorage.setItem('stepFive', JSON.stringify(stepFive));
 				if(complete){
@@ -318,6 +310,9 @@ angular.module("salvageComplaint", ['ngResource','globals','ui.date','factories'
 					};
 					$scope.theData = [data];
 				}else{
+					$scope.vary= "gen";
+					$scope.vary2= "sec";
+					$scope.vary3= "sing";
 					data = {
 						pc: "false",
 						compName : cdFour.compName,

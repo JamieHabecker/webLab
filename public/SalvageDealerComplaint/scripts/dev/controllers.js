@@ -277,10 +277,10 @@ angular.module("salvageComplaint", ['ngResource','globals','ui.date','factories'
 			if(stepSix){
 				cdFour = JSON.parse(stepFour);
 				cdSix = JSON.parse(stepSix);
+				cdFive = JSON.parse(stepFive);
 				if(anonymous === "No"){
 					cdTwo = JSON.parse(stepTwo);
 					cdThree = JSON.parse(stepThree);
-					cdFive = JSON.parse(stepFive);
 					data = {
 						pc: "true",
 						firstname  : cdTwo.firstname,
@@ -322,7 +322,14 @@ angular.module("salvageComplaint", ['ngResource','globals','ui.date','factories'
 						compZip: cdFour.zip,
 						compEmail: cdFour.email,
 						compPhone: cdFour.phone,
-						details: cdSix.details
+						details: cdSix.details,
+						year: cdFive.year,
+						make: cdFive.make,
+						model: cdFive.model,
+						vin: cdFive.vin,
+						plate: cdFive.plate,
+						complDate: cdFive.complDate,
+						learned: sessionStorage.optslearned
 					};
 					$scope.theData = [data];
 				}
