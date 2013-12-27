@@ -27698,24 +27698,12 @@ angular.module('ngResource', ['ng']).
 .directive('cal', function(){
 			return{
 				restrict: 'AE',
-				template: '<div data-ng-form="calFrm"><label>{{title}} <span class="reqText" data-ng-show="dateReq">Required</span></label><input data-ng-show="mobile" type="date" name="date" data-ng-model="date"  data-ng-required="{{dateReq}}"  placeholder="dd/mm/yyyy">' +
-						'<input data-ng-hide="mobile" type="date"  ui-date="dateOptions" ui-date-format name="date" data-ng-model="date"  ng-required="{{dateReq}}"  placeholder="dd/mm/yyyy">' +
-						'<p data-ng-show="calFrm.date.$invalid && calFrm.date.$dirty">You must enter a valid date</p></div>',
+				template: '<div data-ng-form="calFrm"><label>{{title}} <span class="reqText" data-ng-show="dateReq">Required</span></label><input type="date" name="date" data-ng-model="date" data-ng-pattern="calR" data-ng-required="{{dateReq}}"  placeholder="dd/mm/yyyy">' +
+						'<p data-ng-show="calFrm.date.$invalid && calFrm.date.$dirty">You must enter a valid date ex.(dd/mm/yyyy)</p></div>',
 				link: function(scope,ele,attr){
 					scope.dateReq= false;
 					scope.title= attr.title;
-
-					if(Modernizr.inputtypes.date) {
-						scope.mobile = true;
-					}
-					scope.dateOptions = {
-						changeYear : true,
-						changeMonth : true,
-						yearRange : '2012: +1',
-						showOptions : {
-							"fadeIn" : "slow"
-						}
-					};
+					scope.calR = /^((0?[1-9]|1[012])[- /.](0?[1-9]|[12][0-9]|3[01])[- /.](19|20)?[0-9]{2})*$/;
 					if(attr.req){
 						scope.dateReq= true;
 					}

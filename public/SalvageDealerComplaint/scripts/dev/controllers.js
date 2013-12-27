@@ -1,4 +1,4 @@
-angular.module("salvageComplaint", ['ngResource','globals','ui.date','factories'])//.value('$anchorScroll', angular.noop)
+angular.module("salvageComplaint", ['ngResource','globals','factories'])//.value('$anchorScroll', angular.noop)
 
 .config(['$routeProvider','$locationProvider','$httpProvider', function($routeProvider,$locationProvider, $httpProvider){
 	$httpProvider.defaults.headers.get = {
