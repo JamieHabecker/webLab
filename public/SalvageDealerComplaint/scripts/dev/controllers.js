@@ -204,7 +204,7 @@ angular.module("salvageComplaint", ['ngResource','globals','ui.date','factories'
 			var stepFive= sessionStorage.stepFive;
 			var complete= sessionStorage.complete;
 			if(stepFour === undefined){
-				//$location.path("/");
+				$location.path("/");
 			}
 			if(stepFive){
 				var data = sessionStorage.getItem('stepFive');
@@ -219,7 +219,6 @@ angular.module("salvageComplaint", ['ngResource','globals','ui.date','factories'
 						$scope.vvin = p.vin;
 						$scope.vplate = p.plate;
 						$scope.date = b;
-						//$scope.opts = p.learned;
 					}
 				};
 				$timeout(formFill.fillIt, 100);
@@ -234,7 +233,6 @@ angular.module("salvageComplaint", ['ngResource','globals','ui.date','factories'
 					vin : $scope.vvin,
 					plate: $scope.vplate,
 					complDate: b
-					//learned: sessionStorage.optslearned
 				}
 				sessionStorage.setItem('stepFive', JSON.stringify(stepFive));
 				if(complete){
