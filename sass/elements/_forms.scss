@@ -135,13 +135,11 @@ background-color: #FCA4A7 !important;
 
 input.ng-invalid.ng-dirty:focus {
 	background:#fff9d3;
-	background:none\9;
 }
 
 
 input.ng-valid.ng-dirty, select.ng-valid.ng-dirty{
 	background-color: #BFFFC6 !important;
-	background:none\9 !important;
 }
 input.ng-pristine.ng-valid{
 	background-color: #eee;
