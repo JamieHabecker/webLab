@@ -187,14 +187,8 @@ angular.module("salvageComplaint", ['ngResource','globals','ui.date','factories'
 				sessionStorage.setItem('stepFour', JSON.stringify(stepFour));
 				if(complete){
 					$location.path("/Verify")
-				}
-				else if(anonymous === "No"){
-					$location.path("/StepFive")
-				}
-				else if(anonymous === "Yes" && complete){
-					$location.path("/Verify")
 				}else{
-					$location.path("/StepSix")
+					$location.path("/StepFive")
 				}
 			}
 }])
