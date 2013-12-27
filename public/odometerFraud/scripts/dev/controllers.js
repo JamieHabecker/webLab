@@ -195,14 +195,8 @@ angular.module("odomFraud", ['ngResource','directives','globals','factories'])//
 				sessionStorage.setItem('stepFour', JSON.stringify(stepFour));
 				if(complete){
 					$location.path("/Verify")
-				}
-				else if(anonymous === "false"){
-					$location.path("/StepFive")
-				}
-				else if(anonymous === "true" && complete){
-					$location.path("/Verify")
 				}else{
-					$location.path("/StepSix")
+					$location.path("/StepFive")
 				}
 			}
 }])
@@ -322,6 +316,9 @@ angular.module("odomFraud", ['ngResource','directives','globals','factories'])//
 					};
 					$scope.theData = [data];
 				}else{
+					$scope.vary= "gen";
+					$scope.vary2= "sec";
+					$scope.vary3= "sing";
 					data = {
 						pc: "false",
 						compName : cdFour.compName,
