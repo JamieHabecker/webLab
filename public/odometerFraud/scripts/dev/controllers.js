@@ -283,10 +283,10 @@ angular.module("odomFraud", ['ngResource','globals','factories'])//.value('$anch
 			if(stepSix){
 				cdFour = JSON.parse(stepFour);
 				cdSix = JSON.parse(stepSix);
+				cdFive = JSON.parse(stepFive);
 				if(anonymous){
 					cdTwo = JSON.parse(stepTwo);
 					cdThree = JSON.parse(stepThree);
-					cdFive = JSON.parse(stepFive);
 					data = {
 						pc: "true",
 						firstname  : cdTwo.firstname,
@@ -328,6 +328,13 @@ angular.module("odomFraud", ['ngResource','globals','factories'])//.value('$anch
 						compZip: cdFour.zip,
 						compEmail: cdFour.email,
 						compPhone: cdFour.phone,
+						year: cdFive.year,
+						make: cdFive.make,
+						model: cdFive.model,
+						vin: cdFive.vin,
+						plate: cdFive.plate,
+						prmColor: cdFive.prmColor,
+						secColor: cdFive.secColor,
 						details: cdSix.details
 					};
 					$scope.theData = [data];
