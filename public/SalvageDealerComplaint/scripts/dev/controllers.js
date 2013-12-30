@@ -203,8 +203,6 @@ angular.module("salvageComplaint", ['ngResource','globals','factories'])//.value
 			if(stepFive){
 				var data = sessionStorage.getItem('stepFive');
 				var p = JSON.parse(data);
-				var a= p.complDate;
-				var b= $filter('date')(a,'longDate')
 				var formFill = {
 					fillIt : function() {
 						$scope.vyear= p.year;
@@ -212,21 +210,19 @@ angular.module("salvageComplaint", ['ngResource','globals','factories'])//.value
 						$scope.vmodel= p.model;
 						$scope.vvin= p.vin;
 						$scope.vplate= p.plate;
-						$scope.date= b;
+						$scope.date= p.complDate;
 					}
 				};
 				$timeout(formFill.fillIt, 500);
 			}
 			$scope.next= function(){
-				var a= $scope.date;
-				var b= $filter('date')(a,'longDate')
 				var stepFive = {
 					year: $scope.vyear,
 					make: $scope.vmake,
 					model: $scope.vmodel,
 					vin : $scope.vvin,
 					plate: $scope.vplate,
-					complDate: b
+					complDate: $scope.date
 				}
 				sessionStorage.setItem('stepFive', JSON.stringify(stepFive));
 				if(complete){

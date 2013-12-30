@@ -27254,7 +27254,7 @@ angular.module('ngResource', ['ng']).
 			}
 }])
 
-;angular.module("globals", ['globalConfig','globalFactories','globalControllers'])
+;angular.module("globals", ['globalConfig','globalFactories', 'globalControllers'])
 
 
 .directive('states',['StateFactory',function(StateFactory){
@@ -27693,23 +27693,38 @@ angular.module('ngResource', ['ng']).
 		}
 	}
 })
-
-
-.directive('cal', function(){
+		.directive('cal', function(){
 			return{
 				restrict: 'AE',
-				template: '<div data-ng-form="calFrm"><label>{{title}} <span class="reqText" data-ng-show="dateReq">Required</span></label><input type="date" name="date" data-ng-model="date" data-ng-pattern="calR" data-ng-required="{{dateReq}}"  placeholder="dd/mm/yyyy">' +
-						'<p data-ng-show="calFrm.date.$invalid && calFrm.date.$dirty">You must enter a valid date ex.(dd/mm/yyyy)</p></div>',
+				template: '<div data-ng-form="calFrm"><label>{{title}} <span class="reqText" data-ng-show="dateReq">Required</span></label><input type="date" class="{{va}}" data-ng-change="d(date)" name="date" data-ng-model="date" data-ng-required="{{dateReq}}"  placeholder="mm/dd/yyyy">' +
+				'<p data-ng-show="calFrm.date.$invalid && calFrm.date.$dirty">You must enter a valid date ex.(mm/dd/yyyy)</p></div>',
 				link: function(scope,ele,attr){
 					scope.dateReq= false;
+					//scope.$watch('date', function(newVal, oldVal) {
+					//});
+					if(Modernizr.inputtypes.date) {
+					}else{
+						scope.d= function(x){
+						var t= /(0?[1-9]|1[012])[- \/.](0?[1-9]|[12][0-9]|3[01])[- \/.](20)\d\d/;
+						var b= t.test(x);
+							if(b == true && x.length <= 10 || scope.calFrm.date.$modelValue === ""){
+								scope.calFrm.date.$invalid= false;
+								scope.va= "ng-valid ng-dirty";
+							}else{
+								scope.calFrm.date.$invalid= true;
+								scope.va= "ng-invalid ng-dirty";
+							}
+						}
+					}
 					scope.title= attr.title;
-					scope.calR = /^((0?[1-9]|1[012])[- /.](0?[1-9]|[12][0-9]|3[01])[- /.](19|20)?[0-9]{2})*$/;
 					if(attr.req){
 						scope.dateReq= true;
 					}
 				}
-	}
-})
+			}
+		})
+
+
 
 
 .directive('opts',function(){

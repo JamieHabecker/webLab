@@ -20,7 +20,6 @@ ul.radioList{
 			}
 			input{
 				display:inline-block;
-				margin-top:-5px;
 				float:left;
 				background:none !important;
 			}
@@ -29,8 +28,8 @@ ul.radioList{
 		}
 		span{
 			display:inline-block;
-			width:95%;
 			margin-left:0.5em;
+			margin-top:3px;
 			}
 		}
 	}
