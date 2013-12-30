@@ -1,0 +1,11 @@
+div.responses(data-ng-repeat="b in responses", data-ng-class-odd="'odd'", data-ng-class-even="'even'")
+			ul
+				li.title <a href="{{b.U}}" data-ng-bind-html-unsafe="b.T"></a>
+				li(data-ng-bind-html-unsafe="a.S")
+				li <a href="{{b.U}}" data-ng-bind-html-unsafe="b.U"></a>
+				
+
+
+
+var one = "search/views/responseData.html"
+ 		$scope.items = [one];

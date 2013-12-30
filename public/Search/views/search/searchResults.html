@@ -1,0 +1,32 @@
+
+<article class="g17 searchResults">
+  <div class="responseHold">
+    <h1 data-ng-show="showRes">Results for "{{q}}" {{message}}</h1>
+    <h1 data-ng-show="showNone">Sorry, there were no results found for "{{q}}"</h1>
+    <!--p(data-ng-show="showRes") Search Results 1 - {{current}} of about {{total}} for {{q}}. Search took {{time}} seconds.-->
+    <h1 data-ng-show="spellCheck" class="spell">Sorry, "{{q}}" could not be found, </h1>
+    <h1 data-ng-show="spellCheck" class="spell">did you mean <a data-ng-click="spellcheck()">"{{spellCheck}}"</a></h1>
+    <div data-ng-show="showNone" class="none">
+      <ul>
+        <li>For better results:</li>
+        <li>Make sure all words are spelled correctly</li>
+        <li>Try different keywords</li>
+        <li>Try more general keywords</li>
+      </ul>
+    </div>
+    <div data-ng-repeat="a in gmResponses" class="responses gm">
+      <ul>
+        <li class="title"><a href="{{a.GL}}" data-ng-bind-html-unsafe="a.GD"></a></li>
+        <li data-ng-bind-html-unsafe="a.GL"></li>
+      </ul>
+    </div>
+    <div data-ng-repeat="a in responses track by $index" data-ng-show="a.U" class="responses">
+      <ul>
+        <li class="title"><a href="{{a.U}}" data-ng-bind-html-unsafe="a.T"></a></li>
+        <li data-ng-bind-html-unsafe="a.S"></li>
+        <li><a href="{{a.U}}" data-ng-bind-html-unsafe="a.U"></a></li>
+      </ul>
+    </div>
+    <div class="add"></div><a data-ng-click="showMore()" data-ng-show="areMore" data-ng-controller="MoreResults" class="more">Show More</a>
+  </div>
+</article>
