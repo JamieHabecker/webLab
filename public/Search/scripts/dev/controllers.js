@@ -1,196 +1,170 @@
-angular.module("dmvPortal", ['ngResource','ngSanitize','directives','dmvPortalConfig','factories'])
+angular.module("dmvPortal", ['ngResource','ngSanitize','ngCookies','ui.map','ui.event','directives','globals','factories']).value('$anchorScroll', angular.noop)
 
 
-
-
-.config(['$routeProvider','$locationProvider','$httpProvider', function($routeProvider,$locationProvider,$httpProvider,$location){
-
-   //$httpProvider.defaults.headers.get = {
-        //'Accept' : 'application/json, text/javascript, */*'
-   //};
-    $routeProvider
-    .when('/', {
-        controller : 'SearchController',
-        templateUrl : 'views/search.html'
-    })
-    .when('/SearchResults:term', {
-    	controller : 'ResultsController',
-        templateUrl : 'views/search/searchResults.html'
-   })
-    .otherwise({
-        redirectTo : '/'
-    })
-
-}])
-
-.controller('MainNavigationController',['$scope','$location','MenuFactory',function($scope, $location, MenuFactory){
-   var a = angular.element('.mainNav');
-    $scope.menu = "Hide Menu";
-
-    MenuFactory.menu({},{}, successcb, errorcb);
-    function successcb(data){
-      $scope.menuLinks = data;
-      var a = data.slice(0,3)
-       $scope.menuLinksss = a;
-    }
-    function errorcb(err){
-      console.log(err)
-    }
-    $scope.navToggle = function(){
-        if($scope.active === "closed"){
-          $scope.active = "";
-          $scope.menu = "Hide Menu";
-          $(a).slideDown('fast');
-        }else{
-          $scope.active = "closed";
-          $scope.menu = "Show Menu";
-          $(a).slideUp('fast');
-        }
-      
-    }
+.config(['$routeProvider','$locationProvider','$httpProvider', function($routeProvider,$locationProvider,$httpProvider){
+//$httpProvider.defaults.headers.get = {
+// 'Accept' : 'application/json, text/javascript, */*'
+// };
+	$routeProvider
+			.when('/Home', {
+				controller : 'DMVHomeController',
+				templateUrl : 'views/dmvHome.html'
+			})
+			.otherwise({
+					redirectTo : '/Home'
+		})
 }])
 
 
 
-.controller('MoreResults', function($scope, ContactFactory){
-	$scope.showMore = function(){
-     	var data = {
-         searchterm : sessionStorage.term,
-         startat : sessionStorage.startNext
-        }
-		 var DTO ={
-        "oSearchAttributes":data,
-		};
-		ContactFactory.contactInfo({},DTO, cb, errorcb);
-     }
-     
-     
-     function cb(data){
- 		var obj = angular.fromJson(data.d);
- 		var theData = obj;
- 		sessionStorage.startNext = obj.RES["@EN"];
- 		if(theData.RES){
- 			if(obj.RES["@EN"] === obj.RES.M){
- 			$scope.areMore = false;
- 			}else{
- 				$scope.areMore = true;
- 			}
-			$scope.more = theData.RES.R;
-			if(theData.GM){
-			if(theData.GM.length > 0){
-				$scope.gmResponses = theData.GM;
-			}else{
-				$scope.gmResponses = [theData.GM];
+
+
+
+.controller('DMVHomeController',['$scope','$routeParams','$timeout','$location','$cookieStore','message','Locations','Notices','NoticesFactory','Item',function($scope,$routeParams,$timeout,$location,$cookieStore,message,Locations,Notices,NoticesFactory,Item){
+			$scope.isloading= true;
+			$scope.activePath= "/Locations";
+			Locations.query({},successcb,errorcb);
+			function successcb(){
+				if(sessionStorage.mapDrawn){
+					sessionStorage.removeItem("mapDrawn");
+				}
+				message.Locations($scope,Locations,$routeParams,$cookieStore,Item);
 			}
-			}else{
-				
+			function errorcb(){
+				$scope.isloading= false;
+				$scope.isError= true;
 			}
-			angular.forEach($scope.more, function(value, key){
-				
-    		$('div.add').append('<div moreresults class="responses"><ul><li class="title">' + value.T + '</li><li>' + value.S + '</li><li <a href="' + value.U + '">' + value.U + '</a><li></ul></div>')
-   
-    })
- 
-		}else if(theData.SPELLING){
-			$scope.spellCheck = theData.spelling.Suggestion;
-		}else{
- 			$scope.showRes = false;
-			$scope.showNone = true;
-			$scope.q = $routeParams.term.replace(":", "")
-		}
- 	}
-     
-     
-     
-     
-     function errorcb(data){
-          $scope.err = data.status
-     }
-     
-     
-     
-     
-     
-     
+			$scope.tab= function(x){
+				if($scope.isloading){
+					return;
+				}else{
+				$scope.isloading= true;
+				$scope.isError= false;
+				if(x === "Notices"){
+					$scope.activePath= "/Notices";
+					Notices.getNotices($scope,NoticesFactory)
+				}
+				if(x === "Locations" && $scope.activePath !== "/Locations"){
+					$scope.activePath= "/Locations";
+					Locations.query({},successcb,errorcb);
+				}
+				}
+			}
+			$scope.$on('detailsClicked', function(event, details) {
+				$scope.activePath= "/Details";
+				$scope.isloading= true;
+				Item.query({CSCId: details}, detailscb);
+				function detailscb(data){
+					$scope.d= data[0];
+					$scope.isloading= false;
+					var today = new Date();
+					$scope.status= data[0].OpenClosed;
+					$scope.srrc= '/img/csc/' + data[0].ID + 'exF.jpg';
+					if($scope.status === "O"){
+						$scope.status= ": Open"
+					}else if($scope.status === "C" || $scope.status === "E"){
+						$scope.status= ": Closed"
+					}
+				}
+			});
+}])
+
+
+
+
+.controller('DMVGoController', function($scope,$http,$location){
+			$scope.activePath = $location.path();
+			$scope.isloading = true;
+			$scope.isError = false;
+			$http.get('http://dmvnew/apps/dmvnowinterface/dmvnowinterface.aspx?function=events', {
+				cache : true
+			}).success(function(data){
+						$scope.isloading = false;
+						function replace(x){
+							return x.replace(/[^0-9]+/g, "");
+						}
+						try{
+							$scope.dayOneDate = $scope.eventsOne = data[0].e_list[0].E_DAYS[0].E_Date;
+							$scope.dayOne = replace($scope.dayOneDate);
+							$scope.dayOneEvents = $scope.eventsOne = data[0].e_list[0].E_DAYS;
+						}catch(e){
+
+						}
+						try{
+							$scope.dayTwoDate = $scope.eventsTwo = data[1].e_list[0].E_DAYS[0].E_Date;
+							$scope.dayTwo = replace($scope.dayTwoDate);
+							$scope.dayTwoEvents = $scope.eventsTwo = data[1].e_list[0].E_DAYS;
+						}
+						catch(e){
+							$scope.eventDate = false;
+						}
+
+						try{
+							$scope.dayThreeDate = $scope.eventsThree = data[2].e_list[0].E_DAYS[0].E_Date;
+							$scope.dayThree = replace($scope.dayThreeDate);
+							$scope.dayThreeEvents = $scope.eventsThree = data[2].e_list[0].E_DAYS;
+						}
+						catch(e){
+							$scope.eventDate = false;
+						}
+
+						try{
+							$scope.dayFourDate = $scope.eventsFour = data[3].e_list[0].E_DAYS[0].E_Date;
+							$scope.dayFour = replace($scope.dayFourDate);
+							$scope.dayFourEvents = $scope.eventsFour = data[3].e_list[0].E_DAYS;
+						}
+						catch(e){
+							$scope.eventDate = false;
+						}
+
+						try{
+							$scope.dayFiveDate = $scope.eventsFive = data[4].e_list[0].E_DAYS[0].E_Date;
+							$scope.dayFive = replace($scope.dayFiveDate);
+							$scope.dayFiveEvents = $scope.eventsFive = data[4].e_list[0].E_DAYS;
+						}
+						catch(e){
+							$scope.eventDate = false;
+						}
+						try{
+							$scope.daySixDate = $scope.eventsSix = data[5].e_list[0].E_DAYS[0].E_Date;
+							$scope.daySix = replace($scope.daySixDate);
+							$scope.daySixEvents = $scope.eventsSix = data[5].e_list[0].E_DAYS;
+						}
+						catch(e){
+							$scope.eventDate= false;
+						}
+
+					}).error(function() {
+						$scope.isloading= false;
+						$scope.isError= true;
+					});
 })
 
-.controller('ResultsController',['$scope','results','ContactFactory','$routeParams','$location', function($scope, results,ContactFactory, $routeParams,$location){
-	if(sessionStorage.term){
- 		var data = {
-         searchterm : sessionStorage.term,
-        }
-		 var DTO ={
-         "oSearchAttributes":data,
-		};
-		ContactFactory.contactInfo({},DTO, successcb, errorcb);
- 	}else{
- 	$location.path('/SearchResults')
- 	}
- 	function successcb(data){
- 		var obj = angular.fromJson(data.d);
- 		var theData = obj;
- 		sessionStorage.term = obj.Q;
- 		$scope.q = sessionStorage.term;
- 		if(theData.RES){
- 			var startNext = obj.RES["@EN"];
- 			sessionStorage.startNext = startNext;
- 			if(obj.RES["@EN"] === obj.RES.M){
- 			$scope.areMore = false;
- 			}else{
- 			$scope.areMore = true;
- 			}
- 			$scope.showRes = true;
- 			$scope.time = theData.TM;
-			$scope.total = theData.RES.M;
-			$scope.current = theData.RES["@EN"];
-			$scope.responses = theData.RES.R;
-			if(theData.GM){
-			if(theData.GM.length > 0){
-				$scope.gmResponses = theData.GM;
-			}else{
-				$scope.gmResponses = [theData.GM];
-			}
-			}else{
-				//do nothing
-			}
-		}else if(theData.Spelling){
-			$scope.spellCheck = theData.Spelling.Suggestion["@q"];
-			console.log($scope.spellCheck)
-			$scope.spellcheck = function(){
-				sessionStorage.term = $scope.spellCheck;
-				$location.path('/SearchResults:' + $scope.spellCheck)
-			}
-		}else{
- 			$scope.showRes = false;
-			$scope.showNone = true;
-			$scope.q = $routeParams.term.replace(":", "")
-		}
- 	}
- 	
- 	//"RES": { "@SN": "1", "@EN": "8", 
- 	
- 	
-	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
- 	
- 	function errorcb(data){
-          $scope.err = data.status
-     }
-     
-}])
 
-.controller('SearchController',['$scope','ContactFactory','$parse','results','$location', '$routeParams', function($scope, ContactFactory, $parse, results, $location, $routeParams){
-	$scope.search = function(){
-		sessionStorage.term = $scope.searchIn;
-		$location.path('/SearchResults:' + $scope.searchIn)
-}
-}])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*
 .controller('StepTwoController', ['$scope','$location','$timeout','$routeParams', function($scope, $location, $timeout, $routeParams){
@@ -287,25 +261,6 @@ angular.module("dmvPortal", ['ngResource','ngSanitize','directives','dmvPortalCo
 
 
 
-.animation('an-enter', function() {
-        return {
-            setup : function(myElement) {
-                myElement.css({ 'opacity': 0.3 });
-                return {}; //if you want to share some dat between the set and start return it it can be anything
-            },
-            start : function(myElement, done, data) {
-                myElement.animate({
-                    'opacity' : 1
-                }, 300, function(){
-                    done()
-                });
-            }
-        }
-        })
-
-
-
-
 /*
 angular.module('routes',[]).config([
 
@@ -315,8 +270,8 @@ angular.module('routes',[]).config([
     $routeProvider
       .when('/test', {templateUrl: 'test.html'})
       // This one is important:
-      // We define a route that will be used internally and handle 
-      // parameters with urls parsed by us via the URLInterceptor service 
+      // We define a route that will be used internally and handle
+      // parameters with urls parsed by us via the URLInterceptor service
       .when('/parsed-url/:url', {templateUrl: 'url.html', controller:'URLCtrl'})
       .when('/', {redirectTo: '/test'})
       .otherwise({templateUrl: '404.html'});
@@ -335,5 +290,3 @@ angular.module('routes',[]).config([
 //var a = converter.makeHtml($scope.searchIn);
 //$('#result').html(a)
 */
-        
-     

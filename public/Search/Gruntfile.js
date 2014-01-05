@@ -1,29 +1,25 @@
 module.exports = function(grunt){
 	grunt.initConfig({
-	    
-watch: {
-	sass:{
-		files:['y:/sass/**/*.scss','y:/sass/**/**/*.scss', 'sass/*.scss'],
-		tasks:['compass']
-	},
-	all: {
-		files: [
-          '*.html',
-          'views/*html',
-          'views/includes/*html',
-          'views/home/*html',
-          'search/views/*.jade',
-          'jade/*.jade',
-          'scripts/dev/*.js',
-          'img/*.png,jpg,jpeg,gif,webp,svg'
-        ],
-        tasks: ['jade'],
-     },
-     options:{
-     	spawn:false,
-     	livereload: true
-    }
-},
+
+		watch: {
+			sass:{
+				files:['../sass/**/*.scss','../../sass/**/**/*.scss', 'sass/*.scss'],
+				tasks:['compass']
+			},
+			all: {
+				files: ['views/*html','views/includes/*html','scripts/dev/*.js','../../public/css/*.css'],
+				tasks: []
+			},
+			jade: {
+				files: ['jade/*.jade'],
+				tasks: ['jade']
+			},
+			options:{
+				spawn:false,
+				livereload: true
+			}
+		},
+
 bump:{
   files:['package.json']
 },
@@ -95,6 +91,7 @@ jade: {
     },
     files: {
       "index.html": ["jade/index.jade"],
+			"views/dmvHome.html": ["jade/dmvHome.jade"],
       "views/search/searchResults.html":["jade/searchResults.jade"]
     }
   }

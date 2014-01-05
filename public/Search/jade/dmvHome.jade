@@ -1,0 +1,113 @@
+article.g17.dmvHome
+	article.g4.first.comp1
+		h3 Online Services
+		ul
+			li: a(href='https://www.dmv.virginia.gov/dmvnet/registration/regist_entry.asp') Vehicle Registration Renewal
+			li: a(href="https://www.dmv.virginia.gov/dmvnet/address/intro.asp") Address Change
+			li: a(href="https://www.dmv.virginia.gov/dmvnet/drivers_license/intro.asp") Driver's License Renewal
+			li: a(href="https://www.dmv.virginia.gov/dmvnet/veh_sld_trd/intro.asp") Report a Vehicle Sold / Traded
+			li: a(href="https://www.dmv.virginia.gov/dmvnet/drivers_license_replacement/intro.asp") Driver's License Replacement
+			li: a(href="https://www.dmv.virginia.gov/dmvnet/plate_purchase/intro.asp") Plate Purchase
+			li: a.orgBtn(href="/") All
+			li: img(src="/img/responsiveDemo.jpg")
+	article.g4.comp2
+		h3 Driver/ID Services
+		ul
+			li: a(href="/drivers/#applying.html") Applying for a Driver's License
+			li: a(href="/drivers/#points_assess.html") Points and Violations
+			li: a(href="/ske/") Sample Knowledge Exams
+			li: a(href="/drivers/#medical/index.html") Medical Information
+			li: a(href="/drivers/#applyingcdl.html") Applying for a Commercial Driver’s License
+			li: a(href="/drivers/#id/adult_id.html") Adult ID Cards
+			li: a.orgBtn(href="/") All
+			li: img(src="/img/licenseAndKeys.jpg")
+	article.g4.second.comp3
+		h3 Vehicle Services
+		ul
+			li: a(href="/vehicles/#titling.html") Titling a Vehicle in Virginia
+			li: a(href="/vehicles/#vehiclereg.html") Registration Information
+			li: a(href="https://www.dmv.virginia.gov/dmvnet/ins_mon/entry.asp") Insurance Verification
+			li: a(href="/drivers/#disability/plates_assist.html") Disabled Placards & Plates
+			li: a(href="/vehicles/#selling.html") Selling / Donating a Vehicle
+			li: a.orgBtn(href="/") All
+			li: img(src="/img/grayCar.jpg")
+	article.g4.comp4
+		h3 Commercial Services
+		ul
+			li: a(href="/commercial/#mcs/programs/index.html") Motor Carriers
+			li: a(href="/commercial/#ez_fleet.html") EZ Fleet
+			li: a(href="/commercial/#mcs/webcat.html") webCAT
+			li: a(href="/commercial/#dealer/index.html") Dealer Services
+			li: a(href="/commercial/#mcs/weigh/index.html") Size and Weight Enforcement
+			li: a(href="/commercial/#odealer/index.html") Online Dealer
+			li: a.orgBtn(href="/") All
+			li: img(src="/img/blueTruck2.jpg")
+	article.g8.first.homeTabs
+		div.tabs
+			ul
+				li(data-ng-class="{ active: activePath=='/Locations'}"): a(href="",data-ng-click="tab('Locations')") Locations
+				li(data-ng-class="{ active: activePath=='/Notices' }"): a(href="",data-ng-click="tab('Notices')") Notices
+				li(data-ng-class="{ active: activePath=='/DMV2GO' }"): a(href="",data-ng-click="tab('dmvgo')") DMV 2 Go
+				li: a(href="") Moving?
+				li: a(href="") What's New
+		div.content
+			h2.loaderText(data-ng-show="isloading") Loading...
+			h2.error(data-ng-show="isError") Sorry, this information is currently unavailable
+
+			div.map(data-ng-show="activePath=='/Locations' && !isloading && !isError")
+				div.selectHolder(style="position:absolute;z-index:3000;overflow:auto;")
+					div.formField.mapSelect
+						select(data-ng-model="name",data-ng-options="c.name for c in colors",data-ng-change="update()")
+							option(value="") select location
+				div(id="map_canvas" ,ui-map="myMap", ui-options="mapOptions",data-ng-show="!isloading")
+
+			div.details(data-ng-show="activePath=='/Details' && !isloading",data-ng-model='d')
+				img(src="{{srrc}}")
+				h2 {{d.OFFICENAME}}{{status}}
+				h2 {{d.OFFICEADDRESS}}
+				p(data-ng-bind-html="d.OFFICEHOURS")
+				h2.dD: a(href="https://maps.google.com/?q={{d.OFFICEADDRESS}}", data-ng-show="!d.ID === '76'") Click here for driving directions
+				a(href="",data-ng-click="tab('Locations')") << Return to map
+
+			div.notices(data-ng-show="activePath=='/Notices'")
+				h2(data-ng-show="noNotices && !isloading") There are currently no notices.
+				div(data-ng-class-odd="'odd'", data-ng-class-even="'even'", data-ng-repeat='importantNotice in importantNotices')
+					h3: a(class="{{importantNotice.HIGHLIGHT}}",data-ng-href="{{importantNotice.link}}") {{importantNotice.TITLE}}
+					p{{importantNotice.INTRO_TEXT}}
+
+			div.twoGo(data-ng-show="activePath=='/DMV2Go'")
+				h2(data-ng-show="noData") There are no visits planned for today.
+				h2(data-ng-show="!dayOneEvents && !dayTwoEvents && !dayThreeEvents") There are no visits planned for this week.
+				div(style="padding-top:1em;")
+
+				div.day(data-ng-show="dayOneEvents")
+					div(day,events="dayOne")
+					div.theEvents(eventlist,data-ng-repeat="event in dayOneEvents")
+
+				div.day(data-ng-show="dayTwoEvents")
+					div(day,events="dayTwo")
+					div(eventlist,data-ng-repeat="event in dayTwoEvents")
+
+				div.day(data-ng-show="dayThreeEvents")
+					div(day,events="dayThree")
+					div(eventlist,data-ng-repeat="event in dayThreeEvents")
+
+				div.day(data-ng-show="dayFourEvents")
+					div(day,events="dayFour")
+					div(eventlist,data-ng-repeat="event in dayFourEvents")
+
+				div.day(data-ng-show="dayFiveEvents")
+					div(day,events="dayFive")
+					div(eventlist,data-ng-repeat="event in dayFiveEvents")
+
+				div.day(data-ng-show="daySixEvents")
+					div(day,events="daySix")
+					div(eventlist,data-ng-repeat="event in daySixEvents")
+				a(style="text-decoration:underline;float:right;margin-right:2em;margin-top:1.2em;",href="/general/#dmv_2go.html") Full <span class="emphasis">DMV 2 Go Calendar</span>
+
+	article.g8.sec
+		div.flexslider
+			ul.slides
+				li img(src="img/slide1.jpg")
+				li img(src="img/slide2.jpg")
+				li img(src="img/slide3.jpg")

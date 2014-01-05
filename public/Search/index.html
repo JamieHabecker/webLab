@@ -11,28 +11,38 @@
     <!--if lt IE 9-->
     <script src="scripts/shims/respond.min.js"></script>
   </head>
-  <body id="ng-app" data-ng-app="dmvPortal" class="search">
-    <!--[if lt IE 8]><p>You are using an <strong>outdated browser</strong>. 
+  <body id="ng-app" data-ng-app="dmvPortal" class="dmvNow">
+    <!--[if lt IE 8]><p>You are using an <strong>outdated browser</strong>.
 Please <a href="https://browsehappy.com">upgrade your browser</a> or
 <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome</a> to improve your experience.</p>
     <![endif]-->
     <ul data-ng-include="'views/includes/vaNav.html'" class="vaNav"></ul>
     <section class="site">
-      <header data-ng-include="'views/includes/dmvHeader.html'" class="dmvHeader g16"></header>
+      <mainheader></mainheader>
       <div data-ng-view  data-ng-animate="{enter: 'an-enter'}" class="content g16">
         <h2 style="text-align:center">Preparing Portal...</h2>
       </div>
-    </section><!-- build:js /Search/scripts/contactUs.min.js -->
-    <script src="scripts/vendor/jquery-1.10.2.js"></script>
-    <script src="scripts/vendor/angular.js"></script>
-    <script src="scripts/vendor/resource.js"></script>
+    </section><!-- build:js /scripts/public/globals/globals.min.js -->
+    <!--script(src="http://10.156.147.121/globals/globals.js")-->
+    <script src="http://localhost/globals/globals.js"></script>
+    <script src="https://www.google.com/jsapi"></script>
+    <script>
+      google.load('maps', 3, {
+       'other_params' : 'sensor=true'
+      })
+    </script>
+    <script src="scripts/vendor/uiMap.js"></script>
+    <script src="scripts/vendor/clu.min.js"></script><!-- endbuild -->
+    <!-- build:js /Search/scripts/contactUs.min.js -->
     <script src="scripts/vendor/ngSanitize.js"></script>
+    <script src="scripts/vendor/cookies.js"></script>
     <script src="scripts/vendor/underscore.js"></script>
     <script src="scripts/dev/controllers.js"></script>
     <script src="scripts/dev/factories.js"></script>
+    <script src="scripts/dev/MapFactory.js"></script>
     <script src="scripts/dev/directives.js"></script>
-    <script src="scripts/dev/dmvPortalConfig.js"></script>
     <script src="scripts/vendor/showdown.js"></script>
-    <script src="scripts/vendor/ga.js"></script><!-- endbuild -->
+    <script src="scripts/vendor/info.min.js"></script>
+    <script src="scripts/vendor/jquery.flexslider.js"></script><!-- endbuild -->
   </body>
 </html>
