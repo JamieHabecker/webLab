@@ -8,6 +8,11 @@ angular.module("globalFactories", [])
 			}
 })
 
+.factory('results', function() {
+			var resultData = {};
+			return resultData;
+})
+
 .factory('StateFactory',['$resource', function($resource) {
 		var dev = window.location.protocol + "//" + window.location.host + "/";
 		var baseUrl = dev + "models/states.json";
@@ -20,6 +25,7 @@ angular.module("globalFactories", [])
 			});
 }])
 
+		/*
 .animation('an-enter', function() {
 			return {
 				setup : function(myElement) {
@@ -35,3 +41,31 @@ angular.module("globalFactories", [])
 				}
 			}
 })
+
+*/
+
+		.factory('ContactFactory',['$resource', function($resource) {
+			var baseUrl = "//10.156.147.131/dmvForms/default.aspx/SendSearchAttributes";
+			//var baseUrl= "http://search.dmv.virginia.gov/search?mode=allwords&reload=1&debug=1&client=dmvnow_front&proxystylesheet=dmvnew_front&output=xml_no_dtd&site=default_collection&q=test&proxyreload=1&btnSearch=Search";
+			return $resource(baseUrl, {}, {
+				contactInfo : {
+					method : 'GET',
+					url : baseUrl
+				}
+			});
+		}])
+
+
+
+
+
+		.factory('MenuFactory',['$resource', function($resource) {
+			var baseUrl = "/models/mainMenu.json";
+			return $resource(baseUrl, {}, {
+				menu: {
+					method : 'GET',
+					isArray : true,
+					url : baseUrl
+				}
+			});
+		}])

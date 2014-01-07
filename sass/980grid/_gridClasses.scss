@@ -1,4 +1,4 @@
-.g4,.g7,.g5{
+.g4,.g7,.g5,.g8{
 	width:98%;
 }
 
@@ -18,9 +18,11 @@
 
 
 @media screen and (min-width:758px){
-	
-	.g4,.g7,.g8{
+	.g4,.g7{
 	margin-left:percentage((12px)/980px);
+	}
+	.g8{
+		margin-left:percentage((17px)/980px);
 	}
 	.g4,.g8{
 		width:$eight;

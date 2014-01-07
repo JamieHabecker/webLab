@@ -60,6 +60,26 @@ angular.module("globals", ['globalConfig','globalFactories', 'globalControllers'
 })
 
 
+.directive('mainheader', function(){
+			return{
+				restrict: 'EA',
+				template:"<header class='dmvHeader g16'><div class='logo first'><a href='/'><img src='/img/dmvLogo.png' alt='DMV HOME' /></a></div>" +
+						"<div class='subNav'>" +
+						"<div class='login'><button>Log In</button></div>" +
+
+						"<div class='search' data-ng-controller='SearchController'><ul><li><input type='text' name='search' data-ng-model='searchIn' placeholder='Search DMV'/></li><li><a class='bluBtn' data-ng-click='search()'>Search</a></li></div>"+
+						"<div class='subLinks'><a href='/'>Create Account</a><a href='/'>News</a><a href='/'>About DMV</a><a href='/'>Contact Us</a></div></div>"+
+						"<div class='mainNavHold' data-ng-controller='MainNavigationController'><div class='mobMainNav mob'>" +
+						"<select data-ng-model='color' data-ng-options='c.x for c in menuLinks'>" +
+						"<option value=''>Choose a service area</option></select></div><div class='mainNav'>" +
+						'<ul class="mainNavLinks" rest><li ng-repeat="links in menuLinks.slice(0,8)"><a ng-click="next(\'{{links.link}}\')">{{links.x}}</a></li></ul></div></div></header>'
+			}
+		})
+
+
+//<input type='text' name='search' data-ng-model='searchIn' placeholder='Search DMV'/>
+
+
 .directive('weblabheader', function() {
 			return {
 				restrict: 'EA',

@@ -27230,6 +27230,10 @@ angular.module('ngResource', ['ng']).
 						controller: 'ErrorController',
 						templateUrl : 'views/error.html'
 					})
+					.when('/SearchResults:term', {
+						controller : 'ResultsController',
+						templateUrl : 'views/search/searchResults.html'
+					})
 		}])
 
 
@@ -27254,6 +27258,169 @@ angular.module('ngResource', ['ng']).
 			}
 }])
 
+.controller('MainNavigationController',['$scope','$location','MenuFactory',function($scope, $location, MenuFactory){
+			var a = angular.element('.mainNav');
+			$scope.menu = "Hide Menu";
+
+			MenuFactory.menu({},{}, successcb, errorcb);
+			function successcb(data){
+				$scope.menuLinks = data;
+				var a = data.slice(0,3)
+				$scope.menuLinksss = a;
+			}
+			function errorcb(err){
+				console.log(err)
+			}
+			$scope.navToggle = function(){
+				if($scope.active === "closed"){
+					$scope.active = "";
+					$scope.menu = "Hide Menu";
+					$(a).slideDown('fast');
+				}else{
+					$scope.active = "closed";
+					$scope.menu = "Show Menu";
+					$(a).slideUp('fast');
+				}
+
+			}
+		}])
+
+
+
+.controller('MoreResults', function($scope, ContactFactory){
+			$scope.showMore = function(){
+				var data = {
+					searchterm : sessionStorage.term,
+					startat : sessionStorage.startNext
+				}
+				var DTO ={
+					"oSearchAttributes":data
+				};
+				console.log("here")
+				ContactFactory.contactInfo({},DTO, cb, errorcb);
+
+			}
+			/*$('div.responseHold').bind('scroll', function(){
+			 if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight)
+			 {
+			 if($scope.showMore !== null){
+			 var data = {
+			 searchterm : sessionStorage.term,
+			 startat : sessionStorage.startNext
+			 }
+			 var DTO ={
+			 "oSearchAttributes":data
+			 };
+			 console.log("here")
+			 setTimeout(function(){
+			 ContactFactory.contactInfo({},DTO, cb, errorcb);
+			 }, 300)
+			 }
+			 }
+			 })*/
+			function cb(data){
+				console.log("here too")
+				var obj = angular.fromJson(data.d);
+				var theData = obj;
+				sessionStorage.startNext = obj.RES["@EN"];
+				if(theData.RES){
+					if(obj.RES["@EN"] === obj.RES.M){
+						$scope.areMore = false;
+						$scope.showMore= null;
+					}else{
+						$scope.areMore = true;
+					}
+					$scope.more = theData.RES.R;
+					if(theData.GM){
+						if(theData.GM.length > 0){
+							$scope.gmResponses = theData.GM;
+						}else{
+							$scope.gmResponses = [theData.GM];
+						}
+					}else{
+					}
+					angular.forEach($scope.more, function(value, key){
+
+						$('div.add').append('<div moreresults class="responses"><ul><li class="title">' + value.T + '</li><li>' + value.S + '</li><li <a href="' + value.U + '">' + value.U + '</a><li></ul></div>')
+					})
+				}else if(theData.SPELLING){
+					$scope.spellCheck = theData.spelling.Suggestion;
+				}else{
+					$scope.showRes = false;
+					$scope.showNone = true;
+					$scope.q = $routeParams.term.replace(":", "")
+				}
+			}
+			function errorcb(data){
+				$scope.err = data.status
+			}
+		})
+
+.controller('ResultsController',['$scope','results','ContactFactory','$routeParams','$location', function($scope, results,ContactFactory, $routeParams,$location){
+			if(sessionStorage.term){
+				var data = {
+					searchterm : sessionStorage.term,
+				}
+				var DTO ={
+					"oSearchAttributes":data,
+				};
+				ContactFactory.contactInfo({},DTO, successcb, errorcb);
+			}else{
+				$location.path('/SearchResults')
+			}
+			function successcb(data){
+				var obj = angular.fromJson(data.d);
+				var theData = obj;
+				sessionStorage.term = obj.Q;
+				$scope.q = sessionStorage.term;
+				if(theData.RES){
+					var startNext = obj.RES["@EN"];
+					sessionStorage.startNext = startNext;
+					if(obj.RES["@EN"] === obj.RES.M){
+						$scope.areMore = false;
+					}else{
+						$scope.areMore = true;
+					}
+					$scope.showRes = true;
+					$scope.time = theData.TM;
+					$scope.total = theData.RES.M;
+					$scope.current = theData.RES["@EN"];
+					$scope.responses = theData.RES.R;
+					if(theData.GM){
+						if(theData.GM.length > 0){
+							$scope.gmResponses = theData.GM;
+						}else{
+							$scope.gmResponses = [theData.GM];
+						}
+					}else{
+						//do nothing
+					}
+				}else if(theData.Spelling){
+					$scope.spellCheck = theData.Spelling.Suggestion["@q"];
+					console.log($scope.spellCheck)
+					$scope.spellcheck = function(){
+						sessionStorage.term = $scope.spellCheck;
+						$location.path('/SearchResults:' + $scope.spellCheck)
+					}
+				}else{
+					$scope.showRes = false;
+					$scope.showNone = true;
+					$scope.q = $routeParams.term.replace(":", "")
+				}
+			}
+			//"RES": { "@SN": "1", "@EN": "8",
+			function errorcb(data){
+				$scope.err = data.status
+			}
+
+		}])
+
+		.controller('SearchController',['$scope','ContactFactory','$parse','results','$location', '$routeParams', function($scope, ContactFactory, $parse, results, $location, $routeParams){
+			$scope.search = function(){
+				sessionStorage.term = $scope.searchIn;
+				$location.path('/SearchResults:' + $scope.searchIn)
+			}
+		}])
 ;angular.module("globals", ['globalConfig','globalFactories', 'globalControllers'])
 
 
@@ -27314,6 +27481,26 @@ angular.module('ngResource', ['ng']).
 				replace: true
 			};
 })
+
+
+.directive('mainheader', function(){
+			return{
+				restrict: 'EA',
+				template:"<header class='dmvHeader g16'><div class='logo first'><a href='/'><img src='/img/dmvLogo.png' alt='DMV HOME' /></a></div>" +
+						"<div class='subNav'>" +
+						"<div class='login'><button>Log In</button></div>" +
+
+						"<div class='search' data-ng-controller='SearchController'><ul><li><input type='text' name='search' data-ng-model='searchIn' placeholder='Search DMV'/></li><li><a class='bluBtn' data-ng-click='search()'>Search</a></li></div>"+
+						"<div class='subLinks'><a href='/'>Create Account</a><a href='/'>News</a><a href='/'>About DMV</a><a href='/'>Contact Us</a></div></div>"+
+						"<div class='mainNavHold' data-ng-controller='MainNavigationController'><div class='mobMainNav mob'>" +
+						"<select data-ng-model='color' data-ng-options='c.x for c in menuLinks'>" +
+						"<option value=''>Choose a service area</option></select></div><div class='mainNav'>" +
+						'<ul class="mainNavLinks" rest><li ng-repeat="links in menuLinks.slice(0,8)"><a ng-click="next(\'{{links.link}}\')">{{links.x}}</a></li></ul></div></div></header>'
+			}
+		})
+
+
+//<input type='text' name='search' data-ng-model='searchIn' placeholder='Search DMV'/>
 
 
 .directive('weblabheader', function() {
@@ -27841,7 +28028,8 @@ angular.module('ngResource', ['ng']).
 										$timeout(redirectTo.Error, 1000);
 										break;
 									default:
-										showMessage('Error ' + errorResponse.status + ': ' + errorResponse.data, 'errorMessage', 20000);
+										sessionStorage.err= errorResponse.status;
+										$timeout(redirectTo.Error, 1000);
 								}
 								return $q.reject(errorResponse);
 							});
@@ -27857,6 +28045,11 @@ angular.module('ngResource', ['ng']).
 			}
 })
 
+.factory('results', function() {
+			var resultData = {};
+			return resultData;
+})
+
 .factory('StateFactory',['$resource', function($resource) {
 		var dev = window.location.protocol + "//" + window.location.host + "/";
 		var baseUrl = dev + "models/states.json";
@@ -27869,6 +28062,7 @@ angular.module('ngResource', ['ng']).
 			});
 }])
 
+		/*
 .animation('an-enter', function() {
 			return {
 				setup : function(myElement) {
@@ -27884,3 +28078,31 @@ angular.module('ngResource', ['ng']).
 				}
 			}
 })
+
+*/
+
+		.factory('ContactFactory',['$resource', function($resource) {
+			var baseUrl = "//10.156.147.131/dmvForms/default.aspx/SendSearchAttributes";
+			//var baseUrl= "http://search.dmv.virginia.gov/search?mode=allwords&reload=1&debug=1&client=dmvnow_front&proxystylesheet=dmvnew_front&output=xml_no_dtd&site=default_collection&q=test&proxyreload=1&btnSearch=Search";
+			return $resource(baseUrl, {}, {
+				contactInfo : {
+					method : 'GET',
+					url : baseUrl
+				}
+			});
+		}])
+
+
+
+
+
+		.factory('MenuFactory',['$resource', function($resource) {
+			var baseUrl = "/models/mainMenu.json";
+			return $resource(baseUrl, {}, {
+				menu: {
+					method : 'GET',
+					isArray : true,
+					url : baseUrl
+				}
+			});
+		}])

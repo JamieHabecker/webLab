@@ -37,7 +37,8 @@ angular.module("globalConfig", [])
 										$timeout(redirectTo.Error, 1000);
 										break;
 									default:
-										showMessage('Error ' + errorResponse.status + ': ' + errorResponse.data, 'errorMessage', 20000);
+										sessionStorage.err= errorResponse.status;
+										$timeout(redirectTo.Error, 1000);
 								}
 								return $q.reject(errorResponse);
 							});

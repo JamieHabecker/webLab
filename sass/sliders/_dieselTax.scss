@@ -1,0 +1,48 @@
+ul.slides{
+	div.dieselTax{
+		overflow:hidden;
+		background:url("/views/sliders/img/dieselBkgd.jpg") no-repeat;
+		background-position:-70px -230px;
+		border:1px solid #eee\9;
+	div.copy{
+		width:100%;
+		background:url('/views/sliders/img/dieselPump.png') no-repeat;
+		background-position:bottom right;
+		height:21em;
+		padding:1em 0em 0em 1em;
+	h2{
+		display:block;
+		color:#303130;
+		font-size:2.1em;
+		line-height:1em;
+		text-shadow: -1px 1px 1px #eee;
+		padding:0;
+		margin:0;
+		width:80%;
+	}
+		p{
+			padding:0;
+			margin:0;
+			width:70%;
+		}
+	a.fuel{
+		clear:left;
+		float:left !important;
+		margin:1em 2em 0 2em;
+		background: #7d7e7d;
+		background: -moz-linear-gradient(top,  #7d7e7d 0%, #0e0e0e 100%);
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#7d7e7d), color-stop(100%,#0e0e0e));
+		background: -webkit-linear-gradient(top,  #7d7e7d 0%,#0e0e0e 100%);
+		background: -o-linear-gradient(top,  #7d7e7d 0%,#0e0e0e 100%);
+		background: -ms-linear-gradient(top,  #7d7e7d 0%,#0e0e0e 100%);
+		background: linear-gradient(to bottom,  #7d7e7d 0%,#0e0e0e 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7d7e7d', endColorstr='#0e0e0e',GradientType=0 );
+		border:2px solid #eeeeee;
+		@include bottomShadow;
+		text-decoration:none;
+		text-align:center;
+		color:#ffffff;
+	}
+	}
+}
+}

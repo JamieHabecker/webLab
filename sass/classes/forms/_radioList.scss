@@ -22,6 +22,7 @@ ul.radioList{
 				display:inline-block;
 				float:left;
 				background:none !important;
+				margin-top:-2px;
 			}
 			&:hover{
 			background:#FFF9D3;
@@ -29,7 +30,6 @@ ul.radioList{
 		span{
 			display:inline-block;
 			margin-left:0.5em;
-			margin-top:3px;
 			}
 		}
 	}
