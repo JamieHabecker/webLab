@@ -6,24 +6,31 @@ article.dmvHome{
 	article.slider{
 		height:26em;
 	}
-	.comp1 div, .comp2 div, .comp3 div, .comp4 div{
+	.comp1 div, .comp2 div, .comp3 div, .comp4 div, .comp5 div{
 			background:url("/img/homeSprite.jpg")no-repeat;
 			height:130px;
 			width:100%;
 			background-position:center;
 		}
 	article.comp1 div{
-		background-position:center -122px;
+		background-position:center -2px;
 	}
 	article.comp2 div{
-			background-position:center -266px;
+			background-position:center -149px;
+		height:300px;
+		margin-top:-15px;
 	}
 	article.comp3 div{
-		background-position:center 41px;
-		height:150px;
+		background-position:center -322px;
+		height:300px;
 	}
 	article.comp4 div{
-		background-position:center -450px;
+		background-position:center -497px;
+		height:300px;
+	}
+	article.comp5 div{
+		background-position:center -671px;
+		height:300px;
 	}
 
 }

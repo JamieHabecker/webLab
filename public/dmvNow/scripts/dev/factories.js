@@ -2,7 +2,6 @@ angular.module("factories", ['MapFactory'])
 
 .factory('NoticesFactory',['$resource', function($resource) {
 			var baseUrl = "http://dmvnew/apps/dmvnowinterface/dmvnowinterface.aspx?function=notices";
-			//var baseUrl = "/apps/WebServicesBackEnd/SalvageComplaint.aspx/SendFields";
 			return $resource(baseUrl, {}, {
 				query : {
 					method : 'GET',
@@ -12,9 +11,17 @@ angular.module("factories", ['MapFactory'])
 			});
 }])
 
-
-
-
+.factory('NoticesDetails',['$resource', function($resource){
+			var baseUrl= 'http://dmvnew/apps/dmvnowinterface/dmvnowinterface.aspx?function=noticesdetails';
+			return $resource(baseUrl, {}, {
+				query : {
+					method : 'GET',
+					url : baseUrl,
+					isArray:true,
+					cache:false
+				}
+			});
+}])
 
 .factory('Notices', function(){
 			var a={
@@ -72,5 +79,13 @@ angular.module("factories", ['MapFactory'])
 
 })
 
-
-
+.factory('DMVGoFactory', function($resource){
+			var baseUrl = "http://dmvnew/apps/dmvnowinterface/dmvnowinterface.aspx?function=events";
+			return $resource(baseUrl, {}, {
+				query : {
+					method : 'GET',
+					url : baseUrl,
+					isArray:true
+				}
+			});
+})

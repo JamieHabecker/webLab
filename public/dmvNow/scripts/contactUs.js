@@ -27261,18 +27261,19 @@ angular.module('ngResource', ['ng']).
 					function errorcb(err){
 						scope.isError= true;
 					}
-					if (!_.isEmpty($routeParams)) {
-						latLng = new google.maps.LatLng($routeParams.lat, $routeParams.lng)
-					}else if(sessionStorage.getItem("Location") === "true"){
+					if(sessionStorage.getItem("Location") === "true"){
 						var lat = sessionStorage.getItem("userLat");
 						var lng= sessionStorage.getItem("userLng");
+						console.log("got location")
 						latLng = new google.maps.LatLng(lat,lng);
 						//sessionStorage.mapDrawn= true;
 					}else if(navigator.geolocation && sessionStorage.getItem("Location") !== "true"){
 						sessionStorage.removeItem("Location");
 						navigator.geolocation.getCurrentPosition(positionCallback,errorCallback,{maximumAge:5000});
+						console.log("getting location")
 					}else{
 						latLng = new google.maps.LatLng(38.9177816, -78.1881693)
+						console.log("no location")
 					}
 					function positionCallback(position){
 						latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -27292,8 +27293,9 @@ angular.module('ngResource', ['ng']).
 						disableDefaultUI : true,
 						zoomControl : true,
 						zoomControlOptions : {
-							style : google.maps.ZoomControlStyle.SMALL
+						style : google.maps.ZoomControlStyle.SMALL
 						}
+
 					};
 
 					function drawMap(scope){
@@ -27360,18 +27362,16 @@ angular.module('ngResource', ['ng']).
 							scope.myMap.setZoom(currentZoom + 2)
 						});
 
+						//google.maps.event.addListener(scope.myMap, 'resize', function() {
+
+						//});
 						google.maps.event.addListenerOnce(scope.myMap, 'tilesloaded', function(){
-							console.log("ready map");
-							$('div.infoBox a').bind('click',function(){
+							$('div.infoBox a').click(function(){
 								var details= $(this).attr('data');
 								scope.isloading= true;
 								scope.$broadcast('detailsClicked', details);
-								//callIt(details)
 							})
-							google.maps.event.trigger(scope.myMap, 'resize', function(){
-								console.log('resized');
-							});
-
+							google.maps.event.trigger(scope.myMap, 'resize');
 						});
 
 
@@ -27454,6 +27454,7 @@ function errorCallback() {
 
 .controller('DMVHomeController',['$scope','$routeParams','$timeout','$location','$cookieStore','message','Locations','Notices','NoticesFactory','Item',function($scope,$routeParams,$timeout,$location,$cookieStore,message,Locations,Notices,NoticesFactory,Item){
 			$scope.isloading= true;
+			console.log("home controller")
 			$scope.activePath= "/Locations";
 			sessionStorage.removeItem("mapDrawn");
 			message.Locations($scope,Locations,$routeParams,$cookieStore,Item);
@@ -27465,6 +27466,7 @@ function errorCallback() {
 				$scope.isError= false;
 				if(x === "Notices"){
 					$scope.activePath= "/Notices";
+					sessionStorage.mapDrawn= false;
 					Notices.getNotices($scope,NoticesFactory)
 				}
 				if(x === "Locations" && $scope.activePath !== "/Locations"){

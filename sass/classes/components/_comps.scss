@@ -3,15 +3,7 @@ article{
 		height:26em;
 		overflow:hidden;
 		h3{
-			background: linear-gradient(to bottom, #EEEEEE 0%, #BEC1C2 78%) repeat scroll 0 0 rgba(0, 0, 0, 0);
-			border-bottom: 1px solid #ACCBE0;
-			box-shadow: 0 2px 2px #999999;
-			color: #1F4F80;
-			font-size: 1.3em;
-			line-height: 1.3em;
-			padding-top: 0.3em;
-			text-shadow: 0 1px 0 #EEEEEE;
-			text-align:center;
+			@include compTitle;
 		}
 		ul{
 			margin:0;

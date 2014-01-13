@@ -1,23 +1,78 @@
-var base = "views/directiveTemplates/";
 angular.module("directives", [])
+
+.directive('calicon', function(){
+	return{
+		restrict: 'EA',
+		scope:{
+			eventDate: '=event'
+		},
+		template:'<div ng-show="eventDate" class="calHolder"><ul><li>{{eventDate | date:"EEEE"}}</li><li>{{eventDate | date:"MMMM"}}</li><li>{{eventDate | date:"d"}}</li></ul></div>'
+	};
+})
+
+
+.directive('day', function(){
+	return{
+		restrict: 'A',
+		scope:{
+			events: '=events'
+		},
+		template: '<div class="events"><div ng-show="events" class="calHolder"><ul><li>{{events | date:"EEEE"}}</li><li>{{events | date:"MMMM"}}</li><li class="day">{{events | date:"d"}}</li></ul></div>',
+		replace: true
+	};
+})
+
+.directive('eventlist', function(){
+	return{
+		restrict: 'EA',
+		template: '<table ng-show="event.E_City">' +
+				'<th><a href="https://maps.google.com/?q={{event.E_Street}},{{event.E_Zip}},{{event.E_City}},VA">{{event.E_Sitename}} &nbsp;&nbsp;{{event.E_Hours}}</a></th>' +
+				'<tr><td><a href="https://maps.google.com/?q={{event.E_Street}},{{event.E_Zip}},{{event.E_City}},VA">{{event.E_City}}, {{event.E_Street}}, {{event.E_Zip}}</a>' +
+				'<span ng-show="event.E_Notes">* {{event.E_Notes}}</span></td>' +
+				'</tr></table>'
+	};
+})
+
+.directive('contentheader', function(){
+			return{
+				restrict: 'EA',
+				template: '<h1><span style="padding-right:1em;"><a href="/"><</a></span>{{title}}</h1>',
+				replace:true,
+				link: function(scope,ele,attr){
+					scope.title= attr.title;
+				}
+			}
+		})
+.directive('related1', function(){
+			return{
+			restrict: 'EA',
+			template: '<article class="related g4"><h3>Related Info One</h3></article>',
+			replace:true
+			}
+})
+
+		.directive('related2', function(){
+			return{
+				restrict: 'EA',
+				template: '<article class="related g4"><h3>Related Info Two</h3></article>',
+				replace:true
+			}
+		})
+
+
+
+
+
+
+
+
 
 
 
 
 /*
 
-.directive('loginDetails', function () {
-      return {
-         restrict: "A",
-         replace: true,
-         scope:{
-             number : "@number"
-         },
-         templateUrl:"views/directiveTemplates/loginDetails.html" 
-        }
-     })
 
-*/
 
 .directive('expander', function(){
      return{
@@ -59,5 +114,5 @@ angular.module("directives", [])
 })
 
 
-
+*/
                                           

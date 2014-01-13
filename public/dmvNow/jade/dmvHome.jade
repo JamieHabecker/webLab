@@ -13,7 +13,7 @@ article.g17.dmvHome
 	article.g4.comp2
 		h3 Driver/ID Services
 		ul
-			li: a(href="/drivers/#applying.html") Applying for a Driver's License
+			li: a(href="#/drivers:applying") Applying for a Driver's License
 			li: a(href="/drivers/#points_assess.html") Points and Violations
 			li: a(href="/ske/") Sample Knowledge Exams
 			li: a(href="/drivers/#medical/index.html") Medical Information
@@ -47,8 +47,8 @@ article.g17.dmvHome
 			ul
 				li(data-ng-class="{ active: activePath=='/Locations'}"): a(href="",data-ng-click="tab('Locations')") Locations
 				li(data-ng-class="{ active: activePath=='/Notices' }"): a(href="",data-ng-click="tab('Notices')") Notices
-				li(data-ng-class="{ active: activePath=='/DMV2GO' }"): a(href="",data-ng-click="tab('dmvgo')") DMV 2 Go
-				li: a(href="") Moving?
+				li(data-ng-class="{ active: activePath=='/DMV2Go' }"): a(href="",data-ng-click="tab('dmvgo')") DMV 2 Go
+				li(data-ng-class="{ active: activePath=='/Moving' }"): a(href="",data-ng-click="tab('moving')") Moving?
 				li: a(href="") What's New
 		div.content
 			h2.loaderText(data-ng-show="isloading") Loading...
@@ -63,48 +63,58 @@ article.g17.dmvHome
 
 			div.details(data-ng-show="activePath=='/Details' && !isloading",data-ng-model='d')
 				img(src="{{srrc}}")
-				h2 {{d.OFFICENAME}}{{status}}
-				h2 {{d.OFFICEADDRESS}}
-				p(data-ng-bind-html="d.OFFICEHOURS")
-				h2.dD: a(href="https://maps.google.com/?q={{d.OFFICEADDRESS}}", data-ng-show="!d.ID === '76'") Click here for driving directions
-				a(href="",data-ng-click="tab('Locations')") << Return to map
+				ul
+					li(style="margin-bottom:0.5em;") {{d.OFFICENAME}} {{status}}
+					li(style="margin-bottom:0.5em;") Current Wait: {{d.WAIT}}
+					li(style="margin-bottom:0.5em;") {{d.OFFICEADDRESS}}
+					li(data-ng-bind-html="d.OFFICEHOURS")
+					li(style="padding-top:2em;"): a(href="https://maps.google.com/?q={{d.OFFICEADDRESS}}", data-ng-hide="d.ID === '76'") Click here for driving directions
+					li: a(href="",data-ng-click="tab('Locations')") << Return to map
 
-			div.notices(data-ng-show="activePath=='/Notices'")
+			div.notices(data-ng-show="activePath=='/Notices' && !isloading && !isError")
 				h2(data-ng-show="noNotices && !isloading") There are currently no notices.
 				div(data-ng-class-odd="'odd'", data-ng-class-even="'even'", data-ng-repeat='importantNotice in importantNotices')
-					h3: a(class="{{importantNotice.HIGHLIGHT}}",data-ng-href="{{importantNotice.link}}") {{importantNotice.TITLE}}
+					h3(class="{{importantNotice.HIGHLIGHT}}",data-ng-click="check(importantNotice.TYPE,importantNotice.LINK)",data-ng-href="{{importantNotice.link}}") {{importantNotice.TITLE}}
 					p{{importantNotice.INTRO_TEXT}}
+			div.noticesDetails(data-ng-show="activePath=='/Notice' && !isloading", data-ng-model="notice")
+				h2(data-ng-show="noData && !isloading") This record does not exist.
+				h2 {{title}}
+				p(data-ng-show="notice && !isloading") {{notice.MSG}}
 
-			div.twoGo(data-ng-show="activePath=='/DMV2Go'")
-				h2(data-ng-show="noData") There are no visits planned for today.
-				h2(data-ng-show="!dayOneEvents && !dayTwoEvents && !dayThreeEvents") There are no visits planned for this week.
+
+			div.twoGo(data-ng-show="activePath=='/DMV2Go' && !isloading")
+				h2(data-ng-show="noEvents") There are no visits planned.
 				div(style="padding-top:1em;")
 
-				div.day(data-ng-show="dayOneEvents")
-					div(day,events="dayOne")
-					div.theEvents(eventlist,data-ng-repeat="event in dayOneEvents")
+					div.day(data-ng-show="dayOneEvents")
+						div(day,events="dayOne")
+						div.theEvents(eventlist,data-ng-repeat="event in dayOneEvents")
 
-				div.day(data-ng-show="dayTwoEvents")
-					div(day,events="dayTwo")
-					div(eventlist,data-ng-repeat="event in dayTwoEvents")
+					div.day(data-ng-show="dayTwoEvents")
+						div(day,events="dayTwo")
+						div.theEvents(eventlist,data-ng-repeat="event in dayTwoEvents")
 
-				div.day(data-ng-show="dayThreeEvents")
-					div(day,events="dayThree")
-					div(eventlist,data-ng-repeat="event in dayThreeEvents")
+					div.day(data-ng-show="dayThreeEvents")
+						div(day,events="dayThree")
+						div.theEvents(eventlist,data-ng-repeat="event in dayThreeEvents")
 
-				div.day(data-ng-show="dayFourEvents")
-					div(day,events="dayFour")
-					div(eventlist,data-ng-repeat="event in dayFourEvents")
+					div.day(data-ng-show="dayFourEvents")
+						div(day,events="dayFour")
+						div.theEvents(eventlist,data-ng-repeat="event in dayFourEvents")
 
-				div.day(data-ng-show="dayFiveEvents")
-					div(day,events="dayFive")
-					div(eventlist,data-ng-repeat="event in dayFiveEvents")
+					div.day(data-ng-show="dayFiveEvents")
+						div(day,events="dayFive")
+						div.theEvents(eventlist,data-ng-repeat="event in dayFiveEvents")
 
-				div.day(data-ng-show="daySixEvents")
-					div(day,events="daySix")
-					div(eventlist,data-ng-repeat="event in daySixEvents")
-				a(style="text-decoration:underline;float:right;margin-right:2em;margin-top:1.2em;",href="/general/#dmv_2go.html") Full <span class="emphasis">DMV 2 Go Calendar</span>
+					div.day(data-ng-show="daySixEvents")
+						div(day,events="daySix")
+						div.theEvents(eventlist,data-ng-repeat="event in daySixEvents")
+					a(style="text-decoration:underline;float:right;margin-right:2em;margin-top:1.2em;",href="/general/#dmv_2go.html") Full <span class="emphasis">DMV 2 Go Calendar</span>
 
+			div.moving(data-ng-show="activePath=='/Moving' && !isloading")
+				ul
+					li LINK
+					li LINK
 	article.g8.sec.slider
 		div.flexslider
 			ul.slides
@@ -120,7 +130,7 @@ article.g17.dmvHome
 			li: a(href="https://www.dmv.virginia.gov/dmvnet/drivers_license_replacement/intro.asp") Driver's License Replacement
 			li: a(href="https://www.dmv.virginia.gov/dmvnet/plate_purchase/intro.asp") Plate Purchase
 			li: a.orgBtn(href="/") All
-			li: img(src="/img/responsiveDemo.jpg")
+		div
 	article.g4.sec.comp6
 		h3 Other
 		ul
@@ -131,4 +141,5 @@ article.g17.dmvHome
 			li: a(href="https://www.dmv.virginia.gov/dmvnet/drivers_license_replacement/intro.asp") Driver's License Replacement
 			li: a(href="https://www.dmv.virginia.gov/dmvnet/plate_purchase/intro.asp") Plate Purchase
 			li: a.orgBtn(href="/") All
-			li: img(src="/img/responsiveDemo.jpg")
+		div
+

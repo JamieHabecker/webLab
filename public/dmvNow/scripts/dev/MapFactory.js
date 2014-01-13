@@ -16,11 +16,14 @@ angular.module("MapFactory", [])
 			return $resource("http://dmvnew/apps/dmvnowinterface/DMVNowInterface.aspx?function=locationsDetails")
 }])
 
+
 .factory('message', function() {
 			return{
-				'Locations': function(scope,Locations,$routeParams,$cookieStore,Item){
+				'Locations': function(scope,Locations,$routeParams,$cookieStore,Item,fun){
 					var latLng;
 					scope.notMobile = "notMobile"
+
+
 					Locations.query({},successcb,errorcb);
 					function successcb(data){
 						scope.isloading= false;
@@ -56,7 +59,7 @@ angular.module("MapFactory", [])
 						}
 						if(sessionStorage.mapDrawn){
 						}else{
-							drawMap(scope);
+							drawMap(scope, fun);
 						}
 					}
 					function errorcb(err){
@@ -65,9 +68,7 @@ angular.module("MapFactory", [])
 					if(sessionStorage.getItem("Location") === "true"){
 						var lat = sessionStorage.getItem("userLat");
 						var lng= sessionStorage.getItem("userLng");
-						console.log("got location")
 						latLng = new google.maps.LatLng(lat,lng);
-						//sessionStorage.mapDrawn= true;
 					}else if(navigator.geolocation && sessionStorage.getItem("Location") !== "true"){
 						sessionStorage.removeItem("Location");
 						navigator.geolocation.getCurrentPosition(positionCallback,errorCallback,{maximumAge:5000});
@@ -99,9 +100,12 @@ angular.module("MapFactory", [])
 
 					};
 
-					function drawMap(scope){
+					function drawMap(scope, fun){
 						sessionStorage.mapDrawn= true;
 						var markers = [];
+						var test= function(x){
+							alert("clicked " + x)
+						}
 						angular.forEach(scope.LocationDetails, function(value, key) {
 							var markerIcon = "/img/dmv_marker.png"
 							if (value.OpenClosed === "C" || value.OpenClosed === "E") {
@@ -114,6 +118,7 @@ angular.module("MapFactory", [])
 								icon : markerIcon
 							});
 							scope.myMarkers = markers.push(marker);
+							var a= fun;
 							var boxText = document.createElement("div");
 							if (value.OpenClosed === "O") {
 								boxText.innerHTML = "<a style='cursor:pointer;' data='" + value.ID + "'>" + value.OFFICENAME + "<br/>" + "Current wait: " + value.WAIT + "</a>";
@@ -138,9 +143,13 @@ angular.module("MapFactory", [])
 								infoBoxClearance : new google.maps.Size(1, 1),
 								isHidden : false,
 								pane : "floatPane",
-								enableEventPropagation : false
+								enableEventPropagation : false,
 							};
+
 							var ib = new InfoBox(myOptions);
+							google.maps.event.addDomListener(boxText,'click',function(){
+								scope.$broadcast("detailsClicked", value.ID)
+							});
 							ib.open(scope.myMap, marker);
 							google.maps.event.addListener(scope.myMap, 'zoom_changed', function() {
 								var currentZoom = scope.myMap.getZoom();
@@ -162,23 +171,10 @@ angular.module("MapFactory", [])
 							var currentZoom = scope.myMap.getZoom();
 							scope.myMap.setZoom(currentZoom + 2)
 						});
-
-						//google.maps.event.addListener(scope.myMap, 'resize', function() {
-
-						//});
-						google.maps.event.addListenerOnce(scope.myMap, 'tilesloaded', function(){
-							$('div.infoBox a').click(function(){
-								var details= $(this).attr('data');
-								scope.isloading= true;
-								scope.$broadcast('detailsClicked', details);
-							})
+						//google.maps.event.addListener(scope.myMap, 'resize', function() {})
+						google.maps.event.addListener(scope.myMap, 'tilesloaded', function() {
 							google.maps.event.trigger(scope.myMap, 'resize');
 						});
-
-
-
-
-						//google.maps.event.trigger(scope.myMap, 'resize');
 					}
 
 				}

@@ -27482,6 +27482,30 @@ angular.module('ngResource', ['ng']).
 			};
 })
 
+.directive('mobiheader', function(){
+			return{
+				restrict: 'EA',
+				template:"<header class='dmvMobiHeader'><img src='/img/mobiWeb.jpg'/><span data-ng-click='open()'></span></header><div class='mobiMenu' data-ng-show='visible' data-ng-animate=\"{enter: 'an-enter'}\" style='height:300px;background:green;width:100%;'></div>",
+				link: function(scope,ele,attr){
+					scope.visible= false;
+					scope.open= function(){
+						scope.visible = ! scope.visible;
+						if(scope.visible){
+							console.log(scope.visible)
+							$('section.site').css('overflow','hidden')
+							$('body').css('overflow','auto')
+						}else{
+							$('section.site').css('overflow-y','auto')
+							$('body').css('overflow','hidden')
+							console.log(scope.visible)
+						}
+
+					}
+				}
+			}
+})
+
+
 
 .directive('mainheader', function(){
 			return{
@@ -27495,7 +27519,7 @@ angular.module('ngResource', ['ng']).
 						"<div class='mainNavHold' data-ng-controller='MainNavigationController'><div class='mobMainNav mob'>" +
 						"<select data-ng-model='color' data-ng-options='c.x for c in menuLinks'>" +
 						"<option value=''>Choose a service area</option></select></div><div class='mainNav'>" +
-						'<ul class="mainNavLinks" rest><li ng-repeat="links in menuLinks.slice(0,8)"><a ng-click="next(\'{{links.link}}\')">{{links.x}}</a></li></ul></div></div></header>'
+						'<ul class="mainNavLinks" rest><li ng-repeat="links in menuLinks.slice(0,8)"><a data-ng-href="#/{{links.link}}", ng-click="next(\'{{links.link}}\')">{{links.x}}</a></li></ul></div></div></header>'
 			}
 		})
 
@@ -27974,22 +27998,7 @@ angular.module('ngResource', ['ng']).
 											if ($(this).val() == ''){
 												$(this).val($(this).attr('placeholder'));
 											}});});
-						}}}}}])
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-;angular.module("globalConfig", [])
+						}}}}}]);angular.module("globalConfig", [])
 
 .config(['$provide','$httpProvider','$compileProvider', function($provide, $httpProvider, $compileProvider) {
 			var check;
@@ -28062,7 +28071,7 @@ angular.module('ngResource', ['ng']).
 			});
 }])
 
-		/*
+
 .animation('an-enter', function() {
 			return {
 				setup : function(myElement) {
@@ -28079,7 +28088,7 @@ angular.module('ngResource', ['ng']).
 			}
 })
 
-*/
+
 
 		.factory('ContactFactory',['$resource', function($resource) {
 			var baseUrl = "//10.156.147.131/dmvForms/default.aspx/SendSearchAttributes";

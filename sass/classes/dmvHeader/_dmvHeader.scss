@@ -1,24 +1,30 @@
 header.dmvHeader{
-	margin:0 auto;
-	div.logo{
-		float:left;
-		img{
-		}
+	display:none;
+}
+
+header.dmvMobiHeader{
+	@include compTitle;
+	position:absolute;
+	width:100%;
+	height:37px;
+	background:#cccccc;
+	border-bottom:2px solid $blueLighter;
+	padding-left:0;
+	img{
+		margin-left:-11px;
+	}
+	span{
+		background:url("/img/menu-icon.jpg")no-repeat;
+		width:36px;
+		height:19px;
+		float:right;
+		display:block;
+		margin-right:3em;
+		margin-top:13px;
+		cursor:pointer;
 	}
 }
 
-
-@media screen and (max-width:420px){
-	div.logo{
-		width:$seventeen;
-		img{
-			max-width:60%;
-			display:block;
-			margin:0 auto;
-		}
-
-	}
-}
 @media screen and (min-width:421px){
 header.dmvHeader{
 	div.logo{
@@ -26,4 +32,14 @@ header.dmvHeader{
 		width:275px;
 	}
 }
+}
+
+
+@media screen and (min-width:758px){
+	header.dmvHeader{
+		display:block;
+	}
+	header.dmvMobiHeader{
+		display:none;
+	}
 }

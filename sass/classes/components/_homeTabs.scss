@@ -72,10 +72,122 @@ article.homeTabs{
 			padding:1em;
 			overflow-y:auto;
 			height:19em;
+			h3{
+				cursor:pointer;
+			}
 			p{
 				margin-top:0.5em;
 			}
 		}
+		div.noticesDetails{
+			padding:1em;
+		}
+		div.twoGo{
+			overflow-y:auto;
+			overflow-x:hidden;
+			height:22em;
+			div.day{
+				width:100%;
+				float:left;
+				margin-bottom:1em;
+				border-top:1px dotted #CCCCCC;
+				padding:0.5em;
+
+			}
+			div.calHolder{
+			float:left;
+			width:65px;
+			background:#eee;
+			height:75px;
+			box-shadow: 0px 3px 3px #333;
+			border-radius:8px;
+				margin-top:1em;
+			ul{
+				list-style-type: none;
+				padding:0;
+				margin:0;
+				li{
+					width:100%;
+					margin:0;
+					padding:0;
+					text-align:center;
+					border-radius:10px 10px 0px 0px;
+				}
+				li:first-child{
+					background:#FF8116;
+					@include orangeToLight;
+					font-size:0.8em;
+					color:#fff;
+				}
+				li.day{
+					font-size:2em;
+					font-size:1.8em;
+					font-weight:bold;
+				}
+			}
+		}
+			div.theEvents{
+				margin-top:1em;
+				background:#f2f2f2;
+				padding:1em 0;
+			}
+
+			table{
+			margin-left:100px;
+				padding:1em;
+				th{
+					a{
+						color:#333333;
+						text-decoration:none;
+					}
+				}
+				tr{
+					text-align:left;
+					td{
+						a{
+							color:#333333;
+							line-height:1.8em;
+						}
+						span{
+							display:block;
+							margin-top:0.5em;
+							color:#777777;
+						}
+					}
+				}
+			}
+		}
+
+
+
+		.odd {
+			background: #f0f0f0;
+			//margin-top:1em;
+			padding: 0.5em;a{
+			text-decoration: none;
+		}
+
+		}
+		.even {
+			//background: #fff;
+			//margin-top:1em;
+			padding: 0.5em;a{
+			text-decoration: none;
+		}
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
 		div.details{
 			padding:1em;
 			overflow-y:auto;
@@ -84,6 +196,7 @@ article.homeTabs{
 				max-width:35%;
 				float:left;
 				margin-right:1em;
+				margin-bottom:15em;
 			}
 			h2{
 				text-align:left;
@@ -91,16 +204,22 @@ article.homeTabs{
 				padding-top:0;
 				padding-bottom:0;
 				margin:0;
-				&.dD{
-					text-align:center;
+				&.name{
+					padding-bottom:1em;
 				}
 			}
 			p{
-				line-height:1.3em;
+				float:left;
+			}
+			ul{
+				padding:0;
+				margin:0;
+				li{
+					list-style-type: none;
+				}
 			}
 			br{
 				display:block;
-				margin-bottom:0.5em;
 			}
 
 		}

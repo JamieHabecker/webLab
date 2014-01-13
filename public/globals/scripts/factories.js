@@ -25,7 +25,7 @@ angular.module("globalFactories", [])
 			});
 }])
 
-		/*
+
 .animation('an-enter', function() {
 			return {
 				setup : function(myElement) {
@@ -42,7 +42,7 @@ angular.module("globalFactories", [])
 			}
 })
 
-*/
+
 
 		.factory('ContactFactory',['$resource', function($resource) {
 			var baseUrl = "//10.156.147.131/dmvForms/default.aspx/SendSearchAttributes";

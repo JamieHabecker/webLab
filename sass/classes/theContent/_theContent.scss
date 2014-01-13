@@ -1,0 +1,54 @@
+article.content{
+	h1{
+		@include compTitle;
+		border-radius:3px 3px 0px 0px;
+		padding-left:0;
+		span{
+			display:block;
+			float:left;
+			width:30px;
+			background:yellow;
+		}
+	}
+		h2{
+			font-size:1.2em;
+			border-top:1px dotted #cccccc;
+			padding-top:1em;
+		}
+			div{
+				 padding-left:1em;
+			 }
+}
+article.related{
+	h3{
+		@include compTitle;
+	}
+}
+
+
+@media screen and (min-width:758px){
+	article.content{
+		width:$twelve;
+		overflow:hidden;
+		div{
+			height:45em;
+			padding-left:3em;
+			overflow-y:auto;
+			p,h2{
+				width:80%;
+			}
+		}
+	}
+	article.related{
+		width:percentage(($fourCols + 24px)/980px);
+}
+
+}
+
+@media screen and (min-width:1016px){
+	article.content{
+		div{
+			padding-left:6em;
+		}
+	}
+}

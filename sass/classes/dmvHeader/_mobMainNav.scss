@@ -4,6 +4,7 @@ div.mobMainNav{
 	clear:both;
 	margin-top:1em;
 	@include bottomShadowLight;
+	box-shadow:none !important;
 	border-radius:3px;
 	select{
 		width:100%;
@@ -13,10 +14,15 @@ div.mobMainNav{
 		font-size:16px;
 		padding-right:0.5em;
 		border-radius:3px;
+		border-right:1px solid #CCCCCC;
+		box-shadow:none !important;
+		outline: none;
 		option{
 			padding-bottom: 0.5em;
+			border:none;
+			outline: none;
+			box-shadow:none !important;
 			padding-top:0.5em;
-			border-bottom:1px solid #cccccc;
 			&:first-child{
 				color:#777;
 			}
