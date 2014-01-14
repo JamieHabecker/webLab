@@ -33158,7 +33158,6 @@ angular.module('ngResource', ['ng']).
     };angular.module("globalControllers", ['ngRoute'])
 
 
-
 .config(['$routeProvider','$locationProvider','$httpProvider', function($routeProvider,$locationProvider, $httpProvider){
 			$httpProvider.defaults.headers.get = {
 				'Accept' : 'application/json, text/javascript'
@@ -33197,7 +33196,6 @@ angular.module('ngResource', ['ng']).
 .controller('MainNavigationController',['$scope','$location','MenuFactory',function($scope, $location, MenuFactory){
 			var a = angular.element('.mainNav');
 			$scope.menu = "Hide Menu";
-
 			MenuFactory.menu({},{}, successcb, errorcb);
 			function successcb(data){
 				$scope.menuLinks = data;
@@ -33217,11 +33215,8 @@ angular.module('ngResource', ['ng']).
 					$scope.menu = "Show Menu";
 					$(a).slideUp('fast');
 				}
-
 			}
 		}])
-
-
 
 .controller('MoreResults', function($scope, ContactFactory){
 			$scope.showMore = function(){
@@ -33234,7 +33229,6 @@ angular.module('ngResource', ['ng']).
 				};
 				console.log("here")
 				ContactFactory.contactInfo({},DTO, cb, errorcb);
-
 			}
 			/*$('div.responseHold').bind('scroll', function(){
 			 if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight)
@@ -33276,7 +33270,6 @@ angular.module('ngResource', ['ng']).
 					}else{
 					}
 					angular.forEach($scope.more, function(value, key){
-
 						$('div.add').append('<div moreresults class="responses"><ul><li class="title">' + value.T + '</li><li>' + value.S + '</li><li <a href="' + value.U + '">' + value.U + '</a><li></ul></div>')
 					})
 				}else if(theData.SPELLING){
@@ -33292,13 +33285,22 @@ angular.module('ngResource', ['ng']).
 			}
 		})
 
+.controller('SearchController',['$scope','ContactFactory','$parse','results','$location', '$routeParams', function($scope, ContactFactory, $parse, results, $location, $routeParams){
+			$scope.search = function(){
+				sessionStorage.term = $scope.searchIn;
+				var q= "q=" + $scope.searchIn;
+				//$location.path('/SearchResults:' + $scope.searchIn);
+				window.location.replace("http://search.dmv.virginia.gov/search?mode=allwords&reload=1&debug=1&client=dmvnow_front&proxystylesheet=dmvnew_front&output=xml_no_dtd&site=default_collection&" + q + "&proxyreload=1&btnSearch=Search")
+			}
+}])
+
 .controller('ResultsController',['$scope','results','ContactFactory','$routeParams','$location', function($scope, results,ContactFactory, $routeParams,$location){
 			if(sessionStorage.term){
 				var data = {
-					searchterm : sessionStorage.term,
+					searchterm : sessionStorage.term
 				}
 				var DTO ={
-					"oSearchAttributes":data,
+					"oSearchAttributes":data
 				};
 				ContactFactory.contactInfo({},DTO, successcb, errorcb);
 			}else{
@@ -33348,15 +33350,9 @@ angular.module('ngResource', ['ng']).
 			function errorcb(data){
 				$scope.err = data.status
 			}
-
 		}])
 
-		.controller('SearchController',['$scope','ContactFactory','$parse','results','$location', '$routeParams', function($scope, ContactFactory, $parse, results, $location, $routeParams){
-			$scope.search = function(){
-				sessionStorage.term = $scope.searchIn;
-				$location.path('/SearchResults:' + $scope.searchIn)
-			}
-		}])
+
 ;angular.module("globals", ['globalConfig','ngAnimate','globalFactories', 'globalControllers'])
 
 
@@ -33423,8 +33419,14 @@ angular.module('ngResource', ['ng']).
 .directive('mobiheader', function(){
 			return{
 				restrict: 'EA',
-				template:"<header data-ng-init='isHidden=true' class='dmvMobiHeader'><img src='/img/mobiWeb.jpg'/><span data-ng-click='isHidden=!isHidden'></span></header><div class='mobi' data-ng-hide='isHidden'><div><ul><li>Link One</li><li>Link Two</li></ul></div></div>",
+				template:"<header class='dmvMobiHeader'>" +
+						"<ul><li></li><li class='search' data-ng-click='isSearch=!isSearch'></li><li class='menu' data-ng-click='isHidden=!isHidden'></li></ul></header>"+
+						"<div class='mobiSpace'></div>"+
+						"<div class='mobi mobiSearch' data-ng-controller='SearchController' data-ng-hide='isSearch'><div><ul><li><input type='text' name='search' data-ng-model='searchIn' placeholder='Search DMV'/></li><li><a class='bluBtn' data-ng-click='search()'>Search</a></li></ul></div></div>"+
+						"<div class='mobi' data-ng-hide='isHidden'><div><ul><li>Link One</li><li>Link Two</li></ul></div></div>",
 				link: function(scope,ele,attr){
+					scope.isHidden= true;
+					scope.isSearch= true;
 				}
 			}
 })
@@ -33436,7 +33438,6 @@ angular.module('ngResource', ['ng']).
 				template:"<header class='dmvHeader g16'><div class='logo first'><a href='/'><img src='/img/dmvLogo.png' alt='DMV HOME' /></a></div>" +
 						"<div class='subNav'>" +
 						"<div class='login'><button>Log In</button></div>" +
-
 						"<div class='search' data-ng-controller='SearchController'><ul><li><input type='text' name='search' data-ng-model='searchIn' placeholder='Search DMV'/></li><li><a class='bluBtn' data-ng-click='search()'>Search</a></li></div>"+
 						"<div class='subLinks'><a href='/'>Create Account</a><a href='/'>News</a><a href='/'>About DMV</a><a href='/'>Contact Us</a></div></div>"+
 						"<div class='mainNavHold' data-ng-controller='MainNavigationController'><div class='mobMainNav mob'>" +
@@ -34015,14 +34016,12 @@ angular.module('ngResource', ['ng']).
 .animation('.mobi', function() {
 	return {
 		beforeAddClass : function(ele, className, done) {
-			console.log("beforeA")
 			$(ele).stop().slideUp('slow');
-			$('body,section.site').removeClass('mobiMenuShowing')
+			$('body,section.site,div.mobi').removeClass('mobiMenuShowing')
 		},
 		beforeRemoveClass : function(ele){
-			console.log("beforeR")
 			$(ele).stop().slideDown('slow').removeClass('ng-hide');
-			$('body,section.site').addClass('mobiMenuShowing')
+			$('body,section.site,div.mobi').addClass('mobiMenuShowing')
 
 		}
 	};

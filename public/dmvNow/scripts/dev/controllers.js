@@ -37,6 +37,7 @@ angular.module("dmvPortal", ['ngResource','ngSanitize','ngCookies','ui.map','ui.
 })
 
 
+
 .controller('DMVHomeController',['$scope','$location','message','Locations','NoticesFactory','NoticesDetails','Item','DMVGoFactory', function($scope,$location,message,Locations,NoticesFactory,NoticesDetails,Item,DMVGoFactory){
 			$scope.isloading= true;
 			$scope.activePath= "/Locations";

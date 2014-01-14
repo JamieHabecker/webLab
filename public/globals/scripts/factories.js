@@ -46,14 +46,12 @@ angular.module("globalFactories", [])
 .animation('.mobi', function() {
 	return {
 		beforeAddClass : function(ele, className, done) {
-			console.log("beforeA")
 			$(ele).stop().slideUp('slow');
-			$('body,section.site').removeClass('mobiMenuShowing')
+			$('body,section.site,div.mobi').removeClass('mobiMenuShowing')
 		},
 		beforeRemoveClass : function(ele){
-			console.log("beforeR")
 			$(ele).stop().slideDown('slow').removeClass('ng-hide');
-			$('body,section.site').addClass('mobiMenuShowing')
+			$('body,section.site,div.mobi').addClass('mobiMenuShowing')
 
 		}
 	};

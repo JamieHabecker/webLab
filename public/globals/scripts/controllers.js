@@ -1,7 +1,6 @@
 angular.module("globalControllers", ['ngRoute'])
 
 
-
 .config(['$routeProvider','$locationProvider','$httpProvider', function($routeProvider,$locationProvider, $httpProvider){
 			$httpProvider.defaults.headers.get = {
 				'Accept' : 'application/json, text/javascript'
@@ -40,7 +39,6 @@ angular.module("globalControllers", ['ngRoute'])
 .controller('MainNavigationController',['$scope','$location','MenuFactory',function($scope, $location, MenuFactory){
 			var a = angular.element('.mainNav');
 			$scope.menu = "Hide Menu";
-
 			MenuFactory.menu({},{}, successcb, errorcb);
 			function successcb(data){
 				$scope.menuLinks = data;
@@ -60,11 +58,8 @@ angular.module("globalControllers", ['ngRoute'])
 					$scope.menu = "Show Menu";
 					$(a).slideUp('fast');
 				}
-
 			}
 		}])
-
-
 
 .controller('MoreResults', function($scope, ContactFactory){
 			$scope.showMore = function(){
@@ -77,7 +72,6 @@ angular.module("globalControllers", ['ngRoute'])
 				};
 				console.log("here")
 				ContactFactory.contactInfo({},DTO, cb, errorcb);
-
 			}
 			/*$('div.responseHold').bind('scroll', function(){
 			 if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight)
@@ -119,7 +113,6 @@ angular.module("globalControllers", ['ngRoute'])
 					}else{
 					}
 					angular.forEach($scope.more, function(value, key){
-
 						$('div.add').append('<div moreresults class="responses"><ul><li class="title">' + value.T + '</li><li>' + value.S + '</li><li <a href="' + value.U + '">' + value.U + '</a><li></ul></div>')
 					})
 				}else if(theData.SPELLING){
@@ -135,13 +128,22 @@ angular.module("globalControllers", ['ngRoute'])
 			}
 		})
 
+.controller('SearchController',['$scope','ContactFactory','$parse','results','$location', '$routeParams', function($scope, ContactFactory, $parse, results, $location, $routeParams){
+			$scope.search = function(){
+				sessionStorage.term = $scope.searchIn;
+				var q= "q=" + $scope.searchIn;
+				//$location.path('/SearchResults:' + $scope.searchIn);
+				window.location.replace("http://search.dmv.virginia.gov/search?mode=allwords&reload=1&debug=1&client=dmvnow_front&proxystylesheet=dmvnew_front&output=xml_no_dtd&site=default_collection&" + q + "&proxyreload=1&btnSearch=Search")
+			}
+}])
+
 .controller('ResultsController',['$scope','results','ContactFactory','$routeParams','$location', function($scope, results,ContactFactory, $routeParams,$location){
 			if(sessionStorage.term){
 				var data = {
-					searchterm : sessionStorage.term,
+					searchterm : sessionStorage.term
 				}
 				var DTO ={
-					"oSearchAttributes":data,
+					"oSearchAttributes":data
 				};
 				ContactFactory.contactInfo({},DTO, successcb, errorcb);
 			}else{
@@ -191,12 +193,6 @@ angular.module("globalControllers", ['ngRoute'])
 			function errorcb(data){
 				$scope.err = data.status
 			}
-
 		}])
 
-		.controller('SearchController',['$scope','ContactFactory','$parse','results','$location', '$routeParams', function($scope, ContactFactory, $parse, results, $location, $routeParams){
-			$scope.search = function(){
-				sessionStorage.term = $scope.searchIn;
-				$location.path('/SearchResults:' + $scope.searchIn)
-			}
-		}])
+

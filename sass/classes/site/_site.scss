@@ -1,10 +1,9 @@
 section.site{
-	//height:800px;
+	height:800px;
 	margin:0;
-	margin-top:45px;
 	padding:0;
 	overflow:hidden;
-	//overflow-y:auto;
+	overflow-y:auto;
 	width:100%;
 	div.content{
 		margin:0 auto;
@@ -14,9 +13,8 @@ section.site{
 		}
 	}
 	&.mobiMenuShowing{
-		margin-top:0px;
 		overflow-y:hidden;
-		float:left;
+		height:auto;
 	}
 }
 

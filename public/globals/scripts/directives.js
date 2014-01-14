@@ -64,8 +64,14 @@ angular.module("globals", ['globalConfig','ngAnimate','globalFactories', 'global
 .directive('mobiheader', function(){
 			return{
 				restrict: 'EA',
-				template:"<header data-ng-init='isHidden=true' class='dmvMobiHeader'><img src='/img/mobiWeb.jpg'/><span data-ng-click='isHidden=!isHidden'></span></header><div class='mobi' data-ng-hide='isHidden'><div><ul><li>Link One</li><li>Link Two</li></ul></div></div>",
+				template:"<header class='dmvMobiHeader'>" +
+						"<ul><li></li><li class='search' data-ng-click='isSearch=!isSearch'></li><li class='menu' data-ng-click='isHidden=!isHidden'></li></ul></header>"+
+						"<div class='mobiSpace'></div>"+
+						"<div class='mobi mobiSearch' data-ng-controller='SearchController' data-ng-hide='isSearch'><div><ul><li><input type='text' name='search' data-ng-model='searchIn' placeholder='Search DMV'/></li><li><a class='bluBtn' data-ng-click='search()'>Search</a></li></ul></div></div>"+
+						"<div class='mobi' data-ng-hide='isHidden'><div><ul><li>Link One</li><li>Link Two</li></ul></div></div>",
 				link: function(scope,ele,attr){
+					scope.isHidden= true;
+					scope.isSearch= true;
 				}
 			}
 })
@@ -77,7 +83,6 @@ angular.module("globals", ['globalConfig','ngAnimate','globalFactories', 'global
 				template:"<header class='dmvHeader g16'><div class='logo first'><a href='/'><img src='/img/dmvLogo.png' alt='DMV HOME' /></a></div>" +
 						"<div class='subNav'>" +
 						"<div class='login'><button>Log In</button></div>" +
-
 						"<div class='search' data-ng-controller='SearchController'><ul><li><input type='text' name='search' data-ng-model='searchIn' placeholder='Search DMV'/></li><li><a class='bluBtn' data-ng-click='search()'>Search</a></li></div>"+
 						"<div class='subLinks'><a href='/'>Create Account</a><a href='/'>News</a><a href='/'>About DMV</a><a href='/'>Contact Us</a></div></div>"+
 						"<div class='mainNavHold' data-ng-controller='MainNavigationController'><div class='mobMainNav mob'>" +

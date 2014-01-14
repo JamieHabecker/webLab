@@ -47,9 +47,9 @@ article.g17.dmvHome
 			ul
 				li(data-ng-class="{ active: activePath=='/Locations'}"): a(href="",data-ng-click="tab('Locations')") Locations
 				li(data-ng-class="{ active: activePath=='/Notices' }"): a(href="",data-ng-click="tab('Notices')") Notices
-				li(data-ng-class="{ active: activePath=='/DMV2Go' }"): a(href="",data-ng-click="tab('dmvgo')") DMV 2 Go
+				li(class="m",data-ng-class="{ active: activePath=='/DMV2Go' }"): a(href="",data-ng-click="tab('dmvgo')") DMV 2 Go
 				li(data-ng-class="{ active: activePath=='/Moving' }"): a(href="",data-ng-click="tab('moving')") Moving?
-				li: a(href="") What's New
+				li(class="m"): a(href="") What's New
 		div.content
 			h2.loaderText(data-ng-show="isloading") Loading...
 			h2.error(data-ng-show="isError") Sorry, this information is currently unavailable
