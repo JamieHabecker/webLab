@@ -27215,11 +27215,14 @@ angular.module('ngResource', ['ng']).
 			return $resource("http://dmvnew/apps/dmvnowinterface/DMVNowInterface.aspx?function=locationsDetails")
 }])
 
+
 .factory('message', function() {
 			return{
-				'Locations': function(scope,Locations,$routeParams,$cookieStore,Item){
+				'Locations': function(scope,Locations,$routeParams,$cookieStore,Item,fun){
 					var latLng;
 					scope.notMobile = "notMobile"
+
+
 					Locations.query({},successcb,errorcb);
 					function successcb(data){
 						scope.isloading= false;
@@ -27255,7 +27258,7 @@ angular.module('ngResource', ['ng']).
 						}
 						if(sessionStorage.mapDrawn){
 						}else{
-							drawMap(scope);
+							drawMap(scope, fun);
 						}
 					}
 					function errorcb(err){
@@ -27264,9 +27267,7 @@ angular.module('ngResource', ['ng']).
 					if(sessionStorage.getItem("Location") === "true"){
 						var lat = sessionStorage.getItem("userLat");
 						var lng= sessionStorage.getItem("userLng");
-						console.log("got location")
 						latLng = new google.maps.LatLng(lat,lng);
-						//sessionStorage.mapDrawn= true;
 					}else if(navigator.geolocation && sessionStorage.getItem("Location") !== "true"){
 						sessionStorage.removeItem("Location");
 						navigator.geolocation.getCurrentPosition(positionCallback,errorCallback,{maximumAge:5000});
@@ -27298,9 +27299,12 @@ angular.module('ngResource', ['ng']).
 
 					};
 
-					function drawMap(scope){
+					function drawMap(scope, fun){
 						sessionStorage.mapDrawn= true;
 						var markers = [];
+						var test= function(x){
+							alert("clicked " + x)
+						}
 						angular.forEach(scope.LocationDetails, function(value, key) {
 							var markerIcon = "/img/dmv_marker.png"
 							if (value.OpenClosed === "C" || value.OpenClosed === "E") {
@@ -27313,6 +27317,7 @@ angular.module('ngResource', ['ng']).
 								icon : markerIcon
 							});
 							scope.myMarkers = markers.push(marker);
+							var a= fun;
 							var boxText = document.createElement("div");
 							if (value.OpenClosed === "O") {
 								boxText.innerHTML = "<a style='cursor:pointer;' data='" + value.ID + "'>" + value.OFFICENAME + "<br/>" + "Current wait: " + value.WAIT + "</a>";
@@ -27337,9 +27342,13 @@ angular.module('ngResource', ['ng']).
 								infoBoxClearance : new google.maps.Size(1, 1),
 								isHidden : false,
 								pane : "floatPane",
-								enableEventPropagation : false
+								enableEventPropagation : false,
 							};
+
 							var ib = new InfoBox(myOptions);
+							google.maps.event.addDomListener(boxText,'click',function(){
+								scope.$broadcast("detailsClicked", value.ID)
+							});
 							ib.open(scope.myMap, marker);
 							google.maps.event.addListener(scope.myMap, 'zoom_changed', function() {
 								var currentZoom = scope.myMap.getZoom();
@@ -27361,23 +27370,10 @@ angular.module('ngResource', ['ng']).
 							var currentZoom = scope.myMap.getZoom();
 							scope.myMap.setZoom(currentZoom + 2)
 						});
-
-						//google.maps.event.addListener(scope.myMap, 'resize', function() {
-
-						//});
-						google.maps.event.addListenerOnce(scope.myMap, 'tilesloaded', function(){
-							$('div.infoBox a').click(function(){
-								var details= $(this).attr('data');
-								scope.isloading= true;
-								scope.$broadcast('detailsClicked', details);
-							})
+						//google.maps.event.addListener(scope.myMap, 'resize', function() {})
+						google.maps.event.addListener(scope.myMap, 'tilesloaded', function() {
 							google.maps.event.trigger(scope.myMap, 'resize');
 						});
-
-
-
-
-						//google.maps.event.trigger(scope.myMap, 'resize');
 					}
 
 				}
@@ -27434,44 +27430,210 @@ function errorCallback() {
 
 
 
-;angular.module("dmvPortal", ['ngResource','ngSanitize','ngCookies','ui.map','ui.event','directives','globals','factories','sliders']).value('$anchorScroll', angular.noop)
+;
+
+angular.module("dmvPortal", ['ngResource','ngSanitize','ngCookies','ui.map','ui.event','directives','globals','factories','sliders']).value('$anchorScroll', angular.noop)
 
 
-.config(['$routeProvider','$locationProvider','$httpProvider', function($routeProvider,$locationProvider,$httpProvider){
-//$httpProvider.defaults.headers.get = {
-// 'Accept' : 'application/json, text/javascript, */*'
-// };
-	$routeProvider
-			.when('/Home', {
-				controller : 'DMVHomeController',
-				templateUrl : 'views/dmvHome.html'
-			})
-			.otherwise({
-					redirectTo : '/Home'
-		})
-}])
 
 
-.controller('DMVHomeController',['$scope','$routeParams','$timeout','$location','$cookieStore','message','Locations','Notices','NoticesFactory','Item',function($scope,$routeParams,$timeout,$location,$cookieStore,message,Locations,Notices,NoticesFactory,Item){
+.controller('ScrollController', function(){
+		var requestAnimationFrame= window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+		var bodyElement= document.querySelector("body");
+		var floatie= document.querySelector("#floatie");
+		var currentScrollPosition;
+		var iteration;
+		var start= false;
+
+		function setup(){
+		floatie.addEventListener("click",animateToTopOfPage, false);
+
+			bodyElement.addEventListener("mousewheel",stopEverything, false);
+			bodyElement.addEventListener("DOMMouseScroll", stopEverything,false);
+			animationLoop();
+		}
+			setup();
+			function animationLoop(){
+				if(start){
+					window.scrollTo(0, easeOutCubic(iteration,currentScrollPosition,-currentScrollPosition,50));
+					iteration++;
+					if(getScrollPosition() <= 0){
+						stopEverything();
+					}
+				}
+				requestAnimationFrame(animationLoop)
+			}
+
+			function animateToTopOfPage(e){
+				 console.log("clicked")
+				currentScrollPosition= getScrollPosition();
+					start ^= true;
+					iteration= 0;
+
+			}
+
+			function getScrollPosition(){
+				if(document.documentElement.scrollTop == 0){
+					return document.body.scrollTop;
+				}else{
+				return document.documentElement.scrollTop;
+				}
+			}
+
+			function stopEverything(){
+				start= false;
+			}
+
+})
+
+.controller('TestController', function($scope,$routeParams,$location){
+
+			var a= $routeParams.name;
+			var b= a.replace(":", "");
+			console.log(a)
+			//a.replace(":", "");
+	$scope.templateUrl = "/views/drivers/" + b + ".html";
+			$scope.tile= "Applying for a Driver's License"
+})
+
+
+.controller('DMVHomeController',['$scope','$location','message','Locations','NoticesFactory','NoticesDetails','Item','DMVGoFactory', function($scope,$location,message,Locations,NoticesFactory,NoticesDetails,Item,DMVGoFactory){
 			$scope.isloading= true;
-			console.log("home controller")
 			$scope.activePath= "/Locations";
-			sessionStorage.removeItem("mapDrawn");
-			message.Locations($scope,Locations,$routeParams,$cookieStore,Item);
+			sessionStorage.removeItem("mapDrawn")
+			//message.Locations($scope,Locations,Item);
 			$scope.tab= function(x){
 			if($scope.isloading){
-					return;
-				}else{
+				return;
+			}else{
 				$scope.isloading= true;
 				$scope.isError= false;
 				if(x === "Notices"){
+					var successcb= function(data){
+						$scope.isloading= false;
+						if(data.length === 0){
+							$scope.noNotices= true;
+						}else{
+							$scope.importantNotices = data;
+							angular.forEach(data, function(value, key){
+								console.log(value)
+								if(value.TYPE === "I"){
+									value.link = "";
+								}else{
+									value.link = value.LINK;
+								}
+						})
+							$scope.check= function(x,y){
+								if(x === "I"){
+									$scope.isloading= true;
+									$scope.isError = false;
+									function successcb(data){
+										$scope.activePath= "/Notice";
+										$scope.isloading = false;
+										if(data.length === 0) {
+											$scope.noData = true;
+											$scope.notice= false;
+										}else{
+											$scope.noData = false;
+											$scope.title= sessionStorage.noticeTitle;
+											$scope.notice = data[0]
+										}
+									}
+									function errorcb(err){
+										$scope.isError= true;
+										$scope.isloading= false;
+										console.log(err)
+									}
+									NoticesDetails.query({NoticeId: y}, successcb, errorcb)
+								}else{
+
+								}
+							}
+						}
+					}
+					var errorcb= function(err){
+						$scope.isloading= false;
+						$scope.isError= true;
+						console.log(err)
+					}
 					$scope.activePath= "/Notices";
-					sessionStorage.mapDrawn= false;
-					Notices.getNotices($scope,NoticesFactory)
+					NoticesFactory.query({},successcb, errorcb);
 				}
 				if(x === "Locations" && $scope.activePath !== "/Locations"){
 					$scope.activePath= "/Locations";
-					message.Locations($scope,Locations,$routeParams,$cookieStore,Item);
+					message.Locations($scope,Locations,Item);
+				}
+				if(x === "dmvgo"){
+					$scope.activePath= "/DMV2Go";
+					var successcb= function(data){
+						$scope.isError = false;
+						$scope.isloading = false;
+						if(data.length === 0){
+							$scope.noEvents= true;
+						}
+						function replace(x){
+								return x.replace(/[^0-9]+/g, "");
+							}
+							try{
+								$scope.dayOneDate = $scope.eventsOne = data[0].e_list[0].E_DAYS[0].E_Date;
+								$scope.dayOne = replace($scope.dayOneDate);
+								$scope.dayOneEvents = $scope.eventsOne = data[0].e_list[0].E_DAYS;
+							}catch(e){
+
+							}
+							try{
+								$scope.dayTwoDate = $scope.eventsTwo = data[1].e_list[0].E_DAYS[0].E_Date;
+								$scope.dayTwo = replace($scope.dayTwoDate);
+								$scope.dayTwoEvents = $scope.eventsTwo = data[1].e_list[0].E_DAYS;
+							}
+							catch(e){
+								$scope.eventDate = false;
+							}
+
+							try{
+								$scope.dayThreeDate = $scope.eventsThree = data[2].e_list[0].E_DAYS[0].E_Date;
+								$scope.dayThree = replace($scope.dayThreeDate);
+								$scope.dayThreeEvents = $scope.eventsThree = data[2].e_list[0].E_DAYS;
+							}
+							catch(e){
+								$scope.eventDate = false;
+							}
+
+							try{
+								$scope.dayFourDate = $scope.eventsFour = data[3].e_list[0].E_DAYS[0].E_Date;
+								$scope.dayFour = replace($scope.dayFourDate);
+								$scope.dayFourEvents = $scope.eventsFour = data[3].e_list[0].E_DAYS;
+							}
+							catch(e){
+								$scope.eventDate = false;
+							}
+
+							try{
+								$scope.dayFiveDate = $scope.eventsFive = data[4].e_list[0].E_DAYS[0].E_Date;
+								$scope.dayFive = replace($scope.dayFiveDate);
+								$scope.dayFiveEvents = $scope.eventsFive = data[4].e_list[0].E_DAYS;
+							}
+							catch(e){
+								$scope.eventDate = false;
+							}
+							try{
+								$scope.daySixDate = $scope.eventsSix = data[5].e_list[0].E_DAYS[0].E_Date;
+								$scope.daySix = replace($scope.daySixDate);
+								$scope.daySixEvents = $scope.eventsSix = data[5].e_list[0].E_DAYS;
+							}
+							catch(e){
+								$scope.eventDate= false;
+							}
+
+						}
+					var errorcb= function(err){
+						$scope.isError= true;
+					}
+					DMVGoFactory.query({},successcb, errorcb)
+				}
+				if(x === "moving"){
+					$scope.isloading= false;
+					$scope.activePath= "/Moving";
 				}
 				}
 			}
@@ -27497,87 +27659,72 @@ function errorCallback() {
 
 
 
-.controller('DMVGoController', function($scope,$http,$location){
-			$scope.activePath = $location.path();
-			$scope.isloading = true;
-			$scope.isError = false;
-			$scope.s= "Hello"
-			$http.get('http://dmvnew/apps/dmvnowinterface/dmvnowinterface.aspx?function=events', {
-				cache : true
-			}).success(function(data){
-						$scope.isloading = false;
-						function replace(x){
-							return x.replace(/[^0-9]+/g, "");
-						}
-						try{
-							$scope.dayOneDate = $scope.eventsOne = data[0].e_list[0].E_DAYS[0].E_Date;
-							$scope.dayOne = replace($scope.dayOneDate);
-							$scope.dayOneEvents = $scope.eventsOne = data[0].e_list[0].E_DAYS;
-						}catch(e){
-
-						}
-						try{
-							$scope.dayTwoDate = $scope.eventsTwo = data[1].e_list[0].E_DAYS[0].E_Date;
-							$scope.dayTwo = replace($scope.dayTwoDate);
-							$scope.dayTwoEvents = $scope.eventsTwo = data[1].e_list[0].E_DAYS;
-						}
-						catch(e){
-							$scope.eventDate = false;
-						}
-
-						try{
-							$scope.dayThreeDate = $scope.eventsThree = data[2].e_list[0].E_DAYS[0].E_Date;
-							$scope.dayThree = replace($scope.dayThreeDate);
-							$scope.dayThreeEvents = $scope.eventsThree = data[2].e_list[0].E_DAYS;
-						}
-						catch(e){
-							$scope.eventDate = false;
-						}
-
-						try{
-							$scope.dayFourDate = $scope.eventsFour = data[3].e_list[0].E_DAYS[0].E_Date;
-							$scope.dayFour = replace($scope.dayFourDate);
-							$scope.dayFourEvents = $scope.eventsFour = data[3].e_list[0].E_DAYS;
-						}
-						catch(e){
-							$scope.eventDate = false;
-						}
-
-						try{
-							$scope.dayFiveDate = $scope.eventsFive = data[4].e_list[0].E_DAYS[0].E_Date;
-							$scope.dayFive = replace($scope.dayFiveDate);
-							$scope.dayFiveEvents = $scope.eventsFive = data[4].e_list[0].E_DAYS;
-						}
-						catch(e){
-							$scope.eventDate = false;
-						}
-						try{
-							$scope.daySixDate = $scope.eventsSix = data[5].e_list[0].E_DAYS[0].E_Date;
-							$scope.daySix = replace($scope.daySixDate);
-							$scope.daySixEvents = $scope.eventsSix = data[5].e_list[0].E_DAYS;
-						}
-						catch(e){
-							$scope.eventDate= false;
-						}
-
-					}).error(function() {
-						$scope.isloading= false;
-						$scope.isError= true;
-					});
-})
 
 
 
 
 
+.controller('CanvasController', function(){
 
+			var img = new Image();
 
+// User Variables - customize these to change the image being scrolled, its
+// direction, and the speed.
 
+			img.src = '/img/canvas.jpg';
+			var CanvasXSize = 800;
+			var CanvasYSize = 200;
+			var speed = 30; //lower is faster
+			var scale = 1.05;
+			var y = -4.5; //vertical offset
 
+// Main program
 
+			var dx = 0.75;
+			var imgW;
+			var imgH;
+			var x = 0;
+			var clearX;
+			var clearY;
+			var ctx;
 
+			img.onload = function() {
+				imgW = img.width*scale;
+				imgH = img.height*scale;
+				if (imgW > CanvasXSize) { x = CanvasXSize-imgW; } // image larger than canvas
+				if (imgW > CanvasXSize) { clearX = imgW; } // image larger than canvas
+				else { clearX = CanvasXSize; }
+				if (imgH > CanvasYSize) { clearY = imgH; } // image larger than canvas
+				else { clearY = CanvasYSize; }
+				//Get Canvas Element
+				ctx = document.getElementById('canvas').getContext('2d');
+				//Set Refresh Rate
+				return setInterval(draw, speed);
+			}
 
-
+			function draw() {
+				//Clear Canvas
+				ctx.clearRect(0,0,clearX,clearY);
+				//If image is <= Canvas Size
+				if (imgW <= CanvasXSize) {
+					//reset, start from beginning
+					if (x > (CanvasXSize)) { x = 0; }
+					//draw aditional image
+					if (x > (CanvasXSize-imgW)) { ctx.drawImage(img,x-CanvasXSize+1,y,imgW,imgH); }
+				}
+				//If image is > Canvas Size
+				else {
+					//reset, start from beginning
+					if (x > (CanvasXSize)) { x = CanvasXSize-imgW; }
+					//draw aditional image
+					if (x > (CanvasXSize-imgW)) { ctx.drawImage(img,x-imgW+1,y,imgW,imgH); }
+				}
+				//draw image
+				ctx.drawImage(img,x,y,imgW,imgH);
+				//amount to move
+				x += dx;
+			}
+		})
 
 
 
@@ -27714,26 +27861,81 @@ angular.module('routes',[]).config([
 //.converter();
 //var a = converter.makeHtml($scope.searchIn);
 //$('#result').html(a)
-*/;var base = "views/directiveTemplates/";
-angular.module("directives", [])
+*/;angular.module("directives", [])
+
+.directive('calicon', function(){
+	return{
+		restrict: 'EA',
+		scope:{
+			eventDate: '=event'
+		},
+		template:'<div ng-show="eventDate" class="calHolder"><ul><li>{{eventDate | date:"EEEE"}}</li><li>{{eventDate | date:"MMMM"}}</li><li>{{eventDate | date:"d"}}</li></ul></div>'
+	};
+})
+
+
+.directive('day', function(){
+	return{
+		restrict: 'A',
+		scope:{
+			events: '=events'
+		},
+		template: '<div class="events"><div ng-show="events" class="calHolder"><ul><li>{{events | date:"EEEE"}}</li><li>{{events | date:"MMMM"}}</li><li class="day">{{events | date:"d"}}</li></ul></div>',
+		replace: true
+	};
+})
+
+.directive('eventlist', function(){
+	return{
+		restrict: 'EA',
+		template: '<table ng-show="event.E_City">' +
+				'<th><a href="https://maps.google.com/?q={{event.E_Street}},{{event.E_Zip}},{{event.E_City}},VA">{{event.E_Sitename}} &nbsp;&nbsp;{{event.E_Hours}}</a></th>' +
+				'<tr><td><a href="https://maps.google.com/?q={{event.E_Street}},{{event.E_Zip}},{{event.E_City}},VA">{{event.E_City}}, {{event.E_Street}}, {{event.E_Zip}}</a>' +
+				'<span ng-show="event.E_Notes">* {{event.E_Notes}}</span></td>' +
+				'</tr></table>'
+	};
+})
+
+.directive('contentheader', function(){
+			return{
+				restrict: 'EA',
+				template: '<h1><span style="padding-right:1em;"><a href="/"><</a></span>{{title}}</h1>',
+				replace:true,
+				link: function(scope,ele,attr){
+					scope.title= attr.title;
+				}
+			}
+		})
+.directive('related1', function(){
+			return{
+			restrict: 'EA',
+			template: '<article class="related g4"><h3>Related Info One</h3></article>',
+			replace:true
+			}
+})
+
+		.directive('related2', function(){
+			return{
+				restrict: 'EA',
+				template: '<article class="related g4"><h3>Related Info Two</h3></article>',
+				replace:true
+			}
+		})
+
+
+
+
+
+
+
+
 
 
 
 
 /*
 
-.directive('loginDetails', function () {
-      return {
-         restrict: "A",
-         replace: true,
-         scope:{
-             number : "@number"
-         },
-         templateUrl:"views/directiveTemplates/loginDetails.html" 
-        }
-     })
 
-*/
 
 .directive('expander', function(){
      return{
@@ -27775,7 +27977,7 @@ angular.module("directives", [])
 })
 
 
-
+*/
                                           
 ;angular.module("dmvPortalConfig", [])
 
@@ -27881,7 +28083,6 @@ angular.module("directives", [])
 
 .factory('NoticesFactory',['$resource', function($resource) {
 			var baseUrl = "http://dmvnew/apps/dmvnowinterface/dmvnowinterface.aspx?function=notices";
-			//var baseUrl = "/apps/WebServicesBackEnd/SalvageComplaint.aspx/SendFields";
 			return $resource(baseUrl, {}, {
 				query : {
 					method : 'GET',
@@ -27891,9 +28092,17 @@ angular.module("directives", [])
 			});
 }])
 
-
-
-
+.factory('NoticesDetails',['$resource', function($resource){
+			var baseUrl= 'http://dmvnew/apps/dmvnowinterface/dmvnowinterface.aspx?function=noticesdetails';
+			return $resource(baseUrl, {}, {
+				query : {
+					method : 'GET',
+					url : baseUrl,
+					isArray:true,
+					cache:false
+				}
+			});
+}])
 
 .factory('Notices', function(){
 			var a={
@@ -27951,8 +28160,16 @@ angular.module("directives", [])
 
 })
 
-
-
+.factory('DMVGoFactory', function($resource){
+			var baseUrl = "http://dmvnew/apps/dmvnowinterface/dmvnowinterface.aspx?function=events";
+			return $resource(baseUrl, {}, {
+				query : {
+					method : 'GET',
+					url : baseUrl,
+					isArray:true
+				}
+			});
+})
 ;angular.module("sliders", [])
 
 .directive('diesel', function($timeout){

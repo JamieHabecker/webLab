@@ -25,6 +25,38 @@ header.dmvMobiHeader{
 	}
 }
 
+div.mobi{
+	width:94%;
+	margin:0 auto;
+	height:700px;
+	background:#ffffff;
+	border:2px solid $blueLighter;
+	border-radius:0px 0px 5px 5px;
+	@include bottomShadowLight;
+	div{
+		padding-top:50px;
+		overflow:hidden;
+
+		ul{
+			margin:0;
+			padding:0;
+			li{
+				list-style-type: none;
+				width:100%;
+				border-bottom:1px solid #333;
+				padding:13px;
+				display:block;
+				cursor:pointer;
+				&:hover{
+					background:#d7d7d7;
+				}
+			}
+		}
+	}
+}
+
+
+
 @media screen and (min-width:421px){
 header.dmvHeader{
 	div.logo{
@@ -39,7 +71,7 @@ header.dmvHeader{
 	header.dmvHeader{
 		display:block;
 	}
-	header.dmvMobiHeader{
-		display:none;
+	header.dmvMobiHeader,div.mobi{
+		display:none !important;
 	}
 }

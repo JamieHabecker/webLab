@@ -26,7 +26,7 @@ angular.module("globalFactories", [])
 }])
 
 
-.animation('an-enter', function() {
+.animation('.an-enter', function() {
 			return {
 				setup : function(myElement) {
 					myElement.css({ 'opacity': 0.3 });
@@ -43,8 +43,26 @@ angular.module("globalFactories", [])
 })
 
 
+.animation('.mobi', function() {
+	return {
+		beforeAddClass : function(ele, className, done) {
+			console.log("beforeA")
+			$(ele).stop().slideUp('slow');
+			$('body,section.site').removeClass('mobiMenuShowing')
+		},
+		beforeRemoveClass : function(ele){
+			console.log("beforeR")
+			$(ele).stop().slideDown('slow').removeClass('ng-hide');
+			$('body,section.site').addClass('mobiMenuShowing')
 
-		.factory('ContactFactory',['$resource', function($resource) {
+		}
+	};
+})
+
+
+
+
+.factory('ContactFactory',['$resource', function($resource) {
 			var baseUrl = "//10.156.147.131/dmvForms/default.aspx/SendSearchAttributes";
 			//var baseUrl= "http://search.dmv.virginia.gov/search?mode=allwords&reload=1&debug=1&client=dmvnow_front&proxystylesheet=dmvnew_front&output=xml_no_dtd&site=default_collection&q=test&proxyreload=1&btnSearch=Search";
 			return $resource(baseUrl, {}, {

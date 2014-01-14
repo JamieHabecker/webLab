@@ -51,13 +51,37 @@ angular.module("directives", [])
 			}
 })
 
-		.directive('related2', function(){
+.directive('related2', function(){
 			return{
 				restrict: 'EA',
 				template: '<article class="related g4"><h3>Related Info Two</h3></article>',
 				replace:true
-			}
-		})
+		}
+})
+
+
+.directive('scroller', function(){
+	return{
+		restrict: 'EA',
+		template: '<div class="scroller" data-ng-click="animate()">Return to Top</div>',
+		replace:true,
+		link: function(scope,ele,attr){
+				$(window).scroll(function(){
+					var a= $(document).scrollTop()
+					if(a < 1800){
+						jQuery(ele).fadeOut('slow');
+					}else{
+						jQuery(ele).fadeIn('slow')
+					}
+				});
+			scope.animate= function(){
+						$('html,body').animate({
+							scrollTop: $("body").offset().top
+						}, 800);
+					}
+		}
+	}
+})
 
 
 

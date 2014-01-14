@@ -1,5 +1,7 @@
 body{
 	background:#f0f0f0;
 	background-image:url(/img/bkgd.jpg);
-	overflow:hidden;
+	&.mobiMenuShowing{
+		overflow:auto;
+	}
 }

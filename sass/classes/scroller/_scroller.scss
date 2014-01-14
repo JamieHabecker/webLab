@@ -1,0 +1,18 @@
+div.scroller{
+		position:fixed;
+		display:none;
+		bottom:0px;
+		background-color:#ffff00;
+		width:94%;
+		height:40px;
+		border:2px solid #ff9900;
+		font-weight:bold;
+		font-size:1em;
+		text-align:center;
+		cursor:pointer;
+		padding-top:10px;
+		border-radius:3px;
+		transition:transform .2s cubic-bezier(.59,-0.54,.72,1.59);
+		transform: translate(0px, 10px);
+		box-shadow:0 0 10px 0 #666;
+}

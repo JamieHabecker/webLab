@@ -1,4 +1,4 @@
-angular.module("globals", ['globalConfig','globalFactories', 'globalControllers'])
+angular.module("globals", ['globalConfig','ngAnimate','globalFactories', 'globalControllers'])
 
 
 .directive('states',['StateFactory',function(StateFactory){
@@ -59,29 +59,16 @@ angular.module("globals", ['globalConfig','globalFactories', 'globalControllers'
 			};
 })
 
+
+
 .directive('mobiheader', function(){
 			return{
 				restrict: 'EA',
-				template:"<header class='dmvMobiHeader'><img src='/img/mobiWeb.jpg'/><span data-ng-click='open()'></span></header><div class='mobiMenu' data-ng-show='visible' data-ng-animate=\"{enter: 'an-enter'}\" style='height:300px;background:green;width:100%;'></div>",
+				template:"<header data-ng-init='isHidden=true' class='dmvMobiHeader'><img src='/img/mobiWeb.jpg'/><span data-ng-click='isHidden=!isHidden'></span></header><div class='mobi' data-ng-hide='isHidden'><div><ul><li>Link One</li><li>Link Two</li></ul></div></div>",
 				link: function(scope,ele,attr){
-					scope.visible= false;
-					scope.open= function(){
-						scope.visible = ! scope.visible;
-						if(scope.visible){
-							console.log(scope.visible)
-							$('section.site').css('overflow','hidden')
-							$('body').css('overflow','auto')
-						}else{
-							$('section.site').css('overflow-y','auto')
-							$('body').css('overflow','hidden')
-							console.log(scope.visible)
-						}
-
-					}
 				}
 			}
 })
-
 
 
 .directive('mainheader', function(){

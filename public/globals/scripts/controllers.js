@@ -1,8 +1,10 @@
-angular.module("globalControllers", [])
+angular.module("globalControllers", ['ngRoute'])
+
+
 
 .config(['$routeProvider','$locationProvider','$httpProvider', function($routeProvider,$locationProvider, $httpProvider){
 			$httpProvider.defaults.headers.get = {
-				'Accept' : 'application/json, text/javascript, */*'
+				'Accept' : 'application/json, text/javascript'
 			};
 			$routeProvider
 					.when('/Error', {
@@ -14,8 +16,6 @@ angular.module("globalControllers", [])
 						templateUrl : 'views/search/searchResults.html'
 					})
 		}])
-
-
 
 .controller('PortalCancelController',['$scope',function($scope){
 	$scope.portalCancel = function(){
