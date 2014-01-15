@@ -1,6 +1,6 @@
 [
-	{"x" : "Home", "link" : "/Home"},
-	{"x" : "Online Services", "link" : "/OnlineServices/"},
+	{"x" : "Home", "link" : "#/Home"},
+	{"x" : "Online Services", "link" : "#/OnlineServices"},
 	{"x" : "Drivers / ID Services", "link" : "/Drivers/"},
 	{"x" : "Vehicles", "link" : "/vehicles/"},
 	{"x" : "Commercial", "link" : "/commercial/"},

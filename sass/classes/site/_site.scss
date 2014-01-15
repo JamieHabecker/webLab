@@ -1,5 +1,5 @@
 section.site{
-	height:800px;
+	min-height:300px;
 	margin:0;
 	padding:0;
 	overflow:hidden;
@@ -21,7 +21,7 @@ section.site{
 
 @media screen and (min-width:758px){
 	section.site{
-		min-height:800px;
+		height:auto;
 		overflow:auto;
 		margin-top:0 !important;
 	}

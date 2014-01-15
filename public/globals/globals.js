@@ -33198,8 +33198,9 @@ angular.module('ngResource', ['ng']).
 			$scope.menu = "Hide Menu";
 			MenuFactory.menu({},{}, successcb, errorcb);
 			function successcb(data){
-				$scope.menuLinks = data;
 				var a = data.slice(0,3)
+				$scope.mobiData= data;
+				$scope.menuLinks = data;
 				$scope.menuLinksss = a;
 			}
 			function errorcb(err){
@@ -33394,7 +33395,6 @@ angular.module('ngResource', ['ng']).
 			};
 }])
 
-
 .directive('vanav',[ function() {
 			return {
 				restrict: 'EA',
@@ -33414,19 +33414,27 @@ angular.module('ngResource', ['ng']).
 			};
 })
 
-
-
 .directive('mobiheader', function(){
 			return{
 				restrict: 'EA',
 				template:"<header class='dmvMobiHeader'>" +
-						"<ul><li></li><li class='search' data-ng-click='isSearch=!isSearch'></li><li class='menu' data-ng-click='isHidden=!isHidden'></li></ul></header>"+
+						"<ul><li></li><li class='search' data-ng-click='isSearch=!isSearch; isHidden=true'></li><li class='menu' data-ng-click='isHidden=!isHidden; isSearch=true'></li></ul></header>"+
 						"<div class='mobiSpace'></div>"+
 						"<div class='mobi mobiSearch' data-ng-controller='SearchController' data-ng-hide='isSearch'><div><ul><li><input type='text' name='search' data-ng-model='searchIn' placeholder='Search DMV'/></li><li><a class='bluBtn' data-ng-click='search()'>Search</a></li></ul></div></div>"+
-						"<div class='mobi' data-ng-hide='isHidden'><div><ul><li>Link One</li><li>Link Two</li></ul></div></div>",
+						"<div class='mobi' data-ng-hide='isHidden' data-ng-controller='MainNavigationController'><div><ul><li data-ng-repeat='links in mobiData'><a data-ng-href='{{links.link}}'>{{links.x}}</a></li></ul></div></div>",
 				link: function(scope,ele,attr){
 					scope.isHidden= true;
 					scope.isSearch= true;
+					scope.$on('$routeChangeStart', function() {
+
+						scope.isHidden= true;
+						scope.isSearch= true;
+					});
+					scope.$on('$routeChangeSuccess', function() {
+						//$('section.site').show();
+						//scope.isHidden= true;
+						//scope.isSearch= true;
+					});
 				}
 			}
 })
@@ -33443,13 +33451,11 @@ angular.module('ngResource', ['ng']).
 						"<div class='mainNavHold' data-ng-controller='MainNavigationController'><div class='mobMainNav mob'>" +
 						"<select data-ng-model='color' data-ng-options='c.x for c in menuLinks'>" +
 						"<option value=''>Choose a service area</option></select></div><div class='mainNav'>" +
-						'<ul class="mainNavLinks" rest><li ng-repeat="links in menuLinks.slice(0,8)"><a data-ng-href="#/{{links.link}}", ng-click="next(\'{{links.link}}\')">{{links.x}}</a></li></ul></div></div></header>'
+						'<ul class="mainNavLinks" rest><li ng-repeat="links in menuLinks.slice(0,8)"><a data-ng-href="{{links.link}}">{{links.x}}</a></li></ul></div></div></header>'
 			}
 		})
 
-
 //<input type='text' name='search' data-ng-model='searchIn' placeholder='Search DMV'/>
-
 
 .directive('weblabheader', function() {
 			return {
@@ -33497,7 +33503,6 @@ angular.module('ngResource', ['ng']).
 			}
 })
 
-
 .directive('loader', function(){
 			return{
 				restrict: 'A',
@@ -33508,7 +33513,6 @@ angular.module('ngResource', ['ng']).
 				}
 			}
 })
-
 
 .directive('zip', function(){
 			return{
@@ -33555,6 +33559,7 @@ angular.module('ngResource', ['ng']).
 		}
 	}
 })
+
 .directive('plate', function(){
 			return{
 				restrict: 'AE',
@@ -33713,7 +33718,6 @@ angular.module('ngResource', ['ng']).
 			}
 })
 
-
 .directive('make', function(){
 			return{
 				restrict: "AE",
@@ -33812,7 +33816,6 @@ angular.module('ngResource', ['ng']).
 	}
 })
 
-
 .directive('yesno', function(){
 	return{
 		restrict: 'AE',
@@ -33828,7 +33831,8 @@ angular.module('ngResource', ['ng']).
 		}
 	}
 })
-		.directive('cal', function(){
+
+.directive('cal', function(){
 			return{
 				restrict: 'AE',
 				template: '<div data-ng-form="calFrm"><label>{{title}} <span class="reqText" data-ng-show="dateReq">Required</span></label><input type="date" class="{{va}}" data-ng-change="d(date)" name="date" data-ng-model="date" data-ng-required="{{dateReq}}"  placeholder="mm/dd/yyyy">' +
@@ -33858,9 +33862,6 @@ angular.module('ngResource', ['ng']).
 				}
 			}
 		})
-
-
-
 
 .directive('opts',function(){
 			return{
@@ -33895,8 +33896,6 @@ angular.module('ngResource', ['ng']).
 				}
 			}
 		})
-
-
 
 .directive('placeholder', ['$timeout', function($timeout){
 			if (navigator.userAgent.indexOf("MSIE") < 0) {
@@ -34006,11 +34005,50 @@ angular.module('ngResource', ['ng']).
 					myElement.animate({
 						'opacity' : 1
 					}, 300, function(){
-						done()
+						done();
 					});
 				}
 			}
 })
+
+.animation('.siteAnime', function() {
+	return {
+		enter : function(element, done) {
+			jQuery(element).animate({
+				opacity:1
+			},300, function(){
+				done()
+			});
+
+
+		},
+
+		leave : function(element, done) {
+			jQuery(element).animate({
+				opacity:0
+			},300, function(){
+				done();
+			});
+		}
+	};
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 .animation('.mobi', function() {

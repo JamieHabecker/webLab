@@ -92,7 +92,8 @@ jade: {
     files: {
       "index.html": ["jade/index.jade"],
 			"views/dmvHome.html": ["jade/dmvHome.jade"],
-      "views/search/searchResults.html":["jade/searchResults.jade"]
+      "views/search/searchResults.html":["jade/searchResults.jade"],
+			"views/onlineServices.html":["jade/onlineServices.jade"]
     }
   }
 },  

@@ -10,3 +10,7 @@
 	border-bottom: 1px solid #ACCBE0;
 	box-shadow: 0 2px 2px #999999;
 }
+
+.compTitle{
+	@include compTitle;
+}

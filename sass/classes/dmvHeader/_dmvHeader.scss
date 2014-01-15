@@ -4,12 +4,13 @@ header.dmvHeader{
 
 header.dmvMobiHeader{
 	@include compTitle;
-	position:absolute;
+	position:fixed;
 	width:100%;
 	height:auto;
 	background:#cccccc;
 	border-bottom:2px solid $blueLighter;
 	padding-left:0;
+	z-index:8000;
 	ul{
 		padding:0;
 		margin:0;
@@ -45,17 +46,17 @@ header.dmvMobiHeader{
 }
 
 div.mobiSpace{
-	height:45px;
+	height:50px;
 }
 
 div.mobi{
-	width:94%;
 	margin:0 auto;
-	height:520px;
+	height:500px;
 	background:#ffffff;
 	border:2px solid $blueLighter;
-	border-radius:5px;
+	border-radius:0px 0px 5px 5px;
 	@include bottomShadowLight;
+	overflow:hidden;
 	div{
 		overflow:hidden;
 		ul{
@@ -64,23 +65,28 @@ div.mobi{
 			li{
 				list-style-type: none;
 				width:100%;
-				border-bottom:1px solid #333;
+				border-bottom:1px dotted $cGray;
 				padding:13px;
 				display:block;
 				cursor:pointer;
 				&:hover{
-					background:#d7d7d7;
+					background:$focusYellow;
+				}
+				&.active{
+					@include orangeToLight;
+				}
+				a{
+					color:$blueDarker;
+					font-weight:bold;
+					text-decoration: none;
 				}
 			}
 		}
 	}
 }
 
-
-
-
 div.mobiSearch{
-	width:94%;
+	//width:94%;
 	margin:0 auto;
 	height:140px;
 	background:#ffffff;
@@ -116,9 +122,7 @@ div.mobiSearch{
 	}
 }
 
-
-
-@media screen and (min-width:330px){
+@media screen and (max-width:230px){
 	header.dmvMobiHeader{
 		ul{
 			li{
@@ -135,27 +139,80 @@ div.mobiSearch{
 			}
 		}
 	}
-		div.mobiSearch{
+	div.mobiSpace{
+		height:90px;
+	}
+	div.mobiSearch{
+		div{
+			ul{
+				li{
+					input{
+						width:85%;
+					}
+					a{
+						width:75%;
+					}
+				}
+			}
+		}
+	}
+
+}
+
+@media screen and (min-width:301px){
+	header.dmvMobiHeader{
+		ul{
+			li{
+				&:first-child{
+				}
+				&.menu{
+					float:right;
+					width:36px;
+					margin-right:1em;
+				}
+				&.search{
+					margin-left:2em;
+				}
+			}
+		}
+	}
+div.mobiSearch{
 			div{
 			ul{
 				li{
 					input{
-						width:95%;
+						width:90%;
 					}
 					a{
-						width:91%;
+						width:80%;
 					}
 				}
 			}
 			}
 		}
-
 }
 
+@media screen and (min-width:480px){
+	div.mobiSearch{
+		div{
+			ul{
+				li{
+					input{
+						width:96%;
+					}
+					a{
+						width:90%;
+					}
+				}
+			}
+		}
+	}
+}
 
 @media screen and (min-width:758px){
 	header.dmvHeader{
 		display:block;
+		margin:0 auto;
 			div.logo{
 				float:left;
 				width:275px;

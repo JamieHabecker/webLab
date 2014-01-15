@@ -41,8 +41,9 @@ angular.module("globalControllers", ['ngRoute'])
 			$scope.menu = "Hide Menu";
 			MenuFactory.menu({},{}, successcb, errorcb);
 			function successcb(data){
-				$scope.menuLinks = data;
 				var a = data.slice(0,3)
+				$scope.mobiData= data;
+				$scope.menuLinks = data;
 				$scope.menuLinksss = a;
 			}
 			function errorcb(err){

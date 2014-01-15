@@ -157,9 +157,6 @@ article.homeTabs{
 				}
 			}
 		}
-
-
-
 		.odd {
 			background: #f0f0f0;
 			//margin-top:1em;
@@ -175,19 +172,6 @@ article.homeTabs{
 			text-decoration: none;
 		}
 		}
-
-
-
-
-
-
-
-
-
-
-
-
-
 		div.details{
 			padding:1em;
 			overflow-y:auto;
@@ -234,6 +218,12 @@ article.homeTabs{
 
 			}
 		}
+	}
+}
+
+@media screen and (max-width:300px){
+	article.homeTabs{
+		display:none;
 	}
 }
 

@@ -36,11 +36,50 @@ angular.module("globalFactories", [])
 					myElement.animate({
 						'opacity' : 1
 					}, 300, function(){
-						done()
+						done();
 					});
 				}
 			}
 })
+
+.animation('.siteAnime', function() {
+	return {
+		enter : function(element, done) {
+			jQuery(element).animate({
+				opacity:1
+			},300, function(){
+				done()
+			});
+
+
+		},
+
+		leave : function(element, done) {
+			jQuery(element).animate({
+				opacity:0
+			},300, function(){
+				done();
+			});
+		}
+	};
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 .animation('.mobi', function() {

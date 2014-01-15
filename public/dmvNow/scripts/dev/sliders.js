@@ -15,8 +15,7 @@ angular.module("sliders", [])
 				}
 			}
 })
-
-
+		
 .directive('d', function($timeout){
 			return {
 				restrict: 'EA',

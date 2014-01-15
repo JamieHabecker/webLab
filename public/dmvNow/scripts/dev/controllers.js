@@ -1,6 +1,6 @@
 
 
-angular.module("dmvPortal", ['ngResource','ngSanitize','ngCookies','ui.map','ui.event','directives','globals','factories','sliders']).value('$anchorScroll', angular.noop)
+angular.module("dmvPortal", ['ngResource','ngSanitize','ngCookies','ui.map','ui.event','directives','globals','factories','sliders'])//.value('$anchorScroll', angular.noop)
 
 
 .config(['$routeProvider','$locationProvider','$httpProvider',function($routeProvider,$locationProvider,$httpProvider){
@@ -10,7 +10,6 @@ angular.module("dmvPortal", ['ngResource','ngSanitize','ngCookies','ui.map','ui.
 			var template= '<article class="content" ng-include="templateUrl"><h1 class="loaderText">Loading...</h1></h1></div>'
 
 	$routeProvider
-
 			.when('/Home', {
 				controller : 'DMVHomeController',
 				templateUrl : 'views/dmvHome.html'
@@ -18,6 +17,10 @@ angular.module("dmvPortal", ['ngResource','ngSanitize','ngCookies','ui.map','ui.
 			.when('/drivers:name', {
 				template:template,
 				controller : 'TestController'
+			})
+			.when('/OnlineServices', {
+				templateUrl:"views/onlineServices.html",
+				controller : 'OnlineServicesController'
 			})
 			.otherwise({
 					redirectTo : '/Home'
@@ -27,12 +30,11 @@ angular.module("dmvPortal", ['ngResource','ngSanitize','ngCookies','ui.map','ui.
 
 
 .controller('TestController', function($scope,$routeParams,$location){
-
 			var a= $routeParams.name;
 			var b= a.replace(":", "");
 			console.log(a)
 			//a.replace(":", "");
-	$scope.templateUrl = "/views/drivers/" + b + ".html";
+			$scope.templateUrl = "/views/drivers/" + b + ".html";
 			$scope.tile= "Applying for a Driver's License"
 })
 
@@ -42,7 +44,7 @@ angular.module("dmvPortal", ['ngResource','ngSanitize','ngCookies','ui.map','ui.
 			$scope.isloading= true;
 			$scope.activePath= "/Locations";
 			sessionStorage.removeItem("mapDrawn")
-			//message.Locations($scope,Locations,Item);
+			message.Locations($scope,Locations,Item);
 			$scope.tab= function(x){
 			if($scope.isloading){
 				return;
@@ -176,6 +178,9 @@ angular.module("dmvPortal", ['ngResource','ngSanitize','ngCookies','ui.map','ui.
 					$scope.isloading= false;
 					$scope.activePath= "/Moving";
 				}
+				if(x === "new"){
+					console.log("new")
+				}
 				}
 			}
 			$scope.$on('detailsClicked', function(event, details) {
@@ -197,8 +202,36 @@ angular.module("dmvPortal", ['ngResource','ngSanitize','ngCookies','ui.map','ui.
 			});
 }])
 
+.controller('OnlineServicesController', function($scope){
+
+		})
 
 
+.directive('a', [
+    function() {
+        return {
+            restrict: 'E',
+            link: function(scope, elem, attrs) {
+
+                elem.bind('click', function(e){
+                    if(attrs.href){
+                    if (attrs.href.indexOf("Drivers") !==-1){
+                        //e.preventDefault();
+                        //e.stopPropagation();
+                         attrs.$set('href',"#Drivers/drivers");
+                        //attrs.href.replace("/Drivers/", "#/Drivers/")
+                        //alert("yes")
+                    }else{
+                        return;
+                    }
+                   }else{
+                       return;
+                   }
+                })
+            }
+        };
+    }
+])
 
 
 
@@ -206,8 +239,7 @@ angular.module("dmvPortal", ['ngResource','ngSanitize','ngCookies','ui.map','ui.
 
 
 .controller('CanvasController', function(){
-
-			var img = new Image();
+var img = new Image();
 
 // User Variables - customize these to change the image being scrolled, its
 // direction, and the speed.
@@ -215,7 +247,7 @@ angular.module("dmvPortal", ['ngResource','ngSanitize','ngCookies','ui.map','ui.
 			img.src = '/img/canvas.jpg';
 			var CanvasXSize = 800;
 			var CanvasYSize = 200;
-			var speed = 30; //lower is faster
+			var speed = 60; //lower is faster
 			var scale = 1.05;
 			var y = -4.5; //vertical offset
 
@@ -276,83 +308,6 @@ angular.module("dmvPortal", ['ngResource','ngSanitize','ngCookies','ui.map','ui.
 
 
 
-
-
-
-/*
-.controller('StepTwoController', ['$scope','$location','$timeout','$routeParams', function($scope, $location, $timeout, $routeParams){
-   console.log($location.path())
-   console.log($location.hash())
-   
-}])
-
-
-
-
-
-.controller('CompleteController',['$scope','$location','$timeout', function($scope, $location, $timeout){
-    var theData;
-    var formFill;
-    if(!sessionStorage.stepOne && !sessionStorage.stepTwo && !sessionStorage.data){
-      $location.path("/StepOne");
-   }else{
-        theData = sessionStorage.getItem('data');
-        data = JSON.parse(theData);
-        $scope.theData = [data];
-        _gaq.push(['_trackEvent', 'Contact Form Completed!', 'ContactUs']);
-         formFill = {
-        fillIt : function() {
-                sessionStorage.clear();
-            }
-        }
-     $timeout(formFill.fillIt, 1500);
-        
-          $scope.goHome = function(x){
-        sessionStorage.clear();
-        window.location.replace(x);
-    }; 
-   }
-
-}])
-
-
-
-.controller('PortalCancelController',['$scope', function($scope){
-    $scope.portalCancel = function(){
-        window.location.replace("/");
-    };
-    
-}])
-
-
-
-
-.directive('a', [
-    function() {
-        return {
-            restrict: 'E',
-            link: function(scope, elem, attrs) {
-
-                elem.bind('click', function(e){
-                    if(attrs.href){
-                    if (attrs.href.indexOf("Drivers") !==-1){
-                        //e.preventDefault();
-                        //e.stopPropagation();
-                         attrs.$set('href',"#Drivers/drivers");
-                        //attrs.href.replace("/Drivers/", "#/Drivers/")
-                        //alert("yes")
-                    }else{
-                        return;
-                    }
-                   }else{
-                       return;
-                   }
-                })
-            }
-        };
-    }
-])
-*/
 /*
 
 .directive('a', function() {

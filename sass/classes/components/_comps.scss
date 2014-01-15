@@ -30,8 +30,24 @@ article{
 }
 
 
+@media screen and (max-width:758px){
+	article{
+		&.comp, &.comp1, &.comp2, &.comp3, &.comp4,&.comp5,&.comp6,&.comp7,&.comp9,&.comp10{
+			height:27em;
+		}
 
-@media screen and (min-width:758px){
+	}
+}
+
+@media screen and (max-width:300px){
+	.comp1 div, .comp2 div, .comp3 div, .comp4 div, .comp5 div{
+		display:none;
+	}
+	article.dmvHome{
+		article.slider{
+			display:none;
+		}
+	}
 
 }
 

@@ -27435,56 +27435,31 @@ function errorCallback() {
 angular.module("dmvPortal", ['ngResource','ngSanitize','ngCookies','ui.map','ui.event','directives','globals','factories','sliders']).value('$anchorScroll', angular.noop)
 
 
+.config(['$routeProvider','$locationProvider','$httpProvider',function($routeProvider,$locationProvider,$httpProvider){
+//$httpProvider.defaults.headers.get = {
+// 'Accept' : 'application/json, text/javascript, */*'
+// };
+			var template= '<article class="content" ng-include="templateUrl"><h1 class="loaderText">Loading...</h1></h1></div>'
+
+	$routeProvider
+			.when('/Home', {
+				controller : 'DMVHomeController',
+				templateUrl : 'views/dmvHome.html'
+			})
+			.when('/drivers:name', {
+				template:template,
+				controller : 'TestController'
+			})
+			.when('/OnlineServices', {
+				templateUrl:"views/onlineServices.html",
+				controller : 'OnlineServicesController'
+			})
+			.otherwise({
+					redirectTo : '/Home'
+		})
+}])
 
 
-.controller('ScrollController', function(){
-		var requestAnimationFrame= window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
-		var bodyElement= document.querySelector("body");
-		var floatie= document.querySelector("#floatie");
-		var currentScrollPosition;
-		var iteration;
-		var start= false;
-
-		function setup(){
-		floatie.addEventListener("click",animateToTopOfPage, false);
-
-			bodyElement.addEventListener("mousewheel",stopEverything, false);
-			bodyElement.addEventListener("DOMMouseScroll", stopEverything,false);
-			animationLoop();
-		}
-			setup();
-			function animationLoop(){
-				if(start){
-					window.scrollTo(0, easeOutCubic(iteration,currentScrollPosition,-currentScrollPosition,50));
-					iteration++;
-					if(getScrollPosition() <= 0){
-						stopEverything();
-					}
-				}
-				requestAnimationFrame(animationLoop)
-			}
-
-			function animateToTopOfPage(e){
-				 console.log("clicked")
-				currentScrollPosition= getScrollPosition();
-					start ^= true;
-					iteration= 0;
-
-			}
-
-			function getScrollPosition(){
-				if(document.documentElement.scrollTop == 0){
-					return document.body.scrollTop;
-				}else{
-				return document.documentElement.scrollTop;
-				}
-			}
-
-			function stopEverything(){
-				start= false;
-			}
-
-})
 
 .controller('TestController', function($scope,$routeParams,$location){
 
@@ -27497,11 +27472,12 @@ angular.module("dmvPortal", ['ngResource','ngSanitize','ngCookies','ui.map','ui.
 })
 
 
+
 .controller('DMVHomeController',['$scope','$location','message','Locations','NoticesFactory','NoticesDetails','Item','DMVGoFactory', function($scope,$location,message,Locations,NoticesFactory,NoticesDetails,Item,DMVGoFactory){
 			$scope.isloading= true;
 			$scope.activePath= "/Locations";
 			sessionStorage.removeItem("mapDrawn")
-			//message.Locations($scope,Locations,Item);
+			message.Locations($scope,Locations,Item);
 			$scope.tab= function(x){
 			if($scope.isloading){
 				return;
@@ -27635,6 +27611,9 @@ angular.module("dmvPortal", ['ngResource','ngSanitize','ngCookies','ui.map','ui.
 					$scope.isloading= false;
 					$scope.activePath= "/Moving";
 				}
+				if(x === "new"){
+					console.log("new")
+				}
 				}
 			}
 			$scope.$on('detailsClicked', function(event, details) {
@@ -27656,134 +27635,9 @@ angular.module("dmvPortal", ['ngResource','ngSanitize','ngCookies','ui.map','ui.
 			});
 }])
 
+.controller('OnlineServicesController', function($scope){
 
-
-
-
-
-
-
-
-.controller('CanvasController', function(){
-
-			var img = new Image();
-
-// User Variables - customize these to change the image being scrolled, its
-// direction, and the speed.
-
-			img.src = '/img/canvas.jpg';
-			var CanvasXSize = 800;
-			var CanvasYSize = 200;
-			var speed = 30; //lower is faster
-			var scale = 1.05;
-			var y = -4.5; //vertical offset
-
-// Main program
-
-			var dx = 0.75;
-			var imgW;
-			var imgH;
-			var x = 0;
-			var clearX;
-			var clearY;
-			var ctx;
-
-			img.onload = function() {
-				imgW = img.width*scale;
-				imgH = img.height*scale;
-				if (imgW > CanvasXSize) { x = CanvasXSize-imgW; } // image larger than canvas
-				if (imgW > CanvasXSize) { clearX = imgW; } // image larger than canvas
-				else { clearX = CanvasXSize; }
-				if (imgH > CanvasYSize) { clearY = imgH; } // image larger than canvas
-				else { clearY = CanvasYSize; }
-				//Get Canvas Element
-				ctx = document.getElementById('canvas').getContext('2d');
-				//Set Refresh Rate
-				return setInterval(draw, speed);
-			}
-
-			function draw() {
-				//Clear Canvas
-				ctx.clearRect(0,0,clearX,clearY);
-				//If image is <= Canvas Size
-				if (imgW <= CanvasXSize) {
-					//reset, start from beginning
-					if (x > (CanvasXSize)) { x = 0; }
-					//draw aditional image
-					if (x > (CanvasXSize-imgW)) { ctx.drawImage(img,x-CanvasXSize+1,y,imgW,imgH); }
-				}
-				//If image is > Canvas Size
-				else {
-					//reset, start from beginning
-					if (x > (CanvasXSize)) { x = CanvasXSize-imgW; }
-					//draw aditional image
-					if (x > (CanvasXSize-imgW)) { ctx.drawImage(img,x-imgW+1,y,imgW,imgH); }
-				}
-				//draw image
-				ctx.drawImage(img,x,y,imgW,imgH);
-				//amount to move
-				x += dx;
-			}
 		})
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-.controller('StepTwoController', ['$scope','$location','$timeout','$routeParams', function($scope, $location, $timeout, $routeParams){
-   console.log($location.path())
-   console.log($location.hash())
-   
-}])
-
-
-
-
-
-.controller('CompleteController',['$scope','$location','$timeout', function($scope, $location, $timeout){
-    var theData;
-    var formFill;
-    if(!sessionStorage.stepOne && !sessionStorage.stepTwo && !sessionStorage.data){
-      $location.path("/StepOne");
-   }else{
-        theData = sessionStorage.getItem('data');
-        data = JSON.parse(theData);
-        $scope.theData = [data];
-        _gaq.push(['_trackEvent', 'Contact Form Completed!', 'ContactUs']);
-         formFill = {
-        fillIt : function() {
-                sessionStorage.clear();
-            }
-        }
-     $timeout(formFill.fillIt, 1500);
-        
-          $scope.goHome = function(x){
-        sessionStorage.clear();
-        window.location.replace(x);
-    }; 
-   }
-
-}])
-
-
-
-.controller('PortalCancelController',['$scope', function($scope){
-    $scope.portalCancel = function(){
-        window.location.replace("/");
-    };
-    
-}])
-
-
 
 
 .directive('a', [
@@ -27811,7 +27665,17 @@ angular.module("dmvPortal", ['ngResource','ngSanitize','ngCookies','ui.map','ui.
         };
     }
 ])
-*/
+
+
+
+
+
+
+
+
+
+
+
 /*
 
 .directive('a', function() {
@@ -27914,13 +27778,37 @@ angular.module('routes',[]).config([
 			}
 })
 
-		.directive('related2', function(){
+.directive('related2', function(){
 			return{
 				restrict: 'EA',
 				template: '<article class="related g4"><h3>Related Info Two</h3></article>',
 				replace:true
-			}
-		})
+		}
+})
+
+
+.directive('scroller', function(){
+	return{
+		restrict: 'EA',
+		template: '<div class="scroller" data-ng-click="animate()">Return to Top</div>',
+		replace:true,
+		link: function(scope,ele,attr){
+				$(window).scroll(function(){
+					var a= $(document).scrollTop()
+					if(a < 1800){
+						jQuery(ele).fadeOut('slow');
+					}else{
+						jQuery(ele).fadeIn('slow')
+					}
+				});
+			scope.animate= function(){
+						$('html,body').animate({
+							scrollTop: $("body").offset().top
+						}, 800);
+					}
+		}
+	}
+})
 
 
 
@@ -28187,8 +28075,7 @@ angular.module('routes',[]).config([
 				}
 			}
 })
-
-
+		
 .directive('d', function($timeout){
 			return {
 				restrict: 'EA',

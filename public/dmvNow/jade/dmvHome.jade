@@ -8,7 +8,7 @@ article.g17.dmvHome
 			li: a(href="https://www.dmv.virginia.gov/dmvnet/veh_sld_trd/intro.asp") Report a Vehicle Sold / Traded
 			li: a(href="https://www.dmv.virginia.gov/dmvnet/drivers_license_replacement/intro.asp") Driver's License Replacement
 			li: a(href="https://www.dmv.virginia.gov/dmvnet/plate_purchase/intro.asp") Plate Purchase
-			li: a.orgBtn(href="/") All
+			li: a.orgBtn(href="#/OnlineServices") All
 		div
 	article.g4.comp2
 		h3 Driver/ID Services
@@ -49,7 +49,7 @@ article.g17.dmvHome
 				li(data-ng-class="{ active: activePath=='/Notices' }"): a(href="",data-ng-click="tab('Notices')") Notices
 				li(class="m",data-ng-class="{ active: activePath=='/DMV2Go' }"): a(href="",data-ng-click="tab('dmvgo')") DMV 2 Go
 				li(data-ng-class="{ active: activePath=='/Moving' }"): a(href="",data-ng-click="tab('moving')") Moving?
-				li(class="m"): a(href="") What's New
+				li(class="m",data-ng-class="{ active: activePath=='/WhatsNew' }"): a(href="",data-ng-click="tab('new')") What's New
 		div.content
 			h2.loaderText(data-ng-show="isloading") Loading...
 			h2.error(data-ng-show="isError") Sorry, this information is currently unavailable
@@ -144,5 +144,5 @@ article.g17.dmvHome
 		div
 	div(scroller) Return to Top
 
-	canvas(data-ng-controller="CanvasController",id="canvas",width="800",height="200")
+	//canvas(data-ng-controller="CanvasController",id="canvas",width="800",height="200")
 

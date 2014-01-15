@@ -9,7 +9,7 @@
       <li><a href="https://www.dmv.virginia.gov/dmvnet/veh_sld_trd/intro.asp">Report a Vehicle Sold / Traded</a></li>
       <li><a href="https://www.dmv.virginia.gov/dmvnet/drivers_license_replacement/intro.asp">Driver's License Replacement</a></li>
       <li><a href="https://www.dmv.virginia.gov/dmvnet/plate_purchase/intro.asp">Plate Purchase</a></li>
-      <li><a href="/" class="orgBtn">All</a></li>
+      <li><a href="#/OnlineServices" class="orgBtn">All</a></li>
     </ul>
     <div></div>
   </article>
@@ -58,7 +58,7 @@
         <li data-ng-class="{ active: activePath=='/Notices' }"><a href="" data-ng-click="tab('Notices')">Notices</a></li>
         <li data-ng-class="{ active: activePath=='/DMV2Go' }" class="m"><a href="" data-ng-click="tab('dmvgo')">DMV 2 Go</a></li>
         <li data-ng-class="{ active: activePath=='/Moving' }"><a href="" data-ng-click="tab('moving')">Moving?</a></li>
-        <li class="m"><a href="">What's New</a></li>
+        <li data-ng-class="{ active: activePath=='/WhatsNew' }" class="m"><a href="" data-ng-click="tab('new')">What's New</a></li>
       </ul>
     </div>
     <div class="content">
@@ -168,5 +168,5 @@
     <div></div>
   </article>
   <div scroller="scroller">Return to Top</div>
-  <canvas data-ng-controller="CanvasController" id="canvas" width="800" height="200"></canvas>
+  <!--canvas(data-ng-controller="CanvasController",id="canvas",width="800",height="200")-->
 </article>
