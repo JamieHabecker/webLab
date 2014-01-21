@@ -74,9 +74,13 @@ article.homeTabs{
 			height:19em;
 			h3{
 				cursor:pointer;
+				margin:0;
+				padding:0;
+				font-size:1em;
+				color:$blueDarker;
 			}
 			p{
-				margin-top:0.5em;
+				margin-top:0;
 			}
 		}
 		div.noticesDetails{
@@ -137,7 +141,8 @@ article.homeTabs{
 				padding:1em;
 				th{
 					a{
-						color:#333333;
+						color:$blueDarker;
+						font-size:1em;
 						text-decoration:none;
 					}
 				}
@@ -207,6 +212,22 @@ article.homeTabs{
 			}
 
 		}
+		div.moving{
+			padding:0 1em 1em 1em;
+			h1{
+				font-size:1.5em;
+				color:$blueDarker;
+			}
+			ul{
+				li{
+					line-height:2em;
+					list-style-type:none;
+					a{
+						color:$blueDarker;
+					}
+				}
+			}
+		}
 		h2{
 			text-align:center;
 			color:$blueDarker;
@@ -218,6 +239,37 @@ article.homeTabs{
 
 			}
 		}
+	}
+}
+
+article.news{
+	div{
+		padding:0em 1em;
+		&.sp{
+			padding-top:1em;
+		}
+		h1{
+			font-size:1em;
+			color:$blueDarker;
+			padding:0;
+			margin:0;
+			cursor:pointer;
+		}
+		p{
+			margin-top:0;
+		}
+	}
+}
+
+@media screen and (min-width:758px){
+	article.news{
+		width:$seventeen;
+	}
+}
+
+@media screen and (min-width:1016px){
+	article.news{
+		width:$eightWithBorders;
 	}
 }
 

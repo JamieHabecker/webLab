@@ -11,11 +11,9 @@ angular.module("MapFactory", [])
 			});
 }])
 
-
 .factory('Item',['$resource', function($resource) {
 			return $resource("http://dmvnew/apps/dmvnowinterface/DMVNowInterface.aspx?function=locationsDetails")
 }])
-
 
 .factory('message', function() {
 			return{

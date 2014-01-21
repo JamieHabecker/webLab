@@ -126,10 +126,19 @@
         </div>
       </div>
       <div data-ng-show="activePath=='/Moving' &amp;&amp; !isloading" class="moving">
+        <h1>On the Go? Here's What You Need to Know.</h1>
         <ul>
-          <li>LINK</li>
-          <li>LINK</li>
+          <li><a href="">New to Virginia</a></li>
+          <li><a href="">Leaving Virginia</a></li>
+          <li><a href="">Moving Within Virginia</a></li>
+          <li><a href="">Temporarily Outside of Virginia</a></li>
         </ul>
+      </div>
+      <div data-ng-show="activePath=='/WhatsNew' &amp;&amp; !isloading" class="whatsnew">
+        <h2 data-ng-show="noData &amp;&amp; !isloading">There are currently no notices.</h2>
+        <div data-ng-class-odd="'odd'" data-ng-class-even="'even'" data-ng-repeat="new in whatsNew">
+          <p>{{importantNotice.INTRO_TEXT}}</p>
+        </div>
       </div>
     </div>
   </article>
@@ -167,6 +176,14 @@
     </ul>
     <div></div>
   </article>
+  <article data-ng-controller="NewsController" class="g8 second news">
+    <h3>News</h3>
+    <h2 data-ng-show="noNews &amp;&amp; !isloading">There are currently no notices.</h2>
+    <div class="sp"></div>
+    <div data-ng-class-odd="'odd'" data-ng-class-even="'even'" data-ng-repeat="news in News">
+      <h1><a data-ng-click="next(news.ID)">{{news.TITLE}}</a></h1>
+      <p>{{news.INTRO_TEXT}}</p>
+    </div>
+  </article>
   <div scroller="scroller">Return to Top</div>
-  <!--canvas(data-ng-controller="CanvasController",id="canvas",width="800",height="200")-->
 </article>

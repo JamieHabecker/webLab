@@ -33447,7 +33447,7 @@ angular.module('ngResource', ['ng']).
 						$('li.' + x).addClass('active');
 						$location.path(y)
 					}
-					scope.$on('$locationChangeSuccess', function(){
+					scope.$on('$locationChangeStart', function(){
 						scope.isHidden= true;
 						scope.isSearch= true;
 					})

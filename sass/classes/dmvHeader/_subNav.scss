@@ -2,9 +2,7 @@ header.dmvHeader{
 div.subNav{
 	clear:left;
 	width:$seventeen;
-	background:green;
 	padding-bottom:1em;
-	overflow:auto;
 div.login{
 	text-align:center;
 	button{
@@ -61,8 +59,6 @@ div.search{
 	}
 	div.subNav{
 		clear:none;
-		//width:60%;
-		//float:right;
 		clear:both;
 		margin-right:$gutter;
 		div.subLinks{
@@ -71,14 +67,11 @@ div.search{
 			overflow:auto;
 			margin-top:0.5em;
 			float:left;
-			background:yellow;
 			a{
 				margin-right:0.5em;
 			}
 		}
 		div.search{
-			background:orange;
-			overflow:hidden;
 			text-align:right;
 			ul{
 				margin:0;

@@ -91,7 +91,7 @@ angular.module("globals", ['globalConfig','ngAnimate','globalFactories', 'global
 						$('li.' + x).addClass('active');
 						$location.path(y)
 					}
-					scope.$on('$locationChangeSuccess', function(){
+					scope.$on('$locationChangeStart', function(){
 						scope.isHidden= true;
 						scope.isSearch= true;
 					})

@@ -79,7 +79,7 @@ angular.module("factories", ['MapFactory'])
 
 })
 
-.factory('DMVGoFactory', function($resource){
+.factory('DMVGoFactory',['$resource', function($resource){
 			var baseUrl = "http://dmvnew/apps/dmvnowinterface/dmvnowinterface.aspx?function=events";
 			return $resource(baseUrl, {}, {
 				query : {
@@ -88,4 +88,28 @@ angular.module("factories", ['MapFactory'])
 					isArray:true
 				}
 			});
-})
+		}])
+
+		.factory('WhatsNewFactory',['$resource', function($resource){
+			var baseUrl = "http://dmvnew/apps/dmvnowinterface/dmvnowinterface.aspx?function=whatsnew";
+			return $resource(baseUrl, {}, {
+				query : {
+					method : 'GET',
+					url : baseUrl,
+					isArray:true
+				}
+			});
+		}])
+
+.factory('NewsFactory',['$resource', function($resource){
+			var baseUrl = "http://dmvnew/apps/dmvnowinterface/dmvnowinterface.aspx?function=news";
+			return $resource(baseUrl, {}, {
+				query : {
+					method : 'GET',
+					url : baseUrl,
+					isArray:true
+				}
+			});
+		}])
+
+

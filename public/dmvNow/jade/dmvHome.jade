@@ -112,9 +112,16 @@ article.g17.dmvHome
 					a(style="text-decoration:underline;float:right;margin-right:2em;margin-top:1.2em;",href="/general/#dmv_2go.html") Full <span class="emphasis">DMV 2 Go Calendar</span>
 
 			div.moving(data-ng-show="activePath=='/Moving' && !isloading")
+				h1 On the Go? Here's What You Need to Know.
 				ul
-					li LINK
-					li LINK
+					li: a(href="") New to Virginia
+					li: a(href="") Leaving Virginia
+					li: a(href="") Moving Within Virginia
+					li: a(href="") Temporarily Outside of Virginia
+			div.whatsnew(data-ng-show="activePath=='/WhatsNew' && !isloading")
+				h2(data-ng-show="noData && !isloading") There are currently no notices.
+				div(data-ng-class-odd="'odd'", data-ng-class-even="'even'", data-ng-repeat='new in whatsNew')
+					p{{importantNotice.INTRO_TEXT}}
 	article.g8.sec.slider
 		div.flexslider
 			ul.slides
@@ -142,7 +149,12 @@ article.g17.dmvHome
 			li: a(href="https://www.dmv.virginia.gov/dmvnet/plate_purchase/intro.asp") Plate Purchase
 			li: a.orgBtn(href="/") All
 		div
+	article.g8.second.news(data-ng-controller="NewsController")
+		h3 News
+		h2(data-ng-show="noNews && !isloading") There are currently no notices.
+		div.sp
+		div(data-ng-class-odd="'odd'", data-ng-class-even="'even'", data-ng-repeat='news in News')
+			h1: a(data-ng-click="next(news.ID)") {{news.TITLE}}
+			p {{news.INTRO_TEXT}}
 	div(scroller) Return to Top
-
-	//canvas(data-ng-controller="CanvasController",id="canvas",width="800",height="200")
 

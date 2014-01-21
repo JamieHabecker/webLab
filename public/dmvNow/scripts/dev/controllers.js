@@ -27,8 +27,6 @@ angular.module("dmvPortal", ['ngResource','ngSanitize','ngCookies','ui.map','ui.
 		})
 }])
 
-
-
 .controller('TestController', function($scope,$routeParams,$location){
 			var a= $routeParams.name;
 			var b= a.replace(":", "");
@@ -38,9 +36,7 @@ angular.module("dmvPortal", ['ngResource','ngSanitize','ngCookies','ui.map','ui.
 			$scope.tile= "Applying for a Driver's License"
 })
 
-
-
-.controller('DMVHomeController',['$scope','$location','message','Locations','NoticesFactory','NoticesDetails','Item','DMVGoFactory', function($scope,$location,message,Locations,NoticesFactory,NoticesDetails,Item,DMVGoFactory){
+.controller('DMVHomeController',['$scope','$location','message','Locations','NoticesFactory','NoticesDetails','Item','DMVGoFactory','WhatsNewFactory',function($scope,$location,message,Locations,NoticesFactory,NoticesDetails,Item,DMVGoFactory,WhatsNewFactory){
 			$scope.isloading= true;
 			$scope.activePath= "/Locations";
 			sessionStorage.removeItem("mapDrawn")
@@ -179,8 +175,22 @@ angular.module("dmvPortal", ['ngResource','ngSanitize','ngCookies','ui.map','ui.
 					$scope.activePath= "/Moving";
 				}
 				if(x === "new"){
-					console.log("new")
-				}
+					function successcbb(data){
+						$scope.isloading = false;
+						if (data.length === 0){
+							$scope.activePath= "/WhatsNew"
+							$scope.noData = true;
+						}else{
+							$scope.activePath= "/WhatsNew"
+							$scope.whatsNew = data;
+						}
+					}
+					function errorcbb(err){
+						$scope.isloading = false;
+						$scope.isError = true;
+					}
+					WhatsNewFactory.query({},successcbb,errorcbb);
+					}
 				}
 			}
 			$scope.$on('detailsClicked', function(event, details) {
@@ -200,6 +210,26 @@ angular.module("dmvPortal", ['ngResource','ngSanitize','ngCookies','ui.map','ui.
 					}
 				}
 			});
+}])
+
+
+.controller('NewsController', ['$scope','NewsFactory','$location', function($scope, NewsFactory,$location){
+			NewsFactory.query({},successcb,errorcb);
+			function successcb(data){
+				if(data.length === 0){
+					$scope.noNews= true;
+					$scope.isloading= false;
+				}else{
+					$scope.isloading= false;
+					$scope.News= data;
+				}
+			}
+			function errorcb(err){
+			}
+			$scope.next= function(x){
+				var newUrl= '/general/news/pressReleases/#/News_Article:' + x
+				window.location.href = newUrl;
+			}
 }])
 
 .controller('OnlineServicesController', function($scope){
@@ -232,75 +262,6 @@ angular.module("dmvPortal", ['ngResource','ngSanitize','ngCookies','ui.map','ui.
         };
     }
 ])
-
-
-
-
-
-
-.controller('CanvasController', function(){
-var img = new Image();
-
-// User Variables - customize these to change the image being scrolled, its
-// direction, and the speed.
-
-			img.src = '/img/VAForLOvers.jpg';
-			var CanvasXSize = 800;
-			var CanvasYSize = 200;
-			var speed = 60; //lower is faster
-			var scale = 1.05;
-			var y = -4.5; //vertical offset
-
-// Main program
-
-			var dx = 0.75;
-			var imgW;
-			var imgH;
-			var x = 0;
-			var clearX;
-			var clearY;
-			var ctx;
-
-			img.onload = function() {
-				imgW = img.width*scale;
-				imgH = img.height*scale;
-				if (imgW > CanvasXSize) { x = CanvasXSize-imgW; } // image larger than canvas
-				if (imgW > CanvasXSize) { clearX = imgW; } // image larger than canvas
-				else { clearX = CanvasXSize; }
-				if (imgH > CanvasYSize) { clearY = imgH; } // image larger than canvas
-				else { clearY = CanvasYSize; }
-				//Get Canvas Element
-				ctx = document.getElementById('canvas').getContext('2d');
-				//Set Refresh Rate
-				return setInterval(draw, speed);
-			}
-
-			function draw() {
-				//Clear Canvas
-				ctx.clearRect(0,0,clearX,clearY);
-				//If image is <= Canvas Size
-				if (imgW <= CanvasXSize) {
-					//reset, start from beginning
-					if (x > (CanvasXSize)) { x = 0; }
-					//draw aditional image
-					if (x > (CanvasXSize-imgW)) { ctx.drawImage(img,x-CanvasXSize+1,y,imgW,imgH); }
-				}
-				//If image is > Canvas Size
-				else {
-					//reset, start from beginning
-					if (x > (CanvasXSize)) { x = CanvasXSize-imgW; }
-					//draw aditional image
-					if (x > (CanvasXSize-imgW)) { ctx.drawImage(img,x-imgW+1,y,imgW,imgH); }
-				}
-				//draw image
-				ctx.drawImage(img,x,y,imgW,imgH);
-				//amount to move
-				x += dx;
-			}
-		})
-
-
-
 
 
 
