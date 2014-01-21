@@ -73,7 +73,8 @@ div.mobi{
 					background:$focusYellow;
 				}
 				&.active{
-					@include orangeToLight;
+					background:#777777;
+					color:#ffffff;
 				}
 				a{
 					color:$blueDarker;

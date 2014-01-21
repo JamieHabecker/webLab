@@ -1,9 +1,6 @@
 div.mainNavHold{
 	margin-top:0;
 }
-
-
-
 	div.mainNav{
 		display:none;
 	}
@@ -26,13 +23,20 @@ div.mainNavHold{
 						display:inline-block;
 						line-height: 2.5em;
 						cursor:pointer;
+						outline:none;
+						border:none;
 			a{
 				padding:0 0.5em;
 				border:none;
 				color:white;
+				outline:none;
+				border:none;
 
 			}
 			&:hover{
+				@include darkBlueToLight;
+			}
+			&.active{
 				@include darkBlueToLight;
 			}
 		}

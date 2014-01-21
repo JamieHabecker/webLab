@@ -244,7 +244,7 @@ var img = new Image();
 // User Variables - customize these to change the image being scrolled, its
 // direction, and the speed.
 
-			img.src = '/img/canvas.jpg';
+			img.src = '/img/VAForLOvers.jpg';
 			var CanvasXSize = 800;
 			var CanvasYSize = 200;
 			var speed = 60; //lower is faster

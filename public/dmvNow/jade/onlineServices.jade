@@ -66,6 +66,16 @@ article.g17.dmvHome
 		h3 Check out our plates!
 		h2(style='position:absolute;') <a href=''>Hello!</a>
 		canvas(data-ng-controller="CanvasController",style='float:left;',id="canvas",width="1000px",height="200")
+	article.g8.first.comp7
+		h3 Personalize It
+			form(style="width:50%;margin-left:2em;display:inline-block;")
+				input(data-ng-model="te",maxlength="7",style="text-align:center;height:1.5em;",placeholder="Type Here")
+		h2(style='background:url("/img/VAForLovers.jpg")no-repeat;background-position:center;height:175px;width:330px;margin:0 auto;text-align:center;')
+		div(style="width:282px;color:#253c84;margin:0 auto;text-align:center;margin-top:-130px;")
+			span(class="plateText") {{te}}
+			span(data-ng-show="!te", class="plateText") SAMPLE
+		div
+			button Check for availability
 	div(scroller) Return to Top
 
 

@@ -51,7 +51,7 @@ article.g17.dmvHome
 				li(data-ng-class="{ active: activePath=='/Moving' }"): a(href="",data-ng-click="tab('moving')") Moving?
 				li(class="m",data-ng-class="{ active: activePath=='/WhatsNew' }"): a(href="",data-ng-click="tab('new')") What's New
 		div.content
-			h2.loaderText(data-ng-show="isloading") Loading...
+			h2.loaderText(data-ng-show="isloading && !isError") Loading...
 			h2.error(data-ng-show="isError") Sorry, this information is currently unavailable
 
 			div.selectHolder(data-ng-show="activePath=='/Locations' && !isloading && !isError",style="position:absolute;z-index:3000;overflow:auto;")

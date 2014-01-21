@@ -50,8 +50,6 @@ angular.module("globalFactories", [])
 			},300, function(){
 				done()
 			});
-
-
 		},
 
 		leave : function(element, done) {

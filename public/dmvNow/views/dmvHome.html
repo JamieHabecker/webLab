@@ -62,7 +62,7 @@
       </ul>
     </div>
     <div class="content">
-      <h2 data-ng-show="isloading" class="loaderText">Loading...</h2>
+      <h2 data-ng-show="isloading &amp;&amp; !isError" class="loaderText">Loading...</h2>
       <h2 data-ng-show="isError" class="error">Sorry, this information is currently unavailable</h2>
       <div data-ng-show="activePath=='/Locations' &amp;&amp; !isloading &amp;&amp; !isError" style="position:absolute;z-index:3000;overflow:auto;" class="selectHolder">
         <div class="formField mapSelect">

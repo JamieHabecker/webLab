@@ -8,8 +8,7 @@ article.dmvHome{
 	}
 	.comp1 div, .comp2 div, .comp3 div, .comp4 div, .comp5 div{
 			background:url("/img/homeSprite.jpg")no-repeat;
-			height:130px;
-			width:100%;
+			height:300px;
 			background-position:center;
 		}
 	article.comp1 div{
@@ -17,19 +16,15 @@ article.dmvHome{
 	}
 	article.comp2 div{
 		background-position:center -162px;
-		height:300px;
 		margin-top:-15px;
 	}
 	article.comp3 div{
 		background-position:center -322px;
-		height:300px;
 	}
 	article.comp4 div{
 		background-position:center -497px;
-		height:300px;
 	}
 	article.comp5 div{
 		background-position:center -671px;
-		height:300px;
 	}
 }

@@ -33414,33 +33414,48 @@ angular.module('ngResource', ['ng']).
 			};
 })
 
-.directive('mobiheader', function(){
+.directive('mobiheader', function($location){
 			return{
 				restrict: 'EA',
 				template:"<header class='dmvMobiHeader'>" +
-						"<ul><li></li><li class='search' data-ng-click='isSearch=!isSearch; isHidden=true'></li><li class='menu' data-ng-click='isHidden=!isHidden; isSearch=true'></li></ul></header>"+
+						"<ul><li></li><li class='search' data-ng-click='isSearch=!isSearch;isHidden=true;check(\"s\")'></li><li class='menu' data-ng-click='isHidden=!isHidden; isSearch=true; check(\"m\")'></li></ul></header>"+
 						"<div class='mobiSpace'></div>"+
 						"<div class='mobi mobiSearch' data-ng-controller='SearchController' data-ng-hide='isSearch'><div><ul><li><input type='text' name='search' data-ng-model='searchIn' placeholder='Search DMV'/></li><li><a class='bluBtn' data-ng-click='search()'>Search</a></li></ul></div></div>"+
-						"<div class='mobi' data-ng-hide='isHidden' data-ng-controller='MainNavigationController'><div><ul><li data-ng-repeat='links in mobiData'><a data-ng-href='{{links.link}}'>{{links.x}}</a></li></ul></div></div>",
+						"<div class='mobi' data-ng-hide='isHidden' data-ng-controller='MainNavigationController'><div><ul class='theLinks'><li data-ng-repeat='links in mobiData' class='{{$index+1}} {{links.class}}'><a data-ng-click='nextMobi($index+1, links.link)' data-ng-href=''>{{links.x}}</a></li></ul></div></div>",
 				link: function(scope,ele,attr){
-					scope.isHidden= true;
-					scope.isSearch= true;
-					scope.$on('$routeChangeStart', function() {
-
 						scope.isHidden= true;
 						scope.isSearch= true;
-					});
-					scope.$on('$routeChangeSuccess', function() {
-						//$('section.site').show();
-						//scope.isHidden= true;
-						//scope.isSearch= true;
-					});
+					scope.check= function(x){
+						var a= $(document).scrollTop();
+						if(a !== 0){
+							if(x === 's'){
+								scope.isSearch= false;
+								scope.isHidden= true;
+							}else{
+								scope.isHidden= false;
+								scope.isSearch= true;
+							}
+							$('html,body').animate({
+								scrollTop: $("body").offset().top
+							});
+						}
+
+					}
+					scope.nextMobi= function(x,y){
+						console.log(y)
+						$('li').removeClass('active');
+						$('li.' + x).addClass('active');
+						$location.path(y)
+					}
+					scope.$on('$locationChangeSuccess', function(){
+						scope.isHidden= true;
+						scope.isSearch= true;
+					})
 				}
 			}
 })
 
-
-.directive('mainheader', function(){
+.directive('mainheader', function($location){
 			return{
 				restrict: 'EA',
 				template:"<header class='dmvHeader g16'><div class='logo first'><a href='/'><img src='/img/dmvLogo.png' alt='DMV HOME' /></a></div>" +
@@ -33451,7 +33466,16 @@ angular.module('ngResource', ['ng']).
 						"<div class='mainNavHold' data-ng-controller='MainNavigationController'><div class='mobMainNav mob'>" +
 						"<select data-ng-model='color' data-ng-options='c.x for c in menuLinks'>" +
 						"<option value=''>Choose a service area</option></select></div><div class='mainNav'>" +
-						'<ul class="mainNavLinks" rest><li ng-repeat="links in menuLinks.slice(0,8)"><a data-ng-href="{{links.link}}">{{links.x}}</a></li></ul></div></div></header>'
+						'<ul class="mainNavLinks theLinks" rest><li class="{{$index+1}} {{links.class}}" data-ng-repeat="links in menuLinks.slice(0,8)"><a data-ng-click="next($index+1,links.link)" data-ng-href="">{{links.x}}</a></li></ul></div></div></header>',
+				link: function(scope,ele,attr){
+				scope.next= function(x,y){
+					$('li').removeClass('active')
+					$('li.' + x).addClass('active')
+						$('li').removeClass('active');
+						$('li.' + x).addClass('active');
+						$location.path(y)
+					}
+				}
 			}
 		})
 
@@ -34019,8 +34043,6 @@ angular.module('ngResource', ['ng']).
 			},300, function(){
 				done()
 			});
-
-
 		},
 
 		leave : function(element, done) {
