@@ -33497,17 +33497,11 @@ angular.module('ngResource', ['ng']).
 .directive('btn', function(){
 			return{
 			restrict: 'A',
-			template: '<button data-ng-disabled="form.$invalid || dis !== undefined" data-ng-show="!isloading" data-ng-click="next()">{{action}}</button>',
+			template: '<button data-ng-disabled="form.$invalid || dis === \'true\'" data-ng-show="!isloading" data-ng-click="next()">{{action}}</button>',
 			replace: true,
 			link: function(scope,ele,attr){
 				scope.action= attr.act;
 				scope.dis= attr.dis;
-				if(attr.formname){
-					scope.forname= attr.formname;
-				}else{
-					//scope.formName= "form"
-					//scope.formName= "form.$invalid || dis === \'true\'"
-				}
 			}
 			}
 	})
