@@ -39,6 +39,9 @@ angular.module("globalControllers", ['ngRoute'])
 .controller('MainNavigationController',['$scope','$location','MenuFactory',function($scope, $location, MenuFactory){
 			var a = angular.element('.mainNav');
 			$scope.menu = "Hide Menu";
+			$scope.$on('$locationChangeSuccess', function(){
+				$scope.test= "";
+			})
 			MenuFactory.menu({},{}, successcb, errorcb);
 			function successcb(data){
 				var a = data.slice(0,3)
@@ -48,17 +51,6 @@ angular.module("globalControllers", ['ngRoute'])
 			}
 			function errorcb(err){
 				console.log(err)
-			}
-			$scope.navToggle = function(){
-				if($scope.active === "closed"){
-					$scope.active = "";
-					$scope.menu = "Hide Menu";
-					$(a).slideDown('fast');
-				}else{
-					$scope.active = "closed";
-					$scope.menu = "Show Menu";
-					$(a).slideUp('fast');
-				}
 			}
 		}])
 

@@ -1,0 +1,52 @@
+ul.slides {
+	div.mopedSlide{
+		height: 22.3em;
+		overflow: hidden;
+		background: #FFFff0;
+		border: 1px solid #eee\9;
+		h2{
+			padding-top: 0.3em;
+			padding-bottom: 0;
+			display: block;
+			color: #E54327;
+			font-size: 2em;
+			margin: 0;
+			text-shadow: -1px 1px 1px #eee;
+			font-size: 2em\9 !important;
+			width: 90%;
+			margin-bottom: 5px;
+		}
+		p{
+			border-top: 2px solid #1a568c;
+			margin: 0;
+			width: 90%;
+			color: #1a568c;
+		}
+		span{
+			display: block;
+			margin-top: 0 !important;
+			margin-left: 1em;
+			padding: 0.3em !important;
+		}
+		a.more{
+			clear: both;
+			float: right;
+			margin: 1em 2em 0 0;
+			color:#ffffff;
+			text-decoration: none;
+			@include orgBtn;
+			@include blueToLight;
+		}
+		div{
+			background: url('/img/mopedBlu.jpg') no-repeat;
+			height: 24em;
+			width: 100%;div{
+			background: none;
+			float: right;
+			width: 59%;
+		}
+
+		}
+
+	}
+}

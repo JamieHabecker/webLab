@@ -42,7 +42,8 @@ angular.module("dmvPortal", ['ngResource','ngSanitize','ngCookies','ui.map','ui.
 			sessionStorage.removeItem("mapDrawn")
 			message.Locations($scope,Locations,Item);
 			$scope.tab= function(x){
-			if($scope.isloading){
+				console.log($scope.activePath)
+			if($scope.isloading ){
 				return;
 			}else{
 				$scope.isloading= true;
@@ -89,8 +90,8 @@ angular.module("dmvPortal", ['ngResource','ngSanitize','ngCookies','ui.map','ui.
 								}
 							}
 						}
-					}
-					var errorcb= function(err){
+				}
+				var errorcb= function(err){
 						$scope.isloading= false;
 						$scope.isError= true;
 						console.log(err)
@@ -98,7 +99,7 @@ angular.module("dmvPortal", ['ngResource','ngSanitize','ngCookies','ui.map','ui.
 					$scope.activePath= "/Notices";
 					NoticesFactory.query({},successcb, errorcb);
 				}
-				if(x === "Locations" && $scope.activePath !== "/Locations"){
+				if(x === "Locations"){
 					$scope.activePath= "/Locations";
 					message.Locations($scope,Locations,Item);
 				}
@@ -233,6 +234,8 @@ angular.module("dmvPortal", ['ngResource','ngSanitize','ngCookies','ui.map','ui.
 }])
 
 .controller('OnlineServicesController', function($scope){
+			$scope.test= "onlineServies active";
+			console.log($scope.activePath)
 
 		})
 

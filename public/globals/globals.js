@@ -33196,6 +33196,9 @@ angular.module('ngResource', ['ng']).
 .controller('MainNavigationController',['$scope','$location','MenuFactory',function($scope, $location, MenuFactory){
 			var a = angular.element('.mainNav');
 			$scope.menu = "Hide Menu";
+			$scope.$on('$locationChangeSuccess', function(){
+				$scope.test= "";
+			})
 			MenuFactory.menu({},{}, successcb, errorcb);
 			function successcb(data){
 				var a = data.slice(0,3)
@@ -33205,17 +33208,6 @@ angular.module('ngResource', ['ng']).
 			}
 			function errorcb(err){
 				console.log(err)
-			}
-			$scope.navToggle = function(){
-				if($scope.active === "closed"){
-					$scope.active = "";
-					$scope.menu = "Hide Menu";
-					$(a).slideDown('fast');
-				}else{
-					$scope.active = "closed";
-					$scope.menu = "Show Menu";
-					$(a).slideUp('fast');
-				}
 			}
 		}])
 
@@ -33466,15 +33458,28 @@ angular.module('ngResource', ['ng']).
 						"<div class='mainNavHold' data-ng-controller='MainNavigationController'><div class='mobMainNav mob'>" +
 						"<select data-ng-model='color' data-ng-options='c.x for c in menuLinks'>" +
 						"<option value=''>Choose a service area</option></select></div><div class='mainNav'>" +
-						'<ul class="mainNavLinks theLinks" rest><li class="{{$index+1}} {{links.class}}" data-ng-repeat="links in menuLinks.slice(0,8)"><a data-ng-click="next($index+1,links.link)" data-ng-href="">{{links.x}}</a></li></ul></div></div></header>',
+						'<ul class="mainNavLinks theLinks" rest><li class="{{links.class}}" data-ng-repeat="links in menuLinks.slice(0,8)"><a data-ng-click="next($index+1,links.link)">{{links.x}}</a></li></ul></div></div></header>',
 				link: function(scope,ele,attr){
-				scope.next= function(x,y){
+					scope.next= function(x,y){
+						$location.path(y)
+					}
+					scope.$on('$routeChangeSuccess', function(){
+						var a= window.location.hash;
+						console.log(a)
+						if($("ul.theLinks li" ).hasClass(a)){
+							$('ul.theLinks li.').addClass('active');
+						}
+					})
+					/*
+					scope.next= function(x,y){
 					$('li').removeClass('active')
 					$('li.' + x).addClass('active')
 						$('li').removeClass('active');
 						$('li.' + x).addClass('active');
 						$location.path(y)
-					}
+					}*/
+
+
 				}
 			}
 		})
@@ -33492,15 +33497,16 @@ angular.module('ngResource', ['ng']).
 .directive('btn', function(){
 			return{
 			restrict: 'A',
-			template: '<button data-ng-disabled="{{formName}}.$invalid || dis === \'true\'" data-ng-show="!isloading" data-ng-click="next()">{{action}}</button>',
+			template: '<button data-ng-disabled="form.$invalid || dis !== undefined" data-ng-show="!isloading" data-ng-click="next()">{{action}}</button>',
 			replace: true,
 			link: function(scope,ele,attr){
 				scope.action= attr.act;
 				scope.dis= attr.dis;
 				if(attr.formname){
-					scope.formName= attr.formname;
+					scope.forname= attr.formname;
 				}else{
-					scope.formName= "form"
+					//scope.formName= "form"
+					//scope.formName= "form.$invalid || dis === \'true\'"
 				}
 			}
 			}
@@ -33977,7 +33983,9 @@ angular.module('ngResource', ['ng']).
 								switch(errorResponse.status){
 									case 404:
 									sessionStorage.err= errorResponse.status;
-										$timeout(redirectTo.Error, 1000);
+										break;
+									case 503:
+										sessionStorage.err= errorResponse.status;
 										break;
 									case 500:
 										sessionStorage.err= errorResponse.status;
@@ -34018,7 +34026,7 @@ angular.module('ngResource', ['ng']).
 			});
 }])
 
-
+/*
 .animation('.an-enter', function() {
 			return {
 				setup : function(myElement) {
@@ -34034,6 +34042,7 @@ angular.module('ngResource', ['ng']).
 				}
 			}
 })
+*/
 
 .animation('.siteAnime', function() {
 	return {
@@ -34047,28 +34056,13 @@ angular.module('ngResource', ['ng']).
 
 		leave : function(element, done) {
 			jQuery(element).animate({
-				opacity:0
+				opacity:0.4
 			},300, function(){
 				done();
 			});
 		}
 	};
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -34086,6 +34080,7 @@ angular.module('ngResource', ['ng']).
 		}
 	};
 })
+
 
 
 

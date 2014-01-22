@@ -64,15 +64,17 @@
     <div class="content">
       <h2 data-ng-show="isloading &amp;&amp; !isError" class="loaderText">Loading...</h2>
       <h2 data-ng-show="isError" class="error">Sorry, this information is currently unavailable</h2>
-      <div data-ng-show="activePath=='/Locations' &amp;&amp; !isloading &amp;&amp; !isError" style="position:absolute;z-index:3000;overflow:auto;" class="selectHolder">
-        <div class="formField mapSelect">
-          <select data-ng-model="name" data-ng-options="c.name for c in colors" data-ng-change="update()">
-            <option value="">select location</option>
-          </select>
+      <div data-ng-hide="isloading || isError || activePath !== '/Locations'">
+        <div data-ng-show="activePath=='/Locations' &amp;&amp; !isloading &amp;&amp; !isError" style="position:absolute;z-index:3000;overflow:auto;" class="selectHolder">
+          <div class="formField mapSelect">
+            <select data-ng-model="name" data-ng-options="c.name for c in colors" data-ng-change="update()">
+              <option value="">select location</option>
+            </select>
+          </div>
         </div>
-      </div>
-      <div data-ng-show="activePath=='/Locations' &amp;&amp; !isloading &amp;&amp; !isError" style="style=width:500px;height:500px;margin:3px;">
-        <div id="map_canvas" ui-map="myMap" ui-options="mapOptions"></div>
+        <div style="style=width:500px;height:0px;margin:3px;">
+          <div id="map_canvas" ui-map="myMap" ui-options="mapOptions"></div>
+        </div>
       </div>
       <div data-ng-show="activePath=='/Details' &amp;&amp; !isloading" data-ng-model="d" class="details"><img src="{{srrc}}"/>
         <ul>
@@ -145,8 +147,8 @@
   <article class="g8 sec slider">
     <div class="flexslider">
       <ul class="slides">
+        <li moped="moped"></li>
         <li diesel="diesel"></li>
-        <li d="d"></li>
       </ul>
     </div>
   </article>

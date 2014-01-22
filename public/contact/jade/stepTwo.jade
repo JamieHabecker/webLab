@@ -8,7 +8,7 @@ article.g17
 				.formField.plate.sing(plate,req, data-ng-show="vehicles")
 				.formField.details.sing(detail, req)
 				.continue
-					div(btn,act="Continue", formname="form2")
+					div(btn,act="Continue", data-ng-disabled="form2.$invalid ||")
 				portalcancel
 		form(novalidate, name="form", data-ng-show="!vehicles")
 				.formField.details.sing(detail, req)

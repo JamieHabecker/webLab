@@ -15,11 +15,12 @@ angular.module("sliders", [])
 				}
 			}
 })
-		
-.directive('d', function($timeout){
+
+
+.directive('moped', function($timeout){
 			return {
 				restrict: 'EA',
-				template: '<li data-ng-include="\'/views/sliders/dieselTax.html\'"></li>',
+				template: '<li data-ng-include="\'/views/sliders/moped.html\'"></li>',
 				link: function(scope,ele,attr){
 				}
 			}

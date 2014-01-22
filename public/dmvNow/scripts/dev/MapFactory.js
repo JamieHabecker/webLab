@@ -20,8 +20,6 @@ angular.module("MapFactory", [])
 				'Locations': function(scope,Locations,$routeParams,$cookieStore,Item,fun){
 					var latLng;
 					scope.notMobile = "notMobile"
-
-
 					Locations.query({},successcb,errorcb);
 					function successcb(data){
 						scope.isloading= false;
@@ -55,51 +53,59 @@ angular.module("MapFactory", [])
 							});
 							scope.time = scope.name.wait;
 						}
-						if(sessionStorage.mapDrawn){
+
+
+
+						if(sessionStorage.getItem("Location") === "true"){
+							var latlng = new google.maps.LatLng(sessionStorage.userLat, sessionStorage.userLng);
+							setMap(latlng);
+						}else if(navigator.geolocation && sessionStorage.getItem("Location") !== "true"){
+							function positionCallback(position){
+								var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+								sessionStorage.setItem("Location","true");
+								sessionStorage.setItem("userLat",position.coords.latitude);
+								sessionStorage.setItem("userLng",position.coords.longitude);
+								setMap(latlng)
+							};
+							function errorCallback() {
+								var latLng = new google.maps.LatLng(38.9177816, -78.1881693);
+								setMap(latlng);
+							};
+							navigator.geolocation.getCurrentPosition(positionCallback,errorCallback,{maximumAge:5000});
 						}else{
-							drawMap(scope, fun);
+							var latLng = new google.maps.LatLng(38.9177816, -78.1881693);
+							setMap(latlng);
 						}
+
+
+
+
+						function setMap(latlng){
+							console.log("Setting Map")
+							scope.myMap.setOptions({
+								center : latlng,
+								zoom : 15
+							});
+							drawMap(scope,fun, latlng);
+						}
+
+
+
 					}
 					function errorcb(err){
 						scope.isError= true;
+						scope.isloading= false;
+						return;
 					}
-					if(sessionStorage.getItem("Location") === "true"){
-						var lat = sessionStorage.getItem("userLat");
-						var lng= sessionStorage.getItem("userLng");
-						latLng = new google.maps.LatLng(lat,lng);
-					}else if(navigator.geolocation && sessionStorage.getItem("Location") !== "true"){
-						sessionStorage.removeItem("Location");
-						navigator.geolocation.getCurrentPosition(positionCallback,errorCallback,{maximumAge:5000});
-						console.log("getting location")
-					}else{
-						latLng = new google.maps.LatLng(38.9177816, -78.1881693)
-						console.log("no location")
-					}
-					function positionCallback(position){
-						latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-						scope.myMap.setCenter(latLng);
-						sessionStorage.setItem("Location","true");
-						sessionStorage.setItem("userLat",position.coords.latitude);
-						sessionStorage.setItem("userLng",position.coords.longitude);
 
-					};
-					function errorCallback() {
-						latLng = new google.maps.LatLng(38.9177816, -78.1881693)
-					};
-					scope.mapOptions = {
-						center:  latLng,
-						zoom : 10,
-						mapTypeId : google.maps.MapTypeId.ROADMAP,
-						disableDefaultUI : true,
-						zoomControl : true,
-						zoomControlOptions : {
-						style : google.maps.ZoomControlStyle.SMALL
+
+
+					function drawMap(scope, fun,latlng){
+						if(sessionStorage.mapDrawn){
+							return;
+						}else{
+
 						}
-
-					};
-
-					function drawMap(scope, fun){
-						sessionStorage.mapDrawn= true;
 						var markers = [];
 						var test= function(x){
 							alert("clicked " + x)
@@ -143,7 +149,6 @@ angular.module("MapFactory", [])
 								pane : "floatPane",
 								enableEventPropagation : false,
 							};
-
 							var ib = new InfoBox(myOptions);
 							google.maps.event.addDomListener(boxText,'click',function(){
 								scope.$broadcast("detailsClicked", value.ID)
@@ -169,9 +174,18 @@ angular.module("MapFactory", [])
 							var currentZoom = scope.myMap.getZoom();
 							scope.myMap.setZoom(currentZoom + 2)
 						});
-						//google.maps.event.addListener(scope.myMap, 'resize', function() {})
+						google.maps.event.addListener(scope.myMap, 'resize', function(){
+							if(!sessionStorage.mapDrawn){
+							scope.myMap.setOptions({
+								center : latlng,
+								zoom : 15
+							});
+							sessionStorage.mapDrawn= true;
+							}
+
+						})
 						google.maps.event.addListener(scope.myMap, 'tilesloaded', function() {
-							google.maps.event.trigger(scope.myMap, 'resize');
+								google.maps.event.trigger(scope.myMap, 'resize');
 						});
 					}
 

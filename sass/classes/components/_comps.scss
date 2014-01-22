@@ -16,12 +16,16 @@ article{
 					text-decoration:none;
 					display:block;
 					padding:0.2em;
+					border-bottom:1px dotted #eeeeee;
 					&.orgBtn{
 						width:3em;
 						float:right;
 						margin-bottom:6px;
 						font-size:0.875em;
 						padding-left:10px;
+					}
+					&:hover{
+						background:#eeeeee;
 					}
 				}
 			}

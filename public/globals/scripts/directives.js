@@ -110,15 +110,28 @@ angular.module("globals", ['globalConfig','ngAnimate','globalFactories', 'global
 						"<div class='mainNavHold' data-ng-controller='MainNavigationController'><div class='mobMainNav mob'>" +
 						"<select data-ng-model='color' data-ng-options='c.x for c in menuLinks'>" +
 						"<option value=''>Choose a service area</option></select></div><div class='mainNav'>" +
-						'<ul class="mainNavLinks theLinks" rest><li class="{{$index+1}} {{links.class}}" data-ng-repeat="links in menuLinks.slice(0,8)"><a data-ng-click="next($index+1,links.link)" data-ng-href="">{{links.x}}</a></li></ul></div></div></header>',
+						'<ul class="mainNavLinks theLinks" rest><li class="{{links.class}}" data-ng-repeat="links in menuLinks.slice(0,8)"><a data-ng-click="next($index+1,links.link)">{{links.x}}</a></li></ul></div></div></header>',
 				link: function(scope,ele,attr){
-				scope.next= function(x,y){
+					scope.next= function(x,y){
+						$location.path(y)
+					}
+					scope.$on('$routeChangeSuccess', function(){
+						var a= window.location.hash;
+						console.log(a)
+						if($("ul.theLinks li" ).hasClass(a)){
+							$('ul.theLinks li.').addClass('active');
+						}
+					})
+					/*
+					scope.next= function(x,y){
 					$('li').removeClass('active')
 					$('li.' + x).addClass('active')
 						$('li').removeClass('active');
 						$('li.' + x).addClass('active');
 						$location.path(y)
-					}
+					}*/
+
+
 				}
 			}
 		})
@@ -136,15 +149,16 @@ angular.module("globals", ['globalConfig','ngAnimate','globalFactories', 'global
 .directive('btn', function(){
 			return{
 			restrict: 'A',
-			template: '<button data-ng-disabled="{{formName}}.$invalid || dis === \'true\'" data-ng-show="!isloading" data-ng-click="next()">{{action}}</button>',
+			template: '<button data-ng-disabled="form.$invalid || dis !== undefined" data-ng-show="!isloading" data-ng-click="next()">{{action}}</button>',
 			replace: true,
 			link: function(scope,ele,attr){
 				scope.action= attr.act;
 				scope.dis= attr.dis;
 				if(attr.formname){
-					scope.formName= attr.formname;
+					scope.forname= attr.formname;
 				}else{
-					scope.formName= "form"
+					//scope.formName= "form"
+					//scope.formName= "form.$invalid || dis === \'true\'"
 				}
 			}
 			}

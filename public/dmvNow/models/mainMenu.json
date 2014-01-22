@@ -1,5 +1,5 @@
 [
-	{"x" : "Home", "link" : "/Home", "class" : "active"},
+	{"x" : "Home", "link" : "/Home", "class" : "Home"},
 	{"x" : "Online Services", "link" : "/OnlineServices", "class" : "OnlineServices"},
 	{"x" : "Drivers / ID Services", "link" : "/Drivers/"},
 	{"x" : "Vehicles", "link" : "/vehicles/"},

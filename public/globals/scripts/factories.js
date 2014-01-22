@@ -25,7 +25,7 @@ angular.module("globalFactories", [])
 			});
 }])
 
-
+/*
 .animation('.an-enter', function() {
 			return {
 				setup : function(myElement) {
@@ -41,6 +41,7 @@ angular.module("globalFactories", [])
 				}
 			}
 })
+*/
 
 .animation('.siteAnime', function() {
 	return {
@@ -54,28 +55,13 @@ angular.module("globalFactories", [])
 
 		leave : function(element, done) {
 			jQuery(element).animate({
-				opacity:0
+				opacity:0.4
 			},300, function(){
 				done();
 			});
 		}
 	};
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -93,6 +79,7 @@ angular.module("globalFactories", [])
 		}
 	};
 })
+
 
 
 

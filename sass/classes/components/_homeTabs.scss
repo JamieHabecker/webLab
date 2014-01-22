@@ -46,6 +46,14 @@ article.homeTabs{
 				height:1.5em;
 			}
 		}
+		div.noMap{
+			visibility:hidden;
+			//height:0;
+		}
+		div.noMap{
+			visibility:visible;
+			//height:auto;
+		}
 		div#map_canvas{
 			height:275px;
 			margin:3px;

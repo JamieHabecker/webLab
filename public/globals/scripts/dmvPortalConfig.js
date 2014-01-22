@@ -30,7 +30,9 @@ angular.module("globalConfig", [])
 								switch(errorResponse.status){
 									case 404:
 									sessionStorage.err= errorResponse.status;
-										$timeout(redirectTo.Error, 1000);
+										break;
+									case 503:
+										sessionStorage.err= errorResponse.status;
 										break;
 									case 500:
 										sessionStorage.err= errorResponse.status;

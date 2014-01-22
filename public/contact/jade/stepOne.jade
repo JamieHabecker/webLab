@@ -3,12 +3,11 @@ article.g17
 		h3.formTitle Contact Us Step 1 of 3
 		form(novalidate, name="form")
 			.formField.firstName.gen(firstname,req)
-
 			.formField.lastName.sec(lastname,req)
 			.formField.custnumber.gen(custnumber,req)
 			.formField.subject.sec(contactsubj,req)
 			.formField.email.gen(email,req)
 			.formField.phone.sec(phone)
 			.continue
-				div(btn,act="Continue")
+				div(btn,act="Continue", formname="test")
 			portalcancel
