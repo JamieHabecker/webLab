@@ -34036,7 +34036,7 @@ angular.module('ngResource', ['ng']).
 	return {
 		enter : function(element, done) {
 			jQuery(element).animate({
-				opacity:1,
+				opacity:1
 			},300,function(){
 				done();
 			});
