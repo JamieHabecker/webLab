@@ -1,4 +1,33 @@
-
-<div data-ng-view="data-ng-view" class="content g16 siteAnime">
-  <h2 style="text-align:center" class="loaderText">Virginia Department of Motor Vehicles</h2>
-</div>
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="WebLab">
+    <title>WebLab</title>
+    <link rel="stylesheet" href="css/main.css">
+    <script src="globals/shims/mod.min.js"></script>
+    <!--[if lt IE 9]>
+    <script src="scripts/shims/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body id="ng-app" data-ng-app="webLab" class="webLab">
+    <!--[if lt IE 8]><p>You are using an <strong>outdated browser</strong>.
+Please <a href="https://browsehappy.com">upgrade your browser</a> or
+<a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome</a> to improve your experience.</p>
+    <![endif]-->
+    <section class="site">
+      <weblabheader></weblabheader>
+      <div data-ng-view class="content g16 siteAnime">
+        <h2 style="text-align:center" class="loaderText">Virginia Department of Motor Vehicles</h2>
+      </div>
+      <footer class="g16"><small>DMV WebLab&#169;  2013</small></footer>
+    </section>
+    <script src="/globals/globals.js"></script><!-- build:js scripts/contactUs.min.js -->
+    <script src="weblab/dev/controllers.js"></script>
+    <script src="weblab/dev/factories.js"></script>
+    <script src="weblab/dev/directives.js"></script>
+    <script src="weblab/dev/dmvPortalConfig.js"></script><!-- endbuild -->
+  </body>
+</html>
