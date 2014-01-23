@@ -299,24 +299,6 @@ angular.module("webLab", ['ngResource','directives','dmvPortalConfig','globals',
 
 
 
-
-
-.animation('an-enter', function() {
-        return {
-            setup : function(myElement) {
-                myElement.css({ 'opacity': 0.3 });
-                return {}; //if you want to share some dat between the set and start return it it can be anything
-            },
-            start : function(myElement, done, data) {
-                myElement.animate({
-                    'opacity' : 1
-                }, 300, function(){
-                    done()
-                });
-            }
-        }
-        })
-
 //var limit = 1024 * 1024 * 5; // 5 MB
 //var remSpace = limit - unescape(encodeURIComponent(JSON.stringify(sessionStorage))).length;
 //console.log(remSpace)
