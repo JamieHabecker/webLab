@@ -23,6 +23,8 @@ angular.module("globalControllers", ['ngRoute'])
 	};
 }])
 
+
+
 .controller('ErrorController', ['$scope', function($scope){
 			var err= sessionStorage.err;
 			if(err=== "500"){
