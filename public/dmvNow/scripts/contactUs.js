@@ -27210,19 +27210,15 @@ angular.module('ngResource', ['ng']).
 			});
 }])
 
-
 .factory('Item',['$resource', function($resource) {
 			return $resource("http://dmvnew/apps/dmvnowinterface/DMVNowInterface.aspx?function=locationsDetails")
 }])
-
 
 .factory('message', function() {
 			return{
 				'Locations': function(scope,Locations,$routeParams,$cookieStore,Item,fun){
 					var latLng;
 					scope.notMobile = "notMobile"
-
-
 					Locations.query({},successcb,errorcb);
 					function successcb(data){
 						scope.isloading= false;
@@ -27256,51 +27252,59 @@ angular.module('ngResource', ['ng']).
 							});
 							scope.time = scope.name.wait;
 						}
-						if(sessionStorage.mapDrawn){
+
+
+
+						if(sessionStorage.getItem("Location") === "true"){
+							var latlng = new google.maps.LatLng(sessionStorage.userLat, sessionStorage.userLng);
+							setMap(latlng);
+						}else if(navigator.geolocation && sessionStorage.getItem("Location") !== "true"){
+							function positionCallback(position){
+								var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+								sessionStorage.setItem("Location","true");
+								sessionStorage.setItem("userLat",position.coords.latitude);
+								sessionStorage.setItem("userLng",position.coords.longitude);
+								setMap(latlng)
+							};
+							function errorCallback() {
+								var latLng = new google.maps.LatLng(38.9177816, -78.1881693);
+								setMap(latlng);
+							};
+							navigator.geolocation.getCurrentPosition(positionCallback,errorCallback,{maximumAge:5000});
 						}else{
-							drawMap(scope, fun);
+							var latLng = new google.maps.LatLng(38.9177816, -78.1881693);
+							setMap(latlng);
 						}
+
+
+
+
+						function setMap(latlng){
+							console.log("Setting Map")
+							scope.myMap.setOptions({
+								center : latlng,
+								zoom : 15
+							});
+							drawMap(scope,fun, latlng);
+						}
+
+
+
 					}
 					function errorcb(err){
 						scope.isError= true;
+						scope.isloading= false;
+						return;
 					}
-					if(sessionStorage.getItem("Location") === "true"){
-						var lat = sessionStorage.getItem("userLat");
-						var lng= sessionStorage.getItem("userLng");
-						latLng = new google.maps.LatLng(lat,lng);
-					}else if(navigator.geolocation && sessionStorage.getItem("Location") !== "true"){
-						sessionStorage.removeItem("Location");
-						navigator.geolocation.getCurrentPosition(positionCallback,errorCallback,{maximumAge:5000});
-						console.log("getting location")
-					}else{
-						latLng = new google.maps.LatLng(38.9177816, -78.1881693)
-						console.log("no location")
-					}
-					function positionCallback(position){
-						latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-						scope.myMap.setCenter(latLng);
-						sessionStorage.setItem("Location","true");
-						sessionStorage.setItem("userLat",position.coords.latitude);
-						sessionStorage.setItem("userLng",position.coords.longitude);
 
-					};
-					function errorCallback() {
-						latLng = new google.maps.LatLng(38.9177816, -78.1881693)
-					};
-					scope.mapOptions = {
-						center:  latLng,
-						zoom : 10,
-						mapTypeId : google.maps.MapTypeId.ROADMAP,
-						disableDefaultUI : true,
-						zoomControl : true,
-						zoomControlOptions : {
-						style : google.maps.ZoomControlStyle.SMALL
+
+
+					function drawMap(scope, fun,latlng){
+						if(sessionStorage.mapDrawn){
+							return;
+						}else{
+
 						}
-
-					};
-
-					function drawMap(scope, fun){
-						sessionStorage.mapDrawn= true;
 						var markers = [];
 						var test= function(x){
 							alert("clicked " + x)
@@ -27344,7 +27348,6 @@ angular.module('ngResource', ['ng']).
 								pane : "floatPane",
 								enableEventPropagation : false,
 							};
-
 							var ib = new InfoBox(myOptions);
 							google.maps.event.addDomListener(boxText,'click',function(){
 								scope.$broadcast("detailsClicked", value.ID)
@@ -27370,9 +27373,18 @@ angular.module('ngResource', ['ng']).
 							var currentZoom = scope.myMap.getZoom();
 							scope.myMap.setZoom(currentZoom + 2)
 						});
-						//google.maps.event.addListener(scope.myMap, 'resize', function() {})
+						google.maps.event.addListener(scope.myMap, 'resize', function(){
+							if(!sessionStorage.mapDrawn){
+							scope.myMap.setOptions({
+								center : latlng,
+								zoom : 15
+							});
+							sessionStorage.mapDrawn= true;
+							}
+
+						})
 						google.maps.event.addListener(scope.myMap, 'tilesloaded', function() {
-							google.maps.event.trigger(scope.myMap, 'resize');
+								google.maps.event.trigger(scope.myMap, 'resize');
 						});
 					}
 
@@ -27459,8 +27471,6 @@ angular.module("dmvPortal", ['ngResource','ngSanitize','ngCookies','ui.map','ui.
 		})
 }])
 
-
-
 .controller('TestController', function($scope,$routeParams,$location){
 			var a= $routeParams.name;
 			var b= a.replace(":", "");
@@ -27470,15 +27480,14 @@ angular.module("dmvPortal", ['ngResource','ngSanitize','ngCookies','ui.map','ui.
 			$scope.tile= "Applying for a Driver's License"
 })
 
-
-
-.controller('DMVHomeController',['$scope','$location','message','Locations','NoticesFactory','NoticesDetails','Item','DMVGoFactory', function($scope,$location,message,Locations,NoticesFactory,NoticesDetails,Item,DMVGoFactory){
+.controller('DMVHomeController',['$scope','$location','message','Locations','NoticesFactory','NoticesDetails','Item','DMVGoFactory','WhatsNewFactory',function($scope,$location,message,Locations,NoticesFactory,NoticesDetails,Item,DMVGoFactory,WhatsNewFactory){
 			$scope.isloading= true;
 			$scope.activePath= "/Locations";
 			sessionStorage.removeItem("mapDrawn")
 			message.Locations($scope,Locations,Item);
 			$scope.tab= function(x){
-			if($scope.isloading){
+				console.log($scope.activePath)
+			if($scope.isloading ){
 				return;
 			}else{
 				$scope.isloading= true;
@@ -27525,8 +27534,8 @@ angular.module("dmvPortal", ['ngResource','ngSanitize','ngCookies','ui.map','ui.
 								}
 							}
 						}
-					}
-					var errorcb= function(err){
+				}
+				var errorcb= function(err){
 						$scope.isloading= false;
 						$scope.isError= true;
 						console.log(err)
@@ -27534,7 +27543,7 @@ angular.module("dmvPortal", ['ngResource','ngSanitize','ngCookies','ui.map','ui.
 					$scope.activePath= "/Notices";
 					NoticesFactory.query({},successcb, errorcb);
 				}
-				if(x === "Locations" && $scope.activePath !== "/Locations"){
+				if(x === "Locations"){
 					$scope.activePath= "/Locations";
 					message.Locations($scope,Locations,Item);
 				}
@@ -27611,8 +27620,22 @@ angular.module("dmvPortal", ['ngResource','ngSanitize','ngCookies','ui.map','ui.
 					$scope.activePath= "/Moving";
 				}
 				if(x === "new"){
-					console.log("new")
-				}
+					function successcbb(data){
+						$scope.isloading = false;
+						if (data.length === 0){
+							$scope.activePath= "/WhatsNew"
+							$scope.noData = true;
+						}else{
+							$scope.activePath= "/WhatsNew"
+							$scope.whatsNew = data;
+						}
+					}
+					function errorcbb(err){
+						$scope.isloading = false;
+						$scope.isError = true;
+					}
+					WhatsNewFactory.query({},successcbb,errorcbb);
+					}
 				}
 			}
 			$scope.$on('detailsClicked', function(event, details) {
@@ -27634,7 +27657,29 @@ angular.module("dmvPortal", ['ngResource','ngSanitize','ngCookies','ui.map','ui.
 			});
 }])
 
+
+.controller('NewsController', ['$scope','NewsFactory','$location', function($scope, NewsFactory,$location){
+			NewsFactory.query({},successcb,errorcb);
+			function successcb(data){
+				if(data.length === 0){
+					$scope.noNews= true;
+					$scope.isloading= false;
+				}else{
+					$scope.isloading= false;
+					$scope.News= data;
+				}
+			}
+			function errorcb(err){
+			}
+			$scope.next= function(x){
+				var newUrl= '/general/news/pressReleases/#/News_Article:' + x
+				window.location.href = newUrl;
+			}
+}])
+
 .controller('OnlineServicesController', function($scope){
+			$scope.test= "onlineServies active";
+			console.log($scope.activePath)
 
 		})
 
@@ -27664,75 +27709,6 @@ angular.module("dmvPortal", ['ngResource','ngSanitize','ngCookies','ui.map','ui.
         };
     }
 ])
-
-
-
-
-
-
-.controller('CanvasController', function(){
-var img = new Image();
-
-// User Variables - customize these to change the image being scrolled, its
-// direction, and the speed.
-
-			img.src = '/img/VAForLOvers.jpg';
-			var CanvasXSize = 800;
-			var CanvasYSize = 200;
-			var speed = 60; //lower is faster
-			var scale = 1.05;
-			var y = -4.5; //vertical offset
-
-// Main program
-
-			var dx = 0.75;
-			var imgW;
-			var imgH;
-			var x = 0;
-			var clearX;
-			var clearY;
-			var ctx;
-
-			img.onload = function() {
-				imgW = img.width*scale;
-				imgH = img.height*scale;
-				if (imgW > CanvasXSize) { x = CanvasXSize-imgW; } // image larger than canvas
-				if (imgW > CanvasXSize) { clearX = imgW; } // image larger than canvas
-				else { clearX = CanvasXSize; }
-				if (imgH > CanvasYSize) { clearY = imgH; } // image larger than canvas
-				else { clearY = CanvasYSize; }
-				//Get Canvas Element
-				ctx = document.getElementById('canvas').getContext('2d');
-				//Set Refresh Rate
-				return setInterval(draw, speed);
-			}
-
-			function draw() {
-				//Clear Canvas
-				ctx.clearRect(0,0,clearX,clearY);
-				//If image is <= Canvas Size
-				if (imgW <= CanvasXSize) {
-					//reset, start from beginning
-					if (x > (CanvasXSize)) { x = 0; }
-					//draw aditional image
-					if (x > (CanvasXSize-imgW)) { ctx.drawImage(img,x-CanvasXSize+1,y,imgW,imgH); }
-				}
-				//If image is > Canvas Size
-				else {
-					//reset, start from beginning
-					if (x > (CanvasXSize)) { x = CanvasXSize-imgW; }
-					//draw aditional image
-					if (x > (CanvasXSize-imgW)) { ctx.drawImage(img,x-imgW+1,y,imgW,imgH); }
-				}
-				//draw image
-				ctx.drawImage(img,x,y,imgW,imgH);
-				//amount to move
-				x += dx;
-			}
-		})
-
-
-
 
 
 
@@ -28112,7 +28088,7 @@ angular.module('routes',[]).config([
 
 })
 
-.factory('DMVGoFactory', function($resource){
+.factory('DMVGoFactory',['$resource', function($resource){
 			var baseUrl = "http://dmvnew/apps/dmvnowinterface/dmvnowinterface.aspx?function=events";
 			return $resource(baseUrl, {}, {
 				query : {
@@ -28121,7 +28097,31 @@ angular.module('routes',[]).config([
 					isArray:true
 				}
 			});
-})
+		}])
+
+		.factory('WhatsNewFactory',['$resource', function($resource){
+			var baseUrl = "http://dmvnew/apps/dmvnowinterface/dmvnowinterface.aspx?function=whatsnew";
+			return $resource(baseUrl, {}, {
+				query : {
+					method : 'GET',
+					url : baseUrl,
+					isArray:true
+				}
+			});
+		}])
+
+.factory('NewsFactory',['$resource', function($resource){
+			var baseUrl = "http://dmvnew/apps/dmvnowinterface/dmvnowinterface.aspx?function=news";
+			return $resource(baseUrl, {}, {
+				query : {
+					method : 'GET',
+					url : baseUrl,
+					isArray:true
+				}
+			});
+		}])
+
+
 ;angular.module("sliders", [])
 
 .directive('diesel', function($timeout){
@@ -28139,11 +28139,12 @@ angular.module('routes',[]).config([
 				}
 			}
 })
-		
-.directive('d', function($timeout){
+
+
+.directive('moped', function($timeout){
 			return {
 				restrict: 'EA',
-				template: '<li data-ng-include="\'/views/sliders/dieselTax.html\'"></li>',
+				template: '<li data-ng-include="\'/views/sliders/moped.html\'"></li>',
 				link: function(scope,ele,attr){
 				}
 			}

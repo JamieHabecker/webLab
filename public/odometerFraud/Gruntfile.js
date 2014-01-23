@@ -27,7 +27,7 @@ grunt.initConfig({
 	connect:{
 	all:{
 		options:{
-			port:300,
+			port:336,
 			hostname: "localhost",
 			middleware: function(connect, options){
 				return [

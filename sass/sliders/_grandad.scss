@@ -1,0 +1,27 @@
+ul.slides{
+	div.grandad{
+		text-align: center;
+		padding:1em;
+		background:url("/img/grandad.jpg")no-repeat;
+		background-position: top left;
+		height:270px;
+		h2{
+			padding:0;
+			margin:0;
+			font-size:2em;
+		}
+		a{
+			@include orgBtn;
+			text-decoration: none;
+		}
+	}
+}
+
+@media screen and (min-width:1016px){
+ul.slides{
+	div.grandad{
+		background-position: top right;
+	}
+}
+
+}

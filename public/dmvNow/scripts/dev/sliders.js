@@ -26,5 +26,14 @@ angular.module("sliders", [])
 			}
 })
 
+		.directive('grandad', function($timeout){
+			return {
+				restrict: 'EA',
+				template: '<li data-ng-include="\'/views/sliders/grandad.html\'"></li>',
+				link: function(scope,ele,attr){
+				}
+			}
+		})
+
 
 

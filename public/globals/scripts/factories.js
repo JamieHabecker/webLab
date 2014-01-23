@@ -47,16 +47,16 @@ angular.module("globalFactories", [])
 	return {
 		enter : function(element, done) {
 			jQuery(element).animate({
-				opacity:1
-			},300, function(){
-				done()
+				opacity:1,
+			},300,function(){
+				done();
 			});
 		},
 
 		leave : function(element, done) {
 			jQuery(element).animate({
 				opacity:0.4
-			},300, function(){
+			},300,function(){
 				done();
 			});
 		}
@@ -79,7 +79,6 @@ angular.module("globalFactories", [])
 		}
 	};
 })
-
 
 
 

@@ -61,7 +61,7 @@
         <li data-ng-class="{ active: activePath=='/WhatsNew' }" class="m"><a href="" data-ng-click="tab('new')">What's New</a></li>
       </ul>
     </div>
-    <div class="content">
+    <div class="tabContent">
       <h2 data-ng-show="isloading &amp;&amp; !isError" class="loaderText">Loading...</h2>
       <h2 data-ng-show="isError" class="error">Sorry, this information is currently unavailable</h2>
       <div data-ng-hide="isloading || isError || activePath !== '/Locations'">
@@ -149,6 +149,7 @@
       <ul class="slides">
         <li moped="moped"></li>
         <li diesel="diesel"></li>
+        <li grandad="grandad"></li>
       </ul>
     </div>
   </article>

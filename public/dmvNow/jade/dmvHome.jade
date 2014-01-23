@@ -50,7 +50,7 @@ article.g17.dmvHome
 				li(class="m",data-ng-class="{ active: activePath=='/DMV2Go' }"): a(href="",data-ng-click="tab('dmvgo')") DMV 2 Go
 				li(data-ng-class="{ active: activePath=='/Moving' }"): a(href="",data-ng-click="tab('moving')") Moving?
 				li(class="m",data-ng-class="{ active: activePath=='/WhatsNew' }"): a(href="",data-ng-click="tab('new')") What's New
-		div.content
+		div.tabContent
 			h2.loaderText(data-ng-show="isloading && !isError") Loading...
 			h2.error(data-ng-show="isError") Sorry, this information is currently unavailable
 			div(data-ng-hide="isloading || isError || activePath !== '/Locations'")
@@ -127,6 +127,7 @@ article.g17.dmvHome
 			ul.slides
 				li(moped)
 				li(diesel)
+				li(grandad)
 	article.g4.first.comp5
 		h3 Highway Safety
 		ul

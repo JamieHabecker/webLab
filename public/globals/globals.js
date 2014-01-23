@@ -33434,7 +33434,6 @@ angular.module('ngResource', ['ng']).
 
 					}
 					scope.nextMobi= function(x,y){
-						console.log(y)
 						$('li').removeClass('active');
 						$('li.' + x).addClass('active');
 						$location.path(y)
@@ -33465,9 +33464,12 @@ angular.module('ngResource', ['ng']).
 					}
 					scope.$on('$routeChangeSuccess', function(){
 						var a= window.location.hash;
-						console.log(a)
-						if($("ul.theLinks li" ).hasClass(a)){
-							$('ul.theLinks li.').addClass('active');
+						var b= a.substring(2);
+						console.log(b)
+						$('ul.theLinks li').removeClass('active');
+						var c= $("ul.theLinks li." +b)
+						if($(c).hasClass(b)){
+						$("ul.theLinks li." + b).addClass('active')
 						}
 					})
 					/*
@@ -33505,7 +33507,6 @@ angular.module('ngResource', ['ng']).
 			}
 			}
 	})
-
 
 .directive('button', function(){
 			return{
@@ -34042,16 +34043,16 @@ angular.module('ngResource', ['ng']).
 	return {
 		enter : function(element, done) {
 			jQuery(element).animate({
-				opacity:1
-			},300, function(){
-				done()
+				opacity:1,
+			},300,function(){
+				done();
 			});
 		},
 
 		leave : function(element, done) {
 			jQuery(element).animate({
 				opacity:0.4
-			},300, function(){
+			},300,function(){
 				done();
 			});
 		}
@@ -34074,7 +34075,6 @@ angular.module('ngResource', ['ng']).
 		}
 	};
 })
-
 
 
 

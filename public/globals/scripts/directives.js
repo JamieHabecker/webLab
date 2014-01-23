@@ -86,7 +86,6 @@ angular.module("globals", ['globalConfig','ngAnimate','globalFactories', 'global
 
 					}
 					scope.nextMobi= function(x,y){
-						console.log(y)
 						$('li').removeClass('active');
 						$('li.' + x).addClass('active');
 						$location.path(y)
@@ -117,9 +116,12 @@ angular.module("globals", ['globalConfig','ngAnimate','globalFactories', 'global
 					}
 					scope.$on('$routeChangeSuccess', function(){
 						var a= window.location.hash;
-						console.log(a)
-						if($("ul.theLinks li" ).hasClass(a)){
-							$('ul.theLinks li.').addClass('active');
+						var b= a.substring(2);
+						console.log(b)
+						$('ul.theLinks li').removeClass('active');
+						var c= $("ul.theLinks li." +b)
+						if($(c).hasClass(b)){
+						$("ul.theLinks li." + b).addClass('active')
 						}
 					})
 					/*
@@ -157,7 +159,6 @@ angular.module("globals", ['globalConfig','ngAnimate','globalFactories', 'global
 			}
 			}
 	})
-
 
 .directive('button', function(){
 			return{

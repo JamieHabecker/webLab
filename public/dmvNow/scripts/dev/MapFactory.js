@@ -178,7 +178,7 @@ angular.module("MapFactory", [])
 							if(!sessionStorage.mapDrawn){
 							scope.myMap.setOptions({
 								center : latlng,
-								zoom : 15
+								zoom : 13
 							});
 							sessionStorage.mapDrawn= true;
 							}
