@@ -3,11 +3,10 @@ header.dmvHeader{
 }
 
 header.dmvMobiHeader{
-	@include compTitle;
 	position:fixed;
 	width:100%;
 	height:auto;
-	background:#cccccc;
+	background:#CCCCCC;
 	border-bottom:2px solid $blueLighter;
 	padding-left:0;
 	z-index:8000;
@@ -45,7 +44,7 @@ header.dmvMobiHeader{
 }
 
 div.mobiSpace{
-	height:50px;
+	height:41px;
 }
 
 div.mobi{
