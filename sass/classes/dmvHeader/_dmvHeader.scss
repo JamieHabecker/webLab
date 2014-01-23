@@ -217,6 +217,15 @@ div.mobiSearch{
 				float:left;
 				width:275px;
 			}
+		div.mainNav{
+			ul{
+				li{
+					a{
+						text-decoration:none;
+					}
+				}
+			}
+		}
 	}
 	header.dmvMobiHeader,div.mobi,div.mobiSearch,div.mobiSpace{
 		display:none !important;
