@@ -33411,11 +33411,11 @@ angular.module('ngResource', ['ng']).
 .directive('mobiheader', function($location){
 			return{
 				restrict: 'AE',
-				template:"<header class='dmvMobiHeader'>" +
+				template:"<div><header class='dmvMobiHeader'>" +
 						"<ul><li></li><li class='search' data-ng-click='isSearch=!isSearch;isHidden=true;check(\"s\")'></li><li class='menu' data-ng-click='isHidden=!isHidden; isSearch=true; check(\"m\")'></li></ul></header>"+
 						"<div class='mobiSpace'></div>"+
 						"<div class='mobi mobiSearch' data-ng-controller='SearchController' data-ng-hide='isSearch'><div><ul><li><input type='text' name='search' data-ng-model='searchIn' placeholder='Search DMV'/></li><li><a class='bluBtn' data-ng-click='search()'>Search</a></li></ul></div></div>"+
-						"<div class='mobi' data-ng-hide='isHidden' data-ng-controller='MainNavigationController'><div><ul class='theLinks'><li data-ng-repeat='links in mobiData' class='{{$index+1}} {{links.class}}'><a data-ng-click='nextMobi($index+1, links.link)' data-ng-href=''>{{links.x}}</a></li></ul></div></div>",
+						"<div class='mobi' data-ng-hide='isHidden' data-ng-controller='MainNavigationController'><div><ul class='theLinks'><li data-ng-repeat='links in mobiData' class='{{$index+1}} {{links.class}}'><a data-ng-click='nextMobi($index+1, links.link)' data-ng-href=''>{{links.x}}</a></li></ul></div></div></div>",
 				link: function(scope,ele,attr){
 						scope.isHidden= true;
 						scope.isSearch= true;
