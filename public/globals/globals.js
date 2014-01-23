@@ -33410,7 +33410,7 @@ angular.module('ngResource', ['ng']).
 
 .directive('mobiheader', function($location){
 			return{
-				restrict: 'EA',
+				restrict: 'AE',
 				template:"<header class='dmvMobiHeader'>" +
 						"<ul><li></li><li class='search' data-ng-click='isSearch=!isSearch;isHidden=true;check(\"s\")'></li><li class='menu' data-ng-click='isHidden=!isHidden; isSearch=true; check(\"m\")'></li></ul></header>"+
 						"<div class='mobiSpace'></div>"+
@@ -33444,7 +33444,8 @@ angular.module('ngResource', ['ng']).
 						scope.isHidden= true;
 						scope.isSearch= true;
 					})
-				}
+				},
+				replace:true
 			}
 })
 
@@ -33484,7 +33485,8 @@ angular.module('ngResource', ['ng']).
 					}*/
 
 
-				}
+				},
+				replace:true
 			}
 		})
 
