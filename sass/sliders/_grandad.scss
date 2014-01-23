@@ -1,26 +1,45 @@
 ul.slides{
 	div.grandad{
-		text-align: center;
-		padding:1em;
-		background:url("/img/grandad.jpg")no-repeat;
-		background-position: top left;
+		padding-top:0;
+		background:#F4F5EF;
 		height:270px;
 		h2{
-			padding:0;
+			padding:13px 0 0 13px;
 			margin:0;
+			float:left;
 			font-size:2em;
+			line-height:1em;
+			width:80%;
+		}
+		p{
+			float:left;
+			clear:left;
+			margin-top:0;
+			padding-top:0;
+			padding:5px 0 0 13px;
+			width:40%;
 		}
 		a{
 			@include orgBtn;
+			float:left;
+			clear:left;
 			text-decoration: none;
+			margin-left:13px;
 		}
+
+	div.bkgd{
+		background:url("/img/grandad.jpg")no-repeat;
+		background-position: top right;
+		height:270px;
 	}
+
+}
 }
 
 @media screen and (min-width:1016px){
 ul.slides{
 	div.grandad{
-		background-position: top right;
+		//background-position: top right;
 	}
 }
 

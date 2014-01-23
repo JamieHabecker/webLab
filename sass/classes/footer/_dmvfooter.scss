@@ -1,0 +1,28 @@
+footer{
+	@include compTitle;
+	border-top:1px solid $blueLighter;
+	font-size:1em;
+	margin:0;
+	padding:0;
+	text-align: center;
+	ul{
+		padding:0;
+		margin:0;
+		padding-top:11px;
+		li{
+			list-style-type: none;
+			display:inline-block;
+			margin-right:1em;
+			a{
+				color:$blueLight;
+				text-decoration: none;
+			}
+			&:first-child{
+				background:url("/img/magGlass.png")no-repeat;
+				height:27px;
+				background-position: 0px -4px;
+				padding-left:25px;
+			}
+		}
+	}
+}

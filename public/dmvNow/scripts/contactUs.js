@@ -27377,7 +27377,7 @@ angular.module('ngResource', ['ng']).
 							if(!sessionStorage.mapDrawn){
 							scope.myMap.setOptions({
 								center : latlng,
-								zoom : 15
+								zoom : 13
 							});
 							sessionStorage.mapDrawn= true;
 							}
@@ -28149,6 +28149,15 @@ angular.module('routes',[]).config([
 				}
 			}
 })
+
+		.directive('grandad', function($timeout){
+			return {
+				restrict: 'EA',
+				template: '<li data-ng-include="\'/views/sliders/grandad.html\'"></li>',
+				link: function(scope,ele,attr){
+				}
+			}
+		})
 
 
 

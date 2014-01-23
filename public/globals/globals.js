@@ -33488,6 +33488,14 @@ angular.module('ngResource', ['ng']).
 
 //<input type='text' name='search' data-ng-model='searchIn' placeholder='Search DMV'/>
 
+.directive('dmvfooter', function(){
+			return{
+				restrict: 'EA',
+				template: "<footer data-ng-show='!isloading'><ul><li><a href='http://datapoint.apa.virginia.gov/exp/exp_checkbook_agency.cfm?AGYCODE=154'>DMV Expenditures</a></li><li><a href='/about/org/dmv_org_chart.pdf'>Org Chart</a></li><li><a href='/general/'>General</a></li><li><a href='/espanol/'>Espanol</a></li><li><a href='/resources/'>Resources</a></li></ul></footer>",
+				replace: true
+			}
+})
+
 .directive('weblabheader', function() {
 			return {
 				restrict: 'EA',
