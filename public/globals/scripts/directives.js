@@ -94,7 +94,8 @@ angular.module("globals", ['globalConfig','ngAnimate','globalFactories', 'global
 						scope.isHidden= true;
 						scope.isSearch= true;
 					})
-				}
+				},
+				replace:true
 			}
 })
 
@@ -134,7 +135,8 @@ angular.module("globals", ['globalConfig','ngAnimate','globalFactories', 'global
 					}*/
 
 
-				}
+				},
+				replace:true
 			}
 		})
 
