@@ -1,7 +1,7 @@
-angular.module("globalControllers", ['ngRoute'])
+angular.module("globalControllers", [])
 
 
-.config(['$routeProvider','$locationProvider','$httpProvider', function($routeProvider,$locationProvider, $httpProvider){
+.config(['$routeProvider','$locationProvider','$httpProvider',function($routeProvider,$locationProvider, $httpProvider){
 			$httpProvider.defaults.headers.get = {
 				'Accept' : 'application/json, text/javascript'
 			};
@@ -22,8 +22,6 @@ angular.module("globalControllers", ['ngRoute'])
 		window.location.replace("/");
 	};
 }])
-
-
 
 .controller('ErrorController', ['$scope', function($scope){
 			var err= sessionStorage.err;

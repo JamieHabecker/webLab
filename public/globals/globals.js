@@ -30341,7 +30341,2235 @@ if ( typeof module === "object" && module && typeof module.exports === "object" 
 
 })(window, document);
 
-!angular.$$csp() && angular.element(document).find('head').prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide{display:none !important;}ng\\:form{display:block;}</style>');;/**
+!angular.$$csp() && angular.element(document).find('head').prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide{display:none !important;}ng\\:form{display:block;}</style>');;'use strict';
+/* jshint maxlen: false */
+
+/**
+ * @ngdoc overview
+ * @name ngAnimate
+ * @description
+ *
+ * # ngAnimate
+ *
+ * The `ngAnimate` module provides support for JavaScript, CSS3 transition and CSS3 keyframe animation hooks within existing core and custom directives.
+ *
+ * {@installModule animate}
+ *
+ * <div doc-module-components="ngAnimate"></div>
+ *
+ * # Usage
+ *
+ * To see animations in action, all that is required is to define the appropriate CSS classes
+ * or to register a JavaScript animation via the myModule.animation() function. The directives that support animation automatically are:
+ * `ngRepeat`, `ngInclude`, `ngIf`, `ngSwitch`, `ngShow`, `ngHide`, `ngView` and `ngClass`. Custom directives can take advantage of animation
+ * by using the `$animate` service.
+ *
+ * Below is a more detailed breakdown of the supported animation events provided by pre-existing ng directives:
+ *
+ * | Directive                                                 | Supported Animations                               |
+ * |---------------------------------------------------------- |----------------------------------------------------|
+ * | {@link ng.directive:ngRepeat#usage_animations ngRepeat}         | enter, leave and move                              |
+ * | {@link ngRoute.directive:ngView#usage_animations ngView}        | enter and leave                                    |
+ * | {@link ng.directive:ngInclude#usage_animations ngInclude}       | enter and leave                                    |
+ * | {@link ng.directive:ngSwitch#usage_animations ngSwitch}         | enter and leave                                    |
+ * | {@link ng.directive:ngIf#usage_animations ngIf}                 | enter and leave                                    |
+ * | {@link ng.directive:ngClass#usage_animations ngClass}           | add and remove                                     |
+ * | {@link ng.directive:ngShow#usage_animations ngShow & ngHide}    | add and remove (the ng-hide class value)           |
+ *
+ * You can find out more information about animations upon visiting each directive page.
+ *
+ * Below is an example of how to apply animations to a directive that supports animation hooks:
+ *
+ * <pre>
+ * <style type="text/css">
+ * .slide.ng-enter, .slide.ng-leave {
+ *   -webkit-transition:0.5s linear all;
+ *   transition:0.5s linear all;
+ * }
+ *
+ * .slide.ng-enter { }        /&#42; starting animations for enter &#42;/
+ * .slide.ng-enter-active { } /&#42; terminal animations for enter &#42;/
+ * .slide.ng-leave { }        /&#42; starting animations for leave &#42;/
+ * .slide.ng-leave-active { } /&#42; terminal animations for leave &#42;/
+ * </style>
+ *
+ * <!--
+ * the animate service will automatically add .ng-enter and .ng-leave to the element
+ * to trigger the CSS transition/animations
+ * -->
+ * <ANY class="slide" ng-include="..."></ANY>
+ * </pre>
+ *
+ * Keep in mind that if an animation is running, any child elements cannot be animated until the parent element's
+ * animation has completed.
+ *
+ * <h2>CSS-defined Animations</h2>
+ * The animate service will automatically apply two CSS classes to the animated element and these two CSS classes
+ * are designed to contain the start and end CSS styling. Both CSS transitions and keyframe animations are supported
+ * and can be used to play along with this naming structure.
+ *
+ * The following code below demonstrates how to perform animations using **CSS transitions** with Angular:
+ *
+ * <pre>
+ * <style type="text/css">
+ * /&#42;
+ *  The animate class is apart of the element and the ng-enter class
+ *  is attached to the element once the enter animation event is triggered
+ * &#42;/
+ * .reveal-animation.ng-enter {
+ *  -webkit-transition: 1s linear all; /&#42; Safari/Chrome &#42;/
+ *  transition: 1s linear all; /&#42; All other modern browsers and IE10+ &#42;/
+ *
+ *  /&#42; The animation preparation code &#42;/
+ *  opacity: 0;
+ * }
+ *
+ * /&#42;
+ *  Keep in mind that you want to combine both CSS
+ *  classes together to avoid any CSS-specificity
+ *  conflicts
+ * &#42;/
+ * .reveal-animation.ng-enter.ng-enter-active {
+ *  /&#42; The animation code itself &#42;/
+ *  opacity: 1;
+ * }
+ * </style>
+ *
+ * <div class="view-container">
+ *   <div ng-view class="reveal-animation"></div>
+ * </div>
+ * </pre>
+ *
+ * The following code below demonstrates how to perform animations using **CSS animations** with Angular:
+ *
+ * <pre>
+ * <style type="text/css">
+ * .reveal-animation.ng-enter {
+ *   -webkit-animation: enter_sequence 1s linear; /&#42; Safari/Chrome &#42;/
+ *   animation: enter_sequence 1s linear; /&#42; IE10+ and Future Browsers &#42;/
+ * }
+ * &#64-webkit-keyframes enter_sequence {
+ *   from { opacity:0; }
+ *   to { opacity:1; }
+ * }
+ * &#64keyframes enter_sequence {
+ *   from { opacity:0; }
+ *   to { opacity:1; }
+ * }
+ * </style>
+ *
+ * <div class="view-container">
+ *   <div ng-view class="reveal-animation"></div>
+ * </div>
+ * </pre>
+ *
+ * Both CSS3 animations and transitions can be used together and the animate service will figure out the correct duration and delay timing.
+ *
+ * Upon DOM mutation, the event class is added first (something like `ng-enter`), then the browser prepares itself to add
+ * the active class (in this case `ng-enter-active`) which then triggers the animation. The animation module will automatically
+ * detect the CSS code to determine when the animation ends. Once the animation is over then both CSS classes will be
+ * removed from the DOM. If a browser does not support CSS transitions or CSS animations then the animation will start and end
+ * immediately resulting in a DOM element that is at its final state. This final state is when the DOM element
+ * has no CSS transition/animation classes applied to it.
+ *
+ * <h3>CSS Staggering Animations</h3>
+ * A Staggering animation is a collection of animations that are issued with a slight delay in between each successive operation resulting in a
+ * curtain-like effect. The ngAnimate module, as of 1.2.0, supports staggering animations and the stagger effect can be
+ * performed by creating a **ng-EVENT-stagger** CSS class and attaching that class to the base CSS class used for
+ * the animation. The style property expected within the stagger class can either be a **transition-delay** or an
+ * **animation-delay** property (or both if your animation contains both transitions and keyframe animations).
+ *
+ * <pre>
+ * .my-animation.ng-enter {
+ *   /&#42; standard transition code &#42;/
+ *   -webkit-transition: 1s linear all;
+ *   transition: 1s linear all;
+ *   opacity:0;
+ * }
+ * .my-animation.ng-enter-stagger {
+ *   /&#42; this will have a 100ms delay between each successive leave animation &#42;/
+ *   -webkit-transition-delay: 0.1s;
+ *   transition-delay: 0.1s;
+ *
+ *   /&#42; in case the stagger doesn't work then these two values
+ *    must be set to 0 to avoid an accidental CSS inheritance &#42;/
+ *   -webkit-transition-duration: 0s;
+ *   transition-duration: 0s;
+ * }
+ * .my-animation.ng-enter.ng-enter-active {
+ *   /&#42; standard transition styles &#42;/
+ *   opacity:1;
+ * }
+ * </pre>
+ *
+ * Staggering animations work by default in ngRepeat (so long as the CSS class is defined). Outside of ngRepeat, to use staggering animations
+ * on your own, they can be triggered by firing multiple calls to the same event on $animate. However, the restrictions surrounding this
+ * are that each of the elements must have the same CSS className value as well as the same parent element. A stagger operation
+ * will also be reset if more than 10ms has passed after the last animation has been fired.
+ *
+ * The following code will issue the **ng-leave-stagger** event on the element provided:
+ *
+ * <pre>
+ * var kids = parent.children();
+ *
+ * $animate.leave(kids[0]); //stagger index=0
+ * $animate.leave(kids[1]); //stagger index=1
+ * $animate.leave(kids[2]); //stagger index=2
+ * $animate.leave(kids[3]); //stagger index=3
+ * $animate.leave(kids[4]); //stagger index=4
+ *
+ * $timeout(function() {
+ *   //stagger has reset itself
+ *   $animate.leave(kids[5]); //stagger index=0
+ *   $animate.leave(kids[6]); //stagger index=1
+ * }, 100, false);
+ * </pre>
+ *
+ * Stagger animations are currently only supported within CSS-defined animations.
+ *
+ * <h2>JavaScript-defined Animations</h2>
+ * In the event that you do not want to use CSS3 transitions or CSS3 animations or if you wish to offer animations on browsers that do not
+ * yet support CSS transitions/animations, then you can make use of JavaScript animations defined inside of your AngularJS module.
+ *
+ * <pre>
+ * //!annotate="YourApp" Your AngularJS Module|Replace this or ngModule with the module that you used to define your application.
+ * var ngModule = angular.module('YourApp', ['ngAnimate']);
+ * ngModule.animation('.my-crazy-animation', function() {
+ *   return {
+ *     enter: function(element, done) {
+ *       //run the animation here and call done when the animation is complete
+ *       return function(cancelled) {
+ *         //this (optional) function will be called when the animation
+ *         //completes or when the animation is cancelled (the cancelled
+ *         //flag will be set to true if cancelled).
+ *       };
+ *     },
+ *     leave: function(element, done) { },
+ *     move: function(element, done) { },
+ *
+ *     //animation that can be triggered before the class is added
+ *     beforeAddClass: function(element, className, done) { },
+ *
+ *     //animation that can be triggered after the class is added
+ *     addClass: function(element, className, done) { },
+ *
+ *     //animation that can be triggered before the class is removed
+ *     beforeRemoveClass: function(element, className, done) { },
+ *
+ *     //animation that can be triggered after the class is removed
+ *     removeClass: function(element, className, done) { }
+ *   };
+ * });
+ * </pre>
+ *
+ * JavaScript-defined animations are created with a CSS-like class selector and a collection of events which are set to run
+ * a javascript callback function. When an animation is triggered, $animate will look for a matching animation which fits
+ * the element's CSS class attribute value and then run the matching animation event function (if found).
+ * In other words, if the CSS classes present on the animated element match any of the JavaScript animations then the callback function will
+ * be executed. It should be also noted that only simple, single class selectors are allowed (compound class selectors are not supported).
+ *
+ * Within a JavaScript animation, an object containing various event callback animation functions is expected to be returned.
+ * As explained above, these callbacks are triggered based on the animation event. Therefore if an enter animation is run,
+ * and the JavaScript animation is found, then the enter callback will handle that animation (in addition to the CSS keyframe animation
+ * or transition code that is defined via a stylesheet).
+ *
+ */
+
+angular.module('ngAnimate', ['ng'])
+
+/**
+ * @ngdoc object
+ * @name ngAnimate.$animateProvider
+ * @description
+ *
+ * The `$animateProvider` allows developers to register JavaScript animation event handlers directly inside of a module.
+ * When an animation is triggered, the $animate service will query the $animate service to find any animations that match
+ * the provided name value.
+ *
+ * Requires the {@link ngAnimate `ngAnimate`} module to be installed.
+ *
+ * Please visit the {@link ngAnimate `ngAnimate`} module overview page learn more about how to use animations in your application.
+ *
+ */
+		.factory('$$animateReflow', ['$window', '$timeout', function($window, $timeout) {
+			var requestAnimationFrame = $window.requestAnimationFrame       ||
+					$window.webkitRequestAnimationFrame ||
+					function(fn) {
+						return $timeout(fn, 10, false);
+					};
+
+			var cancelAnimationFrame = $window.cancelAnimationFrame       ||
+					$window.webkitCancelAnimationFrame ||
+					function(timer) {
+						return $timeout.cancel(timer);
+					};
+			return function(fn) {
+				var id = requestAnimationFrame(fn);
+				return function() {
+					cancelAnimationFrame(id);
+				};
+			};
+		}])
+
+		.config(['$provide', '$animateProvider', function($provide, $animateProvider) {
+			var noop = angular.noop;
+			var forEach = angular.forEach;
+			var selectors = $animateProvider.$$selectors;
+
+			var ELEMENT_NODE = 1;
+			var NG_ANIMATE_STATE = '$$ngAnimateState';
+			var NG_ANIMATE_CLASS_NAME = 'ng-animate';
+			var rootAnimateState = {running: true};
+
+			function extractElementNode(element) {
+				for(var i = 0; i < element.length; i++) {
+					var elm = element[i];
+					if(elm.nodeType == ELEMENT_NODE) {
+						return elm;
+					}
+				}
+			}
+
+			function isMatchingElement(elm1, elm2) {
+				return extractElementNode(elm1) == extractElementNode(elm2);
+			}
+
+			$provide.decorator('$animate', ['$delegate', '$injector', '$sniffer', '$rootElement', '$timeout', '$rootScope', '$document',
+				function($delegate,   $injector,   $sniffer,   $rootElement,   $timeout,   $rootScope,   $document) {
+
+					$rootElement.data(NG_ANIMATE_STATE, rootAnimateState);
+
+					// disable animations during bootstrap, but once we bootstrapped, wait again
+					// for another digest until enabling animations. The reason why we digest twice
+					// is because all structural animations (enter, leave and move) all perform a
+					// post digest operation before animating. If we only wait for a single digest
+					// to pass then the structural animation would render its animation on page load.
+					// (which is what we're trying to avoid when the application first boots up.)
+					$rootScope.$$postDigest(function() {
+						$rootScope.$$postDigest(function() {
+							rootAnimateState.running = false;
+						});
+					});
+
+					var classNameFilter = $animateProvider.classNameFilter();
+					var isAnimatableClassName = !classNameFilter
+							? function() { return true; }
+							: function(className) {
+						return classNameFilter.test(className);
+					};
+
+					function async(fn) {
+						return $timeout(fn, 0, false);
+					}
+
+					function lookup(name) {
+						if (name) {
+							var matches = [],
+									flagMap = {},
+									classes = name.substr(1).split('.');
+
+							//the empty string value is the default animation
+							//operation which performs CSS transition and keyframe
+							//animations sniffing. This is always included for each
+							//element animation procedure if the browser supports
+							//transitions and/or keyframe animations
+							if ($sniffer.transitions || $sniffer.animations) {
+								classes.push('');
+							}
+
+							for(var i=0; i < classes.length; i++) {
+								var klass = classes[i],
+										selectorFactoryName = selectors[klass];
+								if(selectorFactoryName && !flagMap[klass]) {
+									matches.push($injector.get(selectorFactoryName));
+									flagMap[klass] = true;
+								}
+							}
+							return matches;
+						}
+					}
+
+					/**
+					 * @ngdoc object
+					 * @name ngAnimate.$animate
+					 * @function
+					 *
+					 * @description
+					 * The `$animate` service provides animation detection support while performing DOM operations (enter, leave and move) as well as during addClass and removeClass operations.
+					 * When any of these operations are run, the $animate service
+					 * will examine any JavaScript-defined animations (which are defined by using the $animateProvider provider object)
+					 * as well as any CSS-defined animations against the CSS classes present on the element once the DOM operation is run.
+					 *
+					 * The `$animate` service is used behind the scenes with pre-existing directives and animation with these directives
+					 * will work out of the box without any extra configuration.
+					 *
+					 * Requires the {@link ngAnimate `ngAnimate`} module to be installed.
+					 *
+					 * Please visit the {@link ngAnimate `ngAnimate`} module overview page learn more about how to use animations in your application.
+					 *
+					 */
+					return {
+						/**
+						 * @ngdoc function
+						 * @name ngAnimate.$animate#enter
+						 * @methodOf ngAnimate.$animate
+						 * @function
+						 *
+						 * @description
+						 * Appends the element to the parentElement element that resides in the document and then runs the enter animation. Once
+						 * the animation is started, the following CSS classes will be present on the element for the duration of the animation:
+						 *
+						 * Below is a breakdown of each step that occurs during enter animation:
+						 *
+						 * | Animation Step                                                                               | What the element class attribute looks like |
+						 * |----------------------------------------------------------------------------------------------|---------------------------------------------|
+						 * | 1. $animate.enter(...) is called                                                             | class="my-animation"                        |
+						 * | 2. element is inserted into the parentElement element or beside the afterElement element     | class="my-animation"                        |
+						 * | 3. $animate runs any JavaScript-defined animations on the element                            | class="my-animation ng-animate"             |
+						 * | 4. the .ng-enter class is added to the element                                               | class="my-animation ng-animate ng-enter"    |
+						 * | 5. $animate scans the element styles to get the CSS transition/animation duration and delay  | class="my-animation ng-animate ng-enter"    |
+						 * | 6. $animate waits for 10ms (this performs a reflow)                                          | class="my-animation ng-animate ng-enter"    |
+						 * | 7. the .ng-enter-active and .ng-animate-active classes are added (this triggers the CSS transition/animation) | class="my-animation ng-animate ng-animate-active ng-enter ng-enter-active" |
+						 * | 8. $animate waits for X milliseconds for the animation to complete                           | class="my-animation ng-animate ng-animate-active ng-enter ng-enter-active" |
+						 * | 9. The animation ends and all generated CSS classes are removed from the element             | class="my-animation"                        |
+						 * | 10. The doneCallback() callback is fired (if provided)                                       | class="my-animation"                        |
+						 *
+						 * @param {jQuery/jqLite element} element the element that will be the focus of the enter animation
+						 * @param {jQuery/jqLite element} parentElement the parent element of the element that will be the focus of the enter animation
+						 * @param {jQuery/jqLite element} afterElement the sibling element (which is the previous element) of the element that will be the focus of the enter animation
+						 * @param {function()=} doneCallback the callback function that will be called once the animation is complete
+						 */
+						enter : function(element, parentElement, afterElement, doneCallback) {
+							this.enabled(false, element);
+							$delegate.enter(element, parentElement, afterElement);
+							$rootScope.$$postDigest(function() {
+								performAnimation('enter', 'ng-enter', element, parentElement, afterElement, noop, doneCallback);
+							});
+						},
+
+						/**
+						 * @ngdoc function
+						 * @name ngAnimate.$animate#leave
+						 * @methodOf ngAnimate.$animate
+						 * @function
+						 *
+						 * @description
+						 * Runs the leave animation operation and, upon completion, removes the element from the DOM. Once
+						 * the animation is started, the following CSS classes will be added for the duration of the animation:
+						 *
+						 * Below is a breakdown of each step that occurs during leave animation:
+						 *
+						 * | Animation Step                                                                               | What the element class attribute looks like |
+						 * |----------------------------------------------------------------------------------------------|---------------------------------------------|
+						 * | 1. $animate.leave(...) is called                                                             | class="my-animation"                        |
+						 * | 2. $animate runs any JavaScript-defined animations on the element                            | class="my-animation ng-animate"             |
+						 * | 3. the .ng-leave class is added to the element                                               | class="my-animation ng-animate ng-leave"    |
+						 * | 4. $animate scans the element styles to get the CSS transition/animation duration and delay  | class="my-animation ng-animate ng-leave"    |
+						 * | 5. $animate waits for 10ms (this performs a reflow)                                          | class="my-animation ng-animate ng-leave"    |
+						 * | 6. the .ng-leave-active and .ng-animate-active classes is added (this triggers the CSS transition/animation) | class="my-animation ng-animate ng-animate-active ng-leave ng-leave-active" |
+						 * | 7. $animate waits for X milliseconds for the animation to complete                           | class="my-animation ng-animate ng-animate-active ng-leave ng-leave-active" |
+						 * | 8. The animation ends and all generated CSS classes are removed from the element             | class="my-animation"                        |
+						 * | 9. The element is removed from the DOM                                                       | ...                                         |
+						 * | 10. The doneCallback() callback is fired (if provided)                                       | ...                                         |
+						 *
+						 * @param {jQuery/jqLite element} element the element that will be the focus of the leave animation
+						 * @param {function()=} doneCallback the callback function that will be called once the animation is complete
+						 */
+						leave : function(element, doneCallback) {
+							cancelChildAnimations(element);
+							this.enabled(false, element);
+							$rootScope.$$postDigest(function() {
+								performAnimation('leave', 'ng-leave', element, null, null, function() {
+									$delegate.leave(element);
+								}, doneCallback);
+							});
+						},
+
+						/**
+						 * @ngdoc function
+						 * @name ngAnimate.$animate#move
+						 * @methodOf ngAnimate.$animate
+						 * @function
+						 *
+						 * @description
+						 * Fires the move DOM operation. Just before the animation starts, the animate service will either append it into the parentElement container or
+						 * add the element directly after the afterElement element if present. Then the move animation will be run. Once
+						 * the animation is started, the following CSS classes will be added for the duration of the animation:
+						 *
+						 * Below is a breakdown of each step that occurs during move animation:
+						 *
+						 * | Animation Step                                                                               | What the element class attribute looks like |
+						 * |----------------------------------------------------------------------------------------------|---------------------------------------------|
+						 * | 1. $animate.move(...) is called                                                              | class="my-animation"                        |
+						 * | 2. element is moved into the parentElement element or beside the afterElement element        | class="my-animation"                        |
+						 * | 3. $animate runs any JavaScript-defined animations on the element                            | class="my-animation ng-animate"             |
+						 * | 4. the .ng-move class is added to the element                                                | class="my-animation ng-animate ng-move"     |
+						 * | 5. $animate scans the element styles to get the CSS transition/animation duration and delay  | class="my-animation ng-animate ng-move"     |
+						 * | 6. $animate waits for 10ms (this performs a reflow)                                          | class="my-animation ng-animate ng-move"     |
+						 * | 7. the .ng-move-active and .ng-animate-active classes is added (this triggers the CSS transition/animation) | class="my-animation ng-animate ng-animate-active ng-move ng-move-active" |
+						 * | 8. $animate waits for X milliseconds for the animation to complete                           | class="my-animation ng-animate ng-animate-active ng-move ng-move-active" |
+						 * | 9. The animation ends and all generated CSS classes are removed from the element             | class="my-animation"                        |
+						 * | 10. The doneCallback() callback is fired (if provided)                                       | class="my-animation"                        |
+						 *
+						 * @param {jQuery/jqLite element} element the element that will be the focus of the move animation
+						 * @param {jQuery/jqLite element} parentElement the parentElement element of the element that will be the focus of the move animation
+						 * @param {jQuery/jqLite element} afterElement the sibling element (which is the previous element) of the element that will be the focus of the move animation
+						 * @param {function()=} doneCallback the callback function that will be called once the animation is complete
+						 */
+						move : function(element, parentElement, afterElement, doneCallback) {
+							cancelChildAnimations(element);
+							this.enabled(false, element);
+							$delegate.move(element, parentElement, afterElement);
+							$rootScope.$$postDigest(function() {
+								performAnimation('move', 'ng-move', element, parentElement, afterElement, noop, doneCallback);
+							});
+						},
+
+						/**
+						 * @ngdoc function
+						 * @name ngAnimate.$animate#addClass
+						 * @methodOf ngAnimate.$animate
+						 *
+						 * @description
+						 * Triggers a custom animation event based off the className variable and then attaches the className value to the element as a CSS class.
+						 * Unlike the other animation methods, the animate service will suffix the className value with {@type -add} in order to provide
+						 * the animate service the setup and active CSS classes in order to trigger the animation (this will be skipped if no CSS transitions
+						 * or keyframes are defined on the -add or base CSS class).
+						 *
+						 * Below is a breakdown of each step that occurs during addClass animation:
+						 *
+						 * | Animation Step                                                                                 | What the element class attribute looks like |
+						 * |------------------------------------------------------------------------------------------------|---------------------------------------------|
+						 * | 1. $animate.addClass(element, 'super') is called                                               | class="my-animation"                        |
+						 * | 2. $animate runs any JavaScript-defined animations on the element                              | class="my-animation ng-animate"             |
+						 * | 3. the .super-add class are added to the element                                               | class="my-animation ng-animate super-add"   |
+						 * | 4. $animate scans the element styles to get the CSS transition/animation duration and delay    | class="my-animation ng-animate super-add"   |
+						 * | 5. $animate waits for 10ms (this performs a reflow)                                            | class="my-animation ng-animate super-add"   |
+						 * | 6. the .super, .super-add-active and .ng-animate-active classes are added (this triggers the CSS transition/animation) | class="my-animation ng-animate ng-animate-active super super-add super-add-active"          |
+						 * | 7. $animate waits for X milliseconds for the animation to complete                             | class="my-animation super-add super-add-active"  |
+						 * | 8. The animation ends and all generated CSS classes are removed from the element               | class="my-animation super"                  |
+						 * | 9. The super class is kept on the element                                                      | class="my-animation super"                  |
+						 * | 10. The doneCallback() callback is fired (if provided)                                         | class="my-animation super"                  |
+						 *
+						 * @param {jQuery/jqLite element} element the element that will be animated
+						 * @param {string} className the CSS class that will be added to the element and then animated
+						 * @param {function()=} doneCallback the callback function that will be called once the animation is complete
+						 */
+						addClass : function(element, className, doneCallback) {
+							performAnimation('addClass', className, element, null, null, function() {
+								$delegate.addClass(element, className);
+							}, doneCallback);
+						},
+
+						/**
+						 * @ngdoc function
+						 * @name ngAnimate.$animate#removeClass
+						 * @methodOf ngAnimate.$animate
+						 *
+						 * @description
+						 * Triggers a custom animation event based off the className variable and then removes the CSS class provided by the className value
+						 * from the element. Unlike the other animation methods, the animate service will suffix the className value with {@type -remove} in
+						 * order to provide the animate service the setup and active CSS classes in order to trigger the animation (this will be skipped if
+						 * no CSS transitions or keyframes are defined on the -remove or base CSS classes).
+						 *
+						 * Below is a breakdown of each step that occurs during removeClass animation:
+						 *
+						 * | Animation Step                                                                                | What the element class attribute looks like     |
+						 * |-----------------------------------------------------------------------------------------------|---------------------------------------------|
+						 * | 1. $animate.removeClass(element, 'super') is called                                           | class="my-animation super"                  |
+						 * | 2. $animate runs any JavaScript-defined animations on the element                             | class="my-animation super ng-animate"       |
+						 * | 3. the .super-remove class are added to the element                                           | class="my-animation super ng-animate super-remove"|
+						 * | 4. $animate scans the element styles to get the CSS transition/animation duration and delay   | class="my-animation super ng-animate super-remove"   |
+						 * | 5. $animate waits for 10ms (this performs a reflow)                                           | class="my-animation super ng-animate super-remove"   |
+						 * | 6. the .super-remove-active and .ng-animate-active classes are added and .super is removed (this triggers the CSS transition/animation) | class="my-animation ng-animate ng-animate-active super-remove super-remove-active"          |
+						 * | 7. $animate waits for X milliseconds for the animation to complete                            | class="my-animation ng-animate ng-animate-active super-remove super-remove-active"   |
+						 * | 8. The animation ends and all generated CSS classes are removed from the element              | class="my-animation"                        |
+						 * | 9. The doneCallback() callback is fired (if provided)                                         | class="my-animation"                        |
+						 *
+						 *
+						 * @param {jQuery/jqLite element} element the element that will be animated
+						 * @param {string} className the CSS class that will be animated and then removed from the element
+						 * @param {function()=} doneCallback the callback function that will be called once the animation is complete
+						 */
+						removeClass : function(element, className, doneCallback) {
+							performAnimation('removeClass', className, element, null, null, function() {
+								$delegate.removeClass(element, className);
+							}, doneCallback);
+						},
+
+						/**
+						 * @ngdoc function
+						 * @name ngAnimate.$animate#enabled
+						 * @methodOf ngAnimate.$animate
+						 * @function
+						 *
+						 * @param {boolean=} value If provided then set the animation on or off.
+						 * @param {jQuery/jqLite element=} element If provided then the element will be used to represent the enable/disable operation
+						 * @return {boolean} Current animation state.
+						 *
+						 * @description
+						 * Globally enables/disables animations.
+						 *
+						 */
+						enabled : function(value, element) {
+							switch(arguments.length) {
+								case 2:
+									if(value) {
+										cleanup(element);
+									} else {
+										var data = element.data(NG_ANIMATE_STATE) || {};
+										data.disabled = true;
+										element.data(NG_ANIMATE_STATE, data);
+									}
+									break;
+
+								case 1:
+									rootAnimateState.disabled = !value;
+									break;
+
+								default:
+									value = !rootAnimateState.disabled;
+									break;
+							}
+							return !!value;
+						}
+					};
+
+					/*
+					 all animations call this shared animation triggering function internally.
+					 The animationEvent variable refers to the JavaScript animation event that will be triggered
+					 and the className value is the name of the animation that will be applied within the
+					 CSS code. Element, parentElement and afterElement are provided DOM elements for the animation
+					 and the onComplete callback will be fired once the animation is fully complete.
+					 */
+					function performAnimation(animationEvent, className, element, parentElement, afterElement, domOperation, doneCallback) {
+						var currentClassName, classes, node = extractElementNode(element);
+						if(node) {
+							currentClassName = node.className;
+							classes = currentClassName + ' ' + className;
+						}
+
+						//transcluded directives may sometimes fire an animation using only comment nodes
+						//best to catch this early on to prevent any animation operations from occurring
+						if(!node || !isAnimatableClassName(classes)) {
+							fireDOMOperation();
+							fireBeforeCallbackAsync();
+							fireAfterCallbackAsync();
+							closeAnimation();
+							return;
+						}
+
+						var animationLookup = (' ' + classes).replace(/\s+/g,'.');
+						if (!parentElement) {
+							parentElement = afterElement ? afterElement.parent() : element.parent();
+						}
+
+						var matches = lookup(animationLookup);
+						var isClassBased = animationEvent == 'addClass' || animationEvent == 'removeClass';
+						var ngAnimateState = element.data(NG_ANIMATE_STATE) || {};
+
+						//skip the animation if animations are disabled, a parent is already being animated,
+						//the element is not currently attached to the document body or then completely close
+						//the animation if any matching animations are not found at all.
+						//NOTE: IE8 + IE9 should close properly (run closeAnimation()) in case a NO animation is not found.
+						if (animationsDisabled(element, parentElement) || matches.length === 0) {
+							fireDOMOperation();
+							fireBeforeCallbackAsync();
+							fireAfterCallbackAsync();
+							closeAnimation();
+							return;
+						}
+
+						var animations = [];
+
+						//only add animations if the currently running animation is not structural
+						//or if there is no animation running at all
+						var allowAnimations = isClassBased ?
+								!ngAnimateState.disabled && (!ngAnimateState.running || !ngAnimateState.structural) :
+								true;
+
+						if(allowAnimations) {
+							forEach(matches, function(animation) {
+								//add the animation to the queue to if it is allowed to be cancelled
+								if(!animation.allowCancel || animation.allowCancel(element, animationEvent, className)) {
+									var beforeFn, afterFn = animation[animationEvent];
+
+									//Special case for a leave animation since there is no point in performing an
+									//animation on a element node that has already been removed from the DOM
+									if(animationEvent == 'leave') {
+										beforeFn = afterFn;
+										afterFn = null; //this must be falsy so that the animation is skipped for leave
+									} else {
+										beforeFn = animation['before' + animationEvent.charAt(0).toUpperCase() + animationEvent.substr(1)];
+									}
+									animations.push({
+										before : beforeFn,
+										after : afterFn
+									});
+								}
+							});
+						}
+
+						//this would mean that an animation was not allowed so let the existing
+						//animation do it's thing and close this one early
+						if(animations.length === 0) {
+							fireDOMOperation();
+							fireBeforeCallbackAsync();
+							fireAfterCallbackAsync();
+							fireDoneCallbackAsync();
+							return;
+						}
+
+						var ONE_SPACE = ' ';
+						//this value will be searched for class-based CSS className lookup. Therefore,
+						//we prefix and suffix the current className value with spaces to avoid substring
+						//lookups of className tokens
+						var futureClassName = ONE_SPACE + currentClassName + ONE_SPACE;
+						if(ngAnimateState.running) {
+							//if an animation is currently running on the element then lets take the steps
+							//to cancel that animation and fire any required callbacks
+							$timeout.cancel(ngAnimateState.closeAnimationTimeout);
+							cleanup(element);
+							cancelAnimations(ngAnimateState.animations);
+
+							//in the event that the CSS is class is quickly added and removed back
+							//then we don't want to wait until after the reflow to add/remove the CSS
+							//class since both class animations may run into a race condition.
+							//The code below will check to see if that is occurring and will
+							//immediately remove the former class before the reflow so that the
+							//animation can snap back to the original animation smoothly
+							var isFullyClassBasedAnimation = isClassBased && !ngAnimateState.structural;
+							var isRevertingClassAnimation = isFullyClassBasedAnimation &&
+									ngAnimateState.className == className &&
+									animationEvent != ngAnimateState.event;
+
+							//if the class is removed during the reflow then it will revert the styles temporarily
+							//back to the base class CSS styling causing a jump-like effect to occur. This check
+							//here ensures that the domOperation is only performed after the reflow has commenced
+							if(ngAnimateState.beforeComplete || isRevertingClassAnimation) {
+								(ngAnimateState.done || noop)(true);
+							} else if(isFullyClassBasedAnimation) {
+								//class-based animations will compare element className values after cancelling the
+								//previous animation to see if the element properties already contain the final CSS
+								//class and if so then the animation will be skipped. Since the domOperation will
+								//be performed only after the reflow is complete then our element's className value
+								//will be invalid. Therefore the same string manipulation that would occur within the
+								//DOM operation will be performed below so that the class comparison is valid...
+								futureClassName = ngAnimateState.event == 'removeClass' ?
+										futureClassName.replace(ONE_SPACE + ngAnimateState.className + ONE_SPACE, ONE_SPACE) :
+										futureClassName + ngAnimateState.className + ONE_SPACE;
+							}
+						}
+
+						//There is no point in perform a class-based animation if the element already contains
+						//(on addClass) or doesn't contain (on removeClass) the className being animated.
+						//The reason why this is being called after the previous animations are cancelled
+						//is so that the CSS classes present on the element can be properly examined.
+						var classNameToken = ONE_SPACE + className + ONE_SPACE;
+						if((animationEvent == 'addClass'    && futureClassName.indexOf(classNameToken) >= 0) ||
+								(animationEvent == 'removeClass' && futureClassName.indexOf(classNameToken) == -1)) {
+							fireDOMOperation();
+							fireBeforeCallbackAsync();
+							fireAfterCallbackAsync();
+							fireDoneCallbackAsync();
+							return;
+						}
+
+						//the ng-animate class does nothing, but it's here to allow for
+						//parent animations to find and cancel child animations when needed
+						element.addClass(NG_ANIMATE_CLASS_NAME);
+
+						element.data(NG_ANIMATE_STATE, {
+							running:true,
+							event:animationEvent,
+							className:className,
+							structural:!isClassBased,
+							animations:animations,
+							done:onBeforeAnimationsComplete
+						});
+
+						//first we run the before animations and when all of those are complete
+						//then we perform the DOM operation and run the next set of animations
+						invokeRegisteredAnimationFns(animations, 'before', onBeforeAnimationsComplete);
+
+						function onBeforeAnimationsComplete(cancelled) {
+							fireDOMOperation();
+							if(cancelled === true) {
+								closeAnimation();
+								return;
+							}
+
+							//set the done function to the final done function
+							//so that the DOM event won't be executed twice by accident
+							//if the after animation is cancelled as well
+							var data = element.data(NG_ANIMATE_STATE);
+							if(data) {
+								data.done = closeAnimation;
+								element.data(NG_ANIMATE_STATE, data);
+							}
+							invokeRegisteredAnimationFns(animations, 'after', closeAnimation);
+						}
+
+						function invokeRegisteredAnimationFns(animations, phase, allAnimationFnsComplete) {
+							phase == 'after' ?
+									fireAfterCallbackAsync() :
+									fireBeforeCallbackAsync();
+
+							var endFnName = phase + 'End';
+							forEach(animations, function(animation, index) {
+								var animationPhaseCompleted = function() {
+									progress(index, phase);
+								};
+
+								//there are no before functions for enter + move since the DOM
+								//operations happen before the performAnimation method fires
+								if(phase == 'before' && (animationEvent == 'enter' || animationEvent == 'move')) {
+									animationPhaseCompleted();
+									return;
+								}
+
+								if(animation[phase]) {
+									animation[endFnName] = isClassBased ?
+											animation[phase](element, className, animationPhaseCompleted) :
+											animation[phase](element, animationPhaseCompleted);
+								} else {
+									animationPhaseCompleted();
+								}
+							});
+
+							function progress(index, phase) {
+								var phaseCompletionFlag = phase + 'Complete';
+								var currentAnimation = animations[index];
+								currentAnimation[phaseCompletionFlag] = true;
+								(currentAnimation[endFnName] || noop)();
+
+								for(var i=0;i<animations.length;i++) {
+									if(!animations[i][phaseCompletionFlag]) return;
+								}
+
+								allAnimationFnsComplete();
+							}
+						}
+
+						function fireDOMCallback(animationPhase) {
+							element.triggerHandler('$animate:' + animationPhase, {
+								event : animationEvent,
+								className : className
+							});
+						}
+
+						function fireBeforeCallbackAsync() {
+							async(function() {
+								fireDOMCallback('before');
+							});
+						}
+
+						function fireAfterCallbackAsync() {
+							async(function() {
+								fireDOMCallback('after');
+							});
+						}
+
+						function fireDoneCallbackAsync() {
+							doneCallback && async(doneCallback);
+						}
+
+						//it is less complicated to use a flag than managing and cancelling
+						//timeouts containing multiple callbacks.
+						function fireDOMOperation() {
+							if(!fireDOMOperation.hasBeenRun) {
+								fireDOMOperation.hasBeenRun = true;
+								domOperation();
+							}
+						}
+
+						function closeAnimation() {
+							if(!closeAnimation.hasBeenRun) {
+								closeAnimation.hasBeenRun = true;
+								var data = element.data(NG_ANIMATE_STATE);
+								if(data) {
+									/* only structural animations wait for reflow before removing an
+									 animation, but class-based animations don't. An example of this
+									 failing would be when a parent HTML tag has a ng-class attribute
+									 causing ALL directives below to skip animations during the digest */
+									if(isClassBased) {
+										cleanup(element);
+									} else {
+										data.closeAnimationTimeout = async(function() {
+											cleanup(element);
+										});
+										element.data(NG_ANIMATE_STATE, data);
+									}
+								}
+								fireDoneCallbackAsync();
+							}
+						}
+					}
+
+					function cancelChildAnimations(element) {
+						var node = extractElementNode(element);
+						forEach(node.querySelectorAll('.' + NG_ANIMATE_CLASS_NAME), function(element) {
+							element = angular.element(element);
+							var data = element.data(NG_ANIMATE_STATE);
+							if(data) {
+								cancelAnimations(data.animations);
+								cleanup(element);
+							}
+						});
+					}
+
+					function cancelAnimations(animations) {
+						var isCancelledFlag = true;
+						forEach(animations, function(animation) {
+							if(!animation.beforeComplete) {
+								(animation.beforeEnd || noop)(isCancelledFlag);
+							}
+							if(!animation.afterComplete) {
+								(animation.afterEnd || noop)(isCancelledFlag);
+							}
+						});
+					}
+
+					function cleanup(element) {
+						if(isMatchingElement(element, $rootElement)) {
+							if(!rootAnimateState.disabled) {
+								rootAnimateState.running = false;
+								rootAnimateState.structural = false;
+							}
+						} else {
+							element.removeClass(NG_ANIMATE_CLASS_NAME);
+							element.removeData(NG_ANIMATE_STATE);
+						}
+					}
+
+					function animationsDisabled(element, parentElement) {
+						if (rootAnimateState.disabled) return true;
+
+						if(isMatchingElement(element, $rootElement)) {
+							return rootAnimateState.disabled || rootAnimateState.running;
+						}
+
+						do {
+							//the element did not reach the root element which means that it
+							//is not apart of the DOM. Therefore there is no reason to do
+							//any animations on it
+							if(parentElement.length === 0) break;
+
+							var isRoot = isMatchingElement(parentElement, $rootElement);
+							var state = isRoot ? rootAnimateState : parentElement.data(NG_ANIMATE_STATE);
+							var result = state && (!!state.disabled || !!state.running);
+							if(isRoot || result) {
+								return result;
+							}
+
+							if(isRoot) return true;
+						}
+						while(parentElement = parentElement.parent());
+
+						return true;
+					}
+				}]);
+
+			$animateProvider.register('', ['$window', '$sniffer', '$timeout', '$$animateReflow',
+				function($window,   $sniffer,   $timeout,   $$animateReflow) {
+					// Detect proper transitionend/animationend event names.
+					var CSS_PREFIX = '', TRANSITION_PROP, TRANSITIONEND_EVENT, ANIMATION_PROP, ANIMATIONEND_EVENT;
+
+					// If unprefixed events are not supported but webkit-prefixed are, use the latter.
+					// Otherwise, just use W3C names, browsers not supporting them at all will just ignore them.
+					// Note: Chrome implements `window.onwebkitanimationend` and doesn't implement `window.onanimationend`
+					// but at the same time dispatches the `animationend` event and not `webkitAnimationEnd`.
+					// Register both events in case `window.onanimationend` is not supported because of that,
+					// do the same for `transitionend` as Safari is likely to exhibit similar behavior.
+					// Also, the only modern browser that uses vendor prefixes for transitions/keyframes is webkit
+					// therefore there is no reason to test anymore for other vendor prefixes: http://caniuse.com/#search=transition
+					if (window.ontransitionend === undefined && window.onwebkittransitionend !== undefined) {
+						CSS_PREFIX = '-webkit-';
+						TRANSITION_PROP = 'WebkitTransition';
+						TRANSITIONEND_EVENT = 'webkitTransitionEnd transitionend';
+					} else {
+						TRANSITION_PROP = 'transition';
+						TRANSITIONEND_EVENT = 'transitionend';
+					}
+
+					if (window.onanimationend === undefined && window.onwebkitanimationend !== undefined) {
+						CSS_PREFIX = '-webkit-';
+						ANIMATION_PROP = 'WebkitAnimation';
+						ANIMATIONEND_EVENT = 'webkitAnimationEnd animationend';
+					} else {
+						ANIMATION_PROP = 'animation';
+						ANIMATIONEND_EVENT = 'animationend';
+					}
+
+					var DURATION_KEY = 'Duration';
+					var PROPERTY_KEY = 'Property';
+					var DELAY_KEY = 'Delay';
+					var ANIMATION_ITERATION_COUNT_KEY = 'IterationCount';
+					var NG_ANIMATE_PARENT_KEY = '$$ngAnimateKey';
+					var NG_ANIMATE_CSS_DATA_KEY = '$$ngAnimateCSS3Data';
+					var ELAPSED_TIME_MAX_DECIMAL_PLACES = 3;
+					var CLOSING_TIME_BUFFER = 1.5;
+					var ONE_SECOND = 1000;
+
+					var animationCounter = 0;
+					var lookupCache = {};
+					var parentCounter = 0;
+					var animationReflowQueue = [];
+					var animationElementQueue = [];
+					var cancelAnimationReflow;
+					var closingAnimationTime = 0;
+					var timeOut = false;
+					function afterReflow(element, callback) {
+						if(cancelAnimationReflow) {
+							cancelAnimationReflow();
+						}
+
+						animationReflowQueue.push(callback);
+
+						var node = extractElementNode(element);
+						element = angular.element(node);
+						animationElementQueue.push(element);
+
+						var elementData = element.data(NG_ANIMATE_CSS_DATA_KEY);
+
+						var stagger = elementData.stagger;
+						var staggerTime = elementData.itemIndex * (Math.max(stagger.animationDelay, stagger.transitionDelay) || 0);
+
+						var animationTime = (elementData.maxDelay + elementData.maxDuration) * CLOSING_TIME_BUFFER;
+						closingAnimationTime = Math.max(closingAnimationTime, (staggerTime + animationTime) * ONE_SECOND);
+
+						//by placing a counter we can avoid an accidental
+						//race condition which may close an animation when
+						//a follow-up animation is midway in its animation
+						elementData.animationCount = animationCounter;
+
+						cancelAnimationReflow = $$animateReflow(function() {
+							forEach(animationReflowQueue, function(fn) {
+								fn();
+							});
+
+							//copy the list of elements so that successive
+							//animations won't conflict if they're added before
+							//the closing animation timeout has run
+							var elementQueueSnapshot = [];
+							var animationCounterSnapshot = animationCounter;
+							forEach(animationElementQueue, function(elm) {
+								elementQueueSnapshot.push(elm);
+							});
+
+							$timeout(function() {
+								closeAllAnimations(elementQueueSnapshot, animationCounterSnapshot);
+								elementQueueSnapshot = null;
+							}, closingAnimationTime, false);
+
+							animationReflowQueue = [];
+							animationElementQueue = [];
+							cancelAnimationReflow = null;
+							lookupCache = {};
+							closingAnimationTime = 0;
+							animationCounter++;
+						});
+					}
+
+					function closeAllAnimations(elements, count) {
+						forEach(elements, function(element) {
+							var elementData = element.data(NG_ANIMATE_CSS_DATA_KEY);
+							if(elementData && elementData.animationCount == count) {
+								(elementData.closeAnimationFn || noop)();
+							}
+						});
+					}
+
+					function getElementAnimationDetails(element, cacheKey) {
+						var data = cacheKey ? lookupCache[cacheKey] : null;
+						if(!data) {
+							var transitionDuration = 0;
+							var transitionDelay = 0;
+							var animationDuration = 0;
+							var animationDelay = 0;
+							var transitionDelayStyle;
+							var animationDelayStyle;
+							var transitionDurationStyle;
+							var transitionPropertyStyle;
+
+							//we want all the styles defined before and after
+							forEach(element, function(element) {
+								if (element.nodeType == ELEMENT_NODE) {
+									var elementStyles = $window.getComputedStyle(element) || {};
+
+									transitionDurationStyle = elementStyles[TRANSITION_PROP + DURATION_KEY];
+
+									transitionDuration = Math.max(parseMaxTime(transitionDurationStyle), transitionDuration);
+
+									transitionPropertyStyle = elementStyles[TRANSITION_PROP + PROPERTY_KEY];
+
+									transitionDelayStyle = elementStyles[TRANSITION_PROP + DELAY_KEY];
+
+									transitionDelay  = Math.max(parseMaxTime(transitionDelayStyle), transitionDelay);
+
+									animationDelayStyle = elementStyles[ANIMATION_PROP + DELAY_KEY];
+
+									animationDelay   = Math.max(parseMaxTime(animationDelayStyle), animationDelay);
+
+									var aDuration  = parseMaxTime(elementStyles[ANIMATION_PROP + DURATION_KEY]);
+
+									if(aDuration > 0) {
+										aDuration *= parseInt(elementStyles[ANIMATION_PROP + ANIMATION_ITERATION_COUNT_KEY], 10) || 1;
+									}
+
+									animationDuration = Math.max(aDuration, animationDuration);
+								}
+							});
+							data = {
+								total : 0,
+								transitionPropertyStyle: transitionPropertyStyle,
+								transitionDurationStyle: transitionDurationStyle,
+								transitionDelayStyle: transitionDelayStyle,
+								transitionDelay: transitionDelay,
+								transitionDuration: transitionDuration,
+								animationDelayStyle: animationDelayStyle,
+								animationDelay: animationDelay,
+								animationDuration: animationDuration
+							};
+							if(cacheKey) {
+								lookupCache[cacheKey] = data;
+							}
+						}
+						return data;
+					}
+
+					function parseMaxTime(str) {
+						var maxValue = 0;
+						var values = angular.isString(str) ?
+								str.split(/\s*,\s*/) :
+								[];
+						forEach(values, function(value) {
+							maxValue = Math.max(parseFloat(value) || 0, maxValue);
+						});
+						return maxValue;
+					}
+
+					function getCacheKey(element) {
+						var parentElement = element.parent();
+						var parentID = parentElement.data(NG_ANIMATE_PARENT_KEY);
+						if(!parentID) {
+							parentElement.data(NG_ANIMATE_PARENT_KEY, ++parentCounter);
+							parentID = parentCounter;
+						}
+						return parentID + '-' + extractElementNode(element).className;
+					}
+
+					function animateSetup(element, className, calculationDecorator) {
+						var cacheKey = getCacheKey(element);
+						var eventCacheKey = cacheKey + ' ' + className;
+						var stagger = {};
+						var itemIndex = lookupCache[eventCacheKey] ? ++lookupCache[eventCacheKey].total : 0;
+
+						if(itemIndex > 0) {
+							var staggerClassName = className + '-stagger';
+							var staggerCacheKey = cacheKey + ' ' + staggerClassName;
+							var applyClasses = !lookupCache[staggerCacheKey];
+
+							applyClasses && element.addClass(staggerClassName);
+
+							stagger = getElementAnimationDetails(element, staggerCacheKey);
+
+							applyClasses && element.removeClass(staggerClassName);
+						}
+
+						/* the animation itself may need to add/remove special CSS classes
+						 * before calculating the anmation styles */
+						calculationDecorator = calculationDecorator ||
+								function(fn) { return fn(); };
+
+						element.addClass(className);
+
+						var timings = calculationDecorator(function() {
+							return getElementAnimationDetails(element, eventCacheKey);
+						});
+
+						/* there is no point in performing a reflow if the animation
+						 timeout is empty (this would cause a flicker bug normally
+						 in the page. There is also no point in performing an animation
+						 that only has a delay and no duration */
+						var maxDelay = Math.max(timings.transitionDelay, timings.animationDelay);
+						var maxDuration = Math.max(timings.transitionDuration, timings.animationDuration);
+						if(maxDuration === 0) {
+							element.removeClass(className);
+							return false;
+						}
+
+						//temporarily disable the transition so that the enter styles
+						//don't animate twice (this is here to avoid a bug in Chrome/FF).
+						var activeClassName = '';
+						timings.transitionDuration > 0 ?
+								blockTransitions(element) :
+								blockKeyframeAnimations(element);
+
+						forEach(className.split(' '), function(klass, i) {
+							activeClassName += (i > 0 ? ' ' : '') + klass + '-active';
+						});
+
+						element.data(NG_ANIMATE_CSS_DATA_KEY, {
+							className : className,
+							activeClassName : activeClassName,
+							maxDuration : maxDuration,
+							maxDelay : maxDelay,
+							classes : className + ' ' + activeClassName,
+							timings : timings,
+							stagger : stagger,
+							itemIndex : itemIndex
+						});
+
+						return true;
+					}
+
+					function blockTransitions(element) {
+						extractElementNode(element).style[TRANSITION_PROP + PROPERTY_KEY] = 'none';
+					}
+
+					function blockKeyframeAnimations(element) {
+						extractElementNode(element).style[ANIMATION_PROP] = 'none 0s';
+					}
+
+					function unblockTransitions(element) {
+						var prop = TRANSITION_PROP + PROPERTY_KEY;
+						var node = extractElementNode(element);
+						if(node.style[prop] && node.style[prop].length > 0) {
+							node.style[prop] = '';
+						}
+					}
+
+					function unblockKeyframeAnimations(element) {
+						var prop = ANIMATION_PROP;
+						var node = extractElementNode(element);
+						if(node.style[prop] && node.style[prop].length > 0) {
+							node.style[prop] = '';
+						}
+					}
+
+					function animateRun(element, className, activeAnimationComplete) {
+						var elementData = element.data(NG_ANIMATE_CSS_DATA_KEY);
+						var node = extractElementNode(element);
+						if(node.className.indexOf(className) == -1 || !elementData) {
+							activeAnimationComplete();
+							return;
+						}
+
+						var timings = elementData.timings;
+						var stagger = elementData.stagger;
+						var maxDuration = elementData.maxDuration;
+						var activeClassName = elementData.activeClassName;
+						var maxDelayTime = Math.max(timings.transitionDelay, timings.animationDelay) * ONE_SECOND;
+						var startTime = Date.now();
+						var css3AnimationEvents = ANIMATIONEND_EVENT + ' ' + TRANSITIONEND_EVENT;
+						var itemIndex = elementData.itemIndex;
+
+						var style = '', appliedStyles = [];
+						if(timings.transitionDuration > 0) {
+							var propertyStyle = timings.transitionPropertyStyle;
+							if(propertyStyle.indexOf('all') == -1) {
+								style += CSS_PREFIX + 'transition-property: ' + propertyStyle + ';';
+								style += CSS_PREFIX + 'transition-duration: ' + timings.transitionDurationStyle + ';';
+								appliedStyles.push(CSS_PREFIX + 'transition-property');
+								appliedStyles.push(CSS_PREFIX + 'transition-duration');
+							}
+						}
+
+						if(itemIndex > 0) {
+							if(stagger.transitionDelay > 0 && stagger.transitionDuration === 0) {
+								var delayStyle = timings.transitionDelayStyle;
+								style += CSS_PREFIX + 'transition-delay: ' +
+										prepareStaggerDelay(delayStyle, stagger.transitionDelay, itemIndex) + '; ';
+								appliedStyles.push(CSS_PREFIX + 'transition-delay');
+							}
+
+							if(stagger.animationDelay > 0 && stagger.animationDuration === 0) {
+								style += CSS_PREFIX + 'animation-delay: ' +
+										prepareStaggerDelay(timings.animationDelayStyle, stagger.animationDelay, itemIndex) + '; ';
+								appliedStyles.push(CSS_PREFIX + 'animation-delay');
+							}
+						}
+
+						if(appliedStyles.length > 0) {
+							//the element being animated may sometimes contain comment nodes in
+							//the jqLite object, so we're safe to use a single variable to house
+							//the styles since there is always only one element being animated
+							var oldStyle = node.getAttribute('style') || '';
+							node.setAttribute('style', oldStyle + ' ' + style);
+						}
+
+						element.on(css3AnimationEvents, onAnimationProgress);
+						element.addClass(activeClassName);
+						elementData.closeAnimationFn = function() {
+							onEnd();
+							activeAnimationComplete();
+						};
+						return onEnd;
+
+						// This will automatically be called by $animate so
+						// there is no need to attach this internally to the
+						// timeout done method.
+						function onEnd(cancelled) {
+							element.off(css3AnimationEvents, onAnimationProgress);
+							element.removeClass(activeClassName);
+							animateClose(element, className);
+							var node = extractElementNode(element);
+							for (var i in appliedStyles) {
+								node.style.removeProperty(appliedStyles[i]);
+							}
+						}
+
+						function onAnimationProgress(event) {
+							event.stopPropagation();
+							var ev = event.originalEvent || event;
+							var timeStamp = ev.$manualTimeStamp || ev.timeStamp || Date.now();
+
+							/* Firefox (or possibly just Gecko) likes to not round values up
+							 * when a ms measurement is used for the animation */
+							var elapsedTime = parseFloat(ev.elapsedTime.toFixed(ELAPSED_TIME_MAX_DECIMAL_PLACES));
+
+							/* $manualTimeStamp is a mocked timeStamp value which is set
+							 * within browserTrigger(). This is only here so that tests can
+							 * mock animations properly. Real events fallback to event.timeStamp,
+							 * or, if they don't, then a timeStamp is automatically created for them.
+							 * We're checking to see if the timeStamp surpasses the expected delay,
+							 * but we're using elapsedTime instead of the timeStamp on the 2nd
+							 * pre-condition since animations sometimes close off early */
+							if(Math.max(timeStamp - startTime, 0) >= maxDelayTime && elapsedTime >= maxDuration) {
+								activeAnimationComplete();
+							}
+						}
+					}
+
+					function prepareStaggerDelay(delayStyle, staggerDelay, index) {
+						var style = '';
+						forEach(delayStyle.split(','), function(val, i) {
+							style += (i > 0 ? ',' : '') +
+									(index * staggerDelay + parseInt(val, 10)) + 's';
+						});
+						return style;
+					}
+
+					function animateBefore(element, className, calculationDecorator) {
+						if(animateSetup(element, className, calculationDecorator)) {
+							return function(cancelled) {
+								cancelled && animateClose(element, className);
+							};
+						}
+					}
+
+					function animateAfter(element, className, afterAnimationComplete) {
+						if(element.data(NG_ANIMATE_CSS_DATA_KEY)) {
+							return animateRun(element, className, afterAnimationComplete);
+						} else {
+							animateClose(element, className);
+							afterAnimationComplete();
+						}
+					}
+
+					function animate(element, className, animationComplete) {
+						//If the animateSetup function doesn't bother returning a
+						//cancellation function then it means that there is no animation
+						//to perform at all
+						var preReflowCancellation = animateBefore(element, className);
+						if(!preReflowCancellation) {
+							animationComplete();
+							return;
+						}
+
+						//There are two cancellation functions: one is before the first
+						//reflow animation and the second is during the active state
+						//animation. The first function will take care of removing the
+						//data from the element which will not make the 2nd animation
+						//happen in the first place
+						var cancel = preReflowCancellation;
+						afterReflow(element, function() {
+							unblockTransitions(element);
+							unblockKeyframeAnimations(element);
+							//once the reflow is complete then we point cancel to
+							//the new cancellation function which will remove all of the
+							//animation properties from the active animation
+							cancel = animateAfter(element, className, animationComplete);
+						});
+
+						return function(cancelled) {
+							(cancel || noop)(cancelled);
+						};
+					}
+
+					function animateClose(element, className) {
+						element.removeClass(className);
+						element.removeData(NG_ANIMATE_CSS_DATA_KEY);
+					}
+
+					return {
+						allowCancel : function(element, animationEvent, className) {
+							//always cancel the current animation if it is a
+							//structural animation
+							var oldClasses = (element.data(NG_ANIMATE_CSS_DATA_KEY) || {}).classes;
+							if(!oldClasses || ['enter','leave','move'].indexOf(animationEvent) >= 0) {
+								return true;
+							}
+
+							var parentElement = element.parent();
+							var clone = angular.element(extractElementNode(element).cloneNode());
+
+							//make the element super hidden and override any CSS style values
+							clone.attr('style','position:absolute; top:-9999px; left:-9999px');
+							clone.removeAttr('id');
+							clone.empty();
+
+							forEach(oldClasses.split(' '), function(klass) {
+								clone.removeClass(klass);
+							});
+
+							var suffix = animationEvent == 'addClass' ? '-add' : '-remove';
+							clone.addClass(suffixClasses(className, suffix));
+							parentElement.append(clone);
+
+							var timings = getElementAnimationDetails(clone);
+							clone.remove();
+
+							return Math.max(timings.transitionDuration, timings.animationDuration) > 0;
+						},
+
+						enter : function(element, animationCompleted) {
+							return animate(element, 'ng-enter', animationCompleted);
+						},
+
+						leave : function(element, animationCompleted) {
+							return animate(element, 'ng-leave', animationCompleted);
+						},
+
+						move : function(element, animationCompleted) {
+							return animate(element, 'ng-move', animationCompleted);
+						},
+
+						beforeAddClass : function(element, className, animationCompleted) {
+							var cancellationMethod = animateBefore(element, suffixClasses(className, '-add'), function(fn) {
+
+								/* when a CSS class is added to an element then the transition style that
+								 * is applied is the transition defined on the element when the CSS class
+								 * is added at the time of the animation. This is how CSS3 functions
+								 * outside of ngAnimate. */
+								element.addClass(className);
+								var timings = fn();
+								element.removeClass(className);
+								return timings;
+							});
+
+							if(cancellationMethod) {
+								afterReflow(element, function() {
+									unblockTransitions(element);
+									unblockKeyframeAnimations(element);
+									animationCompleted();
+								});
+								return cancellationMethod;
+							}
+							animationCompleted();
+						},
+
+						addClass : function(element, className, animationCompleted) {
+							return animateAfter(element, suffixClasses(className, '-add'), animationCompleted);
+						},
+
+						beforeRemoveClass : function(element, className, animationCompleted) {
+							var cancellationMethod = animateBefore(element, suffixClasses(className, '-remove'), function(fn) {
+								/* when classes are removed from an element then the transition style
+								 * that is applied is the transition defined on the element without the
+								 * CSS class being there. This is how CSS3 functions outside of ngAnimate.
+								 * http://plnkr.co/edit/j8OzgTNxHTb4n3zLyjGW?p=preview */
+								var klass = element.attr('class');
+								element.removeClass(className);
+								var timings = fn();
+								element.attr('class', klass);
+								return timings;
+							});
+
+							if(cancellationMethod) {
+								afterReflow(element, function() {
+									unblockTransitions(element);
+									unblockKeyframeAnimations(element);
+									animationCompleted();
+								});
+								return cancellationMethod;
+							}
+							animationCompleted();
+						},
+
+						removeClass : function(element, className, animationCompleted) {
+							return animateAfter(element, suffixClasses(className, '-remove'), animationCompleted);
+						}
+					};
+
+					function suffixClasses(classes, suffix) {
+						var className = '';
+						classes = angular.isArray(classes) ? classes : classes.split(/\s+/);
+						forEach(classes, function(klass, i) {
+							if(klass && klass.length > 0) {
+								className += (i > 0 ? ' ' : '') + klass + suffix;
+							}
+						});
+						return className;
+					}
+				}]);
+		}]);
+;/**
+ * @license AngularJS v1.2.11-build.2186+sha.766b3d5
+ * (c) 2010-2014 Google, Inc. http://angularjs.org
+ * License: MIT
+ */
+(function(window, angular, undefined) {'use strict';
+
+	/**
+	 * @ngdoc overview
+	 * @name ngTouch
+	 * @description
+	 *
+	 * # ngTouch
+	 *
+	 * The `ngTouch` module provides touch events and other helpers for touch-enabled devices.
+	 * The implementation is based on jQuery Mobile touch event handling
+	 * ([jquerymobile.com](http://jquerymobile.com/)).
+	 *
+	 * {@installModule touch}
+	 *
+	 * See {@link ngTouch.$swipe `$swipe`} for usage.
+	 *
+	 * <div doc-module-components="ngTouch"></div>
+	 *
+	 */
+
+// define ngTouch module
+	/* global -ngTouch */
+	var ngTouch = angular.module('ngTouch', []);
+
+	/* global ngTouch: false */
+
+	/**
+	 * @ngdoc object
+	 * @name ngTouch.$swipe
+	 *
+	 * @description
+	 * The `$swipe` service is a service that abstracts the messier details of hold-and-drag swipe
+	 * behavior, to make implementing swipe-related directives more convenient.
+	 *
+	 * Requires the {@link ngTouch `ngTouch`} module to be installed.
+	 *
+	 * `$swipe` is used by the `ngSwipeLeft` and `ngSwipeRight` directives in `ngTouch`, and by
+	 * `ngCarousel` in a separate component.
+	 *
+	 * # Usage
+	 * The `$swipe` service is an object with a single method: `bind`. `bind` takes an element
+	 * which is to be watched for swipes, and an object with four handler functions. See the
+	 * documentation for `bind` below.
+	 */
+
+	ngTouch.factory('$swipe', [function() {
+		// The total distance in any direction before we make the call on swipe vs. scroll.
+		var MOVE_BUFFER_RADIUS = 10;
+
+		function getCoordinates(event) {
+			var touches = event.touches && event.touches.length ? event.touches : [event];
+			var e = (event.changedTouches && event.changedTouches[0]) ||
+					(event.originalEvent && event.originalEvent.changedTouches &&
+							event.originalEvent.changedTouches[0]) ||
+					touches[0].originalEvent || touches[0];
+
+			return {
+				x: e.clientX,
+				y: e.clientY
+			};
+		}
+
+		return {
+			/**
+			 * @ngdoc method
+			 * @name ngTouch.$swipe#bind
+			 * @methodOf ngTouch.$swipe
+			 *
+			 * @description
+			 * The main method of `$swipe`. It takes an element to be watched for swipe motions, and an
+			 * object containing event handlers.
+			 *
+			 * The four events are `start`, `move`, `end`, and `cancel`. `start`, `move`, and `end`
+			 * receive as a parameter a coordinates object of the form `{ x: 150, y: 310 }`.
+			 *
+			 * `start` is called on either `mousedown` or `touchstart`. After this event, `$swipe` is
+			 * watching for `touchmove` or `mousemove` events. These events are ignored until the total
+			 * distance moved in either dimension exceeds a small threshold.
+			 *
+			 * Once this threshold is exceeded, either the horizontal or vertical delta is greater.
+			 * - If the horizontal distance is greater, this is a swipe and `move` and `end` events follow.
+			 * - If the vertical distance is greater, this is a scroll, and we let the browser take over.
+			 *   A `cancel` event is sent.
+			 *
+			 * `move` is called on `mousemove` and `touchmove` after the above logic has determined that
+			 * a swipe is in progress.
+			 *
+			 * `end` is called when a swipe is successfully completed with a `touchend` or `mouseup`.
+			 *
+			 * `cancel` is called either on a `touchcancel` from the browser, or when we begin scrolling
+			 * as described above.
+			 *
+			 */
+			bind: function(element, eventHandlers) {
+				// Absolute total movement, used to control swipe vs. scroll.
+				var totalX, totalY;
+				// Coordinates of the start position.
+				var startCoords;
+				// Last event's position.
+				var lastPos;
+				// Whether a swipe is active.
+				var active = false;
+
+				element.on('touchstart mousedown', function(event) {
+					startCoords = getCoordinates(event);
+					active = true;
+					totalX = 0;
+					totalY = 0;
+					lastPos = startCoords;
+					eventHandlers['start'] && eventHandlers['start'](startCoords, event);
+				});
+
+				element.on('touchcancel', function(event) {
+					active = false;
+					eventHandlers['cancel'] && eventHandlers['cancel'](event);
+				});
+
+				element.on('touchmove mousemove', function(event) {
+					if (!active) return;
+
+					// Android will send a touchcancel if it thinks we're starting to scroll.
+					// So when the total distance (+ or - or both) exceeds 10px in either direction,
+					// we either:
+					// - On totalX > totalY, we send preventDefault() and treat this as a swipe.
+					// - On totalY > totalX, we let the browser handle it as a scroll.
+
+					if (!startCoords) return;
+					var coords = getCoordinates(event);
+
+					totalX += Math.abs(coords.x - lastPos.x);
+					totalY += Math.abs(coords.y - lastPos.y);
+
+					lastPos = coords;
+
+					if (totalX < MOVE_BUFFER_RADIUS && totalY < MOVE_BUFFER_RADIUS) {
+						return;
+					}
+
+					// One of totalX or totalY has exceeded the buffer, so decide on swipe vs. scroll.
+					if (totalY > totalX) {
+						// Allow native scrolling to take over.
+						active = false;
+						eventHandlers['cancel'] && eventHandlers['cancel'](event);
+						return;
+					} else {
+						// Prevent the browser from scrolling.
+						event.preventDefault();
+						eventHandlers['move'] && eventHandlers['move'](coords, event);
+					}
+				});
+
+				element.on('touchend mouseup', function(event) {
+					if (!active) return;
+					active = false;
+					eventHandlers['end'] && eventHandlers['end'](getCoordinates(event), event);
+				});
+			}
+		};
+	}]);
+
+	/* global ngTouch: false */
+
+	/**
+	 * @ngdoc directive
+	 * @name ngTouch.directive:ngClick
+	 *
+	 * @description
+	 * A more powerful replacement for the default ngClick designed to be used on touchscreen
+	 * devices. Most mobile browsers wait about 300ms after a tap-and-release before sending
+	 * the click event. This version handles them immediately, and then prevents the
+	 * following click event from propagating.
+	 *
+	 * Requires the {@link ngTouch `ngTouch`} module to be installed.
+	 *
+	 * This directive can fall back to using an ordinary click event, and so works on desktop
+	 * browsers as well as mobile.
+	 *
+	 * This directive also sets the CSS class `ng-click-active` while the element is being held
+	 * down (by a mouse click or touch) so you can restyle the depressed element if you wish.
+	 *
+	 * @element ANY
+	 * @param {expression} ngClick {@link guide/expression Expression} to evaluate
+	 * upon tap. (Event object is available as `$event`)
+	 *
+	 * @example
+	 <doc:example>
+	 <doc:source>
+	 <button ng-click="count = count + 1" ng-init="count=0">
+	 Increment
+	 </button>
+	 count: {{ count }}
+	 </doc:source>
+	 </doc:example>
+	 */
+
+	ngTouch.config(['$provide', function($provide) {
+		$provide.decorator('ngClickDirective', ['$delegate', function($delegate) {
+			// drop the default ngClick directive
+			$delegate.shift();
+			return $delegate;
+		}]);
+	}]);
+
+	ngTouch.directive('ngClick', ['$parse', '$timeout', '$rootElement',
+		function($parse, $timeout, $rootElement) {
+			var TAP_DURATION = 750; // Shorter than 750ms is a tap, longer is a taphold or drag.
+			var MOVE_TOLERANCE = 12; // 12px seems to work in most mobile browsers.
+			var PREVENT_DURATION = 2500; // 2.5 seconds maximum from preventGhostClick call to click
+			var CLICKBUSTER_THRESHOLD = 25; // 25 pixels in any dimension is the limit for busting clicks.
+
+			var ACTIVE_CLASS_NAME = 'ng-click-active';
+			var lastPreventedTime;
+			var touchCoordinates;
+
+
+			// TAP EVENTS AND GHOST CLICKS
+			//
+			// Why tap events?
+			// Mobile browsers detect a tap, then wait a moment (usually ~300ms) to see if you're
+			// double-tapping, and then fire a click event.
+			//
+			// This delay sucks and makes mobile apps feel unresponsive.
+			// So we detect touchstart, touchmove, touchcancel and touchend ourselves and determine when
+			// the user has tapped on something.
+			//
+			// What happens when the browser then generates a click event?
+			// The browser, of course, also detects the tap and fires a click after a delay. This results in
+			// tapping/clicking twice. So we do "clickbusting" to prevent it.
+			//
+			// How does it work?
+			// We attach global touchstart and click handlers, that run during the capture (early) phase.
+			// So the sequence for a tap is:
+			// - global touchstart: Sets an "allowable region" at the point touched.
+			// - element's touchstart: Starts a touch
+			// (- touchmove or touchcancel ends the touch, no click follows)
+			// - element's touchend: Determines if the tap is valid (didn't move too far away, didn't hold
+			//   too long) and fires the user's tap handler. The touchend also calls preventGhostClick().
+			// - preventGhostClick() removes the allowable region the global touchstart created.
+			// - The browser generates a click event.
+			// - The global click handler catches the click, and checks whether it was in an allowable region.
+			//     - If preventGhostClick was called, the region will have been removed, the click is busted.
+			//     - If the region is still there, the click proceeds normally. Therefore clicks on links and
+			//       other elements without ngTap on them work normally.
+			//
+			// This is an ugly, terrible hack!
+			// Yeah, tell me about it. The alternatives are using the slow click events, or making our users
+			// deal with the ghost clicks, so I consider this the least of evils. Fortunately Angular
+			// encapsulates this ugly logic away from the user.
+			//
+			// Why not just put click handlers on the element?
+			// We do that too, just to be sure. The problem is that the tap event might have caused the DOM
+			// to change, so that the click fires in the same position but something else is there now. So
+			// the handlers are global and care only about coordinates and not elements.
+
+			// Checks if the coordinates are close enough to be within the region.
+			function hit(x1, y1, x2, y2) {
+				return Math.abs(x1 - x2) < CLICKBUSTER_THRESHOLD && Math.abs(y1 - y2) < CLICKBUSTER_THRESHOLD;
+			}
+
+			// Checks a list of allowable regions against a click location.
+			// Returns true if the click should be allowed.
+			// Splices out the allowable region from the list after it has been used.
+			function checkAllowableRegions(touchCoordinates, x, y) {
+				for (var i = 0; i < touchCoordinates.length; i += 2) {
+					if (hit(touchCoordinates[i], touchCoordinates[i+1], x, y)) {
+						touchCoordinates.splice(i, i + 2);
+						return true; // allowable region
+					}
+				}
+				return false; // No allowable region; bust it.
+			}
+
+			// Global click handler that prevents the click if it's in a bustable zone and preventGhostClick
+			// was called recently.
+			function onClick(event) {
+				if (Date.now() - lastPreventedTime > PREVENT_DURATION) {
+					return; // Too old.
+				}
+
+				var touches = event.touches && event.touches.length ? event.touches : [event];
+				var x = touches[0].clientX;
+				var y = touches[0].clientY;
+				// Work around desktop Webkit quirk where clicking a label will fire two clicks (on the label
+				// and on the input element). Depending on the exact browser, this second click we don't want
+				// to bust has either (0,0) or negative coordinates.
+				if (x < 1 && y < 1) {
+					return; // offscreen
+				}
+
+				// Look for an allowable region containing this click.
+				// If we find one, that means it was created by touchstart and not removed by
+				// preventGhostClick, so we don't bust it.
+				if (checkAllowableRegions(touchCoordinates, x, y)) {
+					return;
+				}
+
+				// If we didn't find an allowable region, bust the click.
+				event.stopPropagation();
+				event.preventDefault();
+
+				// Blur focused form elements
+				event.target && event.target.blur();
+			}
+
+
+			// Global touchstart handler that creates an allowable region for a click event.
+			// This allowable region can be removed by preventGhostClick if we want to bust it.
+			function onTouchStart(event) {
+				var touches = event.touches && event.touches.length ? event.touches : [event];
+				var x = touches[0].clientX;
+				var y = touches[0].clientY;
+				touchCoordinates.push(x, y);
+
+				$timeout(function() {
+					// Remove the allowable region.
+					for (var i = 0; i < touchCoordinates.length; i += 2) {
+						if (touchCoordinates[i] == x && touchCoordinates[i+1] == y) {
+							touchCoordinates.splice(i, i + 2);
+							return;
+						}
+					}
+				}, PREVENT_DURATION, false);
+			}
+
+			// On the first call, attaches some event handlers. Then whenever it gets called, it creates a
+			// zone around the touchstart where clicks will get busted.
+			function preventGhostClick(x, y) {
+				if (!touchCoordinates) {
+					$rootElement[0].addEventListener('click', onClick, true);
+					$rootElement[0].addEventListener('touchstart', onTouchStart, true);
+					touchCoordinates = [];
+				}
+
+				lastPreventedTime = Date.now();
+
+				checkAllowableRegions(touchCoordinates, x, y);
+			}
+
+			// Actual linking function.
+			return function(scope, element, attr) {
+				var clickHandler = $parse(attr.ngClick),
+						tapping = false,
+						tapElement,  // Used to blur the element after a tap.
+						startTime,   // Used to check if the tap was held too long.
+						touchStartX,
+						touchStartY;
+
+				function resetState() {
+					tapping = false;
+					element.removeClass(ACTIVE_CLASS_NAME);
+				}
+
+				element.on('touchstart', function(event) {
+					tapping = true;
+					tapElement = event.target ? event.target : event.srcElement; // IE uses srcElement.
+					// Hack for Safari, which can target text nodes instead of containers.
+					if(tapElement.nodeType == 3) {
+						tapElement = tapElement.parentNode;
+					}
+
+					element.addClass(ACTIVE_CLASS_NAME);
+
+					startTime = Date.now();
+
+					var touches = event.touches && event.touches.length ? event.touches : [event];
+					var e = touches[0].originalEvent || touches[0];
+					touchStartX = e.clientX;
+					touchStartY = e.clientY;
+				});
+
+				element.on('touchmove', function(event) {
+					resetState();
+				});
+
+				element.on('touchcancel', function(event) {
+					resetState();
+				});
+
+				element.on('touchend', function(event) {
+					var diff = Date.now() - startTime;
+
+					var touches = (event.changedTouches && event.changedTouches.length) ? event.changedTouches :
+							((event.touches && event.touches.length) ? event.touches : [event]);
+					var e = touches[0].originalEvent || touches[0];
+					var x = e.clientX;
+					var y = e.clientY;
+					var dist = Math.sqrt( Math.pow(x - touchStartX, 2) + Math.pow(y - touchStartY, 2) );
+
+					if (tapping && diff < TAP_DURATION && dist < MOVE_TOLERANCE) {
+						// Call preventGhostClick so the clickbuster will catch the corresponding click.
+						preventGhostClick(x, y);
+
+						// Blur the focused element (the button, probably) before firing the callback.
+						// This doesn't work perfectly on Android Chrome, but seems to work elsewhere.
+						// I couldn't get anything to work reliably on Android Chrome.
+						if (tapElement) {
+							tapElement.blur();
+						}
+
+						if (!angular.isDefined(attr.disabled) || attr.disabled === false) {
+							element.triggerHandler('click', [event]);
+						}
+					}
+
+					resetState();
+				});
+
+				// Hack for iOS Safari's benefit. It goes searching for onclick handlers and is liable to click
+				// something else nearby.
+				element.onclick = function(event) { };
+
+				// Actual click handler.
+				// There are three different kinds of clicks, only two of which reach this point.
+				// - On desktop browsers without touch events, their clicks will always come here.
+				// - On mobile browsers, the simulated "fast" click will call this.
+				// - But the browser's follow-up slow click will be "busted" before it reaches this handler.
+				// Therefore it's safe to use this directive on both mobile and desktop.
+				element.on('click', function(event, touchend) {
+					scope.$apply(function() {
+						clickHandler(scope, {$event: (touchend || event)});
+					});
+				});
+
+				element.on('mousedown', function(event) {
+					element.addClass(ACTIVE_CLASS_NAME);
+				});
+
+				element.on('mousemove mouseup', function(event) {
+					element.removeClass(ACTIVE_CLASS_NAME);
+				});
+
+			};
+		}]);
+
+	/* global ngTouch: false */
+
+	/**
+	 * @ngdoc directive
+	 * @name ngTouch.directive:ngSwipeLeft
+	 *
+	 * @description
+	 * Specify custom behavior when an element is swiped to the left on a touchscreen device.
+	 * A leftward swipe is a quick, right-to-left slide of the finger.
+	 * Though ngSwipeLeft is designed for touch-based devices, it will work with a mouse click and drag
+	 * too.
+	 *
+	 * Requires the {@link ngTouch `ngTouch`} module to be installed.
+	 *
+	 * @element ANY
+	 * @param {expression} ngSwipeLeft {@link guide/expression Expression} to evaluate
+	 * upon left swipe. (Event object is available as `$event`)
+	 *
+	 * @example
+	 <doc:example>
+	 <doc:source>
+	 <div ng-show="!showActions" ng-swipe-left="showActions = true">
+	 Some list content, like an email in the inbox
+	 </div>
+	 <div ng-show="showActions" ng-swipe-right="showActions = false">
+	 <button ng-click="reply()">Reply</button>
+	 <button ng-click="delete()">Delete</button>
+	 </div>
+	 </doc:source>
+	 </doc:example>
+	 */
+
+	/**
+	 * @ngdoc directive
+	 * @name ngTouch.directive:ngSwipeRight
+	 *
+	 * @description
+	 * Specify custom behavior when an element is swiped to the right on a touchscreen device.
+	 * A rightward swipe is a quick, left-to-right slide of the finger.
+	 * Though ngSwipeRight is designed for touch-based devices, it will work with a mouse click and drag
+	 * too.
+	 *
+	 * Requires the {@link ngTouch `ngTouch`} module to be installed.
+	 *
+	 * @element ANY
+	 * @param {expression} ngSwipeRight {@link guide/expression Expression} to evaluate
+	 * upon right swipe. (Event object is available as `$event`)
+	 *
+	 * @example
+	 <doc:example>
+	 <doc:source>
+	 <div ng-show="!showActions" ng-swipe-left="showActions = true">
+	 Some list content, like an email in the inbox
+	 </div>
+	 <div ng-show="showActions" ng-swipe-right="showActions = false">
+	 <button ng-click="reply()">Reply</button>
+	 <button ng-click="delete()">Delete</button>
+	 </div>
+	 </doc:source>
+	 </doc:example>
+	 */
+
+	function makeSwipeDirective(directiveName, direction, eventName) {
+		ngTouch.directive(directiveName, ['$parse', '$swipe', function($parse, $swipe) {
+			// The maximum vertical delta for a swipe should be less than 75px.
+			var MAX_VERTICAL_DISTANCE = 75;
+			// Vertical distance should not be more than a fraction of the horizontal distance.
+			var MAX_VERTICAL_RATIO = 0.3;
+			// At least a 30px lateral motion is necessary for a swipe.
+			var MIN_HORIZONTAL_DISTANCE = 30;
+
+			return function(scope, element, attr) {
+				var swipeHandler = $parse(attr[directiveName]);
+
+				var startCoords, valid;
+
+				function validSwipe(coords) {
+					// Check that it's within the coordinates.
+					// Absolute vertical distance must be within tolerances.
+					// Horizontal distance, we take the current X - the starting X.
+					// This is negative for leftward swipes and positive for rightward swipes.
+					// After multiplying by the direction (-1 for left, +1 for right), legal swipes
+					// (ie. same direction as the directive wants) will have a positive delta and
+					// illegal ones a negative delta.
+					// Therefore this delta must be positive, and larger than the minimum.
+					if (!startCoords) return false;
+					var deltaY = Math.abs(coords.y - startCoords.y);
+					var deltaX = (coords.x - startCoords.x) * direction;
+					return valid && // Short circuit for already-invalidated swipes.
+							deltaY < MAX_VERTICAL_DISTANCE &&
+							deltaX > 0 &&
+							deltaX > MIN_HORIZONTAL_DISTANCE &&
+							deltaY / deltaX < MAX_VERTICAL_RATIO;
+				}
+
+				$swipe.bind(element, {
+					'start': function(coords, event) {
+						startCoords = coords;
+						valid = true;
+					},
+					'cancel': function(event) {
+						valid = false;
+					},
+					'end': function(coords, event) {
+						if (validSwipe(coords)) {
+							scope.$apply(function() {
+								element.triggerHandler(eventName);
+								swipeHandler(scope, {$event: event});
+							});
+						}
+					}
+				});
+			};
+		}]);
+	}
+
+// Left is negative X-coordinate, right is positive.
+	makeSwipeDirective('ngSwipeLeft', -1, 'swipeleft');
+	makeSwipeDirective('ngSwipeRight', 1, 'swiperight');
+
+
+
+})(window, window.angular);
+;angular.module("globalControllers", [])
+
+
+.config(['$routeProvider','$locationProvider','$httpProvider',function($routeProvider,$locationProvider, $httpProvider){
+			$httpProvider.defaults.headers.get = {
+				'Accept' : 'application/json, text/javascript'
+			};
+			$routeProvider
+					.when('/Error', {
+						controller: 'ErrorController',
+						templateUrl : 'views/error.html'
+					})
+					.when('/SearchResults:term', {
+						controller : 'ResultsController',
+						templateUrl : 'views/search/searchResults.html'
+					})
+		}])
+
+.controller('PortalCancelController',['$scope',function($scope){
+	$scope.portalCancel = function(){
+		sessionStorage.clear();
+		window.location.replace("/");
+	};
+}])
+
+.controller('ErrorController', ['$scope', function($scope){
+			var err= sessionStorage.err;
+			if(err=== "500"){
+				$scope.error= "Sorry, our server is currently unavailable. Please try again later."
+			}
+			if(err=== "404"){
+				$scope.error= "Sorry, the requested page could not be found. Please check the URL and try again."
+			}
+			$scope.next= function(){
+				window.location.replace("/");
+			}
+}])
+
+.controller('MainNavigationController',['$scope','$location','MenuFactory',function($scope, $location, MenuFactory){
+			var a = angular.element('.mainNav');
+			$scope.menu = "Hide Menu";
+			$scope.$on('$locationChangeSuccess', function(){
+				$scope.test= "";
+			})
+			MenuFactory.menu({},{}, successcb, errorcb);
+			function successcb(data){
+				var a = data.slice(0,3)
+				$scope.mobiData= data;
+				$scope.menuLinks = data;
+				$scope.menuLinksss = a;
+			}
+			function errorcb(err){
+				console.log(err)
+			}
+		}])
+
+.controller('MoreResults', function($scope, ContactFactory){
+			$scope.showMore = function(){
+				var data = {
+					searchterm : sessionStorage.term,
+					startat : sessionStorage.startNext
+				}
+				var DTO ={
+					"oSearchAttributes":data
+				};
+				console.log("here")
+				ContactFactory.contactInfo({},DTO, cb, errorcb);
+			}
+			/*$('div.responseHold').bind('scroll', function(){
+			 if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight)
+			 {
+			 if($scope.showMore !== null){
+			 var data = {
+			 searchterm : sessionStorage.term,
+			 startat : sessionStorage.startNext
+			 }
+			 var DTO ={
+			 "oSearchAttributes":data
+			 };
+			 console.log("here")
+			 setTimeout(function(){
+			 ContactFactory.contactInfo({},DTO, cb, errorcb);
+			 }, 300)
+			 }
+			 }
+			 })*/
+			function cb(data){
+				console.log("here too")
+				var obj = angular.fromJson(data.d);
+				var theData = obj;
+				sessionStorage.startNext = obj.RES["@EN"];
+				if(theData.RES){
+					if(obj.RES["@EN"] === obj.RES.M){
+						$scope.areMore = false;
+						$scope.showMore= null;
+					}else{
+						$scope.areMore = true;
+					}
+					$scope.more = theData.RES.R;
+					if(theData.GM){
+						if(theData.GM.length > 0){
+							$scope.gmResponses = theData.GM;
+						}else{
+							$scope.gmResponses = [theData.GM];
+						}
+					}else{
+					}
+					angular.forEach($scope.more, function(value, key){
+						$('div.add').append('<div moreresults class="responses"><ul><li class="title">' + value.T + '</li><li>' + value.S + '</li><li <a href="' + value.U + '">' + value.U + '</a><li></ul></div>')
+					})
+				}else if(theData.SPELLING){
+					$scope.spellCheck = theData.spelling.Suggestion;
+				}else{
+					$scope.showRes = false;
+					$scope.showNone = true;
+					$scope.q = $routeParams.term.replace(":", "")
+				}
+			}
+			function errorcb(data){
+				$scope.err = data.status
+			}
+		})
+
+.controller('SearchController',['$scope','ContactFactory','$parse','results','$location', '$routeParams', function($scope, ContactFactory, $parse, results, $location, $routeParams){
+			$scope.search = function(){
+				sessionStorage.term = $scope.searchIn;
+				var q= "q=" + $scope.searchIn;
+				//$location.path('/SearchResults:' + $scope.searchIn);
+				window.location.replace("http://search.dmv.virginia.gov/search?mode=allwords&reload=1&debug=1&client=dmvnow_front&proxystylesheet=dmvnew_front&output=xml_no_dtd&site=default_collection&" + q + "&proxyreload=1&btnSearch=Search")
+			}
+}])
+
+.controller('ResultsController',['$scope','results','ContactFactory','$routeParams','$location', function($scope, results,ContactFactory, $routeParams,$location){
+			if(sessionStorage.term){
+				var data = {
+					searchterm : sessionStorage.term
+				}
+				var DTO ={
+					"oSearchAttributes":data
+				};
+				ContactFactory.contactInfo({},DTO, successcb, errorcb);
+			}else{
+				$location.path('/SearchResults')
+			}
+			function successcb(data){
+				var obj = angular.fromJson(data.d);
+				var theData = obj;
+				sessionStorage.term = obj.Q;
+				$scope.q = sessionStorage.term;
+				if(theData.RES){
+					var startNext = obj.RES["@EN"];
+					sessionStorage.startNext = startNext;
+					if(obj.RES["@EN"] === obj.RES.M){
+						$scope.areMore = false;
+					}else{
+						$scope.areMore = true;
+					}
+					$scope.showRes = true;
+					$scope.time = theData.TM;
+					$scope.total = theData.RES.M;
+					$scope.current = theData.RES["@EN"];
+					$scope.responses = theData.RES.R;
+					if(theData.GM){
+						if(theData.GM.length > 0){
+							$scope.gmResponses = theData.GM;
+						}else{
+							$scope.gmResponses = [theData.GM];
+						}
+					}else{
+						//do nothing
+					}
+				}else if(theData.Spelling){
+					$scope.spellCheck = theData.Spelling.Suggestion["@q"];
+					console.log($scope.spellCheck)
+					$scope.spellcheck = function(){
+						sessionStorage.term = $scope.spellCheck;
+						$location.path('/SearchResults:' + $scope.spellCheck)
+					}
+				}else{
+					$scope.showRes = false;
+					$scope.showNone = true;
+					$scope.q = $routeParams.term.replace(":", "")
+				}
+			}
+			//"RES": { "@SN": "1", "@EN": "8",
+			function errorcb(data){
+				$scope.err = data.status
+			}
+		}])
+
+
+;/**
  * @license AngularJS v1.2.1
  * (c) 2010-2012 Google, Inc. http://angularjs.org
  * License: MIT
@@ -31219,2136 +33447,7 @@ if ( typeof module === "object" && module && typeof module.exports === "object" 
 
 
 })(window, window.angular);
-;/**
- * @license AngularJS v1.2.8
- * (c) 2010-2014 Google, Inc. http://angularjs.org
- * License: MIT
- */
-(function(window, angular, undefined) {'use strict';
-
-	/* jshint maxlen: false */
-
-	/**
-	 * @ngdoc overview
-	 * @name ngAnimate
-	 * @description
-	 *
-	 * # ngAnimate
-	 *
-	 * The `ngAnimate` module provides support for JavaScript, CSS3 transition and CSS3 keyframe animation hooks within existing core and custom directives.
-	 *
-	 * {@installModule animate}
-	 *
-	 * <div doc-module-components="ngAnimate"></div>
-	 *
-	 * # Usage
-	 *
-	 * To see animations in action, all that is required is to define the appropriate CSS classes
-	 * or to register a JavaScript animation via the myModule.animation() function. The directives that support animation automatically are:
-	 * `ngRepeat`, `ngInclude`, `ngIf`, `ngSwitch`, `ngShow`, `ngHide`, `ngView` and `ngClass`. Custom directives can take advantage of animation
-	 * by using the `$animate` service.
-	 *
-	 * Below is a more detailed breakdown of the supported animation events provided by pre-existing ng directives:
-	 *
-	 * | Directive                                                 | Supported Animations                               |
-	 * |---------------------------------------------------------- |----------------------------------------------------|
-	 * | {@link ng.directive:ngRepeat#usage_animations ngRepeat}         | enter, leave and move                              |
-	 * | {@link ngRoute.directive:ngView#usage_animations ngView}        | enter and leave                                    |
-	 * | {@link ng.directive:ngInclude#usage_animations ngInclude}       | enter and leave                                    |
-	 * | {@link ng.directive:ngSwitch#usage_animations ngSwitch}         | enter and leave                                    |
-	 * | {@link ng.directive:ngIf#usage_animations ngIf}                 | enter and leave                                    |
-	 * | {@link ng.directive:ngClass#usage_animations ngClass}           | add and remove                                     |
-	 * | {@link ng.directive:ngShow#usage_animations ngShow & ngHide}    | add and remove (the ng-hide class value)           |
-	 *
-	 * You can find out more information about animations upon visiting each directive page.
-	 *
-	 * Below is an example of how to apply animations to a directive that supports animation hooks:
-	 *
-	 * <pre>
-	 * <style type="text/css">
-	 * .slide.ng-enter, .slide.ng-leave {
- *   -webkit-transition:0.5s linear all;
- *   transition:0.5s linear all;
- * }
-	 *
-	 * .slide.ng-enter { }        /&#42; starting animations for enter &#42;/
-	 * .slide.ng-enter-active { } /&#42; terminal animations for enter &#42;/
-	 * .slide.ng-leave { }        /&#42; starting animations for leave &#42;/
-	 * .slide.ng-leave-active { } /&#42; terminal animations for leave &#42;/
-	 * </style>
-	 *
-	 * <!--
-	 * the animate service will automatically add .ng-enter and .ng-leave to the element
-	 * to trigger the CSS transition/animations
-	 * -->
-	 * <ANY class="slide" ng-include="..."></ANY>
-	 * </pre>
-	 *
-	 * Keep in mind that if an animation is running, any child elements cannot be animated until the parent element's
-	 * animation has completed.
-	 *
-	 * <h2>CSS-defined Animations</h2>
-	 * The animate service will automatically apply two CSS classes to the animated element and these two CSS classes
-	 * are designed to contain the start and end CSS styling. Both CSS transitions and keyframe animations are supported
-	 * and can be used to play along with this naming structure.
-	 *
-	 * The following code below demonstrates how to perform animations using **CSS transitions** with Angular:
-	 *
-	 * <pre>
-	 * <style type="text/css">
-	 * /&#42;
-	 *  The animate class is apart of the element and the ng-enter class
-	 *  is attached to the element once the enter animation event is triggered
-	 * &#42;/
-	 * .reveal-animation.ng-enter {
- *  -webkit-transition: 1s linear all; /&#42; Safari/Chrome &#42;/
- *  transition: 1s linear all; /&#42; All other modern browsers and IE10+ &#42;/
- *
- *  /&#42; The animation preparation code &#42;/
- *  opacity: 0;
- * }
-	 *
-	 * /&#42;
-	 *  Keep in mind that you want to combine both CSS
-	 *  classes together to avoid any CSS-specificity
-	 *  conflicts
-	 * &#42;/
-	 * .reveal-animation.ng-enter.ng-enter-active {
- *  /&#42; The animation code itself &#42;/
- *  opacity: 1;
- * }
-	 * </style>
-	 *
-	 * <div class="view-container">
-	 *   <div ng-view class="reveal-animation"></div>
-	 * </div>
-	 * </pre>
-	 *
-	 * The following code below demonstrates how to perform animations using **CSS animations** with Angular:
-	 *
-	 * <pre>
-	 * <style type="text/css">
-	 * .reveal-animation.ng-enter {
- *   -webkit-animation: enter_sequence 1s linear; /&#42; Safari/Chrome &#42;/
- *   animation: enter_sequence 1s linear; /&#42; IE10+ and Future Browsers &#42;/
- * }
-	 * &#64-webkit-keyframes enter_sequence {
- *   from { opacity:0; }
- *   to { opacity:1; }
- * }
-	 * &#64keyframes enter_sequence {
- *   from { opacity:0; }
- *   to { opacity:1; }
- * }
-	 * </style>
-	 *
-	 * <div class="view-container">
-	 *   <div ng-view class="reveal-animation"></div>
-	 * </div>
-	 * </pre>
-	 *
-	 * Both CSS3 animations and transitions can be used together and the animate service will figure out the correct duration and delay timing.
-	 *
-	 * Upon DOM mutation, the event class is added first (something like `ng-enter`), then the browser prepares itself to add
-	 * the active class (in this case `ng-enter-active`) which then triggers the animation. The animation module will automatically
-	 * detect the CSS code to determine when the animation ends. Once the animation is over then both CSS classes will be
-	 * removed from the DOM. If a browser does not support CSS transitions or CSS animations then the animation will start and end
-	 * immediately resulting in a DOM element that is at its final state. This final state is when the DOM element
-	 * has no CSS transition/animation classes applied to it.
-	 *
-	 * <h3>CSS Staggering Animations</h3>
-	 * A Staggering animation is a collection of animations that are issued with a slight delay in between each successive operation resulting in a
-	 * curtain-like effect. The ngAnimate module, as of 1.2.0, supports staggering animations and the stagger effect can be
-	 * performed by creating a **ng-EVENT-stagger** CSS class and attaching that class to the base CSS class used for
-	 * the animation. The style property expected within the stagger class can either be a **transition-delay** or an
-	 * **animation-delay** property (or both if your animation contains both transitions and keyframe animations).
-	 *
-	 * <pre>
-	 * .my-animation.ng-enter {
- *   /&#42; standard transition code &#42;/
- *   -webkit-transition: 1s linear all;
- *   transition: 1s linear all;
- *   opacity:0;
- * }
-	 * .my-animation.ng-enter-stagger {
- *   /&#42; this will have a 100ms delay between each successive leave animation &#42;/
- *   -webkit-transition-delay: 0.1s;
- *   transition-delay: 0.1s;
- *
- *   /&#42; in case the stagger doesn't work then these two values
- *    must be set to 0 to avoid an accidental CSS inheritance &#42;/
- *   -webkit-transition-duration: 0s;
- *   transition-duration: 0s;
- * }
-	 * .my-animation.ng-enter.ng-enter-active {
- *   /&#42; standard transition styles &#42;/
- *   opacity:1;
- * }
-	 * </pre>
-	 *
-	 * Staggering animations work by default in ngRepeat (so long as the CSS class is defined). Outside of ngRepeat, to use staggering animations
-	 * on your own, they can be triggered by firing multiple calls to the same event on $animate. However, the restrictions surrounding this
-	 * are that each of the elements must have the same CSS className value as well as the same parent element. A stagger operation
-	 * will also be reset if more than 10ms has passed after the last animation has been fired.
-	 *
-	 * The following code will issue the **ng-leave-stagger** event on the element provided:
-	 *
-	 * <pre>
-	 * var kids = parent.children();
-	 *
-	 * $animate.leave(kids[0]); //stagger index=0
-	 * $animate.leave(kids[1]); //stagger index=1
-	 * $animate.leave(kids[2]); //stagger index=2
-	 * $animate.leave(kids[3]); //stagger index=3
-	 * $animate.leave(kids[4]); //stagger index=4
-	 *
-	 * $timeout(function() {
- *   //stagger has reset itself
- *   $animate.leave(kids[5]); //stagger index=0
- *   $animate.leave(kids[6]); //stagger index=1
- * }, 100, false);
-	 * </pre>
-	 *
-	 * Stagger animations are currently only supported within CSS-defined animations.
-	 *
-	 * <h2>JavaScript-defined Animations</h2>
-	 * In the event that you do not want to use CSS3 transitions or CSS3 animations or if you wish to offer animations on browsers that do not
-	 * yet support CSS transitions/animations, then you can make use of JavaScript animations defined inside of your AngularJS module.
-	 *
-	 * <pre>
-	 * //!annotate="YourApp" Your AngularJS Module|Replace this or ngModule with the module that you used to define your application.
-	 * var ngModule = angular.module('YourApp', ['ngAnimate']);
-	 * ngModule.animation('.my-crazy-animation', function() {
- *   return {
- *     enter: function(element, done) {
- *       //run the animation here and call done when the animation is complete
- *       return function(cancelled) {
- *         //this (optional) function will be called when the animation
- *         //completes or when the animation is cancelled (the cancelled
- *         //flag will be set to true if cancelled).
- *       };
- *     },
- *     leave: function(element, done) { },
- *     move: function(element, done) { },
- *
- *     //animation that can be triggered before the class is added
- *     beforeAddClass: function(element, className, done) { },
- *
- *     //animation that can be triggered after the class is added
- *     addClass: function(element, className, done) { },
- *
- *     //animation that can be triggered before the class is removed
- *     beforeRemoveClass: function(element, className, done) { },
- *
- *     //animation that can be triggered after the class is removed
- *     removeClass: function(element, className, done) { }
- *   };
- * });
-	 * </pre>
-	 *
-	 * JavaScript-defined animations are created with a CSS-like class selector and a collection of events which are set to run
-	 * a javascript callback function. When an animation is triggered, $animate will look for a matching animation which fits
-	 * the element's CSS class attribute value and then run the matching animation event function (if found).
-	 * In other words, if the CSS classes present on the animated element match any of the JavaScript animations then the callback function will
-	 * be executed. It should be also noted that only simple, single class selectors are allowed (compound class selectors are not supported).
-	 *
-	 * Within a JavaScript animation, an object containing various event callback animation functions is expected to be returned.
-	 * As explained above, these callbacks are triggered based on the animation event. Therefore if an enter animation is run,
-	 * and the JavaScript animation is found, then the enter callback will handle that animation (in addition to the CSS keyframe animation
-	 * or transition code that is defined via a stylesheet).
-	 *
-	 */
-
-	angular.module('ngAnimate', ['ng'])
-
-	/**
-	 * @ngdoc object
-	 * @name ngAnimate.$animateProvider
-	 * @description
-	 *
-	 * The `$animateProvider` allows developers to register JavaScript animation event handlers directly inside of a module.
-	 * When an animation is triggered, the $animate service will query the $animate service to find any animations that match
-	 * the provided name value.
-	 *
-	 * Requires the {@link ngAnimate `ngAnimate`} module to be installed.
-	 *
-	 * Please visit the {@link ngAnimate `ngAnimate`} module overview page learn more about how to use animations in your application.
-	 *
-	 */
-			.config(['$provide', '$animateProvider', function($provide, $animateProvider) {
-				var noop = angular.noop;
-				var forEach = angular.forEach;
-				var selectors = $animateProvider.$$selectors;
-
-				var ELEMENT_NODE = 1;
-				var NG_ANIMATE_STATE = '$$ngAnimateState';
-				var NG_ANIMATE_CLASS_NAME = 'ng-animate';
-				var rootAnimateState = {running: true};
-
-				function extractElementNode(element) {
-					for(var i = 0; i < element.length; i++) {
-						var elm = element[i];
-						if(elm.nodeType == ELEMENT_NODE) {
-							return elm;
-						}
-					}
-				}
-
-				function isMatchingElement(elm1, elm2) {
-					return extractElementNode(elm1) == extractElementNode(elm2);
-				}
-
-				$provide.decorator('$animate', ['$delegate', '$injector', '$sniffer', '$rootElement', '$timeout', '$rootScope', '$document',
-					function($delegate,   $injector,   $sniffer,   $rootElement,   $timeout,   $rootScope,   $document) {
-
-						$rootElement.data(NG_ANIMATE_STATE, rootAnimateState);
-
-						// disable animations during bootstrap, but once we bootstrapped, wait again
-						// for another digest until enabling animations. The reason why we digest twice
-						// is because all structural animations (enter, leave and move) all perform a
-						// post digest operation before animating. If we only wait for a single digest
-						// to pass then the structural animation would render its animation on page load.
-						// (which is what we're trying to avoid when the application first boots up.)
-						$rootScope.$$postDigest(function() {
-							$rootScope.$$postDigest(function() {
-								rootAnimateState.running = false;
-							});
-						});
-
-						var classNameFilter = $animateProvider.classNameFilter();
-						var isAnimatableClassName = !classNameFilter
-								? function() { return true; }
-								: function(className) {
-							return classNameFilter.test(className);
-						};
-
-						function lookup(name) {
-							if (name) {
-								var matches = [],
-										flagMap = {},
-										classes = name.substr(1).split('.');
-
-								//the empty string value is the default animation
-								//operation which performs CSS transition and keyframe
-								//animations sniffing. This is always included for each
-								//element animation procedure if the browser supports
-								//transitions and/or keyframe animations
-								if ($sniffer.transitions || $sniffer.animations) {
-									classes.push('');
-								}
-
-								for(var i=0; i < classes.length; i++) {
-									var klass = classes[i],
-											selectorFactoryName = selectors[klass];
-									if(selectorFactoryName && !flagMap[klass]) {
-										matches.push($injector.get(selectorFactoryName));
-										flagMap[klass] = true;
-									}
-								}
-								return matches;
-							}
-						}
-
-						/**
-						 * @ngdoc object
-						 * @name ngAnimate.$animate
-						 * @function
-						 *
-						 * @description
-						 * The `$animate` service provides animation detection support while performing DOM operations (enter, leave and move) as well as during addClass and removeClass operations.
-						 * When any of these operations are run, the $animate service
-						 * will examine any JavaScript-defined animations (which are defined by using the $animateProvider provider object)
-						 * as well as any CSS-defined animations against the CSS classes present on the element once the DOM operation is run.
-						 *
-						 * The `$animate` service is used behind the scenes with pre-existing directives and animation with these directives
-						 * will work out of the box without any extra configuration.
-						 *
-						 * Requires the {@link ngAnimate `ngAnimate`} module to be installed.
-						 *
-						 * Please visit the {@link ngAnimate `ngAnimate`} module overview page learn more about how to use animations in your application.
-						 *
-						 */
-						return {
-							/**
-							 * @ngdoc function
-							 * @name ngAnimate.$animate#enter
-							 * @methodOf ngAnimate.$animate
-							 * @function
-							 *
-							 * @description
-							 * Appends the element to the parentElement element that resides in the document and then runs the enter animation. Once
-							 * the animation is started, the following CSS classes will be present on the element for the duration of the animation:
-							 *
-							 * Below is a breakdown of each step that occurs during enter animation:
-							 *
-							 * | Animation Step                                                                               | What the element class attribute looks like |
-							 * |----------------------------------------------------------------------------------------------|---------------------------------------------|
-							 * | 1. $animate.enter(...) is called                                                             | class="my-animation"                        |
-							 * | 2. element is inserted into the parentElement element or beside the afterElement element     | class="my-animation"                        |
-							 * | 3. $animate runs any JavaScript-defined animations on the element                            | class="my-animation ng-animate"             |
-							 * | 4. the .ng-enter class is added to the element                                               | class="my-animation ng-animate ng-enter"    |
-							 * | 5. $animate scans the element styles to get the CSS transition/animation duration and delay  | class="my-animation ng-animate ng-enter"    |
-							 * | 6. $animate waits for 10ms (this performs a reflow)                                          | class="my-animation ng-animate ng-enter"    |
-							 * | 7. the .ng-enter-active and .ng-animate-active classes are added (this triggers the CSS transition/animation) | class="my-animation ng-animate ng-animate-active ng-enter ng-enter-active" |
-							 * | 8. $animate waits for X milliseconds for the animation to complete                           | class="my-animation ng-animate ng-animate-active ng-enter ng-enter-active" |
-							 * | 9. The animation ends and all generated CSS classes are removed from the element             | class="my-animation"                        |
-							 * | 10. The doneCallback() callback is fired (if provided)                                       | class="my-animation"                        |
-							 *
-							 * @param {jQuery/jqLite element} element the element that will be the focus of the enter animation
-							 * @param {jQuery/jqLite element} parentElement the parent element of the element that will be the focus of the enter animation
-							 * @param {jQuery/jqLite element} afterElement the sibling element (which is the previous element) of the element that will be the focus of the enter animation
-							 * @param {function()=} doneCallback the callback function that will be called once the animation is complete
-							 */
-							enter : function(element, parentElement, afterElement, doneCallback) {
-								this.enabled(false, element);
-								$delegate.enter(element, parentElement, afterElement);
-								$rootScope.$$postDigest(function() {
-									performAnimation('enter', 'ng-enter', element, parentElement, afterElement, noop, doneCallback);
-								});
-							},
-
-							/**
-							 * @ngdoc function
-							 * @name ngAnimate.$animate#leave
-							 * @methodOf ngAnimate.$animate
-							 * @function
-							 *
-							 * @description
-							 * Runs the leave animation operation and, upon completion, removes the element from the DOM. Once
-							 * the animation is started, the following CSS classes will be added for the duration of the animation:
-							 *
-							 * Below is a breakdown of each step that occurs during leave animation:
-							 *
-							 * | Animation Step                                                                               | What the element class attribute looks like |
-							 * |----------------------------------------------------------------------------------------------|---------------------------------------------|
-							 * | 1. $animate.leave(...) is called                                                             | class="my-animation"                        |
-							 * | 2. $animate runs any JavaScript-defined animations on the element                            | class="my-animation ng-animate"             |
-							 * | 3. the .ng-leave class is added to the element                                               | class="my-animation ng-animate ng-leave"    |
-							 * | 4. $animate scans the element styles to get the CSS transition/animation duration and delay  | class="my-animation ng-animate ng-leave"    |
-							 * | 5. $animate waits for 10ms (this performs a reflow)                                          | class="my-animation ng-animate ng-leave"    |
-							 * | 6. the .ng-leave-active and .ng-animate-active classes is added (this triggers the CSS transition/animation) | class="my-animation ng-animate ng-animate-active ng-leave ng-leave-active" |
-							 * | 7. $animate waits for X milliseconds for the animation to complete                           | class="my-animation ng-animate ng-animate-active ng-leave ng-leave-active" |
-							 * | 8. The animation ends and all generated CSS classes are removed from the element             | class="my-animation"                        |
-							 * | 9. The element is removed from the DOM                                                       | ...                                         |
-							 * | 10. The doneCallback() callback is fired (if provided)                                       | ...                                         |
-							 *
-							 * @param {jQuery/jqLite element} element the element that will be the focus of the leave animation
-							 * @param {function()=} doneCallback the callback function that will be called once the animation is complete
-							 */
-							leave : function(element, doneCallback) {
-								cancelChildAnimations(element);
-								this.enabled(false, element);
-								$rootScope.$$postDigest(function() {
-									performAnimation('leave', 'ng-leave', element, null, null, function() {
-										$delegate.leave(element);
-									}, doneCallback);
-								});
-							},
-
-							/**
-							 * @ngdoc function
-							 * @name ngAnimate.$animate#move
-							 * @methodOf ngAnimate.$animate
-							 * @function
-							 *
-							 * @description
-							 * Fires the move DOM operation. Just before the animation starts, the animate service will either append it into the parentElement container or
-							 * add the element directly after the afterElement element if present. Then the move animation will be run. Once
-							 * the animation is started, the following CSS classes will be added for the duration of the animation:
-							 *
-							 * Below is a breakdown of each step that occurs during move animation:
-							 *
-							 * | Animation Step                                                                               | What the element class attribute looks like |
-							 * |----------------------------------------------------------------------------------------------|---------------------------------------------|
-							 * | 1. $animate.move(...) is called                                                              | class="my-animation"                        |
-							 * | 2. element is moved into the parentElement element or beside the afterElement element        | class="my-animation"                        |
-							 * | 3. $animate runs any JavaScript-defined animations on the element                            | class="my-animation ng-animate"             |
-							 * | 4. the .ng-move class is added to the element                                                | class="my-animation ng-animate ng-move"     |
-							 * | 5. $animate scans the element styles to get the CSS transition/animation duration and delay  | class="my-animation ng-animate ng-move"     |
-							 * | 6. $animate waits for 10ms (this performs a reflow)                                          | class="my-animation ng-animate ng-move"     |
-							 * | 7. the .ng-move-active and .ng-animate-active classes is added (this triggers the CSS transition/animation) | class="my-animation ng-animate ng-animate-active ng-move ng-move-active" |
-							 * | 8. $animate waits for X milliseconds for the animation to complete                           | class="my-animation ng-animate ng-animate-active ng-move ng-move-active" |
-							 * | 9. The animation ends and all generated CSS classes are removed from the element             | class="my-animation"                        |
-							 * | 10. The doneCallback() callback is fired (if provided)                                       | class="my-animation"                        |
-							 *
-							 * @param {jQuery/jqLite element} element the element that will be the focus of the move animation
-							 * @param {jQuery/jqLite element} parentElement the parentElement element of the element that will be the focus of the move animation
-							 * @param {jQuery/jqLite element} afterElement the sibling element (which is the previous element) of the element that will be the focus of the move animation
-							 * @param {function()=} doneCallback the callback function that will be called once the animation is complete
-							 */
-							move : function(element, parentElement, afterElement, doneCallback) {
-								cancelChildAnimations(element);
-								this.enabled(false, element);
-								$delegate.move(element, parentElement, afterElement);
-								$rootScope.$$postDigest(function() {
-									performAnimation('move', 'ng-move', element, parentElement, afterElement, noop, doneCallback);
-								});
-							},
-
-							/**
-							 * @ngdoc function
-							 * @name ngAnimate.$animate#addClass
-							 * @methodOf ngAnimate.$animate
-							 *
-							 * @description
-							 * Triggers a custom animation event based off the className variable and then attaches the className value to the element as a CSS class.
-							 * Unlike the other animation methods, the animate service will suffix the className value with {@type -add} in order to provide
-							 * the animate service the setup and active CSS classes in order to trigger the animation (this will be skipped if no CSS transitions
-							 * or keyframes are defined on the -add or base CSS class).
-							 *
-							 * Below is a breakdown of each step that occurs during addClass animation:
-							 *
-							 * | Animation Step                                                                                 | What the element class attribute looks like |
-							 * |------------------------------------------------------------------------------------------------|---------------------------------------------|
-							 * | 1. $animate.addClass(element, 'super') is called                                               | class="my-animation"                        |
-							 * | 2. $animate runs any JavaScript-defined animations on the element                              | class="my-animation ng-animate"             |
-							 * | 3. the .super-add class are added to the element                                               | class="my-animation ng-animate super-add"   |
-							 * | 4. $animate scans the element styles to get the CSS transition/animation duration and delay    | class="my-animation ng-animate super-add"   |
-							 * | 5. $animate waits for 10ms (this performs a reflow)                                            | class="my-animation ng-animate super-add"   |
-							 * | 6. the .super, .super-add-active and .ng-animate-active classes are added (this triggers the CSS transition/animation) | class="my-animation ng-animate ng-animate-active super super-add super-add-active"          |
-							 * | 7. $animate waits for X milliseconds for the animation to complete                             | class="my-animation super-add super-add-active"  |
-							 * | 8. The animation ends and all generated CSS classes are removed from the element               | class="my-animation super"                  |
-							 * | 9. The super class is kept on the element                                                      | class="my-animation super"                  |
-							 * | 10. The doneCallback() callback is fired (if provided)                                         | class="my-animation super"                  |
-							 *
-							 * @param {jQuery/jqLite element} element the element that will be animated
-							 * @param {string} className the CSS class that will be added to the element and then animated
-							 * @param {function()=} doneCallback the callback function that will be called once the animation is complete
-							 */
-							addClass : function(element, className, doneCallback) {
-								performAnimation('addClass', className, element, null, null, function() {
-									$delegate.addClass(element, className);
-								}, doneCallback);
-							},
-
-							/**
-							 * @ngdoc function
-							 * @name ngAnimate.$animate#removeClass
-							 * @methodOf ngAnimate.$animate
-							 *
-							 * @description
-							 * Triggers a custom animation event based off the className variable and then removes the CSS class provided by the className value
-							 * from the element. Unlike the other animation methods, the animate service will suffix the className value with {@type -remove} in
-							 * order to provide the animate service the setup and active CSS classes in order to trigger the animation (this will be skipped if
-							 * no CSS transitions or keyframes are defined on the -remove or base CSS classes).
-							 *
-							 * Below is a breakdown of each step that occurs during removeClass animation:
-							 *
-							 * | Animation Step                                                                                | What the element class attribute looks like     |
-							 * |-----------------------------------------------------------------------------------------------|---------------------------------------------|
-							 * | 1. $animate.removeClass(element, 'super') is called                                           | class="my-animation super"                  |
-							 * | 2. $animate runs any JavaScript-defined animations on the element                             | class="my-animation super ng-animate"       |
-							 * | 3. the .super-remove class are added to the element                                           | class="my-animation super ng-animate super-remove"|
-							 * | 4. $animate scans the element styles to get the CSS transition/animation duration and delay   | class="my-animation super ng-animate super-remove"   |
-							 * | 5. $animate waits for 10ms (this performs a reflow)                                           | class="my-animation super ng-animate super-remove"   |
-							 * | 6. the .super-remove-active and .ng-animate-active classes are added and .super is removed (this triggers the CSS transition/animation) | class="my-animation ng-animate ng-animate-active super-remove super-remove-active"          |
-							 * | 7. $animate waits for X milliseconds for the animation to complete                            | class="my-animation ng-animate ng-animate-active super-remove super-remove-active"   |
-							 * | 8. The animation ends and all generated CSS classes are removed from the element              | class="my-animation"                        |
-							 * | 9. The doneCallback() callback is fired (if provided)                                         | class="my-animation"                        |
-							 *
-							 *
-							 * @param {jQuery/jqLite element} element the element that will be animated
-							 * @param {string} className the CSS class that will be animated and then removed from the element
-							 * @param {function()=} doneCallback the callback function that will be called once the animation is complete
-							 */
-							removeClass : function(element, className, doneCallback) {
-								performAnimation('removeClass', className, element, null, null, function() {
-									$delegate.removeClass(element, className);
-								}, doneCallback);
-							},
-
-							/**
-							 * @ngdoc function
-							 * @name ngAnimate.$animate#enabled
-							 * @methodOf ngAnimate.$animate
-							 * @function
-							 *
-							 * @param {boolean=} value If provided then set the animation on or off.
-							 * @param {jQuery/jqLite element=} element If provided then the element will be used to represent the enable/disable operation
-							 * @return {boolean} Current animation state.
-							 *
-							 * @description
-							 * Globally enables/disables animations.
-							 *
-							 */
-							enabled : function(value, element) {
-								switch(arguments.length) {
-									case 2:
-										if(value) {
-											cleanup(element);
-										} else {
-											var data = element.data(NG_ANIMATE_STATE) || {};
-											data.disabled = true;
-											element.data(NG_ANIMATE_STATE, data);
-										}
-										break;
-
-									case 1:
-										rootAnimateState.disabled = !value;
-										break;
-
-									default:
-										value = !rootAnimateState.disabled;
-										break;
-								}
-								return !!value;
-							}
-						};
-
-						/*
-						 all animations call this shared animation triggering function internally.
-						 The animationEvent variable refers to the JavaScript animation event that will be triggered
-						 and the className value is the name of the animation that will be applied within the
-						 CSS code. Element, parentElement and afterElement are provided DOM elements for the animation
-						 and the onComplete callback will be fired once the animation is fully complete.
-						 */
-						function performAnimation(animationEvent, className, element, parentElement, afterElement, domOperation, doneCallback) {
-							var currentClassName, classes, node = extractElementNode(element);
-							if(node) {
-								currentClassName = node.className;
-								classes = currentClassName + ' ' + className;
-							}
-
-							//transcluded directives may sometimes fire an animation using only comment nodes
-							//best to catch this early on to prevent any animation operations from occurring
-							if(!node || !isAnimatableClassName(classes)) {
-								fireDOMOperation();
-								closeAnimation();
-								return;
-							}
-
-							var animationLookup = (' ' + classes).replace(/\s+/g,'.');
-							if (!parentElement) {
-								parentElement = afterElement ? afterElement.parent() : element.parent();
-							}
-
-							var matches = lookup(animationLookup);
-							var isClassBased = animationEvent == 'addClass' || animationEvent == 'removeClass';
-							var ngAnimateState = element.data(NG_ANIMATE_STATE) || {};
-
-							//skip the animation if animations are disabled, a parent is already being animated,
-							//the element is not currently attached to the document body or then completely close
-							//the animation if any matching animations are not found at all.
-							//NOTE: IE8 + IE9 should close properly (run closeAnimation()) in case a NO animation is not found.
-							if (animationsDisabled(element, parentElement) || matches.length === 0) {
-								fireDOMOperation();
-								closeAnimation();
-								return;
-							}
-
-							var animations = [];
-
-							//only add animations if the currently running animation is not structural
-							//or if there is no animation running at all
-							var allowAnimations = isClassBased ?
-									!ngAnimateState.disabled && (!ngAnimateState.running || !ngAnimateState.structural) :
-									true;
-
-							if(allowAnimations) {
-								forEach(matches, function(animation) {
-									//add the animation to the queue to if it is allowed to be cancelled
-									if(!animation.allowCancel || animation.allowCancel(element, animationEvent, className)) {
-										var beforeFn, afterFn = animation[animationEvent];
-
-										//Special case for a leave animation since there is no point in performing an
-										//animation on a element node that has already been removed from the DOM
-										if(animationEvent == 'leave') {
-											beforeFn = afterFn;
-											afterFn = null; //this must be falsy so that the animation is skipped for leave
-										} else {
-											beforeFn = animation['before' + animationEvent.charAt(0).toUpperCase() + animationEvent.substr(1)];
-										}
-										animations.push({
-											before : beforeFn,
-											after : afterFn
-										});
-									}
-								});
-							}
-
-							//this would mean that an animation was not allowed so let the existing
-							//animation do it's thing and close this one early
-							if(animations.length === 0) {
-								fireDOMOperation();
-								fireDoneCallbackAsync();
-								return;
-							}
-
-							//this value will be searched for class-based CSS className lookup. Therefore,
-							//we prefix and suffix the current className value with spaces to avoid substring
-							//lookups of className tokens
-							var futureClassName = ' ' + currentClassName + ' ';
-							if(ngAnimateState.running) {
-								//if an animation is currently running on the element then lets take the steps
-								//to cancel that animation and fire any required callbacks
-								$timeout.cancel(ngAnimateState.closeAnimationTimeout);
-								cleanup(element);
-								cancelAnimations(ngAnimateState.animations);
-
-								//if the class is removed during the reflow then it will revert the styles temporarily
-								//back to the base class CSS styling causing a jump-like effect to occur. This check
-								//here ensures that the domOperation is only performed after the reflow has commenced
-								if(ngAnimateState.beforeComplete) {
-									(ngAnimateState.done || noop)(true);
-								} else if(isClassBased && !ngAnimateState.structural) {
-									//class-based animations will compare element className values after cancelling the
-									//previous animation to see if the element properties already contain the final CSS
-									//class and if so then the animation will be skipped. Since the domOperation will
-									//be performed only after the reflow is complete then our element's className value
-									//will be invalid. Therefore the same string manipulation that would occur within the
-									//DOM operation will be performed below so that the class comparison is valid...
-									futureClassName = ngAnimateState.event == 'removeClass' ?
-											futureClassName.replace(ngAnimateState.className, '') :
-											futureClassName + ngAnimateState.className + ' ';
-								}
-							}
-
-							//There is no point in perform a class-based animation if the element already contains
-							//(on addClass) or doesn't contain (on removeClass) the className being animated.
-							//The reason why this is being called after the previous animations are cancelled
-							//is so that the CSS classes present on the element can be properly examined.
-							var classNameToken = ' ' + className + ' ';
-							if((animationEvent == 'addClass'    && futureClassName.indexOf(classNameToken) >= 0) ||
-									(animationEvent == 'removeClass' && futureClassName.indexOf(classNameToken) == -1)) {
-								fireDOMOperation();
-								fireDoneCallbackAsync();
-								return;
-							}
-
-							//the ng-animate class does nothing, but it's here to allow for
-							//parent animations to find and cancel child animations when needed
-							element.addClass(NG_ANIMATE_CLASS_NAME);
-
-							element.data(NG_ANIMATE_STATE, {
-								running:true,
-								event:animationEvent,
-								className:className,
-								structural:!isClassBased,
-								animations:animations,
-								done:onBeforeAnimationsComplete
-							});
-
-							//first we run the before animations and when all of those are complete
-							//then we perform the DOM operation and run the next set of animations
-							invokeRegisteredAnimationFns(animations, 'before', onBeforeAnimationsComplete);
-
-							function onBeforeAnimationsComplete(cancelled) {
-								fireDOMOperation();
-								if(cancelled === true) {
-									closeAnimation();
-									return;
-								}
-
-								//set the done function to the final done function
-								//so that the DOM event won't be executed twice by accident
-								//if the after animation is cancelled as well
-								var data = element.data(NG_ANIMATE_STATE);
-								if(data) {
-									data.done = closeAnimation;
-									element.data(NG_ANIMATE_STATE, data);
-								}
-								invokeRegisteredAnimationFns(animations, 'after', closeAnimation);
-							}
-
-							function invokeRegisteredAnimationFns(animations, phase, allAnimationFnsComplete) {
-								var endFnName = phase + 'End';
-								forEach(animations, function(animation, index) {
-									var animationPhaseCompleted = function() {
-										progress(index, phase);
-									};
-
-									//there are no before functions for enter + move since the DOM
-									//operations happen before the performAnimation method fires
-									if(phase == 'before' && (animationEvent == 'enter' || animationEvent == 'move')) {
-										animationPhaseCompleted();
-										return;
-									}
-
-									if(animation[phase]) {
-										animation[endFnName] = isClassBased ?
-												animation[phase](element, className, animationPhaseCompleted) :
-												animation[phase](element, animationPhaseCompleted);
-									} else {
-										animationPhaseCompleted();
-									}
-								});
-
-								function progress(index, phase) {
-									var phaseCompletionFlag = phase + 'Complete';
-									var currentAnimation = animations[index];
-									currentAnimation[phaseCompletionFlag] = true;
-									(currentAnimation[endFnName] || noop)();
-
-									for(var i=0;i<animations.length;i++) {
-										if(!animations[i][phaseCompletionFlag]) return;
-									}
-
-									allAnimationFnsComplete();
-								}
-							}
-
-							function fireDoneCallbackAsync() {
-								doneCallback && $timeout(doneCallback, 0, false);
-							}
-
-							//it is less complicated to use a flag than managing and cancelling
-							//timeouts containing multiple callbacks.
-							function fireDOMOperation() {
-								if(!fireDOMOperation.hasBeenRun) {
-									fireDOMOperation.hasBeenRun = true;
-									domOperation();
-								}
-							}
-
-							function closeAnimation() {
-								if(!closeAnimation.hasBeenRun) {
-									closeAnimation.hasBeenRun = true;
-									var data = element.data(NG_ANIMATE_STATE);
-									if(data) {
-										/* only structural animations wait for reflow before removing an
-										 animation, but class-based animations don't. An example of this
-										 failing would be when a parent HTML tag has a ng-class attribute
-										 causing ALL directives below to skip animations during the digest */
-										if(isClassBased) {
-											cleanup(element);
-										} else {
-											data.closeAnimationTimeout = $timeout(function() {
-												cleanup(element);
-											}, 0, false);
-											element.data(NG_ANIMATE_STATE, data);
-										}
-									}
-									fireDoneCallbackAsync();
-								}
-							}
-						}
-
-						function cancelChildAnimations(element) {
-							var node = extractElementNode(element);
-							forEach(node.querySelectorAll('.' + NG_ANIMATE_CLASS_NAME), function(element) {
-								element = angular.element(element);
-								var data = element.data(NG_ANIMATE_STATE);
-								if(data) {
-									cancelAnimations(data.animations);
-									cleanup(element);
-								}
-							});
-						}
-
-						function cancelAnimations(animations) {
-							var isCancelledFlag = true;
-							forEach(animations, function(animation) {
-								if(!animations.beforeComplete) {
-									(animation.beforeEnd || noop)(isCancelledFlag);
-								}
-								if(!animations.afterComplete) {
-									(animation.afterEnd || noop)(isCancelledFlag);
-								}
-							});
-						}
-
-						function cleanup(element) {
-							if(isMatchingElement(element, $rootElement)) {
-								if(!rootAnimateState.disabled) {
-									rootAnimateState.running = false;
-									rootAnimateState.structural = false;
-								}
-							} else {
-								element.removeClass(NG_ANIMATE_CLASS_NAME);
-								element.removeData(NG_ANIMATE_STATE);
-							}
-						}
-
-						function animationsDisabled(element, parentElement) {
-							if (rootAnimateState.disabled) return true;
-
-							if(isMatchingElement(element, $rootElement)) {
-								return rootAnimateState.disabled || rootAnimateState.running;
-							}
-
-							do {
-								//the element did not reach the root element which means that it
-								//is not apart of the DOM. Therefore there is no reason to do
-								//any animations on it
-								if(parentElement.length === 0) break;
-
-								var isRoot = isMatchingElement(parentElement, $rootElement);
-								var state = isRoot ? rootAnimateState : parentElement.data(NG_ANIMATE_STATE);
-								var result = state && (!!state.disabled || !!state.running);
-								if(isRoot || result) {
-									return result;
-								}
-
-								if(isRoot) return true;
-							}
-							while(parentElement = parentElement.parent());
-
-							return true;
-						}
-					}]);
-
-				$animateProvider.register('', ['$window', '$sniffer', '$timeout', function($window, $sniffer, $timeout) {
-					// Detect proper transitionend/animationend event names.
-					var CSS_PREFIX = '', TRANSITION_PROP, TRANSITIONEND_EVENT, ANIMATION_PROP, ANIMATIONEND_EVENT;
-
-					// If unprefixed events are not supported but webkit-prefixed are, use the latter.
-					// Otherwise, just use W3C names, browsers not supporting them at all will just ignore them.
-					// Note: Chrome implements `window.onwebkitanimationend` and doesn't implement `window.onanimationend`
-					// but at the same time dispatches the `animationend` event and not `webkitAnimationEnd`.
-					// Register both events in case `window.onanimationend` is not supported because of that,
-					// do the same for `transitionend` as Safari is likely to exhibit similar behavior.
-					// Also, the only modern browser that uses vendor prefixes for transitions/keyframes is webkit
-					// therefore there is no reason to test anymore for other vendor prefixes: http://caniuse.com/#search=transition
-					if (window.ontransitionend === undefined && window.onwebkittransitionend !== undefined) {
-						CSS_PREFIX = '-webkit-';
-						TRANSITION_PROP = 'WebkitTransition';
-						TRANSITIONEND_EVENT = 'webkitTransitionEnd transitionend';
-					} else {
-						TRANSITION_PROP = 'transition';
-						TRANSITIONEND_EVENT = 'transitionend';
-					}
-
-					if (window.onanimationend === undefined && window.onwebkitanimationend !== undefined) {
-						CSS_PREFIX = '-webkit-';
-						ANIMATION_PROP = 'WebkitAnimation';
-						ANIMATIONEND_EVENT = 'webkitAnimationEnd animationend';
-					} else {
-						ANIMATION_PROP = 'animation';
-						ANIMATIONEND_EVENT = 'animationend';
-					}
-
-					var DURATION_KEY = 'Duration';
-					var PROPERTY_KEY = 'Property';
-					var DELAY_KEY = 'Delay';
-					var ANIMATION_ITERATION_COUNT_KEY = 'IterationCount';
-					var NG_ANIMATE_PARENT_KEY = '$$ngAnimateKey';
-					var NG_ANIMATE_CSS_DATA_KEY = '$$ngAnimateCSS3Data';
-					var ELAPSED_TIME_MAX_DECIMAL_PLACES = 3;
-					var CLOSING_TIME_BUFFER = 1.5;
-					var ONE_SECOND = 1000;
-
-					var animationCounter = 0;
-					var lookupCache = {};
-					var parentCounter = 0;
-					var animationReflowQueue = [];
-					var animationElementQueue = [];
-					var animationTimer;
-					var closingAnimationTime = 0;
-					var timeOut = false;
-					function afterReflow(element, callback) {
-						$timeout.cancel(animationTimer);
-
-						animationReflowQueue.push(callback);
-
-						var node = extractElementNode(element);
-						element = angular.element(node);
-						animationElementQueue.push(element);
-
-						var elementData = element.data(NG_ANIMATE_CSS_DATA_KEY);
-						closingAnimationTime = Math.max(closingAnimationTime,
-								(elementData.maxDelay + elementData.maxDuration) * CLOSING_TIME_BUFFER * ONE_SECOND);
-
-						//by placing a counter we can avoid an accidental
-						//race condition which may close an animation when
-						//a follow-up animation is midway in its animation
-						elementData.animationCount = animationCounter;
-
-						animationTimer = $timeout(function() {
-							forEach(animationReflowQueue, function(fn) {
-								fn();
-							});
-
-							//copy the list of elements so that successive
-							//animations won't conflict if they're added before
-							//the closing animation timeout has run
-							var elementQueueSnapshot = [];
-							var animationCounterSnapshot = animationCounter;
-							forEach(animationElementQueue, function(elm) {
-								elementQueueSnapshot.push(elm);
-							});
-
-							$timeout(function() {
-								closeAllAnimations(elementQueueSnapshot, animationCounterSnapshot);
-								elementQueueSnapshot = null;
-							}, closingAnimationTime, false);
-
-							animationReflowQueue = [];
-							animationElementQueue = [];
-							animationTimer = null;
-							lookupCache = {};
-							closingAnimationTime = 0;
-							animationCounter++;
-						}, 10, false);
-					}
-
-					function closeAllAnimations(elements, count) {
-						forEach(elements, function(element) {
-							var elementData = element.data(NG_ANIMATE_CSS_DATA_KEY);
-							if(elementData && elementData.animationCount == count) {
-								(elementData.closeAnimationFn || noop)();
-							}
-						});
-					}
-
-					function getElementAnimationDetails(element, cacheKey) {
-						var data = cacheKey ? lookupCache[cacheKey] : null;
-						if(!data) {
-							var transitionDuration = 0;
-							var transitionDelay = 0;
-							var animationDuration = 0;
-							var animationDelay = 0;
-							var transitionDelayStyle;
-							var animationDelayStyle;
-							var transitionDurationStyle;
-							var transitionPropertyStyle;
-
-							//we want all the styles defined before and after
-							forEach(element, function(element) {
-								if (element.nodeType == ELEMENT_NODE) {
-									var elementStyles = $window.getComputedStyle(element) || {};
-
-									transitionDurationStyle = elementStyles[TRANSITION_PROP + DURATION_KEY];
-
-									transitionDuration = Math.max(parseMaxTime(transitionDurationStyle), transitionDuration);
-
-									transitionPropertyStyle = elementStyles[TRANSITION_PROP + PROPERTY_KEY];
-
-									transitionDelayStyle = elementStyles[TRANSITION_PROP + DELAY_KEY];
-
-									transitionDelay  = Math.max(parseMaxTime(transitionDelayStyle), transitionDelay);
-
-									animationDelayStyle = elementStyles[ANIMATION_PROP + DELAY_KEY];
-
-									animationDelay   = Math.max(parseMaxTime(animationDelayStyle), animationDelay);
-
-									var aDuration  = parseMaxTime(elementStyles[ANIMATION_PROP + DURATION_KEY]);
-
-									if(aDuration > 0) {
-										aDuration *= parseInt(elementStyles[ANIMATION_PROP + ANIMATION_ITERATION_COUNT_KEY], 10) || 1;
-									}
-
-									animationDuration = Math.max(aDuration, animationDuration);
-								}
-							});
-							data = {
-								total : 0,
-								transitionPropertyStyle: transitionPropertyStyle,
-								transitionDurationStyle: transitionDurationStyle,
-								transitionDelayStyle: transitionDelayStyle,
-								transitionDelay: transitionDelay,
-								transitionDuration: transitionDuration,
-								animationDelayStyle: animationDelayStyle,
-								animationDelay: animationDelay,
-								animationDuration: animationDuration
-							};
-							if(cacheKey) {
-								lookupCache[cacheKey] = data;
-							}
-						}
-						return data;
-					}
-
-					function parseMaxTime(str) {
-						var maxValue = 0;
-						var values = angular.isString(str) ?
-								str.split(/\s*,\s*/) :
-								[];
-						forEach(values, function(value) {
-							maxValue = Math.max(parseFloat(value) || 0, maxValue);
-						});
-						return maxValue;
-					}
-
-					function getCacheKey(element) {
-						var parentElement = element.parent();
-						var parentID = parentElement.data(NG_ANIMATE_PARENT_KEY);
-						if(!parentID) {
-							parentElement.data(NG_ANIMATE_PARENT_KEY, ++parentCounter);
-							parentID = parentCounter;
-						}
-						return parentID + '-' + extractElementNode(element).className;
-					}
-
-					function animateSetup(element, className) {
-						var cacheKey = getCacheKey(element);
-						var eventCacheKey = cacheKey + ' ' + className;
-						var stagger = {};
-						var ii = lookupCache[eventCacheKey] ? ++lookupCache[eventCacheKey].total : 0;
-
-						if(ii > 0) {
-							var staggerClassName = className + '-stagger';
-							var staggerCacheKey = cacheKey + ' ' + staggerClassName;
-							var applyClasses = !lookupCache[staggerCacheKey];
-
-							applyClasses && element.addClass(staggerClassName);
-
-							stagger = getElementAnimationDetails(element, staggerCacheKey);
-
-							applyClasses && element.removeClass(staggerClassName);
-						}
-
-						element.addClass(className);
-
-						var timings = getElementAnimationDetails(element, eventCacheKey);
-
-						/* there is no point in performing a reflow if the animation
-						 timeout is empty (this would cause a flicker bug normally
-						 in the page. There is also no point in performing an animation
-						 that only has a delay and no duration */
-						var maxDelay = Math.max(timings.transitionDelay, timings.animationDelay);
-						var maxDuration = Math.max(timings.transitionDuration, timings.animationDuration);
-						if(maxDuration === 0) {
-							element.removeClass(className);
-							return false;
-						}
-
-						//temporarily disable the transition so that the enter styles
-						//don't animate twice (this is here to avoid a bug in Chrome/FF).
-						var activeClassName = '';
-						timings.transitionDuration > 0 ?
-								blockTransitions(element) :
-								blockKeyframeAnimations(element);
-
-						forEach(className.split(' '), function(klass, i) {
-							activeClassName += (i > 0 ? ' ' : '') + klass + '-active';
-						});
-
-						element.data(NG_ANIMATE_CSS_DATA_KEY, {
-							className : className,
-							activeClassName : activeClassName,
-							maxDuration : maxDuration,
-							maxDelay : maxDelay,
-							classes : className + ' ' + activeClassName,
-							timings : timings,
-							stagger : stagger,
-							ii : ii
-						});
-
-						return true;
-					}
-
-					function blockTransitions(element) {
-						extractElementNode(element).style[TRANSITION_PROP + PROPERTY_KEY] = 'none';
-					}
-
-					function blockKeyframeAnimations(element) {
-						extractElementNode(element).style[ANIMATION_PROP] = 'none 0s';
-					}
-
-					function unblockTransitions(element) {
-						var prop = TRANSITION_PROP + PROPERTY_KEY;
-						var node = extractElementNode(element);
-						if(node.style[prop] && node.style[prop].length > 0) {
-							node.style[prop] = '';
-						}
-					}
-
-					function unblockKeyframeAnimations(element) {
-						var prop = ANIMATION_PROP;
-						var node = extractElementNode(element);
-						if(node.style[prop] && node.style[prop].length > 0) {
-							node.style[prop] = '';
-						}
-					}
-
-					function animateRun(element, className, activeAnimationComplete) {
-						var elementData = element.data(NG_ANIMATE_CSS_DATA_KEY);
-						var node = extractElementNode(element);
-						if(node.className.indexOf(className) == -1 || !elementData) {
-							activeAnimationComplete();
-							return;
-						}
-
-						var timings = elementData.timings;
-						var stagger = elementData.stagger;
-						var maxDuration = elementData.maxDuration;
-						var activeClassName = elementData.activeClassName;
-						var maxDelayTime = Math.max(timings.transitionDelay, timings.animationDelay) * ONE_SECOND;
-						var startTime = Date.now();
-						var css3AnimationEvents = ANIMATIONEND_EVENT + ' ' + TRANSITIONEND_EVENT;
-						var ii = elementData.ii;
-
-						var style = '', appliedStyles = [];
-						if(timings.transitionDuration > 0) {
-							var propertyStyle = timings.transitionPropertyStyle;
-							if(propertyStyle.indexOf('all') == -1) {
-								style += CSS_PREFIX + 'transition-property: ' + propertyStyle + ';';
-								style += CSS_PREFIX + 'transition-duration: ' + timings.transitionDurationStyle + ';';
-								appliedStyles.push(CSS_PREFIX + 'transition-property');
-								appliedStyles.push(CSS_PREFIX + 'transition-duration');
-							}
-						}
-
-						if(ii > 0) {
-							if(stagger.transitionDelay > 0 && stagger.transitionDuration === 0) {
-								var delayStyle = timings.transitionDelayStyle;
-								style += CSS_PREFIX + 'transition-delay: ' +
-										prepareStaggerDelay(delayStyle, stagger.transitionDelay, ii) + '; ';
-								appliedStyles.push(CSS_PREFIX + 'transition-delay');
-							}
-
-							if(stagger.animationDelay > 0 && stagger.animationDuration === 0) {
-								style += CSS_PREFIX + 'animation-delay: ' +
-										prepareStaggerDelay(timings.animationDelayStyle, stagger.animationDelay, ii) + '; ';
-								appliedStyles.push(CSS_PREFIX + 'animation-delay');
-							}
-						}
-
-						if(appliedStyles.length > 0) {
-							//the element being animated may sometimes contain comment nodes in
-							//the jqLite object, so we're safe to use a single variable to house
-							//the styles since there is always only one element being animated
-							var oldStyle = node.getAttribute('style') || '';
-							node.setAttribute('style', oldStyle + ' ' + style);
-						}
-
-						element.on(css3AnimationEvents, onAnimationProgress);
-						element.addClass(activeClassName);
-						elementData.closeAnimationFn = function() {
-							onEnd();
-							activeAnimationComplete();
-						};
-						return onEnd;
-
-						// This will automatically be called by $animate so
-						// there is no need to attach this internally to the
-						// timeout done method.
-						function onEnd(cancelled) {
-							element.off(css3AnimationEvents, onAnimationProgress);
-							element.removeClass(activeClassName);
-							animateClose(element, className);
-							var node = extractElementNode(element);
-							for (var i in appliedStyles) {
-								node.style.removeProperty(appliedStyles[i]);
-							}
-						}
-
-						function onAnimationProgress(event) {
-							event.stopPropagation();
-							var ev = event.originalEvent || event;
-							var timeStamp = ev.$manualTimeStamp || ev.timeStamp || Date.now();
-
-							/* Firefox (or possibly just Gecko) likes to not round values up
-							 * when a ms measurement is used for the animation */
-							var elapsedTime = parseFloat(ev.elapsedTime.toFixed(ELAPSED_TIME_MAX_DECIMAL_PLACES));
-
-							/* $manualTimeStamp is a mocked timeStamp value which is set
-							 * within browserTrigger(). This is only here so that tests can
-							 * mock animations properly. Real events fallback to event.timeStamp,
-							 * or, if they don't, then a timeStamp is automatically created for them.
-							 * We're checking to see if the timeStamp surpasses the expected delay,
-							 * but we're using elapsedTime instead of the timeStamp on the 2nd
-							 * pre-condition since animations sometimes close off early */
-							if(Math.max(timeStamp - startTime, 0) >= maxDelayTime && elapsedTime >= maxDuration) {
-								activeAnimationComplete();
-							}
-						}
-					}
-
-					function prepareStaggerDelay(delayStyle, staggerDelay, index) {
-						var style = '';
-						forEach(delayStyle.split(','), function(val, i) {
-							style += (i > 0 ? ',' : '') +
-									(index * staggerDelay + parseInt(val, 10)) + 's';
-						});
-						return style;
-					}
-
-					function animateBefore(element, className) {
-						if(animateSetup(element, className)) {
-							return function(cancelled) {
-								cancelled && animateClose(element, className);
-							};
-						}
-					}
-
-					function animateAfter(element, className, afterAnimationComplete) {
-						if(element.data(NG_ANIMATE_CSS_DATA_KEY)) {
-							return animateRun(element, className, afterAnimationComplete);
-						} else {
-							animateClose(element, className);
-							afterAnimationComplete();
-						}
-					}
-
-					function animate(element, className, animationComplete) {
-						//If the animateSetup function doesn't bother returning a
-						//cancellation function then it means that there is no animation
-						//to perform at all
-						var preReflowCancellation = animateBefore(element, className);
-						if(!preReflowCancellation) {
-							animationComplete();
-							return;
-						}
-
-						//There are two cancellation functions: one is before the first
-						//reflow animation and the second is during the active state
-						//animation. The first function will take care of removing the
-						//data from the element which will not make the 2nd animation
-						//happen in the first place
-						var cancel = preReflowCancellation;
-						afterReflow(element, function() {
-							unblockTransitions(element);
-							unblockKeyframeAnimations(element);
-							//once the reflow is complete then we point cancel to
-							//the new cancellation function which will remove all of the
-							//animation properties from the active animation
-							cancel = animateAfter(element, className, animationComplete);
-						});
-
-						return function(cancelled) {
-							(cancel || noop)(cancelled);
-						};
-					}
-
-					function animateClose(element, className) {
-						element.removeClass(className);
-						element.removeData(NG_ANIMATE_CSS_DATA_KEY);
-					}
-
-					return {
-						allowCancel : function(element, animationEvent, className) {
-							//always cancel the current animation if it is a
-							//structural animation
-							var oldClasses = (element.data(NG_ANIMATE_CSS_DATA_KEY) || {}).classes;
-							if(!oldClasses || ['enter','leave','move'].indexOf(animationEvent) >= 0) {
-								return true;
-							}
-
-							var parentElement = element.parent();
-							var clone = angular.element(extractElementNode(element).cloneNode());
-
-							//make the element super hidden and override any CSS style values
-							clone.attr('style','position:absolute; top:-9999px; left:-9999px');
-							clone.removeAttr('id');
-							clone.empty();
-
-							forEach(oldClasses.split(' '), function(klass) {
-								clone.removeClass(klass);
-							});
-
-							var suffix = animationEvent == 'addClass' ? '-add' : '-remove';
-							clone.addClass(suffixClasses(className, suffix));
-							parentElement.append(clone);
-
-							var timings = getElementAnimationDetails(clone);
-							clone.remove();
-
-							return Math.max(timings.transitionDuration, timings.animationDuration) > 0;
-						},
-
-						enter : function(element, animationCompleted) {
-							return animate(element, 'ng-enter', animationCompleted);
-						},
-
-						leave : function(element, animationCompleted) {
-							return animate(element, 'ng-leave', animationCompleted);
-						},
-
-						move : function(element, animationCompleted) {
-							return animate(element, 'ng-move', animationCompleted);
-						},
-
-						beforeAddClass : function(element, className, animationCompleted) {
-							var cancellationMethod = animateBefore(element, suffixClasses(className, '-add'));
-							if(cancellationMethod) {
-								afterReflow(element, function() {
-									unblockTransitions(element);
-									unblockKeyframeAnimations(element);
-									animationCompleted();
-								});
-								return cancellationMethod;
-							}
-							animationCompleted();
-						},
-
-						addClass : function(element, className, animationCompleted) {
-							return animateAfter(element, suffixClasses(className, '-add'), animationCompleted);
-						},
-
-						beforeRemoveClass : function(element, className, animationCompleted) {
-							var cancellationMethod = animateBefore(element, suffixClasses(className, '-remove'));
-							if(cancellationMethod) {
-								afterReflow(element, function() {
-									unblockTransitions(element);
-									unblockKeyframeAnimations(element);
-									animationCompleted();
-								});
-								return cancellationMethod;
-							}
-							animationCompleted();
-						},
-
-						removeClass : function(element, className, animationCompleted) {
-							return animateAfter(element, suffixClasses(className, '-remove'), animationCompleted);
-						}
-					};
-
-					function suffixClasses(classes, suffix) {
-						var className = '';
-						classes = angular.isArray(classes) ? classes : classes.split(/\s+/);
-						forEach(classes, function(klass, i) {
-							if(klass && klass.length > 0) {
-								className += (i > 0 ? ' ' : '') + klass + suffix;
-							}
-						});
-						return className;
-					}
-				}]);
-			}]);
-
-
-})(window, window.angular);
-;'use strict';
-
-/**
- * @ngdoc overview
- * @name ngResource
- * @description
- */
-
-/**
- * @ngdoc object
- * @name ngResource.$resource
- * @requires $http
- *
- * @description
- * A factory which creates a resource object that lets you interact with
- * [RESTful](http://en.wikipedia.org/wiki/Representational_State_Transfer) server-side data sources.
- *
- * The returned resource object has action methods which provide high-level behaviors without
- * the need to interact with the low level {@link ng.$http $http} service.
- *
- * # Installation
- * To use $resource make sure you have included the `angular-resource.js` that comes in Angular
- * package. You can also find this file on Google CDN, bower as well as at
- * {@link http://code.angularjs.org/ code.angularjs.org}.
- *
- * Finally load the module in your application:
- *
- *        angular.module('app', ['ngResource']);
- *
- * and you are ready to get started!
- *
- * @param {string} url A parametrized URL template with parameters prefixed by `:` as in
- *   `/user/:username`. If you are using a URL with a port number (e.g.
- *   `http://example.com:8080/api`), you'll need to escape the colon character before the port
- *   number, like this: `$resource('http://example.com\\:8080/api')`.
- *
- *   If you are using a url with a suffix, just add the suffix, like this:
- *   `$resource('http://example.com/resource.json')` or `$resource('http://example.com/:id.json')
- *   or even `$resource('http://example.com/resource/:resource_id.:format')`
- *   If the parameter before the suffix is empty, :resource_id in this case, then the `/.` will be
- *   collapsed down to a single `.`.  If you need this sequence to appear and not collapse then you
- *   can escape it with `/\.`.
- *
- * @param {Object=} paramDefaults Default values for `url` parameters. These can be overridden in
- *   `actions` methods. If any of the parameter value is a function, it will be executed every time
- *   when a param value needs to be obtained for a request (unless the param was overridden).
- *
- *   Each key value in the parameter object is first bound to url template if present and then any
- *   excess keys are appended to the url search query after the `?`.
- *
- *   Given a template `/path/:verb` and parameter `{verb:'greet', salutation:'Hello'}` results in
- *   URL `/path/greet?salutation=Hello`.
- *
- *   If the parameter value is prefixed with `@` then the value of that parameter is extracted from
- *   the data object (useful for non-GET operations).
- *
- * @param {Object.<Object>=} actions Hash with declaration of custom action that should extend the
- *   default set of resource actions. The declaration should be created in the format of {@link
- *   ng.$http#Parameters $http.config}:
- *
- *       {action1: {method:?, params:?, isArray:?, headers:?, ...},
- *        action2: {method:?, params:?, isArray:?, headers:?, ...},
- *        ...}
- *
- *   Where:
- *
- *   - **`action`** – {string} – The name of action. This name becomes the name of the method on your
- *     resource object.
- *   - **`method`** – {string} – HTTP request method. Valid methods are: `GET`, `POST`, `PUT`, `DELETE`,
- *     and `JSONP`.
- *   - **`params`** – {Object=} – Optional set of pre-bound parameters for this action. If any of the
- *     parameter value is a function, it will be executed every time when a param value needs to be
- *     obtained for a request (unless the param was overridden).
- *   - **`url`** – {string} – action specific `url` override. The url templating is supported just like
- *     for the resource-level urls.
- *   - **`isArray`** – {boolean=} – If true then the returned object for this action is an array, see
- *     `returns` section.
- *   - **`transformRequest`** – `{function(data, headersGetter)|Array.<function(data, headersGetter)>}` –
- *     transform function or an array of such functions. The transform function takes the http
- *     request body and headers and returns its transformed (typically serialized) version.
- *   - **`transformResponse`** – `{function(data, headersGetter)|Array.<function(data, headersGetter)>}` –
- *     transform function or an array of such functions. The transform function takes the http
- *     response body and headers and returns its transformed (typically deserialized) version.
- *   - **`cache`** – `{boolean|Cache}` – If true, a default $http cache will be used to cache the
- *     GET request, otherwise if a cache instance built with
- *     {@link ng.$cacheFactory $cacheFactory}, this cache will be used for
- *     caching.
- *   - **`timeout`** – `{number|Promise}` – timeout in milliseconds, or {@link ng.$q promise} that
- *     should abort the request when resolved.
- *   - **`withCredentials`** - `{boolean}` - whether to to set the `withCredentials` flag on the
- *     XHR object. See {@link https://developer.mozilla.org/en/http_access_control#section_5
- *     requests with credentials} for more information.
- *   - **`responseType`** - `{string}` - see {@link
- *     https://developer.mozilla.org/en-US/docs/DOM/XMLHttpRequest#responseType requestType}.
- *   - **`interceptor`** - `{Object=}` - The interceptor object has two optional methods -
- *     `response` and `responseError`. Both `response` and `responseError` interceptors get called
- *     with `http response` object. See {@link ng.$http $http interceptors}.
- *
- * @returns {Object} A resource "class" object with methods for the default set of resource actions
- *   optionally extended with custom `actions`. The default set contains these actions:
- *
- *       { 'get':    {method:'GET'},
- *         'save':   {method:'POST'},
- *         'query':  {method:'GET', isArray:true},
- *         'remove': {method:'DELETE'},
- *         'delete': {method:'DELETE'} };
- *
- *   Calling these methods invoke an {@link ng.$http} with the specified http method,
- *   destination and parameters. When the data is returned from the server then the object is an
- *   instance of the resource class. The actions `save`, `remove` and `delete` are available on it
- *   as  methods with the `$` prefix. This allows you to easily perform CRUD operations (create,
- *   read, update, delete) on server-side data like this:
- *   <pre>
-        var User = $resource('/user/:userId', {userId:'@id'});
-        var user = User.get({userId:123}, function() {
-          user.abc = true;
-          user.$save();
-        });
-     </pre>
- *
- *   It is important to realize that invoking a $resource object method immediately returns an
- *   empty reference (object or array depending on `isArray`). Once the data is returned from the
- *   server the existing reference is populated with the actual data. This is a useful trick since
- *   usually the resource is assigned to a model which is then rendered by the view. Having an empty
- *   object results in no rendering, once the data arrives from the server then the object is
- *   populated with the data and the view automatically re-renders itself showing the new data. This
- *   means that in most case one never has to write a callback function for the action methods.
- *
- *   The action methods on the class object or instance object can be invoked with the following
- *   parameters:
- *
- *   - HTTP GET "class" actions: `Resource.action([parameters], [success], [error])`
- *   - non-GET "class" actions: `Resource.action([parameters], postData, [success], [error])`
- *   - non-GET instance actions:  `instance.$action([parameters], [success], [error])`
- *
- *   Success callback is called with (value, responseHeaders) arguments. Error callback is called
- *   with (httpResponse) argument.
- *
- *   Class actions return empty instance (with additional properties below).
- *   Instance actions return promise of the action.
- *
- *   The Resource instances and collection have these additional properties:
- *
- *   - `$promise`: the {@link ng.$q promise} of the original server interaction that created this
- *     instance or collection.
- *
- *     On success, the promise is resolved with the same resource instance or collection object,
- *     updated with data from server. This makes it easy to use in
- *     {@link ngRoute.$routeProvider resolve section of $routeProvider.when()} to defer view rendering
- *     until the resource(s) are loaded.
- *
- *     On failure, the promise is resolved with the {@link ng.$http http response} object,
- *     without the `resource` property.
- *
- *   - `$resolved`: `true` after first server interaction is completed (either with success or rejection),
- *     `false` before that. Knowing if the Resource has been resolved is useful in data-binding.
- *
- * @example
- *
- * # Credit card resource
- *
- * <pre>
-     // Define CreditCard class
-     var CreditCard = $resource('/user/:userId/card/:cardId',
-      {userId:123, cardId:'@id'}, {
-       charge: {method:'POST', params:{charge:true}}
-      });
-
-     // We can retrieve a collection from the server
-     var cards = CreditCard.query(function() {
-       // GET: /user/123/card
-       // server returns: [ {id:456, number:'1234', name:'Smith'} ];
-
-       var card = cards[0];
-       // each item is an instance of CreditCard
-       expect(card instanceof CreditCard).toEqual(true);
-       card.name = "J. Smith";
-       // non GET methods are mapped onto the instances
-       card.$save();
-       // POST: /user/123/card/456 {id:456, number:'1234', name:'J. Smith'}
-       // server returns: {id:456, number:'1234', name: 'J. Smith'};
-
-       // our custom method is mapped as well.
-       card.$charge({amount:9.99});
-       // POST: /user/123/card/456?amount=9.99&charge=true {id:456, number:'1234', name:'J. Smith'}
-     });
-
-     // we can create an instance as well
-     var newCard = new CreditCard({number:'0123'});
-     newCard.name = "Mike Smith";
-     newCard.$save();
-     // POST: /user/123/card {number:'0123', name:'Mike Smith'}
-     // server returns: {id:789, number:'01234', name: 'Mike Smith'};
-     expect(newCard.id).toEqual(789);
- * </pre>
- *
- * The object returned from this function execution is a resource "class" which has "static" method
- * for each action in the definition.
- *
- * Calling these methods invoke `$http` on the `url` template with the given `method`, `params` and `headers`.
- * When the data is returned from the server then the object is an instance of the resource type and
- * all of the non-GET methods are available with `$` prefix. This allows you to easily support CRUD
- * operations (create, read, update, delete) on server-side data.
-
-   <pre>
-     var User = $resource('/user/:userId', {userId:'@id'});
-     var user = User.get({userId:123}, function() {
-       user.abc = true;
-       user.$save();
-     });
-   </pre>
- *
- * It's worth noting that the success callback for `get`, `query` and other method gets passed
- * in the response that came from the server as well as $http header getter function, so one
- * could rewrite the above example and get access to http headers as:
- *
-   <pre>
-     var User = $resource('/user/:userId', {userId:'@id'});
-     User.get({userId:123}, function(u, getResponseHeaders){
-       u.abc = true;
-       u.$save(function(u, putResponseHeaders) {
-         //u => saved user object
-         //putResponseHeaders => $http header getter
-       });
-     });
-   </pre>
-
- * # Buzz client
-
-   Let's look at what a buzz client created with the `$resource` service looks like:
-    <doc:example>
-      <doc:source jsfiddle="false">
-       <script>
-         function BuzzController($resource) {
-           this.userId = 'googlebuzz';
-           this.Activity = $resource(
-             'https://www.googleapis.com/buzz/v1/activities/:userId/:visibility/:activityId/:comments',
-             {alt:'json', callback:'JSON_CALLBACK'},
-             {get:{method:'JSONP', params:{visibility:'@self'}}, replies: {method:'JSONP', params:{visibility:'@self', comments:'@comments'}}}
-           );
-         }
-
-         BuzzController.prototype = {
-           fetch: function() {
-             this.activities = this.Activity.get({userId:this.userId});
-           },
-           expandReplies: function(activity) {
-             activity.replies = this.Activity.replies({userId:this.userId, activityId:activity.id});
-           }
-         };
-         BuzzController.$inject = ['$resource'];
-       </script>
-
-       <div ng-controller="BuzzController">
-         <input ng-model="userId"/>
-         <button ng-click="fetch()">fetch</button>
-         <hr/>
-         <div ng-repeat="item in activities.data.items">
-           <h1 style="font-size: 15px;">
-             <img src="{{item.actor.thumbnailUrl}}" style="max-height:30px;max-width:30px;"/>
-             <a href="{{item.actor.profileUrl}}">{{item.actor.name}}</a>
-             <a href ng-click="expandReplies(item)" style="float: right;">Expand replies: {{item.links.replies[0].count}}</a>
-           </h1>
-           {{item.object.content | html}}
-           <div ng-repeat="reply in item.replies.data.items" style="margin-left: 20px;">
-             <img src="{{reply.actor.thumbnailUrl}}" style="max-height:30px;max-width:30px;"/>
-             <a href="{{reply.actor.profileUrl}}">{{reply.actor.name}}</a>: {{reply.content | html}}
-           </div>
-         </div>
-       </div>
-      </doc:source>
-      <doc:scenario>
-      </doc:scenario>
-    </doc:example>
- */
-angular.module('ngResource', ['ng']).
-  factory('$resource', ['$http', '$parse', '$q', function($http, $parse, $q) {
-    var DEFAULT_ACTIONS = {
-      'get':    {method:'GET'},
-      'save':   {method:'POST'},
-      'query':  {method:'GET', isArray:true},
-      'remove': {method:'DELETE'},
-      'delete': {method:'DELETE'}
-    };
-    var noop = angular.noop,
-        forEach = angular.forEach,
-        extend = angular.extend,
-        copy = angular.copy,
-        isFunction = angular.isFunction,
-        getter = function(obj, path) {
-          return $parse(path)(obj);
-        };
-
-    /**
-     * We need our custom method because encodeURIComponent is too aggressive and doesn't follow
-     * http://www.ietf.org/rfc/rfc3986.txt with regards to the character set (pchar) allowed in path
-     * segments:
-     *    segment       = *pchar
-     *    pchar         = unreserved / pct-encoded / sub-delims / ":" / "@"
-     *    pct-encoded   = "%" HEXDIG HEXDIG
-     *    unreserved    = ALPHA / DIGIT / "-" / "." / "_" / "~"
-     *    sub-delims    = "!" / "$" / "&" / "'" / "(" / ")"
-     *                     / "*" / "+" / "," / ";" / "="
-     */
-    function encodeUriSegment(val) {
-      return encodeUriQuery(val, true).
-        replace(/%26/gi, '&').
-        replace(/%3D/gi, '=').
-        replace(/%2B/gi, '+');
-    }
-
-
-    /**
-     * This method is intended for encoding *key* or *value* parts of query component. We need a custom
-     * method because encodeURIComponent is too aggressive and encodes stuff that doesn't have to be
-     * encoded per http://tools.ietf.org/html/rfc3986:
-     *    query       = *( pchar / "/" / "?" )
-     *    pchar         = unreserved / pct-encoded / sub-delims / ":" / "@"
-     *    unreserved    = ALPHA / DIGIT / "-" / "." / "_" / "~"
-     *    pct-encoded   = "%" HEXDIG HEXDIG
-     *    sub-delims    = "!" / "$" / "&" / "'" / "(" / ")"
-     *                     / "*" / "+" / "," / ";" / "="
-     */
-    function encodeUriQuery(val, pctEncodeSpaces) {
-      return encodeURIComponent(val).
-        replace(/%40/gi, '@').
-        replace(/%3A/gi, ':').
-        replace(/%24/g, '$').
-        replace(/%2C/gi, ',').
-        replace(/%20/g, (pctEncodeSpaces ? '%20' : '+'));
-    }
-
-    function Route(template, defaults) {
-      this.template = template;
-      this.defaults = defaults || {};
-      this.urlParams = {};
-    }
-
-    Route.prototype = {
-      setUrlParams: function(config, params, actionUrl) {
-        var self = this,
-            url = actionUrl || self.template,
-            val,
-            encodedVal;
-
-        var urlParams = self.urlParams = {};
-        forEach(url.split(/\W/), function(param){
-          if (param && (new RegExp("(^|[^\\\\]):" + param + "(\\W|$)").test(url))) {
-              urlParams[param] = true;
-          }
-        });
-        url = url.replace(/\\:/g, ':');
-
-        params = params || {};
-        forEach(self.urlParams, function(_, urlParam){
-          val = params.hasOwnProperty(urlParam) ? params[urlParam] : self.defaults[urlParam];
-          if (angular.isDefined(val) && val !== null) {
-            encodedVal = encodeUriSegment(val);
-            url = url.replace(new RegExp(":" + urlParam + "(\\W|$)", "g"), encodedVal + "$1");
-          } else {
-            url = url.replace(new RegExp("(\/?):" + urlParam + "(\\W|$)", "g"), function(match,
-                leadingSlashes, tail) {
-              if (tail.charAt(0) == '/') {
-                return tail;
-              } else {
-                return leadingSlashes + tail;
-              }
-            });
-          }
-        });
-
-        // strip trailing slashes and set the url
-        url = url.replace(/\/+$/, '');
-        // then replace collapse `/.` if found in the last URL path segment before the query
-        // E.g. `http://url.com/id./format?q=x` becomes `http://url.com/id.format?q=x`
-        url = url.replace(/\/\.(?=\w+($|\?))/, '.');
-        // replace escaped `/\.` with `/.`
-        config.url = url.replace(/\/\\\./, '/.');
-
-
-        // set params - delegate param encoding to $http
-        forEach(params, function(value, key){
-          if (!self.urlParams[key]) {
-            config.params = config.params || {};
-            config.params[key] = value;
-          }
-        });
-      }
-    };
-
-
-    function ResourceFactory(url, paramDefaults, actions) {
-      var route = new Route(url);
-
-      actions = extend({}, DEFAULT_ACTIONS, actions);
-
-      function extractParams(data, actionParams){
-        var ids = {};
-        actionParams = extend({}, paramDefaults, actionParams);
-        forEach(actionParams, function(value, key){
-          if (isFunction(value)) { value = value(); }
-          ids[key] = value && value.charAt && value.charAt(0) == '@' ? getter(data, value.substr(1)) : value;
-        });
-        return ids;
-      }
-
-      function defaultResponseInterceptor(response) {
-        return response.resource;
-      }
-
-      function Resource(value){
-        copy(value || {}, this);
-      }
-
-      forEach(actions, function(action, name) {
-        var hasBody = /^(POST|PUT|PATCH)$/i.test(action.method);
-
-        Resource[name] = function(a1, a2, a3, a4) {
-          var params = {}, data, success, error;
-
-          switch(arguments.length) {
-          case 4:
-            error = a4;
-            success = a3;
-            //fallthrough
-          case 3:
-          case 2:
-            if (isFunction(a2)) {
-              if (isFunction(a1)) {
-                success = a1;
-                error = a2;
-                break;
-              }
-
-              success = a2;
-              error = a3;
-              //fallthrough
-            } else {
-              params = a1;
-              data = a2;
-              success = a3;
-              break;
-            }
-          case 1:
-            if (isFunction(a1)) success = a1;
-            else if (hasBody) data = a1;
-            else params = a1;
-            break;
-          case 0: break;
-          default:
-            throw "Expected up to 4 arguments [params, data, success, error], got " +
-              arguments.length + " arguments.";
-          }
-
-          var isInstanceCall = data instanceof Resource;
-          var value = isInstanceCall ? data : (action.isArray ? [] : new Resource(data));
-          var httpConfig = {};
-          var responseInterceptor = action.interceptor && action.interceptor.response || defaultResponseInterceptor;
-          var responseErrorInterceptor = action.interceptor && action.interceptor.responseError || undefined;
-
-          forEach(action, function(value, key) {
-            if (key != 'params' && key != 'isArray' && key != 'interceptor') {
-              httpConfig[key] = copy(value);
-            }
-          });
-
-          httpConfig.data = data;
-          route.setUrlParams(httpConfig, extend({}, extractParams(data, action.params || {}), params), action.url);
-
-          var promise = $http(httpConfig).then(function(response) {
-            var data = response.data,
-                promise = value.$promise;
-
-            if (data) {
-              if (action.isArray) {
-                value.length = 0;
-                forEach(data, function(item) {
-                  value.push(new Resource(item));
-                });
-              } else {
-                copy(data, value);
-                value.$promise = promise;
-              }
-            }
-
-            value.$resolved = true;
-
-            (success||noop)(value, response.headers);
-
-            response.resource = value;
-
-            return response;
-          }, function(response) {
-            value.$resolved = true;
-
-            (error||noop)(response);
-
-            return $q.reject(response);
-          }).then(responseInterceptor, responseErrorInterceptor);
-
-
-          if (!isInstanceCall) {
-            // we are creating instance / collection
-            // - set the initial promise
-            // - return the instance / collection
-            value.$promise = promise;
-            value.$resolved = false;
-
-            return value;
-          }
-
-          // instance call
-          return promise;
-        };
-
-
-        Resource.prototype['$' + name] = function(params, success, error) {
-          if (isFunction(params)) {
-            error = success; success = params; params = {};
-          }
-          var result = Resource[name](params, this, success, error);
-          return result.$promise || result;
-        };
-      });
-
-      Resource.bind = function(additionalParamDefaults){
-        return ResourceFactory(url, extend({}, paramDefaults, additionalParamDefaults), actions);
-      };
-
-      return Resource;
-    }
-
-    return ResourceFactory;
-  }]);
-;(function(){var n=this,t=n._,r={},e=Array.prototype,u=Object.prototype,i=Function.prototype,a=e.push,o=e.slice,c=e.concat,l=u.toString,f=u.hasOwnProperty,s=e.forEach,p=e.map,h=e.reduce,v=e.reduceRight,d=e.filter,g=e.every,m=e.some,y=e.indexOf,b=e.lastIndexOf,x=Array.isArray,_=Object.keys,j=i.bind,w=function(n){return n instanceof w?n:this instanceof w?(this._wrapped=n,void 0):new w(n)};"undefined"!=typeof exports?("undefined"!=typeof module&&module.exports&&(exports=module.exports=w),exports._=w):n._=w,w.VERSION="1.4.4";var A=w.each=w.forEach=function(n,t,e){if(null!=n)if(s&&n.forEach===s)n.forEach(t,e);else if(n.length===+n.length){for(var u=0,i=n.length;i>u;u++)if(t.call(e,n[u],u,n)===r)return}else for(var a in n)if(w.has(n,a)&&t.call(e,n[a],a,n)===r)return};w.map=w.collect=function(n,t,r){var e=[];return null==n?e:p&&n.map===p?n.map(t,r):(A(n,function(n,u,i){e[e.length]=t.call(r,n,u,i)}),e)};var O="Reduce of empty array with no initial value";w.reduce=w.foldl=w.inject=function(n,t,r,e){var u=arguments.length>2;if(null==n&&(n=[]),h&&n.reduce===h)return e&&(t=w.bind(t,e)),u?n.reduce(t,r):n.reduce(t);if(A(n,function(n,i,a){u?r=t.call(e,r,n,i,a):(r=n,u=!0)}),!u)throw new TypeError(O);return r},w.reduceRight=w.foldr=function(n,t,r,e){var u=arguments.length>2;if(null==n&&(n=[]),v&&n.reduceRight===v)return e&&(t=w.bind(t,e)),u?n.reduceRight(t,r):n.reduceRight(t);var i=n.length;if(i!==+i){var a=w.keys(n);i=a.length}if(A(n,function(o,c,l){c=a?a[--i]:--i,u?r=t.call(e,r,n[c],c,l):(r=n[c],u=!0)}),!u)throw new TypeError(O);return r},w.find=w.detect=function(n,t,r){var e;return E(n,function(n,u,i){return t.call(r,n,u,i)?(e=n,!0):void 0}),e},w.filter=w.select=function(n,t,r){var e=[];return null==n?e:d&&n.filter===d?n.filter(t,r):(A(n,function(n,u,i){t.call(r,n,u,i)&&(e[e.length]=n)}),e)},w.reject=function(n,t,r){return w.filter(n,function(n,e,u){return!t.call(r,n,e,u)},r)},w.every=w.all=function(n,t,e){t||(t=w.identity);var u=!0;return null==n?u:g&&n.every===g?n.every(t,e):(A(n,function(n,i,a){return(u=u&&t.call(e,n,i,a))?void 0:r}),!!u)};var E=w.some=w.any=function(n,t,e){t||(t=w.identity);var u=!1;return null==n?u:m&&n.some===m?n.some(t,e):(A(n,function(n,i,a){return u||(u=t.call(e,n,i,a))?r:void 0}),!!u)};w.contains=w.include=function(n,t){return null==n?!1:y&&n.indexOf===y?n.indexOf(t)!=-1:E(n,function(n){return n===t})},w.invoke=function(n,t){var r=o.call(arguments,2),e=w.isFunction(t);return w.map(n,function(n){return(e?t:n[t]).apply(n,r)})},w.pluck=function(n,t){return w.map(n,function(n){return n[t]})},w.where=function(n,t,r){return w.isEmpty(t)?r?null:[]:w[r?"find":"filter"](n,function(n){for(var r in t)if(t[r]!==n[r])return!1;return!0})},w.findWhere=function(n,t){return w.where(n,t,!0)},w.max=function(n,t,r){if(!t&&w.isArray(n)&&n[0]===+n[0]&&65535>n.length)return Math.max.apply(Math,n);if(!t&&w.isEmpty(n))return-1/0;var e={computed:-1/0,value:-1/0};return A(n,function(n,u,i){var a=t?t.call(r,n,u,i):n;a>=e.computed&&(e={value:n,computed:a})}),e.value},w.min=function(n,t,r){if(!t&&w.isArray(n)&&n[0]===+n[0]&&65535>n.length)return Math.min.apply(Math,n);if(!t&&w.isEmpty(n))return 1/0;var e={computed:1/0,value:1/0};return A(n,function(n,u,i){var a=t?t.call(r,n,u,i):n;e.computed>a&&(e={value:n,computed:a})}),e.value},w.shuffle=function(n){var t,r=0,e=[];return A(n,function(n){t=w.random(r++),e[r-1]=e[t],e[t]=n}),e};var k=function(n){return w.isFunction(n)?n:function(t){return t[n]}};w.sortBy=function(n,t,r){var e=k(t);return w.pluck(w.map(n,function(n,t,u){return{value:n,index:t,criteria:e.call(r,n,t,u)}}).sort(function(n,t){var r=n.criteria,e=t.criteria;if(r!==e){if(r>e||r===void 0)return 1;if(e>r||e===void 0)return-1}return n.index<t.index?-1:1}),"value")};var F=function(n,t,r,e){var u={},i=k(t||w.identity);return A(n,function(t,a){var o=i.call(r,t,a,n);e(u,o,t)}),u};w.groupBy=function(n,t,r){return F(n,t,r,function(n,t,r){(w.has(n,t)?n[t]:n[t]=[]).push(r)})},w.countBy=function(n,t,r){return F(n,t,r,function(n,t){w.has(n,t)||(n[t]=0),n[t]++})},w.sortedIndex=function(n,t,r,e){r=null==r?w.identity:k(r);for(var u=r.call(e,t),i=0,a=n.length;a>i;){var o=i+a>>>1;u>r.call(e,n[o])?i=o+1:a=o}return i},w.toArray=function(n){return n?w.isArray(n)?o.call(n):n.length===+n.length?w.map(n,w.identity):w.values(n):[]},w.size=function(n){return null==n?0:n.length===+n.length?n.length:w.keys(n).length},w.first=w.head=w.take=function(n,t,r){return null==n?void 0:null==t||r?n[0]:o.call(n,0,t)},w.initial=function(n,t,r){return o.call(n,0,n.length-(null==t||r?1:t))},w.last=function(n,t,r){return null==n?void 0:null==t||r?n[n.length-1]:o.call(n,Math.max(n.length-t,0))},w.rest=w.tail=w.drop=function(n,t,r){return o.call(n,null==t||r?1:t)},w.compact=function(n){return w.filter(n,w.identity)};var R=function(n,t,r){return A(n,function(n){w.isArray(n)?t?a.apply(r,n):R(n,t,r):r.push(n)}),r};w.flatten=function(n,t){return R(n,t,[])},w.without=function(n){return w.difference(n,o.call(arguments,1))},w.uniq=w.unique=function(n,t,r,e){w.isFunction(t)&&(e=r,r=t,t=!1);var u=r?w.map(n,r,e):n,i=[],a=[];return A(u,function(r,e){(t?e&&a[a.length-1]===r:w.contains(a,r))||(a.push(r),i.push(n[e]))}),i},w.union=function(){return w.uniq(c.apply(e,arguments))},w.intersection=function(n){var t=o.call(arguments,1);return w.filter(w.uniq(n),function(n){return w.every(t,function(t){return w.indexOf(t,n)>=0})})},w.difference=function(n){var t=c.apply(e,o.call(arguments,1));return w.filter(n,function(n){return!w.contains(t,n)})},w.zip=function(){for(var n=o.call(arguments),t=w.max(w.pluck(n,"length")),r=Array(t),e=0;t>e;e++)r[e]=w.pluck(n,""+e);return r},w.object=function(n,t){if(null==n)return{};for(var r={},e=0,u=n.length;u>e;e++)t?r[n[e]]=t[e]:r[n[e][0]]=n[e][1];return r},w.indexOf=function(n,t,r){if(null==n)return-1;var e=0,u=n.length;if(r){if("number"!=typeof r)return e=w.sortedIndex(n,t),n[e]===t?e:-1;e=0>r?Math.max(0,u+r):r}if(y&&n.indexOf===y)return n.indexOf(t,r);for(;u>e;e++)if(n[e]===t)return e;return-1},w.lastIndexOf=function(n,t,r){if(null==n)return-1;var e=null!=r;if(b&&n.lastIndexOf===b)return e?n.lastIndexOf(t,r):n.lastIndexOf(t);for(var u=e?r:n.length;u--;)if(n[u]===t)return u;return-1},w.range=function(n,t,r){1>=arguments.length&&(t=n||0,n=0),r=arguments[2]||1;for(var e=Math.max(Math.ceil((t-n)/r),0),u=0,i=Array(e);e>u;)i[u++]=n,n+=r;return i},w.bind=function(n,t){if(n.bind===j&&j)return j.apply(n,o.call(arguments,1));var r=o.call(arguments,2);return function(){return n.apply(t,r.concat(o.call(arguments)))}},w.partial=function(n){var t=o.call(arguments,1);return function(){return n.apply(this,t.concat(o.call(arguments)))}},w.bindAll=function(n){var t=o.call(arguments,1);return 0===t.length&&(t=w.functions(n)),A(t,function(t){n[t]=w.bind(n[t],n)}),n},w.memoize=function(n,t){var r={};return t||(t=w.identity),function(){var e=t.apply(this,arguments);return w.has(r,e)?r[e]:r[e]=n.apply(this,arguments)}},w.delay=function(n,t){var r=o.call(arguments,2);return setTimeout(function(){return n.apply(null,r)},t)},w.defer=function(n){return w.delay.apply(w,[n,1].concat(o.call(arguments,1)))},w.throttle=function(n,t){var r,e,u,i,a=0,o=function(){a=new Date,u=null,i=n.apply(r,e)};return function(){var c=new Date,l=t-(c-a);return r=this,e=arguments,0>=l?(clearTimeout(u),u=null,a=c,i=n.apply(r,e)):u||(u=setTimeout(o,l)),i}},w.debounce=function(n,t,r){var e,u;return function(){var i=this,a=arguments,o=function(){e=null,r||(u=n.apply(i,a))},c=r&&!e;return clearTimeout(e),e=setTimeout(o,t),c&&(u=n.apply(i,a)),u}},w.once=function(n){var t,r=!1;return function(){return r?t:(r=!0,t=n.apply(this,arguments),n=null,t)}},w.wrap=function(n,t){return function(){var r=[n];return a.apply(r,arguments),t.apply(this,r)}},w.compose=function(){var n=arguments;return function(){for(var t=arguments,r=n.length-1;r>=0;r--)t=[n[r].apply(this,t)];return t[0]}},w.after=function(n,t){return 0>=n?t():function(){return 1>--n?t.apply(this,arguments):void 0}},w.keys=_||function(n){if(n!==Object(n))throw new TypeError("Invalid object");var t=[];for(var r in n)w.has(n,r)&&(t[t.length]=r);return t},w.values=function(n){var t=[];for(var r in n)w.has(n,r)&&t.push(n[r]);return t},w.pairs=function(n){var t=[];for(var r in n)w.has(n,r)&&t.push([r,n[r]]);return t},w.invert=function(n){var t={};for(var r in n)w.has(n,r)&&(t[n[r]]=r);return t},w.functions=w.methods=function(n){var t=[];for(var r in n)w.isFunction(n[r])&&t.push(r);return t.sort()},w.extend=function(n){return A(o.call(arguments,1),function(t){if(t)for(var r in t)n[r]=t[r]}),n},w.pick=function(n){var t={},r=c.apply(e,o.call(arguments,1));return A(r,function(r){r in n&&(t[r]=n[r])}),t},w.omit=function(n){var t={},r=c.apply(e,o.call(arguments,1));for(var u in n)w.contains(r,u)||(t[u]=n[u]);return t},w.defaults=function(n){return A(o.call(arguments,1),function(t){if(t)for(var r in t)null==n[r]&&(n[r]=t[r])}),n},w.clone=function(n){return w.isObject(n)?w.isArray(n)?n.slice():w.extend({},n):n},w.tap=function(n,t){return t(n),n};var I=function(n,t,r,e){if(n===t)return 0!==n||1/n==1/t;if(null==n||null==t)return n===t;n instanceof w&&(n=n._wrapped),t instanceof w&&(t=t._wrapped);var u=l.call(n);if(u!=l.call(t))return!1;switch(u){case"[object String]":return n==t+"";case"[object Number]":return n!=+n?t!=+t:0==n?1/n==1/t:n==+t;case"[object Date]":case"[object Boolean]":return+n==+t;case"[object RegExp]":return n.source==t.source&&n.global==t.global&&n.multiline==t.multiline&&n.ignoreCase==t.ignoreCase}if("object"!=typeof n||"object"!=typeof t)return!1;for(var i=r.length;i--;)if(r[i]==n)return e[i]==t;r.push(n),e.push(t);var a=0,o=!0;if("[object Array]"==u){if(a=n.length,o=a==t.length)for(;a--&&(o=I(n[a],t[a],r,e)););}else{var c=n.constructor,f=t.constructor;if(c!==f&&!(w.isFunction(c)&&c instanceof c&&w.isFunction(f)&&f instanceof f))return!1;for(var s in n)if(w.has(n,s)&&(a++,!(o=w.has(t,s)&&I(n[s],t[s],r,e))))break;if(o){for(s in t)if(w.has(t,s)&&!a--)break;o=!a}}return r.pop(),e.pop(),o};w.isEqual=function(n,t){return I(n,t,[],[])},w.isEmpty=function(n){if(null==n)return!0;if(w.isArray(n)||w.isString(n))return 0===n.length;for(var t in n)if(w.has(n,t))return!1;return!0},w.isElement=function(n){return!(!n||1!==n.nodeType)},w.isArray=x||function(n){return"[object Array]"==l.call(n)},w.isObject=function(n){return n===Object(n)},A(["Arguments","Function","String","Number","Date","RegExp"],function(n){w["is"+n]=function(t){return l.call(t)=="[object "+n+"]"}}),w.isArguments(arguments)||(w.isArguments=function(n){return!(!n||!w.has(n,"callee"))}),"function"!=typeof/./&&(w.isFunction=function(n){return"function"==typeof n}),w.isFinite=function(n){return isFinite(n)&&!isNaN(parseFloat(n))},w.isNaN=function(n){return w.isNumber(n)&&n!=+n},w.isBoolean=function(n){return n===!0||n===!1||"[object Boolean]"==l.call(n)},w.isNull=function(n){return null===n},w.isUndefined=function(n){return n===void 0},w.has=function(n,t){return f.call(n,t)},w.noConflict=function(){return n._=t,this},w.identity=function(n){return n},w.times=function(n,t,r){for(var e=Array(n),u=0;n>u;u++)e[u]=t.call(r,u);return e},w.random=function(n,t){return null==t&&(t=n,n=0),n+Math.floor(Math.random()*(t-n+1))};var M={escape:{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#x27;","/":"&#x2F;"}};M.unescape=w.invert(M.escape);var S={escape:RegExp("["+w.keys(M.escape).join("")+"]","g"),unescape:RegExp("("+w.keys(M.unescape).join("|")+")","g")};w.each(["escape","unescape"],function(n){w[n]=function(t){return null==t?"":(""+t).replace(S[n],function(t){return M[n][t]})}}),w.result=function(n,t){if(null==n)return null;var r=n[t];return w.isFunction(r)?r.call(n):r},w.mixin=function(n){A(w.functions(n),function(t){var r=w[t]=n[t];w.prototype[t]=function(){var n=[this._wrapped];return a.apply(n,arguments),D.call(this,r.apply(w,n))}})};var N=0;w.uniqueId=function(n){var t=++N+"";return n?n+t:t},w.templateSettings={evaluate:/<%([\s\S]+?)%>/g,interpolate:/<%=([\s\S]+?)%>/g,escape:/<%-([\s\S]+?)%>/g};var T=/(.)^/,q={"'":"'","\\":"\\","\r":"r","\n":"n","    ":"t","\u2028":"u2028","\u2029":"u2029"},B=/\\|'|\r|\n|\t|\u2028|\u2029/g;w.template=function(n,t,r){var e;r=w.defaults({},r,w.templateSettings);var u=RegExp([(r.escape||T).source,(r.interpolate||T).source,(r.evaluate||T).source].join("|")+"|$","g"),i=0,a="__p+='";n.replace(u,function(t,r,e,u,o){return a+=n.slice(i,o).replace(B,function(n){return"\\"+q[n]}),r&&(a+="'+\n((__t=("+r+"))==null?'':_.escape(__t))+\n'"),e&&(a+="'+\n((__t=("+e+"))==null?'':__t)+\n'"),u&&(a+="';\n"+u+"\n__p+='"),i=o+t.length,t}),a+="';\n",r.variable||(a="with(obj||{}){\n"+a+"}\n"),a="var __t,__p='',__j=Array.prototype.join,"+"print=function(){__p+=__j.call(arguments,'');};\n"+a+"return __p;\n";try{e=Function(r.variable||"obj","_",a)}catch(o){throw o.source=a,o}if(t)return e(t,w);var c=function(n){return e.call(this,n,w)};return c.source="function("+(r.variable||"obj")+"){\n"+a+"}",c},w.chain=function(n){return w(n).chain()};var D=function(n){return this._chain?w(n).chain():n};w.mixin(w),A(["pop","push","reverse","shift","sort","splice","unshift"],function(n){var t=e[n];w.prototype[n]=function(){var r=this._wrapped;return t.apply(r,arguments),"shift"!=n&&"splice"!=n||0!==r.length||delete r[0],D.call(this,r)}}),A(["concat","join","slice"],function(n){var t=e[n];w.prototype[n]=function(){return D.call(this,t.apply(this._wrapped,arguments))}}),w.extend(w.prototype,{chain:function(){return this._chain=!0,this},value:function(){return this._wrapped}})}).call(this);;
-    var _gaq = _gaq || [];
-    var testKey = 'qeTest', storage = window.sessionStorage;
-  _gaq.push(['_setAccount', 'UA-38638778-1']);
-  _gaq.push(['_trackPageview']);
-    (function() {
-    var s, ga = document.createElement('script'); 
-    ga.type = 'text/javascript'; 
-    ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-    
-    try {
-        // Try and catch quota exceeded errors
-        storage.setItem(testKey, '1');
-        storage.removeItem(testKey);
-    } catch (error) {
-        if (error.code === DOMException.QUOTA_EXCEEDED_ERR && storage.length === 0)
-            alert('Please make sure you have private browsing turned off in your Safari settings to use this form.');
-        else
-            throw error;
-    };angular.module("globalControllers", ['ngRoute'])
-
-
-.config(['$routeProvider','$locationProvider','$httpProvider', function($routeProvider,$locationProvider, $httpProvider){
-			$httpProvider.defaults.headers.get = {
-				'Accept' : 'application/json, text/javascript'
-			};
-			$routeProvider
-					.when('/Error', {
-						controller: 'ErrorController',
-						templateUrl : 'views/error.html'
-					})
-					.when('/SearchResults:term', {
-						controller : 'ResultsController',
-						templateUrl : 'views/search/searchResults.html'
-					})
-		}])
-
-.controller('PortalCancelController',['$scope',function($scope){
-	$scope.portalCancel = function(){
-		sessionStorage.clear();
-		window.location.replace("/");
-	};
-}])
-
-
-
-.controller('ErrorController', ['$scope', function($scope){
-			var err= sessionStorage.err;
-			if(err=== "500"){
-				$scope.error= "Sorry, our server is currently unavailable. Please try again later."
-			}
-			if(err=== "404"){
-				$scope.error= "Sorry, the requested page could not be found. Please check the URL and try again."
-			}
-			$scope.next= function(){
-				window.location.replace("/");
-			}
-}])
-
-.controller('MainNavigationController',['$scope','$location','MenuFactory',function($scope, $location, MenuFactory){
-			var a = angular.element('.mainNav');
-			$scope.menu = "Hide Menu";
-			$scope.$on('$locationChangeSuccess', function(){
-				$scope.test= "";
-			})
-			MenuFactory.menu({},{}, successcb, errorcb);
-			function successcb(data){
-				var a = data.slice(0,3)
-				$scope.mobiData= data;
-				$scope.menuLinks = data;
-				$scope.menuLinksss = a;
-			}
-			function errorcb(err){
-				console.log(err)
-			}
-		}])
-
-.controller('MoreResults', function($scope, ContactFactory){
-			$scope.showMore = function(){
-				var data = {
-					searchterm : sessionStorage.term,
-					startat : sessionStorage.startNext
-				}
-				var DTO ={
-					"oSearchAttributes":data
-				};
-				console.log("here")
-				ContactFactory.contactInfo({},DTO, cb, errorcb);
-			}
-			/*$('div.responseHold').bind('scroll', function(){
-			 if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight)
-			 {
-			 if($scope.showMore !== null){
-			 var data = {
-			 searchterm : sessionStorage.term,
-			 startat : sessionStorage.startNext
-			 }
-			 var DTO ={
-			 "oSearchAttributes":data
-			 };
-			 console.log("here")
-			 setTimeout(function(){
-			 ContactFactory.contactInfo({},DTO, cb, errorcb);
-			 }, 300)
-			 }
-			 }
-			 })*/
-			function cb(data){
-				console.log("here too")
-				var obj = angular.fromJson(data.d);
-				var theData = obj;
-				sessionStorage.startNext = obj.RES["@EN"];
-				if(theData.RES){
-					if(obj.RES["@EN"] === obj.RES.M){
-						$scope.areMore = false;
-						$scope.showMore= null;
-					}else{
-						$scope.areMore = true;
-					}
-					$scope.more = theData.RES.R;
-					if(theData.GM){
-						if(theData.GM.length > 0){
-							$scope.gmResponses = theData.GM;
-						}else{
-							$scope.gmResponses = [theData.GM];
-						}
-					}else{
-					}
-					angular.forEach($scope.more, function(value, key){
-						$('div.add').append('<div moreresults class="responses"><ul><li class="title">' + value.T + '</li><li>' + value.S + '</li><li <a href="' + value.U + '">' + value.U + '</a><li></ul></div>')
-					})
-				}else if(theData.SPELLING){
-					$scope.spellCheck = theData.spelling.Suggestion;
-				}else{
-					$scope.showRes = false;
-					$scope.showNone = true;
-					$scope.q = $routeParams.term.replace(":", "")
-				}
-			}
-			function errorcb(data){
-				$scope.err = data.status
-			}
-		})
-
-.controller('SearchController',['$scope','ContactFactory','$parse','results','$location', '$routeParams', function($scope, ContactFactory, $parse, results, $location, $routeParams){
-			$scope.search = function(){
-				sessionStorage.term = $scope.searchIn;
-				var q= "q=" + $scope.searchIn;
-				//$location.path('/SearchResults:' + $scope.searchIn);
-				window.location.replace("http://search.dmv.virginia.gov/search?mode=allwords&reload=1&debug=1&client=dmvnow_front&proxystylesheet=dmvnew_front&output=xml_no_dtd&site=default_collection&" + q + "&proxyreload=1&btnSearch=Search")
-			}
-}])
-
-.controller('ResultsController',['$scope','results','ContactFactory','$routeParams','$location', function($scope, results,ContactFactory, $routeParams,$location){
-			if(sessionStorage.term){
-				var data = {
-					searchterm : sessionStorage.term
-				}
-				var DTO ={
-					"oSearchAttributes":data
-				};
-				ContactFactory.contactInfo({},DTO, successcb, errorcb);
-			}else{
-				$location.path('/SearchResults')
-			}
-			function successcb(data){
-				var obj = angular.fromJson(data.d);
-				var theData = obj;
-				sessionStorage.term = obj.Q;
-				$scope.q = sessionStorage.term;
-				if(theData.RES){
-					var startNext = obj.RES["@EN"];
-					sessionStorage.startNext = startNext;
-					if(obj.RES["@EN"] === obj.RES.M){
-						$scope.areMore = false;
-					}else{
-						$scope.areMore = true;
-					}
-					$scope.showRes = true;
-					$scope.time = theData.TM;
-					$scope.total = theData.RES.M;
-					$scope.current = theData.RES["@EN"];
-					$scope.responses = theData.RES.R;
-					if(theData.GM){
-						if(theData.GM.length > 0){
-							$scope.gmResponses = theData.GM;
-						}else{
-							$scope.gmResponses = [theData.GM];
-						}
-					}else{
-						//do nothing
-					}
-				}else if(theData.Spelling){
-					$scope.spellCheck = theData.Spelling.Suggestion["@q"];
-					console.log($scope.spellCheck)
-					$scope.spellcheck = function(){
-						sessionStorage.term = $scope.spellCheck;
-						$location.path('/SearchResults:' + $scope.spellCheck)
-					}
-				}else{
-					$scope.showRes = false;
-					$scope.showNone = true;
-					$scope.q = $routeParams.term.replace(":", "")
-				}
-			}
-			//"RES": { "@SN": "1", "@EN": "8",
-			function errorcb(data){
-				$scope.err = data.status
-			}
-		}])
-
-
-;angular.module("globals", ['globalConfig','ngAnimate','globalFactories', 'globalControllers'])
+;angular.module("globals", ['ngRoute','ngResource','ngAnimate','ngTouch','globalConfig','globalControllers','globalFactories','ngSanitize'])
 
 
 .directive('states',['StateFactory',function(StateFactory){
@@ -33408,17 +33507,18 @@ angular.module('ngResource', ['ng']).
 			};
 })
 
-.directive('mobiheader', function($location){
+
+.directive('mobiheader',['$location',function($location){
 			return{
 				restrict: 'AE',
 				template:"<div><header class='dmvMobiHeader'>" +
-						"<ul><li></li><li class='search' data-ng-click='isSearch=!isSearch;isHidden=true;check(\"s\")'></li><li class='menu' data-ng-click='isHidden=!isHidden; isSearch=true; check(\"m\")'></li></ul></header>"+
+						"<ul><li data-ng-click='goHome()'></li><li class='search' data-ng-click='isSearch=!isSearch;isHidden=true;check(\"s\")'></li><li class='menu' data-ng-click='isHidden=!isHidden; isSearch=true; check(\"m\")'></li></ul></header>"+
 						"<div class='mobiSpace'></div>"+
 						"<div class='mobi mobiSearch' data-ng-controller='SearchController' data-ng-hide='isSearch'><div><ul><li><input type='text' name='search' data-ng-model='searchIn' placeholder='Search DMV'/></li><li><a class='bluBtn' data-ng-click='search()'>Search</a></li></ul></div></div>"+
 						"<div class='mobi' data-ng-hide='isHidden' data-ng-controller='MainNavigationController'><div><ul class='theLinks'><li data-ng-repeat='links in mobiData' class='{{$index+1}} {{links.class}}'><a data-ng-click='nextMobi($index+1, links.link)' data-ng-href=''>{{links.x}}</a></li></ul></div></div></div>",
 				link: function(scope,ele,attr){
-						scope.isHidden= true;
-						scope.isSearch= true;
+					scope.isHidden= true;
+					scope.isSearch= true;
 					scope.check= function(x){
 						var a= $(document).scrollTop();
 						if(a !== 0){
@@ -33440,19 +33540,22 @@ angular.module('ngResource', ['ng']).
 						$('li.' + x).addClass('active');
 						$location.path(y)
 					}
-					scope.$on('$locationChangeStart', function(){
+					scope.$on('$locationChangeSuccess', function(){
 						scope.isHidden= true;
 						scope.isSearch= true;
 					})
+					scope.goHome= function(){
+						$location.path("/Home")
+					}
 				},
 				replace:true
 			}
-})
+		}])
 
-.directive('mainheader', function($location){
+.directive('mainheader',['$location', function($location){
 			return{
 				restrict: 'EA',
-				template:"<header class='dmvHeader g16'><div class='logo first'><a href='/'><img src='/img/dmvLogo.png' alt='DMV HOME' /></a></div>" +
+				template:"<header class='dmvHeader g16'><div class='social'><ul><li class='face'></li><li class='mobile'></li><li class='yt'></li><li class='tw'></li><li class='rs'></li></ul></div><div class='logo first'><a data-ng-click='goHome()'><img src='/img/dmvLogo.png' alt='DMV HOME' /></a></div>" +
 						"<div class='subNav'>" +
 						"<div class='login'><button>Log In</button></div>" +
 						"<div class='search' data-ng-controller='SearchController'><ul><li><input type='text' name='search' data-ng-model='searchIn' placeholder='Search DMV'/></li><li><a class='bluBtn' data-ng-click='search()'>Search</a></li></div>"+
@@ -33466,36 +33569,31 @@ angular.module('ngResource', ['ng']).
 						$location.path(y)
 					}
 					scope.$on('$routeChangeSuccess', function(){
+						angular.element('ul.theLinks li').removeClass('active');
+					})
+					scope.$on('$routeChangeSuccess', function(){
 						var a= window.location.hash;
 						var b= a.substring(2);
-						console.log(b)
-						$('ul.theLinks li').removeClass('active');
-						var c= $("ul.theLinks li." +b)
+						var c= angular.element('ul.theLinks li.' + b)
 						if($(c).hasClass(b)){
-						$("ul.theLinks li." + b).addClass('active')
+							angular.element('ul.theLinks li.' + b).addClass('active');
 						}
 					})
-					/*
-					scope.next= function(x,y){
-					$('li').removeClass('active')
-					$('li.' + x).addClass('active')
-						$('li').removeClass('active');
-						$('li.' + x).addClass('active');
-						$location.path(y)
-					}*/
-
-
+					scope.goHome= function(){
+						$location.path("/Home")
+					}
 				},
 				replace:true
 			}
-		})
+		}])
 
-//<input type='text' name='search' data-ng-model='searchIn' placeholder='Search DMV'/>
 
 .directive('dmvfooter', function(){
 			return{
 				restrict: 'EA',
 				template: "<footer data-ng-show='!isloading'><ul><li><a href='http://datapoint.apa.virginia.gov/exp/exp_checkbook_agency.cfm?AGYCODE=154'>DMV Expenditures</a></li><li><a href='/about/org/dmv_org_chart.pdf'>Org Chart</a></li><li><a href='/general/'>General</a></li><li><a href='/espanol/'>Espanol</a></li><li><a href='/resources/'>Resources</a></li></ul></footer>",
+				link: function(scope,ele,attr){
+				},
 				replace: true
 			}
 })
@@ -34039,7 +34137,7 @@ angular.module('ngResource', ['ng']).
 		enter : function(element, done) {
 			jQuery(element).animate({
 				opacity:1
-			},300,function(){
+			},100,function(){
 				done();
 			});
 		},
@@ -34047,7 +34145,7 @@ angular.module('ngResource', ['ng']).
 		leave : function(element, done) {
 			jQuery(element).animate({
 				opacity:0.4
-			},300,function(){
+			},100,function(){
 				done();
 			});
 		}
@@ -34056,23 +34154,37 @@ angular.module('ngResource', ['ng']).
 
 
 
-
 .animation('.mobi', function() {
 	return {
-		beforeAddClass : function(ele, className, done) {
-			$(ele).stop().slideUp('slow');
-			$('body,section.site,div.mobi').removeClass('mobiMenuShowing')
+		beforeAddClass : function(element, className, done) {
+		jQuery(element).slideUp('slow', function(){
+							done()
+				})
 		},
-		beforeRemoveClass : function(ele){
-			$(ele).stop().slideDown('slow').removeClass('ng-hide');
-			$('body,section.site,div.mobi').addClass('mobiMenuShowing')
-
+		beforeRemoveClass : function(element, className, done) {
+			jQuery(element).slideDown('slow').removeClass('ng-hide',function(){
+				done();
+			});
 		}
 	};
 })
 
 
+/*
+.animation('.mobi', function() {
+			return {
+				beforeAddClass : function(ele, className, done) {
+					$(ele).stop().slideUp('slow');
+					$('body,section.site,div.mobi').removeClass('mobiMenuShowing')
+				},
+				beforeRemoveClass : function(ele){
+					$(ele).stop().slideDown('slow').removeClass('ng-hide');
+					$('body,section.site,div.mobi').addClass('mobiMenuShowing')
 
+				}
+			};
+		})
+*/
 
 .factory('ContactFactory',['$resource', function($resource) {
 			var baseUrl = "//10.156.147.131/dmvForms/default.aspx/SendSearchAttributes";
@@ -34085,11 +34197,7 @@ angular.module('ngResource', ['ng']).
 			});
 		}])
 
-
-
-
-
-		.factory('MenuFactory',['$resource', function($resource) {
+.factory('MenuFactory',['$resource', function($resource) {
 			var baseUrl = "/models/mainMenu.json";
 			return $resource(baseUrl, {}, {
 				menu: {
@@ -34098,4 +34206,1072 @@ angular.module('ngResource', ['ng']).
 					url : baseUrl
 				}
 			});
-		}])
+		}]);/**
+ * @license AngularJS v1.0.3
+ * (c) 2010-2012 Google, Inc. http://angularjs.org
+ * License: MIT
+ */
+(function(window, angular, undefined) {
+'use strict';
+
+/**
+ * @ngdoc overview
+ * @name ngSanitize
+ * @description
+ */
+
+/*
+ * HTML Parser By Misko Hevery (misko@hevery.com)
+ * based on:  HTML Parser By John Resig (ejohn.org)
+ * Original code by Erik Arvidsson, Mozilla Public License
+ * http://erik.eae.net/simplehtmlparser/simplehtmlparser.js
+ *
+ * // Use like so:
+ * htmlParser(htmlString, {
+ *     start: function(tag, attrs, unary) {},
+ *     end: function(tag) {},
+ *     chars: function(text) {},
+ *     comment: function(text) {}
+ * });
+ *
+ */
+
+
+/**
+ * @ngdoc service
+ * @name ngSanitize.$sanitize
+ * @function
+ *
+ * @description
+ *   The input is sanitized by parsing the html into tokens. All safe tokens (from a whitelist) are
+ *   then serialized back to properly escaped html string. This means that no unsafe input can make
+ *   it into the returned string, however, since our parser is more strict than a typical browser
+ *   parser, it's possible that some obscure input, which would be recognized as valid HTML by a
+ *   browser, won't make it through the sanitizer.
+ *
+ * @param {string} html Html input.
+ * @returns {string} Sanitized html.
+ *
+ * @example
+   <doc:example module="ngSanitize">
+     <doc:source>
+       <script>
+         function Ctrl($scope) {
+           $scope.snippet =
+             '<p style="color:blue">an html\n' +
+             '<em onmouseover="this.textContent=\'PWN3D!\'">click here</em>\n' +
+             'snippet</p>';
+         }
+       </script>
+       <div ng-controller="Ctrl">
+          Snippet: <textarea ng-model="snippet" cols="60" rows="3"></textarea>
+           <table>
+             <tr>
+               <td>Filter</td>
+               <td>Source</td>
+               <td>Rendered</td>
+             </tr>
+             <tr id="html-filter">
+               <td>html filter</td>
+               <td>
+                 <pre>&lt;div ng-bind-html="snippet"&gt;<br/>&lt;/div&gt;</pre>
+               </td>
+               <td>
+                 <div ng-bind-html="snippet"></div>
+               </td>
+             </tr>
+             <tr id="escaped-html">
+               <td>no filter</td>
+               <td><pre>&lt;div ng-bind="snippet"&gt;<br/>&lt;/div&gt;</pre></td>
+               <td><div ng-bind="snippet"></div></td>
+             </tr>
+             <tr id="html-unsafe-filter">
+               <td>unsafe html filter</td>
+               <td><pre>&lt;div ng-bind-html-unsafe="snippet"&gt;<br/>&lt;/div&gt;</pre></td>
+               <td><div ng-bind-html-unsafe="snippet"></div></td>
+             </tr>
+           </table>
+         </div>
+     </doc:source>
+     <doc:scenario>
+       it('should sanitize the html snippet ', function() {
+         expect(using('#html-filter').element('div').html()).
+           toBe('<p>an html\n<em>click here</em>\nsnippet</p>');
+       });
+
+       it('should escape snippet without any filter', function() {
+         expect(using('#escaped-html').element('div').html()).
+           toBe("&lt;p style=\"color:blue\"&gt;an html\n" +
+                "&lt;em onmouseover=\"this.textContent='PWN3D!'\"&gt;click here&lt;/em&gt;\n" +
+                "snippet&lt;/p&gt;");
+       });
+
+       it('should inline raw snippet if filtered as unsafe', function() {
+         expect(using('#html-unsafe-filter').element("div").html()).
+           toBe("<p style=\"color:blue\">an html\n" +
+                "<em onmouseover=\"this.textContent='PWN3D!'\">click here</em>\n" +
+                "snippet</p>");
+       });
+
+       it('should update', function() {
+         input('snippet').enter('new <b>text</b>');
+         expect(using('#html-filter').binding('snippet')).toBe('new <b>text</b>');
+         expect(using('#escaped-html').element('div').html()).toBe("new &lt;b&gt;text&lt;/b&gt;");
+         expect(using('#html-unsafe-filter').binding("snippet")).toBe('new <b>text</b>');
+       });
+     </doc:scenario>
+   </doc:example>
+ */
+var $sanitize = function(html) {
+  var buf = [];
+    htmlParser(html, htmlSanitizeWriter(buf));
+    return buf.join('');
+};
+
+
+// Regular Expressions for parsing tags and attributes
+var START_TAG_REGEXP = /^<\s*([\w:-]+)((?:\s+[\w:-]+(?:\s*=\s*(?:(?:"[^"]*")|(?:'[^']*')|[^>\s]+))?)*)\s*(\/?)\s*>/,
+  END_TAG_REGEXP = /^<\s*\/\s*([\w:-]+)[^>]*>/,
+  ATTR_REGEXP = /([\w:-]+)(?:\s*=\s*(?:(?:"((?:[^"])*)")|(?:'((?:[^'])*)')|([^>\s]+)))?/g,
+  BEGIN_TAG_REGEXP = /^</,
+  BEGING_END_TAGE_REGEXP = /^<\s*\//,
+  COMMENT_REGEXP = /<!--(.*?)-->/g,
+  CDATA_REGEXP = /<!\[CDATA\[(.*?)]]>/g,
+  URI_REGEXP = /^((ftp|https?):\/\/|mailto:|#)/,
+  NON_ALPHANUMERIC_REGEXP = /([^\#-~| |!])/g; // Match everything outside of normal chars and " (quote character)
+
+
+// Good source of info about elements and attributes
+// http://dev.w3.org/html5/spec/Overview.html#semantics
+// http://simon.html5.org/html-elements
+
+// Safe Void Elements - HTML5
+// http://dev.w3.org/html5/spec/Overview.html#void-elements
+var voidElements = makeMap("area,br,col,hr,img,wbr");
+
+// Elements that you can, intentionally, leave open (and which close themselves)
+// http://dev.w3.org/html5/spec/Overview.html#optional-tags
+var optionalEndTagBlockElements = makeMap("colgroup,dd,dt,li,p,tbody,td,tfoot,th,thead,tr"),
+    optionalEndTagInlineElements = makeMap("rp,rt"),
+    optionalEndTagElements = angular.extend({}, optionalEndTagInlineElements, optionalEndTagBlockElements);
+
+// Safe Block Elements - HTML5
+var blockElements = angular.extend({}, optionalEndTagBlockElements, makeMap("address,article,aside," +
+        "blockquote,caption,center,del,dir,div,dl,figure,figcaption,footer,h1,h2,h3,h4,h5,h6," +
+        "header,hgroup,hr,ins,map,menu,nav,ol,pre,script,section,table,ul"));
+
+// Inline Elements - HTML5
+var inlineElements = angular.extend({}, optionalEndTagInlineElements, makeMap("a,abbr,acronym,b,bdi,bdo," +
+        "big,br,cite,code,del,dfn,em,font,i,img,ins,kbd,label,map,mark,q,ruby,rp,rt,s,samp,small," +
+        "span,strike,strong,sub,sup,time,tt,u,var"));
+
+
+// Special Elements (can contain anything)
+var specialElements = makeMap("script,style");
+
+var validElements = angular.extend({}, voidElements, blockElements, inlineElements, optionalEndTagElements);
+
+//Attributes that have href and hence need to be sanitized
+var uriAttrs = makeMap("background,cite,href,longdesc,src,usemap");
+var validAttrs = angular.extend({}, uriAttrs, makeMap(
+    'abbr,align,alt,axis,bgcolor,border,cellpadding,cellspacing,class,clear,'+
+    'color,cols,colspan,compact,coords,dir,face,headers,height,hreflang,hspace,'+
+    'ismap,lang,language,nohref,nowrap,rel,rev,rows,rowspan,rules,'+
+    'scope,scrolling,shape,span,start,summary,target,title,type,'+
+    'valign,value,vspace,width'));
+
+function makeMap(str) {
+  var obj = {}, items = str.split(','), i;
+  for (i = 0; i < items.length; i++) obj[items[i]] = true;
+  return obj;
+}
+
+
+/**
+ * @example
+ * htmlParser(htmlString, {
+ *     start: function(tag, attrs, unary) {},
+ *     end: function(tag) {},
+ *     chars: function(text) {},
+ *     comment: function(text) {}
+ * });
+ *
+ * @param {string} html string
+ * @param {object} handler
+ */
+function htmlParser( html, handler ) {
+  var index, chars, match, stack = [], last = html;
+  stack.last = function() { return stack[ stack.length - 1 ]; };
+
+  while ( html ) {
+    chars = true;
+
+    // Make sure we're not in a script or style element
+    if ( !stack.last() || !specialElements[ stack.last() ] ) {
+
+      // Comment
+      if ( html.indexOf("<!--") === 0 ) {
+        index = html.indexOf("-->");
+
+        if ( index >= 0 ) {
+          if (handler.comment) handler.comment( html.substring( 4, index ) );
+          html = html.substring( index + 3 );
+          chars = false;
+        }
+
+      // end tag
+      } else if ( BEGING_END_TAGE_REGEXP.test(html) ) {
+        match = html.match( END_TAG_REGEXP );
+
+        if ( match ) {
+          html = html.substring( match[0].length );
+          match[0].replace( END_TAG_REGEXP, parseEndTag );
+          chars = false;
+        }
+
+      // start tag
+      } else if ( BEGIN_TAG_REGEXP.test(html) ) {
+        match = html.match( START_TAG_REGEXP );
+
+        if ( match ) {
+          html = html.substring( match[0].length );
+          match[0].replace( START_TAG_REGEXP, parseStartTag );
+          chars = false;
+        }
+      }
+
+      if ( chars ) {
+        index = html.indexOf("<");
+
+        var text = index < 0 ? html : html.substring( 0, index );
+        html = index < 0 ? "" : html.substring( index );
+
+        if (handler.chars) handler.chars( decodeEntities(text) );
+      }
+
+    } else {
+      html = html.replace(new RegExp("(.*)<\\s*\\/\\s*" + stack.last() + "[^>]*>", 'i'), function(all, text){
+        text = text.
+          replace(COMMENT_REGEXP, "$1").
+          replace(CDATA_REGEXP, "$1");
+
+        if (handler.chars) handler.chars( decodeEntities(text) );
+
+        return "";
+      });
+
+      parseEndTag( "", stack.last() );
+    }
+
+    if ( html == last ) {
+      throw "Parse Error: " + html;
+    }
+    last = html;
+  }
+
+  // Clean up any remaining tags
+  parseEndTag();
+
+  function parseStartTag( tag, tagName, rest, unary ) {
+    tagName = angular.lowercase(tagName);
+    if ( blockElements[ tagName ] ) {
+      while ( stack.last() && inlineElements[ stack.last() ] ) {
+        parseEndTag( "", stack.last() );
+      }
+    }
+
+    if ( optionalEndTagElements[ tagName ] && stack.last() == tagName ) {
+      parseEndTag( "", tagName );
+    }
+
+    unary = voidElements[ tagName ] || !!unary;
+
+    if ( !unary )
+      stack.push( tagName );
+
+    var attrs = {};
+
+    rest.replace(ATTR_REGEXP, function(match, name, doubleQuotedValue, singleQoutedValue, unqoutedValue) {
+      var value = doubleQuotedValue
+        || singleQoutedValue
+        || unqoutedValue
+        || '';
+
+      attrs[name] = decodeEntities(value);
+    });
+    if (handler.start) handler.start( tagName, attrs, unary );
+  }
+
+  function parseEndTag( tag, tagName ) {
+    var pos = 0, i;
+    tagName = angular.lowercase(tagName);
+    if ( tagName )
+      // Find the closest opened tag of the same type
+      for ( pos = stack.length - 1; pos >= 0; pos-- )
+        if ( stack[ pos ] == tagName )
+          break;
+
+    if ( pos >= 0 ) {
+      // Close all the open elements, up the stack
+      for ( i = stack.length - 1; i >= pos; i-- )
+        if (handler.end) handler.end( stack[ i ] );
+
+      // Remove the open elements from the stack
+      stack.length = pos;
+    }
+  }
+}
+
+/**
+ * decodes all entities into regular string
+ * @param value
+ * @returns {string} A string with decoded entities.
+ */
+var hiddenPre=document.createElement("pre");
+function decodeEntities(value) {
+  hiddenPre.innerHTML=value.replace(/</g,"&lt;");
+  return hiddenPre.innerText || hiddenPre.textContent || '';
+}
+
+/**
+ * Escapes all potentially dangerous characters, so that the
+ * resulting string can be safely inserted into attribute or
+ * element text.
+ * @param value
+ * @returns escaped text
+ */
+function encodeEntities(value) {
+  return value.
+    replace(/&/g, '&amp;').
+    replace(NON_ALPHANUMERIC_REGEXP, function(value){
+      return '&#' + value.charCodeAt(0) + ';';
+    }).
+    replace(/</g, '&lt;').
+    replace(/>/g, '&gt;');
+}
+
+/**
+ * create an HTML/XML writer which writes to buffer
+ * @param {Array} buf use buf.jain('') to get out sanitized html string
+ * @returns {object} in the form of {
+ *     start: function(tag, attrs, unary) {},
+ *     end: function(tag) {},
+ *     chars: function(text) {},
+ *     comment: function(text) {}
+ * }
+ */
+function htmlSanitizeWriter(buf){
+  var ignore = false;
+  var out = angular.bind(buf, buf.push);
+  return {
+    start: function(tag, attrs, unary){
+      tag = angular.lowercase(tag);
+      if (!ignore && specialElements[tag]) {
+        ignore = tag;
+      }
+      if (!ignore && validElements[tag] == true) {
+        out('<');
+        out(tag);
+        angular.forEach(attrs, function(value, key){
+          var lkey=angular.lowercase(key);
+          if (validAttrs[lkey]==true && (uriAttrs[lkey]!==true || value.match(URI_REGEXP))) {
+            out(' ');
+            out(key);
+            out('="');
+            out(encodeEntities(value));
+            out('"');
+          }
+        });
+        out(unary ? '/>' : '>');
+      }
+    },
+    end: function(tag){
+        tag = angular.lowercase(tag);
+        if (!ignore && validElements[tag] == true) {
+          out('</');
+          out(tag);
+          out('>');
+        }
+        if (tag == ignore) {
+          ignore = false;
+        }
+      },
+    chars: function(chars){
+        if (!ignore) {
+          out(encodeEntities(chars));
+        }
+      }
+  };
+}
+
+
+// define ngSanitize module and register $sanitize service
+angular.module('ngSanitize', []).value('$sanitize', $sanitize);
+
+/**
+ * @ngdoc directive
+ * @name ngSanitize.directive:ngBindHtml
+ *
+ * @description
+ * Creates a binding that will sanitize the result of evaluating the `expression` with the
+ * {@link ngSanitize.$sanitize $sanitize} service and innerHTML the result into the current element.
+ *
+ * See {@link ngSanitize.$sanitize $sanitize} docs for examples.
+ *
+ * @element ANY
+ * @param {expression} ngBindHtml {@link guide/expression Expression} to evaluate.
+ */
+angular.module('ngSanitize').directive('ngBindHtml', ['$sanitize', function($sanitize) {
+  return function(scope, element, attr) {
+    element.addClass('ng-binding').data('$binding', attr.ngBindHtml);
+    scope.$watch(attr.ngBindHtml, function ngBindHtmlWatchAction(value) {
+      value = $sanitize(value);
+      element.html(value || '');
+    });
+  };
+}]);
+/**
+ * @ngdoc filter
+ * @name ngSanitize.filter:linky
+ * @function
+ *
+ * @description
+ *   Finds links in text input and turns them into html links. Supports http/https/ftp/mailto and
+ *   plain email address links.
+ *
+ * @param {string} text Input text.
+ * @returns {string} Html-linkified text.
+ *
+ * @usage
+   <span ng-bind-html="linky_expression | linky"></span>
+ *
+ * @example
+   <doc:example module="ngSanitize">
+     <doc:source>
+       <script>
+         function Ctrl($scope) {
+           $scope.snippet =
+             'Pretty text with some links:\n'+
+             'http://angularjs.org/,\n'+
+             'mailto:us@somewhere.org,\n'+
+             'another@somewhere.org,\n'+
+             'and one more: ftp://127.0.0.1/.';
+         }
+       </script>
+       <div ng-controller="Ctrl">
+       Snippet: <textarea ng-model="snippet" cols="60" rows="3"></textarea>
+       <table>
+         <tr>
+           <td>Filter</td>
+           <td>Source</td>
+           <td>Rendered</td>
+         </tr>
+         <tr id="linky-filter">
+           <td>linky filter</td>
+           <td>
+             <pre>&lt;div ng-bind-html="snippet | linky"&gt;<br>&lt;/div&gt;</pre>
+           </td>
+           <td>
+             <div ng-bind-html="snippet | linky"></div>
+           </td>
+         </tr>
+         <tr id="escaped-html">
+           <td>no filter</td>
+           <td><pre>&lt;div ng-bind="snippet"&gt;<br>&lt;/div&gt;</pre></td>
+           <td><div ng-bind="snippet"></div></td>
+         </tr>
+       </table>
+     </doc:source>
+     <doc:scenario>
+       it('should linkify the snippet with urls', function() {
+         expect(using('#linky-filter').binding('snippet | linky')).
+           toBe('Pretty text with some links:&#10;' +
+                '<a href="http://angularjs.org/">http://angularjs.org/</a>,&#10;' +
+                '<a href="mailto:us@somewhere.org">us@somewhere.org</a>,&#10;' +
+                '<a href="mailto:another@somewhere.org">another@somewhere.org</a>,&#10;' +
+                'and one more: <a href="ftp://127.0.0.1/">ftp://127.0.0.1/</a>.');
+       });
+
+       it ('should not linkify snippet without the linky filter', function() {
+         expect(using('#escaped-html').binding('snippet')).
+           toBe("Pretty text with some links:\n" +
+                "http://angularjs.org/,\n" +
+                "mailto:us@somewhere.org,\n" +
+                "another@somewhere.org,\n" +
+                "and one more: ftp://127.0.0.1/.");
+       });
+
+       it('should update', function() {
+         input('snippet').enter('new http://link.');
+         expect(using('#linky-filter').binding('snippet | linky')).
+           toBe('new <a href="http://link">http://link</a>.');
+         expect(using('#escaped-html').binding('snippet')).toBe('new http://link.');
+       });
+     </doc:scenario>
+   </doc:example>
+ */
+angular.module('ngSanitize').filter('linky', function() {
+  var LINKY_URL_REGEXP = /((ftp|https?):\/\/|(mailto:)?[A-Za-z0-9._%+-]+@)\S*[^\s\.\;\,\(\)\{\}\<\>]/,
+      MAILTO_REGEXP = /^mailto:/;
+
+  return function(text) {
+    if (!text) return text;
+    var match;
+    var raw = text;
+    var html = [];
+    // TODO(vojta): use $sanitize instead
+    var writer = htmlSanitizeWriter(html);
+    var url;
+    var i;
+    while ((match = raw.match(LINKY_URL_REGEXP))) {
+      // We can not end in these as they are sometimes found at the end of the sentence
+      url = match[0];
+      // if we did not match ftp/http/mailto then assume mailto
+      if (match[2] == match[3]) url = 'mailto:' + url;
+      i = match.index;
+      writer.chars(raw.substr(0, i));
+      writer.start('a', {href:url});
+      writer.chars(match[0].replace(MAILTO_REGEXP, ''));
+      writer.end('a');
+      raw = raw.substring(i + match[0].length);
+    }
+    writer.chars(raw);
+    return html.join('');
+  };
+});
+
+})(window, window.angular);
+;'use strict';
+
+/**
+ * @ngdoc overview
+ * @name ngResource
+ * @description
+ */
+
+/**
+ * @ngdoc object
+ * @name ngResource.$resource
+ * @requires $http
+ *
+ * @description
+ * A factory which creates a resource object that lets you interact with
+ * [RESTful](http://en.wikipedia.org/wiki/Representational_State_Transfer) server-side data sources.
+ *
+ * The returned resource object has action methods which provide high-level behaviors without
+ * the need to interact with the low level {@link ng.$http $http} service.
+ *
+ * # Installation
+ * To use $resource make sure you have included the `angular-resource.js` that comes in Angular
+ * package. You can also find this file on Google CDN, bower as well as at
+ * {@link http://code.angularjs.org/ code.angularjs.org}.
+ *
+ * Finally load the module in your application:
+ *
+ *        angular.module('app', ['ngResource']);
+ *
+ * and you are ready to get started!
+ *
+ * @param {string} url A parametrized URL template with parameters prefixed by `:` as in
+ *   `/user/:username`. If you are using a URL with a port number (e.g.
+ *   `http://example.com:8080/api`), you'll need to escape the colon character before the port
+ *   number, like this: `$resource('http://example.com\\:8080/api')`.
+ *
+ *   If you are using a url with a suffix, just add the suffix, like this:
+ *   `$resource('http://example.com/resource.json')` or `$resource('http://example.com/:id.json')
+ *   or even `$resource('http://example.com/resource/:resource_id.:format')`
+ *   If the parameter before the suffix is empty, :resource_id in this case, then the `/.` will be
+ *   collapsed down to a single `.`.  If you need this sequence to appear and not collapse then you
+ *   can escape it with `/\.`.
+ *
+ * @param {Object=} paramDefaults Default values for `url` parameters. These can be overridden in
+ *   `actions` methods. If any of the parameter value is a function, it will be executed every time
+ *   when a param value needs to be obtained for a request (unless the param was overridden).
+ *
+ *   Each key value in the parameter object is first bound to url template if present and then any
+ *   excess keys are appended to the url search query after the `?`.
+ *
+ *   Given a template `/path/:verb` and parameter `{verb:'greet', salutation:'Hello'}` results in
+ *   URL `/path/greet?salutation=Hello`.
+ *
+ *   If the parameter value is prefixed with `@` then the value of that parameter is extracted from
+ *   the data object (useful for non-GET operations).
+ *
+ * @param {Object.<Object>=} actions Hash with declaration of custom action that should extend the
+ *   default set of resource actions. The declaration should be created in the format of {@link
+ *   ng.$http#Parameters $http.config}:
+ *
+ *       {action1: {method:?, params:?, isArray:?, headers:?, ...},
+ *        action2: {method:?, params:?, isArray:?, headers:?, ...},
+ *        ...}
+ *
+ *   Where:
+ *
+ *   - **`action`** – {string} – The name of action. This name becomes the name of the method on your
+ *     resource object.
+ *   - **`method`** – {string} – HTTP request method. Valid methods are: `GET`, `POST`, `PUT`, `DELETE`,
+ *     and `JSONP`.
+ *   - **`params`** – {Object=} – Optional set of pre-bound parameters for this action. If any of the
+ *     parameter value is a function, it will be executed every time when a param value needs to be
+ *     obtained for a request (unless the param was overridden).
+ *   - **`url`** – {string} – action specific `url` override. The url templating is supported just like
+ *     for the resource-level urls.
+ *   - **`isArray`** – {boolean=} – If true then the returned object for this action is an array, see
+ *     `returns` section.
+ *   - **`transformRequest`** – `{function(data, headersGetter)|Array.<function(data, headersGetter)>}` –
+ *     transform function or an array of such functions. The transform function takes the http
+ *     request body and headers and returns its transformed (typically serialized) version.
+ *   - **`transformResponse`** – `{function(data, headersGetter)|Array.<function(data, headersGetter)>}` –
+ *     transform function or an array of such functions. The transform function takes the http
+ *     response body and headers and returns its transformed (typically deserialized) version.
+ *   - **`cache`** – `{boolean|Cache}` – If true, a default $http cache will be used to cache the
+ *     GET request, otherwise if a cache instance built with
+ *     {@link ng.$cacheFactory $cacheFactory}, this cache will be used for
+ *     caching.
+ *   - **`timeout`** – `{number|Promise}` – timeout in milliseconds, or {@link ng.$q promise} that
+ *     should abort the request when resolved.
+ *   - **`withCredentials`** - `{boolean}` - whether to to set the `withCredentials` flag on the
+ *     XHR object. See {@link https://developer.mozilla.org/en/http_access_control#section_5
+ *     requests with credentials} for more information.
+ *   - **`responseType`** - `{string}` - see {@link
+ *     https://developer.mozilla.org/en-US/docs/DOM/XMLHttpRequest#responseType requestType}.
+ *   - **`interceptor`** - `{Object=}` - The interceptor object has two optional methods -
+ *     `response` and `responseError`. Both `response` and `responseError` interceptors get called
+ *     with `http response` object. See {@link ng.$http $http interceptors}.
+ *
+ * @returns {Object} A resource "class" object with methods for the default set of resource actions
+ *   optionally extended with custom `actions`. The default set contains these actions:
+ *
+ *       { 'get':    {method:'GET'},
+ *         'save':   {method:'POST'},
+ *         'query':  {method:'GET', isArray:true},
+ *         'remove': {method:'DELETE'},
+ *         'delete': {method:'DELETE'} };
+ *
+ *   Calling these methods invoke an {@link ng.$http} with the specified http method,
+ *   destination and parameters. When the data is returned from the server then the object is an
+ *   instance of the resource class. The actions `save`, `remove` and `delete` are available on it
+ *   as  methods with the `$` prefix. This allows you to easily perform CRUD operations (create,
+ *   read, update, delete) on server-side data like this:
+ *   <pre>
+        var User = $resource('/user/:userId', {userId:'@id'});
+        var user = User.get({userId:123}, function() {
+          user.abc = true;
+          user.$save();
+        });
+     </pre>
+ *
+ *   It is important to realize that invoking a $resource object method immediately returns an
+ *   empty reference (object or array depending on `isArray`). Once the data is returned from the
+ *   server the existing reference is populated with the actual data. This is a useful trick since
+ *   usually the resource is assigned to a model which is then rendered by the view. Having an empty
+ *   object results in no rendering, once the data arrives from the server then the object is
+ *   populated with the data and the view automatically re-renders itself showing the new data. This
+ *   means that in most case one never has to write a callback function for the action methods.
+ *
+ *   The action methods on the class object or instance object can be invoked with the following
+ *   parameters:
+ *
+ *   - HTTP GET "class" actions: `Resource.action([parameters], [success], [error])`
+ *   - non-GET "class" actions: `Resource.action([parameters], postData, [success], [error])`
+ *   - non-GET instance actions:  `instance.$action([parameters], [success], [error])`
+ *
+ *   Success callback is called with (value, responseHeaders) arguments. Error callback is called
+ *   with (httpResponse) argument.
+ *
+ *   Class actions return empty instance (with additional properties below).
+ *   Instance actions return promise of the action.
+ *
+ *   The Resource instances and collection have these additional properties:
+ *
+ *   - `$promise`: the {@link ng.$q promise} of the original server interaction that created this
+ *     instance or collection.
+ *
+ *     On success, the promise is resolved with the same resource instance or collection object,
+ *     updated with data from server. This makes it easy to use in
+ *     {@link ngRoute.$routeProvider resolve section of $routeProvider.when()} to defer view rendering
+ *     until the resource(s) are loaded.
+ *
+ *     On failure, the promise is resolved with the {@link ng.$http http response} object,
+ *     without the `resource` property.
+ *
+ *   - `$resolved`: `true` after first server interaction is completed (either with success or rejection),
+ *     `false` before that. Knowing if the Resource has been resolved is useful in data-binding.
+ *
+ * @example
+ *
+ * # Credit card resource
+ *
+ * <pre>
+     // Define CreditCard class
+     var CreditCard = $resource('/user/:userId/card/:cardId',
+      {userId:123, cardId:'@id'}, {
+       charge: {method:'POST', params:{charge:true}}
+      });
+
+     // We can retrieve a collection from the server
+     var cards = CreditCard.query(function() {
+       // GET: /user/123/card
+       // server returns: [ {id:456, number:'1234', name:'Smith'} ];
+
+       var card = cards[0];
+       // each item is an instance of CreditCard
+       expect(card instanceof CreditCard).toEqual(true);
+       card.name = "J. Smith";
+       // non GET methods are mapped onto the instances
+       card.$save();
+       // POST: /user/123/card/456 {id:456, number:'1234', name:'J. Smith'}
+       // server returns: {id:456, number:'1234', name: 'J. Smith'};
+
+       // our custom method is mapped as well.
+       card.$charge({amount:9.99});
+       // POST: /user/123/card/456?amount=9.99&charge=true {id:456, number:'1234', name:'J. Smith'}
+     });
+
+     // we can create an instance as well
+     var newCard = new CreditCard({number:'0123'});
+     newCard.name = "Mike Smith";
+     newCard.$save();
+     // POST: /user/123/card {number:'0123', name:'Mike Smith'}
+     // server returns: {id:789, number:'01234', name: 'Mike Smith'};
+     expect(newCard.id).toEqual(789);
+ * </pre>
+ *
+ * The object returned from this function execution is a resource "class" which has "static" method
+ * for each action in the definition.
+ *
+ * Calling these methods invoke `$http` on the `url` template with the given `method`, `params` and `headers`.
+ * When the data is returned from the server then the object is an instance of the resource type and
+ * all of the non-GET methods are available with `$` prefix. This allows you to easily support CRUD
+ * operations (create, read, update, delete) on server-side data.
+
+   <pre>
+     var User = $resource('/user/:userId', {userId:'@id'});
+     var user = User.get({userId:123}, function() {
+       user.abc = true;
+       user.$save();
+     });
+   </pre>
+ *
+ * It's worth noting that the success callback for `get`, `query` and other method gets passed
+ * in the response that came from the server as well as $http header getter function, so one
+ * could rewrite the above example and get access to http headers as:
+ *
+   <pre>
+     var User = $resource('/user/:userId', {userId:'@id'});
+     User.get({userId:123}, function(u, getResponseHeaders){
+       u.abc = true;
+       u.$save(function(u, putResponseHeaders) {
+         //u => saved user object
+         //putResponseHeaders => $http header getter
+       });
+     });
+   </pre>
+
+ * # Buzz client
+
+   Let's look at what a buzz client created with the `$resource` service looks like:
+    <doc:example>
+      <doc:source jsfiddle="false">
+       <script>
+         function BuzzController($resource) {
+           this.userId = 'googlebuzz';
+           this.Activity = $resource(
+             'https://www.googleapis.com/buzz/v1/activities/:userId/:visibility/:activityId/:comments',
+             {alt:'json', callback:'JSON_CALLBACK'},
+             {get:{method:'JSONP', params:{visibility:'@self'}}, replies: {method:'JSONP', params:{visibility:'@self', comments:'@comments'}}}
+           );
+         }
+
+         BuzzController.prototype = {
+           fetch: function() {
+             this.activities = this.Activity.get({userId:this.userId});
+           },
+           expandReplies: function(activity) {
+             activity.replies = this.Activity.replies({userId:this.userId, activityId:activity.id});
+           }
+         };
+         BuzzController.$inject = ['$resource'];
+       </script>
+
+       <div ng-controller="BuzzController">
+         <input ng-model="userId"/>
+         <button ng-click="fetch()">fetch</button>
+         <hr/>
+         <div ng-repeat="item in activities.data.items">
+           <h1 style="font-size: 15px;">
+             <img src="{{item.actor.thumbnailUrl}}" style="max-height:30px;max-width:30px;"/>
+             <a href="{{item.actor.profileUrl}}">{{item.actor.name}}</a>
+             <a href ng-click="expandReplies(item)" style="float: right;">Expand replies: {{item.links.replies[0].count}}</a>
+           </h1>
+           {{item.object.content | html}}
+           <div ng-repeat="reply in item.replies.data.items" style="margin-left: 20px;">
+             <img src="{{reply.actor.thumbnailUrl}}" style="max-height:30px;max-width:30px;"/>
+             <a href="{{reply.actor.profileUrl}}">{{reply.actor.name}}</a>: {{reply.content | html}}
+           </div>
+         </div>
+       </div>
+      </doc:source>
+      <doc:scenario>
+      </doc:scenario>
+    </doc:example>
+ */
+angular.module('ngResource', ['ng']).
+  factory('$resource', ['$http', '$parse', '$q', function($http, $parse, $q) {
+    var DEFAULT_ACTIONS = {
+      'get':    {method:'GET'},
+      'save':   {method:'POST'},
+      'query':  {method:'GET', isArray:true},
+      'remove': {method:'DELETE'},
+      'delete': {method:'DELETE'}
+    };
+    var noop = angular.noop,
+        forEach = angular.forEach,
+        extend = angular.extend,
+        copy = angular.copy,
+        isFunction = angular.isFunction,
+        getter = function(obj, path) {
+          return $parse(path)(obj);
+        };
+
+    /**
+     * We need our custom method because encodeURIComponent is too aggressive and doesn't follow
+     * http://www.ietf.org/rfc/rfc3986.txt with regards to the character set (pchar) allowed in path
+     * segments:
+     *    segment       = *pchar
+     *    pchar         = unreserved / pct-encoded / sub-delims / ":" / "@"
+     *    pct-encoded   = "%" HEXDIG HEXDIG
+     *    unreserved    = ALPHA / DIGIT / "-" / "." / "_" / "~"
+     *    sub-delims    = "!" / "$" / "&" / "'" / "(" / ")"
+     *                     / "*" / "+" / "," / ";" / "="
+     */
+    function encodeUriSegment(val) {
+      return encodeUriQuery(val, true).
+        replace(/%26/gi, '&').
+        replace(/%3D/gi, '=').
+        replace(/%2B/gi, '+');
+    }
+
+
+    /**
+     * This method is intended for encoding *key* or *value* parts of query component. We need a custom
+     * method because encodeURIComponent is too aggressive and encodes stuff that doesn't have to be
+     * encoded per http://tools.ietf.org/html/rfc3986:
+     *    query       = *( pchar / "/" / "?" )
+     *    pchar         = unreserved / pct-encoded / sub-delims / ":" / "@"
+     *    unreserved    = ALPHA / DIGIT / "-" / "." / "_" / "~"
+     *    pct-encoded   = "%" HEXDIG HEXDIG
+     *    sub-delims    = "!" / "$" / "&" / "'" / "(" / ")"
+     *                     / "*" / "+" / "," / ";" / "="
+     */
+    function encodeUriQuery(val, pctEncodeSpaces) {
+      return encodeURIComponent(val).
+        replace(/%40/gi, '@').
+        replace(/%3A/gi, ':').
+        replace(/%24/g, '$').
+        replace(/%2C/gi, ',').
+        replace(/%20/g, (pctEncodeSpaces ? '%20' : '+'));
+    }
+
+    function Route(template, defaults) {
+      this.template = template;
+      this.defaults = defaults || {};
+      this.urlParams = {};
+    }
+
+    Route.prototype = {
+      setUrlParams: function(config, params, actionUrl) {
+        var self = this,
+            url = actionUrl || self.template,
+            val,
+            encodedVal;
+
+        var urlParams = self.urlParams = {};
+        forEach(url.split(/\W/), function(param){
+          if (param && (new RegExp("(^|[^\\\\]):" + param + "(\\W|$)").test(url))) {
+              urlParams[param] = true;
+          }
+        });
+        url = url.replace(/\\:/g, ':');
+
+        params = params || {};
+        forEach(self.urlParams, function(_, urlParam){
+          val = params.hasOwnProperty(urlParam) ? params[urlParam] : self.defaults[urlParam];
+          if (angular.isDefined(val) && val !== null) {
+            encodedVal = encodeUriSegment(val);
+            url = url.replace(new RegExp(":" + urlParam + "(\\W|$)", "g"), encodedVal + "$1");
+          } else {
+            url = url.replace(new RegExp("(\/?):" + urlParam + "(\\W|$)", "g"), function(match,
+                leadingSlashes, tail) {
+              if (tail.charAt(0) == '/') {
+                return tail;
+              } else {
+                return leadingSlashes + tail;
+              }
+            });
+          }
+        });
+
+        // strip trailing slashes and set the url
+        url = url.replace(/\/+$/, '');
+        // then replace collapse `/.` if found in the last URL path segment before the query
+        // E.g. `http://url.com/id./format?q=x` becomes `http://url.com/id.format?q=x`
+        url = url.replace(/\/\.(?=\w+($|\?))/, '.');
+        // replace escaped `/\.` with `/.`
+        config.url = url.replace(/\/\\\./, '/.');
+
+
+        // set params - delegate param encoding to $http
+        forEach(params, function(value, key){
+          if (!self.urlParams[key]) {
+            config.params = config.params || {};
+            config.params[key] = value;
+          }
+        });
+      }
+    };
+
+
+    function ResourceFactory(url, paramDefaults, actions) {
+      var route = new Route(url);
+
+      actions = extend({}, DEFAULT_ACTIONS, actions);
+
+      function extractParams(data, actionParams){
+        var ids = {};
+        actionParams = extend({}, paramDefaults, actionParams);
+        forEach(actionParams, function(value, key){
+          if (isFunction(value)) { value = value(); }
+          ids[key] = value && value.charAt && value.charAt(0) == '@' ? getter(data, value.substr(1)) : value;
+        });
+        return ids;
+      }
+
+      function defaultResponseInterceptor(response) {
+        return response.resource;
+      }
+
+      function Resource(value){
+        copy(value || {}, this);
+      }
+
+      forEach(actions, function(action, name) {
+        var hasBody = /^(POST|PUT|PATCH)$/i.test(action.method);
+
+        Resource[name] = function(a1, a2, a3, a4) {
+          var params = {}, data, success, error;
+
+          switch(arguments.length) {
+          case 4:
+            error = a4;
+            success = a3;
+            //fallthrough
+          case 3:
+          case 2:
+            if (isFunction(a2)) {
+              if (isFunction(a1)) {
+                success = a1;
+                error = a2;
+                break;
+              }
+
+              success = a2;
+              error = a3;
+              //fallthrough
+            } else {
+              params = a1;
+              data = a2;
+              success = a3;
+              break;
+            }
+          case 1:
+            if (isFunction(a1)) success = a1;
+            else if (hasBody) data = a1;
+            else params = a1;
+            break;
+          case 0: break;
+          default:
+            throw "Expected up to 4 arguments [params, data, success, error], got " +
+              arguments.length + " arguments.";
+          }
+
+          var isInstanceCall = data instanceof Resource;
+          var value = isInstanceCall ? data : (action.isArray ? [] : new Resource(data));
+          var httpConfig = {};
+          var responseInterceptor = action.interceptor && action.interceptor.response || defaultResponseInterceptor;
+          var responseErrorInterceptor = action.interceptor && action.interceptor.responseError || undefined;
+
+          forEach(action, function(value, key) {
+            if (key != 'params' && key != 'isArray' && key != 'interceptor') {
+              httpConfig[key] = copy(value);
+            }
+          });
+
+          httpConfig.data = data;
+          route.setUrlParams(httpConfig, extend({}, extractParams(data, action.params || {}), params), action.url);
+
+          var promise = $http(httpConfig).then(function(response) {
+            var data = response.data,
+                promise = value.$promise;
+
+            if (data) {
+              if (action.isArray) {
+                value.length = 0;
+                forEach(data, function(item) {
+                  value.push(new Resource(item));
+                });
+              } else {
+                copy(data, value);
+                value.$promise = promise;
+              }
+            }
+
+            value.$resolved = true;
+
+            (success||noop)(value, response.headers);
+
+            response.resource = value;
+
+            return response;
+          }, function(response) {
+            value.$resolved = true;
+
+            (error||noop)(response);
+
+            return $q.reject(response);
+          }).then(responseInterceptor, responseErrorInterceptor);
+
+
+          if (!isInstanceCall) {
+            // we are creating instance / collection
+            // - set the initial promise
+            // - return the instance / collection
+            value.$promise = promise;
+            value.$resolved = false;
+
+            return value;
+          }
+
+          // instance call
+          return promise;
+        };
+
+
+        Resource.prototype['$' + name] = function(params, success, error) {
+          if (isFunction(params)) {
+            error = success; success = params; params = {};
+          }
+          var result = Resource[name](params, this, success, error);
+          return result.$promise || result;
+        };
+      });
+
+      Resource.bind = function(additionalParamDefaults){
+        return ResourceFactory(url, extend({}, paramDefaults, additionalParamDefaults), actions);
+      };
+
+      return Resource;
+    }
+
+    return ResourceFactory;
+  }]);

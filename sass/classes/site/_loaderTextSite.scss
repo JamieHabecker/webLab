@@ -1,0 +1,21 @@
+h2.loaderTextSite{
+	float:none;
+	display:block;
+	width:45%;
+	margin:0 auto;
+	background: url('/img/5-0.gif') no-repeat top right;
+	padding-right: 1.5em;
+	text-align:center;
+	color:$blueDarker;
+	height:5em;
+	&.err{
+		padding-top:0;
+	}
+}
+
+
+@media screen and (min-width:758px){
+	h2.loaderTextSite{
+		width:40%;
+	}
+}

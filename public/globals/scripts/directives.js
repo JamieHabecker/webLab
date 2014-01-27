@@ -1,4 +1,4 @@
-angular.module("globals", ['globalConfig','ngAnimate','globalFactories', 'globalControllers'])
+angular.module("globals", ['ngRoute','ngResource','ngAnimate','ngTouch','globalConfig','globalControllers','globalFactories','ngSanitize'])
 
 
 .directive('states',['StateFactory',function(StateFactory){
@@ -58,17 +58,18 @@ angular.module("globals", ['globalConfig','ngAnimate','globalFactories', 'global
 			};
 })
 
-.directive('mobiheader', function($location){
+
+.directive('mobiheader',['$location',function($location){
 			return{
 				restrict: 'AE',
 				template:"<div><header class='dmvMobiHeader'>" +
-						"<ul><li></li><li class='search' data-ng-click='isSearch=!isSearch;isHidden=true;check(\"s\")'></li><li class='menu' data-ng-click='isHidden=!isHidden; isSearch=true; check(\"m\")'></li></ul></header>"+
+						"<ul><li data-ng-click='goHome()'></li><li class='search' data-ng-click='isSearch=!isSearch;isHidden=true;check(\"s\")'></li><li class='menu' data-ng-click='isHidden=!isHidden; isSearch=true; check(\"m\")'></li></ul></header>"+
 						"<div class='mobiSpace'></div>"+
 						"<div class='mobi mobiSearch' data-ng-controller='SearchController' data-ng-hide='isSearch'><div><ul><li><input type='text' name='search' data-ng-model='searchIn' placeholder='Search DMV'/></li><li><a class='bluBtn' data-ng-click='search()'>Search</a></li></ul></div></div>"+
 						"<div class='mobi' data-ng-hide='isHidden' data-ng-controller='MainNavigationController'><div><ul class='theLinks'><li data-ng-repeat='links in mobiData' class='{{$index+1}} {{links.class}}'><a data-ng-click='nextMobi($index+1, links.link)' data-ng-href=''>{{links.x}}</a></li></ul></div></div></div>",
 				link: function(scope,ele,attr){
-						scope.isHidden= true;
-						scope.isSearch= true;
+					scope.isHidden= true;
+					scope.isSearch= true;
 					scope.check= function(x){
 						var a= $(document).scrollTop();
 						if(a !== 0){
@@ -90,19 +91,22 @@ angular.module("globals", ['globalConfig','ngAnimate','globalFactories', 'global
 						$('li.' + x).addClass('active');
 						$location.path(y)
 					}
-					scope.$on('$locationChangeStart', function(){
+					scope.$on('$locationChangeSuccess', function(){
 						scope.isHidden= true;
 						scope.isSearch= true;
 					})
+					scope.goHome= function(){
+						$location.path("/Home")
+					}
 				},
 				replace:true
 			}
-})
+		}])
 
-.directive('mainheader', function($location){
+.directive('mainheader',['$location', function($location){
 			return{
 				restrict: 'EA',
-				template:"<header class='dmvHeader g16'><div class='logo first'><a href='/'><img src='/img/dmvLogo.png' alt='DMV HOME' /></a></div>" +
+				template:"<header class='dmvHeader g16'><div class='social'><ul><li class='face'></li><li class='mobile'></li><li class='yt'></li><li class='tw'></li><li class='rs'></li></ul></div><div class='logo first'><a data-ng-click='goHome()'><img src='/img/dmvLogo.png' alt='DMV HOME' /></a></div>" +
 						"<div class='subNav'>" +
 						"<div class='login'><button>Log In</button></div>" +
 						"<div class='search' data-ng-controller='SearchController'><ul><li><input type='text' name='search' data-ng-model='searchIn' placeholder='Search DMV'/></li><li><a class='bluBtn' data-ng-click='search()'>Search</a></li></div>"+
@@ -116,36 +120,31 @@ angular.module("globals", ['globalConfig','ngAnimate','globalFactories', 'global
 						$location.path(y)
 					}
 					scope.$on('$routeChangeSuccess', function(){
+						angular.element('ul.theLinks li').removeClass('active');
+					})
+					scope.$on('$routeChangeSuccess', function(){
 						var a= window.location.hash;
 						var b= a.substring(2);
-						console.log(b)
-						$('ul.theLinks li').removeClass('active');
-						var c= $("ul.theLinks li." +b)
+						var c= angular.element('ul.theLinks li.' + b)
 						if($(c).hasClass(b)){
-						$("ul.theLinks li." + b).addClass('active')
+							angular.element('ul.theLinks li.' + b).addClass('active');
 						}
 					})
-					/*
-					scope.next= function(x,y){
-					$('li').removeClass('active')
-					$('li.' + x).addClass('active')
-						$('li').removeClass('active');
-						$('li.' + x).addClass('active');
-						$location.path(y)
-					}*/
-
-
+					scope.goHome= function(){
+						$location.path("/Home")
+					}
 				},
 				replace:true
 			}
-		})
+		}])
 
-//<input type='text' name='search' data-ng-model='searchIn' placeholder='Search DMV'/>
 
 .directive('dmvfooter', function(){
 			return{
 				restrict: 'EA',
 				template: "<footer data-ng-show='!isloading'><ul><li><a href='http://datapoint.apa.virginia.gov/exp/exp_checkbook_agency.cfm?AGYCODE=154'>DMV Expenditures</a></li><li><a href='/about/org/dmv_org_chart.pdf'>Org Chart</a></li><li><a href='/general/'>General</a></li><li><a href='/espanol/'>Espanol</a></li><li><a href='/resources/'>Resources</a></li></ul></footer>",
+				link: function(scope,ele,attr){
+				},
 				replace: true
 			}
 })

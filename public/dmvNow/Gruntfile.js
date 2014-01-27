@@ -61,8 +61,8 @@ open: {
 				separator: ';' 
 			},
 			dist:{
-				src: ['scripts/vendor/jquery-1.10.2.js','scripts/vendor/angular.js','scripts/vendor/resource.js','scripts/vendor/underscore.js','scripts/dev/*js','scripts/dev/forms/*js', 'scripts/dev/home/*js'], //Using mini match for your scripts to concatenate
-                dest: 'scripts/contactUs.js' //where to output the script
+				src: ['scripts/dev/*js','scripts/vendor/clu.min.js','scripts/vendor/slider.js','scripts/vendor/info.min.js','scripts/vendor/uiMap.js'], //Using mini match for your scripts to concatenate
+				dest: 'scripts/dmvnow.js' //where to output the script
 			}
 		},
 		compass: {
@@ -103,7 +103,7 @@ jade: {
 uglify: {
     dest: {
       files: {
-        'scripts/contactUs.min.js': ['scripts/contactUs.js']
+        'scripts/dmvnow.min.js': ['scripts/dmvnow.js']
       }
     }
 },
@@ -111,17 +111,17 @@ uglify: {
 
  clean: {
             options: { force: true },
-            release: ['y:/public/Search/']
+            release: ['../../public/releases/dmvnow/']
         },
         copy: {            
             release: {
                 files: {
-                    'y:/public/Search/': ['scripts/contactUs.min.js','scripts/shims/*','search/css/*','views/*','views/directiveTemplates/*','views/includes/*','index.html', 'img/*', 'models/*']
+                    '../../public/releases/dmvnow/': ['scripts/dmvnow.min.js','scripts/shims/*','main/css/*','views/*','views/includes/*','index.html', 'img/*', 'models/*']
                 }
             }
         },
  usemin: {
-            html: ['y:/public/Search/index.html']
+            html: ['../../public/releases/dmvnow/index.html']
     }
        
 	
@@ -158,15 +158,15 @@ uglify: {
     'watch'
   ]);
   
-  //build task
-  grunt.registerTask('build', [
-  'compass',
-  'concat',
-   'uglify',
-   'jade',
-    'clean',
-    'copy',
-    'usemin'
+//build task
+grunt.registerTask('build', [
+	'compass',
+	'concat',
+	'uglify',
+	'jade',
+	'clean',
+	'copy',
+	'usemin'
   ]);
 
 };

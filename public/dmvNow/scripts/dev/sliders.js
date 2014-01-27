@@ -1,6 +1,6 @@
 angular.module("sliders", [])
 
-.directive('diesel', function($timeout){
+.directive('diesel',['$timeout',function($timeout){
 			return {
 				restrict: 'EA',
 				template: '<li data-ng-include="\'/views/sliders/dieselTax.html\'"></li>',
@@ -14,10 +14,10 @@ angular.module("sliders", [])
 					},1000);
 				}
 			}
-})
+}])
 
 
-.directive('moped', function($timeout){
+.directive('moped',function(){
 			return {
 				restrict: 'EA',
 				template: '<li data-ng-include="\'/views/sliders/moped.html\'"></li>',
@@ -26,13 +26,11 @@ angular.module("sliders", [])
 			}
 })
 
-		.directive('grandad', function($timeout){
+		.directive('grandad',function(){
 			return {
 				restrict: 'EA',
-				template: '<li data-ng-include="\'/views/sliders/grandad.html\'"></li>',
-				link: function(scope,ele,attr){
+				template: '<li data-ng-include="\'/views/sliders/grandad.html\'"></li>'
 				}
-			}
 		})
 
 

@@ -1,4 +1,4 @@
-article.dmvHome{
+article.onlineServices{
 	border:none;
 	box-shadow:none;
 	border-radius:none;
@@ -7,15 +7,15 @@ article.dmvHome{
 		height:26em;
 	}
 	.comp1 div, .comp2 div, .comp3 div, .comp4 div, .comp5 div{
-			background:url("/img/homeSprite.jpg")no-repeat;
-			height:300px;
-			background-position:center;
-		}
+		background:url("/img/onlineServicesSprite.jpg")no-repeat;
+		height:300px;
+		background-position:center;
+	}
 	article.comp1 div{
 		background-position:center -2px;
 	}
 	article.comp2 div{
-		background-position:center -162px;
+		background-position:center 22px;
 		margin-top:-15px;
 	}
 	article.comp3 div{
@@ -30,4 +30,3 @@ article.dmvHome{
 		background-position:center -633px;
 	}
 }
-

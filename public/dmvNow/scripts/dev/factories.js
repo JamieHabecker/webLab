@@ -49,34 +49,9 @@ angular.module("factories", ['MapFactory'])
 				$scope.isError= true;
 				console.log(err)
 			}
-			/*
-			 $scope.importantNotices = NoticesResource.query();
-			 $scope.importantNotices.then(function(importantNotices){
-			 if(importantNotices.length === 0){
-			 $location.path( "/Locations");
-			 }else if(importantNotices.length === 0){
-			 $scope.noData= true;
-			 $scope.isViewLoading= false;
-			 $location.path( "/Locations");
-			 }else{
-			 angular.forEach(importantNotices, function(value, key){
-			 $scope.isViewLoading = false;
-			 if(value.TYPE === "I"){
-			 value.link = "#/Notice:" + value.LINK;
-			 } else{
-			 value.link = value.LINK;
-			 }
-			 });
-			 }
-			 },function(status){
-			 $scope.isError = true;
-			 $scope.isViewLoading = false;
-			 });
-			 */
 				}
 			}
 		return a;
-
 })
 
 .factory('DMVGoFactory',['$resource', function($resource){

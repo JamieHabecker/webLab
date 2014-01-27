@@ -45,15 +45,13 @@ article.g17.dmvHome
 	article.g8.first.homeTabs
 		div.tabs
 			ul
-				li(data-ng-class="{ active: activePath=='/Locations'}"): a(href="",data-ng-click="tab('Locations')") Locations
-				li(data-ng-class="{ active: activePath=='/Notices' }"): a(href="",data-ng-click="tab('Notices')") Notices
+				li(data-ng-class="{ active: activePath=='/Locations' || activePath=='/Details'}"): a(href="",data-ng-click="tab('Locations')") Locations
+				li(data-ng-class="{ active: activePath=='/Notices' || activePath=='/NoticeDetails' }"): a(href="",data-ng-click="tab('Notices')") Notices
 				li(class="m",data-ng-class="{ active: activePath=='/DMV2Go' }"): a(href="",data-ng-click="tab('dmvgo')") DMV 2 Go
 				li(data-ng-class="{ active: activePath=='/Moving' }"): a(href="",data-ng-click="tab('moving')") Moving?
 				li(class="m",data-ng-class="{ active: activePath=='/WhatsNew' }"): a(href="",data-ng-click="tab('new')") What's New
 		div.tabContent
-			h2.loaderText(data-ng-show="isloading && !isError") Loading...
-			h2.error(data-ng-show="isError") Sorry, this information is currently unavailable
-			div(data-ng-hide="isloading || isError || activePath !== '/Locations'")
+			div(data-ng-hide="activePath !== '/Locations'")
 				div.selectHolder(data-ng-show="activePath=='/Locations' && !isloading && !isError",style="position:absolute;z-index:3000;overflow:auto;")
 					div.formField.mapSelect
 						select(data-ng-model="name",data-ng-options="c.name for c in colors",data-ng-change="update()")
@@ -61,30 +59,40 @@ article.g17.dmvHome
 				div(style="style=width:500px;height:0px;margin:3px;")
 					div(id="map_canvas" ,ui-map="myMap",ui-options="mapOptions")
 
-			div.details(data-ng-show="activePath=='/Details' && !isloading",data-ng-model='d')
-				img(src="{{srrc}}")
-				ul
-					li(style="margin-bottom:0.5em;") {{d.OFFICENAME}} {{status}}
-					li(style="margin-bottom:0.5em;") Current Wait: {{d.WAIT}}
-					li(style="margin-bottom:0.5em;") {{d.OFFICEADDRESS}}
-					li(data-ng-bind-html="d.OFFICEHOURS")
-					li(style="padding-top:2em;"): a(href="https://maps.google.com/?q={{d.OFFICEADDRESS}}", data-ng-hide="d.ID === '76'") Click here for driving directions
-					li: a(href="",data-ng-click="tab('Locations')") << Return to map
+			div(data-ng-show="activePath=='/Details'",data-ng-model='d')
+				h2.loaderText(data-ng-show="isloading && !errr")
+				h2.errr(data-ng-show="errr") Location details are currently unavailable
+				div.details(data-ng-show="!errr && !isloading")
+					div.img
+						img(data-ng-click="details(d.ID)",src="{{srrc}}")
+						a(data-ng-click="details(d.ID)") More Details
+						a(data-ng-click="tab('Locations')") < Back to map
+					div.det
+						ul
+							li(style="margin-bottom:0.5em;") {{d.OFFICENAME}} {{status}}
+							li(style="margin-bottom:0.5em;") Current Wait: {{d.WAIT}}
+							li(style="margin-bottom:0.5em;") {{d.OFFICEADDRESS}}
+							li(data-ng-bind-html="d.OFFICEHOURS")
+							li(style="padding-top:2em;"): a(href="https://maps.google.com/?q={{d.OFFICEADDRESS}}", data-ng-hide="d.ID === '76'") Click here for driving directions
 
-			div.notices(data-ng-show="activePath=='/Notices' && !isloading && !isError")
+			div.notices(data-ng-show="activePath=='/Notices'")
+				h2.loaderText(data-ng-show="isloading && !errr")
+				h2.errr(data-ng-show="errr") Location details are currently unavailable
 				h2(data-ng-show="noNotices && !isloading") There are currently no notices.
 				div(data-ng-class-odd="'odd'", data-ng-class-even="'even'", data-ng-repeat='importantNotice in importantNotices')
 					h3(class="{{importantNotice.HIGHLIGHT}}",data-ng-click="check(importantNotice.TYPE,importantNotice.LINK)",data-ng-href="{{importantNotice.link}}") {{importantNotice.TITLE}}
 					p{{importantNotice.INTRO_TEXT}}
-			div.noticesDetails(data-ng-show="activePath=='/Notice' && !isloading", data-ng-model="notice")
-				h2(data-ng-show="noData && !isloading") This record does not exist.
-				h2 {{title}}
-				p(data-ng-show="notice && !isloading") {{notice.MSG}}
+
+			div.noticesDetails(data-ng-show="activePath=='/NoticeDetails' && !isloading", data-ng-model="notice")
+					h2(data-ng-show="noData && !isloading") This record does not exist.
+					h2 {{title}}
+					p(data-ng-show="notice && !isloading") {{notice.MSG}}
 
 
-			div.twoGo(data-ng-show="activePath=='/DMV2Go' && !isloading")
+			div.twoGo(data-ng-show="activePath=='/DMV2Go'")
+				h2.loaderText(data-ng-show="isloading && !errr")
 				h2(data-ng-show="noEvents") There are no visits planned.
-				div(style="padding-top:1em;")
+				div(data-ng-show="!isloading && !errr",style="padding-top:1em;")
 
 					div.day(data-ng-show="dayOneEvents")
 						div(day,events="dayOne")
@@ -140,12 +148,15 @@ article.g17.dmvHome
 	article.g4.sec.comp6
 		h3 Other
 		ul
-			li: a(href='https://www.dmv.virginia.gov/dmvnet/registration/regist_entry.asp') Vehicle Registration Renewal
-			li: a(href="https://www.dmv.virginia.gov/dmvnet/address/intro.asp") Address Change
-			li: a(href="https://www.dmv.virginia.gov/dmvnet/drivers_license/intro.asp") Driver's License Renewal
-			li: a(href="https://www.dmv.virginia.gov/dmvnet/veh_sld_trd/intro.asp") Report a Vehicle Sold / Traded
-			li: a(href="https://www.dmv.virginia.gov/dmvnet/drivers_license_replacement/intro.asp") Driver's License Replacement
-			li: a(href="https://www.dmv.virginia.gov/dmvnet/plate_purchase/intro.asp") Plate Purchase
+			li: a(href='/webdoc/pdf/dmv201.pdf') Fees
+			li: a(href="/commercial/#taxact/diesel_refunds.html") Diesel Vehicle Fuel Refunds
+			li: a(href="/general/#guide/index.html") Family of Deceased
+			li: a(href="/military/") Military Personnel
+			li: a(href="/forms/") Forms and Publications
+			li: a(href="/general/#auth_mc.asp") Licensed Transportation Services
+			li: a(href="/general/#hauling.html") Hauling Permits
+			li: a(href="/general/#records/index.html") Record Services
+			li: a(href="https://logi.epro.cgipdc.com/Public") Transparency in Procurement
 			li: a.orgBtn(href="/") All
 		div
 	article.g8.second.news(data-ng-controller="NewsController")

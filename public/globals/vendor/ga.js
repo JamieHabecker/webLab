@@ -20,4 +20,4 @@
             alert('Please make sure you have private browsing turned off in your Safari settings to use this form.');
         else
             throw error;
-    }
+    };

@@ -54,17 +54,15 @@
   <article class="g8 first homeTabs">
     <div class="tabs">
       <ul>
-        <li data-ng-class="{ active: activePath=='/Locations'}"><a href="" data-ng-click="tab('Locations')">Locations</a></li>
-        <li data-ng-class="{ active: activePath=='/Notices' }"><a href="" data-ng-click="tab('Notices')">Notices</a></li>
+        <li data-ng-class="{ active: activePath=='/Locations' || activePath=='/Details'}"><a href="" data-ng-click="tab('Locations')">Locations</a></li>
+        <li data-ng-class="{ active: activePath=='/Notices' || activePath=='/NoticeDetails' }"><a href="" data-ng-click="tab('Notices')">Notices</a></li>
         <li data-ng-class="{ active: activePath=='/DMV2Go' }" class="m"><a href="" data-ng-click="tab('dmvgo')">DMV 2 Go</a></li>
         <li data-ng-class="{ active: activePath=='/Moving' }"><a href="" data-ng-click="tab('moving')">Moving?</a></li>
         <li data-ng-class="{ active: activePath=='/WhatsNew' }" class="m"><a href="" data-ng-click="tab('new')">What's New</a></li>
       </ul>
     </div>
     <div class="tabContent">
-      <h2 data-ng-show="isloading &amp;&amp; !isError" class="loaderText">Loading...</h2>
-      <h2 data-ng-show="isError" class="error">Sorry, this information is currently unavailable</h2>
-      <div data-ng-hide="isloading || isError || activePath !== '/Locations'">
+      <div data-ng-hide="activePath !== '/Locations'">
         <div data-ng-show="activePath=='/Locations' &amp;&amp; !isloading &amp;&amp; !isError" style="position:absolute;z-index:3000;overflow:auto;" class="selectHolder">
           <div class="formField mapSelect">
             <select data-ng-model="name" data-ng-options="c.name for c in colors" data-ng-change="update()">
@@ -76,31 +74,40 @@
           <div id="map_canvas" ui-map="myMap" ui-options="mapOptions"></div>
         </div>
       </div>
-      <div data-ng-show="activePath=='/Details' &amp;&amp; !isloading" data-ng-model="d" class="details"><img src="{{srrc}}"/>
-        <ul>
-          <li style="margin-bottom:0.5em;">{{d.OFFICENAME}} {{status}}</li>
-          <li style="margin-bottom:0.5em;">Current Wait: {{d.WAIT}}</li>
-          <li style="margin-bottom:0.5em;">{{d.OFFICEADDRESS}}</li>
-          <li data-ng-bind-html="d.OFFICEHOURS"></li>
-          <li style="padding-top:2em;"><a href="https://maps.google.com/?q={{d.OFFICEADDRESS}}" data-ng-hide="d.ID === '76'">Click here for driving directions</a></li>
-          <li><a href="" data-ng-click="tab('Locations')"><< Return to map</a></li>
-        </ul>
+      <div data-ng-show="activePath=='/Details'" data-ng-model="d">
+        <h2 data-ng-show="isloading &amp;&amp; !errr" class="loaderText"></h2>
+        <h2 data-ng-show="errr" class="errr">Location details are currently unavailable</h2>
+        <div data-ng-show="!errr &amp;&amp; !isloading" class="details">
+          <div class="img"><img data-ng-click="details(d.ID)" src="{{srrc}}"/><a data-ng-click="details(d.ID)">More Details</a><a data-ng-click="tab('Locations')">< Back to map</a></div>
+          <div class="det">
+            <ul>
+              <li style="margin-bottom:0.5em;">{{d.OFFICENAME}} {{status}}</li>
+              <li style="margin-bottom:0.5em;">Current Wait: {{d.WAIT}}</li>
+              <li style="margin-bottom:0.5em;">{{d.OFFICEADDRESS}}</li>
+              <li data-ng-bind-html="d.OFFICEHOURS"></li>
+              <li style="padding-top:2em;"><a href="https://maps.google.com/?q={{d.OFFICEADDRESS}}" data-ng-hide="d.ID === '76'">Click here for driving directions</a></li>
+            </ul>
+          </div>
+        </div>
       </div>
-      <div data-ng-show="activePath=='/Notices' &amp;&amp; !isloading &amp;&amp; !isError" class="notices">
+      <div data-ng-show="activePath=='/Notices'" class="notices">
+        <h2 data-ng-show="isloading &amp;&amp; !errr" class="loaderText"></h2>
+        <h2 data-ng-show="errr" class="errr">Location details are currently unavailable</h2>
         <h2 data-ng-show="noNotices &amp;&amp; !isloading">There are currently no notices.</h2>
         <div data-ng-class-odd="'odd'" data-ng-class-even="'even'" data-ng-repeat="importantNotice in importantNotices">
           <h3 data-ng-click="check(importantNotice.TYPE,importantNotice.LINK)" data-ng-href="{{importantNotice.link}}" class="{{importantNotice.HIGHLIGHT}}">{{importantNotice.TITLE}}</h3>
           <p>{{importantNotice.INTRO_TEXT}}</p>
         </div>
       </div>
-      <div data-ng-show="activePath=='/Notice' &amp;&amp; !isloading" data-ng-model="notice" class="noticesDetails">
+      <div data-ng-show="activePath=='/NoticeDetails' &amp;&amp; !isloading" data-ng-model="notice" class="noticesDetails">
         <h2 data-ng-show="noData &amp;&amp; !isloading">This record does not exist.</h2>
         <h2>{{title}}</h2>
         <p data-ng-show="notice &amp;&amp; !isloading">{{notice.MSG}}</p>
       </div>
-      <div data-ng-show="activePath=='/DMV2Go' &amp;&amp; !isloading" class="twoGo">
+      <div data-ng-show="activePath=='/DMV2Go'" class="twoGo">
+        <h2 data-ng-show="isloading &amp;&amp; !errr" class="loaderText"></h2>
         <h2 data-ng-show="noEvents">There are no visits planned.</h2>
-        <div style="padding-top:1em;">
+        <div data-ng-show="!isloading &amp;&amp; !errr" style="padding-top:1em;">
           <div data-ng-show="dayOneEvents" class="day">
             <div day="day" events="dayOne"></div>
             <div eventlist="eventlist" data-ng-repeat="event in dayOneEvents" class="theEvents"></div>
@@ -167,12 +174,15 @@
   <article class="g4 sec comp6">
     <h3>Other</h3>
     <ul>
-      <li><a href="https://www.dmv.virginia.gov/dmvnet/registration/regist_entry.asp">Vehicle Registration Renewal</a></li>
-      <li><a href="https://www.dmv.virginia.gov/dmvnet/address/intro.asp">Address Change</a></li>
-      <li><a href="https://www.dmv.virginia.gov/dmvnet/drivers_license/intro.asp">Driver's License Renewal</a></li>
-      <li><a href="https://www.dmv.virginia.gov/dmvnet/veh_sld_trd/intro.asp">Report a Vehicle Sold / Traded</a></li>
-      <li><a href="https://www.dmv.virginia.gov/dmvnet/drivers_license_replacement/intro.asp">Driver's License Replacement</a></li>
-      <li><a href="https://www.dmv.virginia.gov/dmvnet/plate_purchase/intro.asp">Plate Purchase</a></li>
+      <li><a href="/webdoc/pdf/dmv201.pdf">Fees</a></li>
+      <li><a href="/commercial/#taxact/diesel_refunds.html">Diesel Vehicle Fuel Refunds</a></li>
+      <li><a href="/general/#guide/index.html">Family of Deceased</a></li>
+      <li><a href="/military/">Military Personnel</a></li>
+      <li><a href="/forms/">Forms and Publications</a></li>
+      <li><a href="/general/#auth_mc.asp">Licensed Transportation Services</a></li>
+      <li><a href="/general/#hauling.html">Hauling Permits</a></li>
+      <li><a href="/general/#records/index.html">Record Services</a></li>
+      <li><a href="https://logi.epro.cgipdc.com/Public">Transparency in Procurement</a></li>
       <li><a href="/" class="orgBtn">All</a></li>
     </ul>
     <div></div>

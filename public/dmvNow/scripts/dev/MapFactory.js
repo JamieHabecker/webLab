@@ -17,15 +17,18 @@ angular.module("MapFactory", [])
 
 .factory('message', function() {
 			return{
-				'Locations': function(scope,Locations,$routeParams,$cookieStore,Item,fun){
+				'Locations': function(scope,Locations,Item){
 					var latLng;
+					var myMap;
+					var allOffices;
+					var offices = [];
+					var themap= scope.myMap;
 					scope.notMobile = "notMobile"
 					Locations.query({},successcb,errorcb);
 					function successcb(data){
 						scope.isloading= false;
 						scope.LocationDetails = data;
-						var allOffices= function(){
-							var offices= []
+						allOffices= function(){
 							angular.forEach(data, function(value, key){
 								if(value.WAIT === "00:00"){
 									value.WAIT = "No Wait"
@@ -43,9 +46,17 @@ angular.module("MapFactory", [])
 							});
 							return offices;
 						}
+
+
+
+
+
+
+
+
 						scope.colors = allOffices();
 						scope.update = function() {
-						scope.myMap.setOptions({
+						themap.setOptions({
 								center : new google.maps.LatLng(scope.name.lat, scope.name.lng),
 								zoom : 15,
 								mapTypeId : google.maps.MapTypeId.ROADMAP,
@@ -53,9 +64,6 @@ angular.module("MapFactory", [])
 							});
 							scope.time = scope.name.wait;
 						}
-
-
-
 						if(sessionStorage.getItem("Location") === "true"){
 							var latlng = new google.maps.LatLng(sessionStorage.userLat, sessionStorage.userLng);
 							setMap(latlng);
@@ -76,39 +84,24 @@ angular.module("MapFactory", [])
 							var latLng = new google.maps.LatLng(38.9177816, -78.1881693);
 							setMap(latlng);
 						}
-
-
-
-
 						function setMap(latlng){
-							console.log("Setting Map")
-							scope.myMap.setOptions({
+							themap.setOptions({
 								center : latlng,
 								zoom : 15
 							});
-							drawMap(scope,fun, latlng);
+							drawMap(scope,Locations,Item,latlng);
 						}
-
-
-
 					}
 					function errorcb(err){
 						scope.isError= true;
 						scope.isloading= false;
 						return;
 					}
-
-
-
-					function drawMap(scope, fun,latlng){
+					function drawMap(scope,Locations,Item,latlng){
+						var markers = [];
 						if(sessionStorage.mapDrawn){
 							return;
 						}else{
-
-						}
-						var markers = [];
-						var test= function(x){
-							alert("clicked " + x)
 						}
 						angular.forEach(scope.LocationDetails, function(value, key) {
 							var markerIcon = "/img/dmv_marker.png"
@@ -116,13 +109,13 @@ angular.module("MapFactory", [])
 								var markerIcon = "/img/dmv_marker_closed.png"
 							}
 							var marker = new google.maps.Marker({
-								map : scope.myMap,
+								map : themap,
 								position : new google.maps.LatLng(value.LATITUDE, value.LONGITUDE),
 								title : value.OFFICENAME,
 								icon : markerIcon
 							});
 							scope.myMarkers = markers.push(marker);
-							var a= fun;
+
 							var boxText = document.createElement("div");
 							if (value.OpenClosed === "O") {
 								boxText.innerHTML = "<a style='cursor:pointer;' data='" + value.ID + "'>" + value.OFFICENAME + "<br/>" + "Current wait: " + value.WAIT + "</a>";
@@ -131,6 +124,7 @@ angular.module("MapFactory", [])
 							}else if (value.OpenClosed === "E") {
 								boxText.innerHTML = "<a>" + value.OFFICENAME + "<br/>Closed</a>";
 							}
+							var ib;
 							var myOptions = {
 								content: boxText,
 								disableAutoPan : true,
@@ -147,15 +141,15 @@ angular.module("MapFactory", [])
 								infoBoxClearance : new google.maps.Size(1, 1),
 								isHidden : false,
 								pane : "floatPane",
-								enableEventPropagation : false,
+								enableEventPropagation : false
 							};
-							var ib = new InfoBox(myOptions);
 							google.maps.event.addDomListener(boxText,'click',function(){
-								scope.$broadcast("detailsClicked", value.ID)
+								scope.$emit("detailsClicked", value.ID)
 							});
+							ib = new InfoBox(myOptions);
 							ib.open(scope.myMap, marker);
-							google.maps.event.addListener(scope.myMap, 'zoom_changed', function() {
-								var currentZoom = scope.myMap.getZoom();
+							google.maps.event.addListener(themap, 'zoom_changed', function() {
+								var currentZoom = themap.getZoom();
 								if (currentZoom <= 9) {
 									ib.hide();
 								} else {
@@ -163,20 +157,19 @@ angular.module("MapFactory", [])
 								}
 							});
 							google.maps.event.addListener(marker, 'click', function() {
-								//window.location.replace("#/Office:" + value.ID);
 								sessionStorage.id= value.ID;
 							});
 						});
-						var markerclusterer = new MarkerClusterer(scope.myMap, markers, {
+						var markerclusterer = new MarkerClusterer(themap, markers, {
 							'gridSize' : 50
 						});
 						google.maps.event.addListener(markerclusterer, 'clusterclick', function(cluster) {
-							var currentZoom = scope.myMap.getZoom();
+							var currentZoom = themap.getZoom();
 							scope.myMap.setZoom(currentZoom + 2)
 						});
-						google.maps.event.addListener(scope.myMap, 'resize', function(){
+						google.maps.event.addListener(themap, 'resize', function(){
 							if(!sessionStorage.mapDrawn){
-							scope.myMap.setOptions({
+							themap.setOptions({
 								center : latlng,
 								zoom : 13
 							});
@@ -184,62 +177,18 @@ angular.module("MapFactory", [])
 							}
 
 						})
-						google.maps.event.addListener(scope.myMap, 'tilesloaded', function() {
-								google.maps.event.trigger(scope.myMap, 'resize');
+						google.maps.event.addListener(themap, 'tilesloaded', function() {
+								google.maps.event.trigger(themap, 'resize');
 						});
 					}
 
 				}
+
+
+
+
 			}
+
+
+
 		})
-
-
-
-
-
-
-/*
-if (!_.isEmpty($routeParams)) {
-	latLng = new google.maps.LatLng($routeParams.lat, $routeParams.lng)
-}else if(sessionStorage.getItem("Location") === "true"){
-	var lat = sessionStorage.getItem("userLat");
-	var lng= sessionStorage.getItem("userLng");
-	latLng = new google.maps.LatLng(lat,lng);
-}else if(navigator.geolocation && sessionStorage.getItem("Location") !== "true"){
-	sessionStorage.removeItem("Location");
-	navigator.geolocation.getCurrentPosition(positionCallback,errorCallback,{maximumAge:5000});
-}else{
-	latLng = new google.maps.LatLng(38.9177816, -78.1881693)
-}
-
-function positionCallback(position){
-	latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-	scope.myMap.setCenter(latLng);
-	sessionStorage.setItem("Location","true");
-	sessionStorage.setItem("userLat",position.coords.latitude);
-	sessionStorage.setItem("userLng",position.coords.longitude);
-
-};
-function errorCallback() {
-	latLng = new google.maps.LatLng(38.9177816, -78.1881693)
-};
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

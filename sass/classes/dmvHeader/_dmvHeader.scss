@@ -10,6 +10,8 @@ header.dmvMobiHeader{
 	border-bottom:2px solid $blueLighter;
 	padding-left:0;
 	z-index:8000;
+	@include bottomShadowLight;
+	padding:1em 0;
 	ul{
 		padding:0;
 		margin:0;
@@ -22,18 +24,21 @@ header.dmvMobiHeader{
 				width:146px;
 				float:left;
 				margin-left:-13px;
+				cursor:pointer;
 			}
 			&.menu{
 				background:url("/img/menu-icon.jpg")no-repeat;
 				width:26px;
-				height:19px;
+				height:8px;
 				margin-top:13px;
 				cursor:pointer;
+				padding-left:3em;
+				padding-top:1em;
 			}
 			&.search{
 				background:url("/img/menu-icon.jpg")no-repeat;
 				background-position:3px -26px;
-				width:36px;
+				width:62px;
 				height:28px;
 				margin-right:1em;
 				margin-top:8px;
@@ -44,7 +49,7 @@ header.dmvMobiHeader{
 }
 
 div.mobiSpace{
-	height:41px;
+	height:80px;
 }
 
 div.mobi{
@@ -55,6 +60,7 @@ div.mobi{
 	border-radius:0px 0px 5px 5px;
 	@include bottomShadowLight;
 	overflow:hidden;
+	padding-top:13px;
 	div{
 		overflow:hidden;
 		ul{
@@ -167,7 +173,6 @@ div.mobiSearch{
 				&.menu{
 					float:right;
 					width:36px;
-					margin-right:1em;
 				}
 				&.search{
 					margin-left:2em;
@@ -209,12 +214,61 @@ div.mobiSearch{
 }
 
 @media screen and (min-width:758px){
+
 	header.dmvHeader{
 		display:block;
 		margin:0 auto;
+		div.social{
+			float:right;
+			ul{
+				padding:0;
+				margin:0;
+				li{
+					list-style-type: none;
+					background:url('/img/socis.png') no-repeat;
+					height:40px;
+					width:38px;
+					cursor: pointer;
+					display:inline-block;
+					&.face{
+						background-position:-3px -4px;
+						&:hover{
+							background-position:-4px -209px;
+						}
+					}
+					&.mobile{
+						background-position:-3px -43px;
+						&:hover{
+							background-position:-4px -248px;
+						}
+					}
+					&.yt{
+						background-position:-3px -83px;
+						&:hover{
+							background-position:-4px -288px;
+						}
+					}
+					&.tw{
+						background-position:-3px -122px;
+						&:hover{
+							background-position:-4px -327px;
+						}
+					}
+					&.rs{
+						background-position:-3px -162px;
+						&:hover{
+							background-position:-4px -367px;
+						}
+					}
+				}
+			}
+		}
 			div.logo{
 				float:left;
 				width:275px;
+				a{
+					cursor: pointer;
+				}
 			}
 		div.mainNav{
 			ul{

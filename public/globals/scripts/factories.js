@@ -31,7 +31,7 @@ angular.module("globalFactories", [])
 		enter : function(element, done) {
 			jQuery(element).animate({
 				opacity:1
-			},300,function(){
+			},100,function(){
 				done();
 			});
 		},
@@ -39,7 +39,7 @@ angular.module("globalFactories", [])
 		leave : function(element, done) {
 			jQuery(element).animate({
 				opacity:0.4
-			},300,function(){
+			},100,function(){
 				done();
 			});
 		}
@@ -48,23 +48,37 @@ angular.module("globalFactories", [])
 
 
 
-
 .animation('.mobi', function() {
 	return {
-		beforeAddClass : function(ele, className, done) {
-			$(ele).stop().slideUp('slow');
-			$('body,section.site,div.mobi').removeClass('mobiMenuShowing')
+		beforeAddClass : function(element, className, done) {
+		jQuery(element).slideUp('slow', function(){
+							done()
+				})
 		},
-		beforeRemoveClass : function(ele){
-			$(ele).stop().slideDown('slow').removeClass('ng-hide');
-			$('body,section.site,div.mobi').addClass('mobiMenuShowing')
-
+		beforeRemoveClass : function(element, className, done) {
+			jQuery(element).slideDown('slow').removeClass('ng-hide',function(){
+				done();
+			});
 		}
 	};
 })
 
 
+/*
+.animation('.mobi', function() {
+			return {
+				beforeAddClass : function(ele, className, done) {
+					$(ele).stop().slideUp('slow');
+					$('body,section.site,div.mobi').removeClass('mobiMenuShowing')
+				},
+				beforeRemoveClass : function(ele){
+					$(ele).stop().slideDown('slow').removeClass('ng-hide');
+					$('body,section.site,div.mobi').addClass('mobiMenuShowing')
 
+				}
+			};
+		})
+*/
 
 .factory('ContactFactory',['$resource', function($resource) {
 			var baseUrl = "//10.156.147.131/dmvForms/default.aspx/SendSearchAttributes";
@@ -77,11 +91,7 @@ angular.module("globalFactories", [])
 			});
 		}])
 
-
-
-
-
-		.factory('MenuFactory',['$resource', function($resource) {
+.factory('MenuFactory',['$resource', function($resource) {
 			var baseUrl = "/models/mainMenu.json";
 			return $resource(baseUrl, {}, {
 				menu: {

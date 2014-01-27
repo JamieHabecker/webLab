@@ -10,7 +10,6 @@ angular.module("directives", [])
 	};
 })
 
-
 .directive('day', function(){
 	return{
 		restrict: 'A',
@@ -43,6 +42,7 @@ angular.module("directives", [])
 				}
 			}
 		})
+
 .directive('related1', function(){
 			return{
 			restrict: 'EA',
@@ -56,9 +56,8 @@ angular.module("directives", [])
 				restrict: 'EA',
 				template: '<article class="related g4"><h3>Related Info Two</h3></article>',
 				replace:true
-		}
+			}
 })
-
 
 .directive('scroller', function(){
 	return{

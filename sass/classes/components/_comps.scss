@@ -17,15 +17,19 @@ article{
 					display:block;
 					padding:0.2em;
 					border-bottom:1px dotted #eeeeee;
-					&.orgBtn{
-						width:3em;
-						float:right;
-						margin-bottom:6px;
-						font-size:0.875em;
-						padding-left:10px;
-					}
 					&:hover{
 						background:#eeeeee;
+					}
+				}
+				a.orgBtn{
+					width:3em;
+					float:right;
+					margin-bottom:6px;
+					font-size:0.875em;
+					padding-left:10px;
+					border-bottom:2px solid $blueLighter;
+					&:hover{
+						@include orangeToLight;
 					}
 				}
 			}

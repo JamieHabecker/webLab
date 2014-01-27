@@ -38,6 +38,14 @@ article.homeTabs{
 		@include bottomShadowLight;
 		border-radius:5px;
 		background:#FFFFFF;
+		h2.loaderText{
+			width:100%;
+			text-align: center;
+			height:50px;
+		}
+		h2.errr{
+			text-align:center;
+		}
 		div.selectHolder{
 			margin-top:0.5em;
 			margin-left:0.5em;
@@ -187,14 +195,26 @@ article.homeTabs{
 		}
 		div.details{
 			padding:1em;
+			overflow:hidden;
 			overflow-y:auto;
 			height:19em;
-			img{
-				max-width:35%;
+			div.img{
+				text-align: center;
 				float:left;
-				margin-right:1em;
-				margin-bottom:15em;
+				width:45%;
+				cursor: pointer;
+				a{
+					clear:left;
+					display:block;
+					cursor:pointer;
+					&:last-child{
+						margin-top:2em;
+					}
+				}
 			}
+			div.det{
+				float:right;
+				width:48%;
 			h2{
 				text-align:left;
 				font-size:1.3em;
@@ -217,6 +237,7 @@ article.homeTabs{
 			}
 			br{
 				display:block;
+			}
 			}
 
 		}
