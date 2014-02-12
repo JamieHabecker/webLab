@@ -197,7 +197,7 @@ angular.module("dmvPortal", ['globals','ui.map','ui.event','directives','factori
 				$scope.colors = allOffices();
 				drawMap($scope,data);
 			}
-			if(!sessionStorage.userLat){
+			if(Modernizr.geolocation && !sessionStorage.userLat){
 				navigator.geolocation.getCurrentPosition(function(position) {
 					var pos = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
 					$scope.myMap.setCenter(pos);

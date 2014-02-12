@@ -120,14 +120,12 @@ angular.module("globals", ['ngRoute','ngResource','ngAnimate','ngTouch','globalC
 						$location.path(y)
 					}
 					scope.$on('$routeChangeSuccess', function(){
-						angular.element('ul.theLinks li').removeClass('active');
-					})
-					scope.$on('$routeChangeSuccess', function(){
 						var a= window.location.hash;
 						var b= a.substring(2);
-						var c= angular.element('ul.theLinks li.' + b)
+						var c= jQuery('ul.theLinks li.' + b)
+						jQuery('ul.theLinks li').removeClass('active');
 						if($(c).hasClass(b)){
-							angular.element('ul.theLinks li.' + b).addClass('active');
+							jQuery('ul.theLinks li.' + b).addClass('active');
 						}
 					})
 					scope.goHome= function(){
@@ -137,7 +135,6 @@ angular.module("globals", ['ngRoute','ngResource','ngAnimate','ngTouch','globalC
 				replace:true
 			}
 		}])
-
 
 .directive('dmvfooter', function(){
 			return{
