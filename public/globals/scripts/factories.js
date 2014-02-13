@@ -26,6 +26,23 @@ angular.module("globalFactories", [])
 }])
 
 
+.animation('an-enter', function() {
+	 return {
+	 setup : function(myElement) {
+	 myElement.css({ 'opacity': 0.3 });
+	 return {};
+	 },
+	 start : function(myElement, done, data) {
+	 myElement.animate({
+	 'opacity' : 1
+	 }, 300, function(){
+	 done();
+	 });
+	 }
+	 }
+})
+
+/****Use when upgrade to angular 1.2.8*****
 .animation('.siteAnime', function() {
 	return {
 		enter : function(element, done) {
@@ -45,7 +62,7 @@ angular.module("globalFactories", [])
 		}
 	};
 })
-
+*/
 
 
 .animation('.mobi', function() {

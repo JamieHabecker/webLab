@@ -1,4 +1,4 @@
-angular.module("globals", ['ngRoute','ngResource','ngAnimate','ngTouch','globalConfig','globalControllers','globalFactories','ngSanitize'])
+angular.module("globals", ['ngResource','ngTouch','globalConfig','globalControllers','globalFactories','ngSanitize'])
 
 
 .directive('states',['StateFactory',function(StateFactory){
@@ -108,7 +108,7 @@ angular.module("globals", ['ngRoute','ngResource','ngAnimate','ngTouch','globalC
 				restrict: 'EA',
 				template:"<header class='dmvHeader g16'><div class='social'><ul><li class='face'></li><li class='mobile'></li><li class='yt'></li><li class='tw'></li><li class='rs'></li></ul></div><div class='logo first'><a data-ng-click='goHome()'><img src='/img/dmvLogo.png' alt='DMV HOME' /></a></div>" +
 						"<div class='subNav'>" +
-						"<div class='login'><button>Log In</button></div>" +
+						"<div class='login'><button data-ng-click='logIn()'>Log In</button></div>" +
 						"<div class='search' data-ng-controller='SearchController'><ul><li><input type='text' name='search' data-ng-model='searchIn' placeholder='Search DMV'/></li><li><a class='bluBtn' data-ng-click='search()'>Search</a></li></div>"+
 						"<div class='subLinks'><a href='/'>Create Account</a><a href='/'>News</a><a href='/'>About DMV</a><a href='/'>Contact Us</a></div></div>"+
 						"<div class='mainNavHold' data-ng-controller='MainNavigationController'><div class='mobMainNav mob'>" +
@@ -118,6 +118,11 @@ angular.module("globals", ['ngRoute','ngResource','ngAnimate','ngTouch','globalC
 				link: function(scope,ele,attr){
 					scope.next= function(x,y){
 						$location.path(y)
+					}
+					scope.logIn= function(){
+						console.log("Here")
+						var url= "/dmvnet/pin_maint/pin_logon.aspx";
+						window.location.href= url
 					}
 					scope.$on('$routeChangeSuccess', function(){
 						var a= window.location.hash;

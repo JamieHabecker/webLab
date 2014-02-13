@@ -62,7 +62,7 @@ concat:{
 		separator: ';'
 	},
 	dist:{
-		src: ['public/globals/vendor/jquery-1.10.2.js','public/globals/vendor/angular.js','public/globals/scripts/*.js'], //Using mini match for your scripts to concatenate
+		src: ['public/globals/vendor/jquery-1.10.2.js','public/globals/vendor/angular.js','public/globals/vendor/ga.js','public/globals/scripts/*.js'], //Using mini match for your scripts to concatenate
 		dest: 'public/globals/globals.js' //where to output the script
 	}
 },
