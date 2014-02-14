@@ -1,12 +1,15 @@
 div.formField{
-	label{
+	label,span.lab{
 		padding-bottom:0.5em;
 	}
-	p{
+	p,span.err{
 		background: none repeat scroll 0 0 transparent;
 		color: #555555;
 		font-size: 0.7em;
 		margin-top: -0.5em;
+	}
+	span.err{
+		display:block;
 	}
 	input{
 		padding-top:6px;
@@ -24,7 +27,44 @@ div.formField{
 			border-bottom:none;
 		}
 	}
-
+	&.phoneThree{
+		input{
+			float:left;
+			width:30%;
+			margin-right:1%;
+		}
+		ul{
+			padding:0;
+			margin:0;
+			clear:left;
+			li{
+				width:31%;
+				display:inline-block;
+			}
+		}
+	}
+}
+div.dob{
+	background: #eeeeee;
+	border:1px solid #ccc;
+	border-radius:5px;
+	width:99%;
+	float:left;
+	div.dobMonth, div.dobDay, div.dobCent, div.dobYear{
+		width:24.6%;
+		float:left;
+		select{
+			background:#ffffff;
+		}
+		&.dobYear{
+			label{
+				visibility:hidden;
+			}
+		}
+	}
+	div.dobMonth{
+		margin-left:3px;
+	}
 }
 
 
@@ -48,7 +88,6 @@ div.formField{
 		clear:left;
 		 margin-left:0;
 	 }
-
 	div.sec{
 		width:49%;
 		margin-left:2%;
@@ -72,7 +111,23 @@ div.formField{
 		textarea{
 			width:98%;
 		}
+		div.phoneThree{
+			input{
+				width:32%;
+				margin-right:1%;
+			}
+		}
 	}
+	div.dob{
+		width:94%;
+	div.dobMonth, div.dobDay, div.dobCent, div.dobYear{
+		width:23%;
+	}
+		div.dobMonth{
+			margin-left:1em;
+		}
+	}
+
 }
 
 

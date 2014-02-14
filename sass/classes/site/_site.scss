@@ -5,6 +5,7 @@ section.site{
 	overflow:hidden;
 	overflow-y:auto;
 	width:100%;
+	min-height:600px;
 	div.content{
 		margin:0 auto;
 		margin-top:1em;
@@ -17,22 +18,57 @@ section.site{
 		overflow-y:hidden;
 		height:auto;
 	}
+	&.transaction, &.contactForms{
+		header.dmvHeader{
+			display:block;
+			text-align: center;
+			img{
+				max-width:40%;
+			}
+		}
+	}
 }
-
 
 @media screen and (min-width:758px){
 	section.site{
 		height:auto;
 		overflow:auto;
 		margin-top:0 !important;
-	}
-	body.odomFraud,body.salvageComplaint{
-		section.site{
-		div.content{
-			article{
-				//margin-bottom:200px;
+		&.transaction, &.contactForms{
+			header.dmvHeader{
+				img{
+					max-width:100%;
+				}
 			}
-		}
+
 		}
 	}
 }
+
+@media screen and (min-width:1040px){
+	section.transaction{
+		width:70%;
+		margin:0 auto;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

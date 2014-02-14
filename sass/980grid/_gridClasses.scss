@@ -11,6 +11,9 @@
 .g17{
 	width:$seventeen;
 }
+.second{
+	margin-left:0;
+}
 
 
 
@@ -39,7 +42,18 @@
 	.second{
 		margin-left:0;
 	}
+	section.transaction{
+		.second{
+			margin-left:percentage((12px)/980px);
+		}
+	}
+
 }
+
+
+
+
+
 
 @media screen and (min-width:1016px){
 	.g4{

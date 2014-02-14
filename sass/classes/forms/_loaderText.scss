@@ -12,6 +12,16 @@ h2.loaderText{
 	}
 }
 
+div.transaction{
+	h2.loaderText{
+		margin-top:3em;
+		width:80%;
+		background-position: center bottom;
+		padding-right:0;
+		height:100px;
+	}
+}
+
 
 @media screen and (min-width:758px){
 	h2.loaderText{

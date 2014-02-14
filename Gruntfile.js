@@ -70,7 +70,7 @@ concat:{
 compass: {
 	options: {
 		sassDir: 'sass/',
-		cssDir: 'public/css/',
+		cssDir: ['z:/Inetpub/DMVNew/css/','css/'],
 		imageDir: 'img/',
 		outputStyle: 'compressed'
 		//relativeAssets: false

@@ -4,10 +4,10 @@ nav.portalCancel{
 	text-align:center;
 	padding-top:1em;
 	padding-bottom:2em;
-	a{
+	a, input{
 	@include rightShadow;
 	background:#788E9C;
-	color:#eee;
+	color:#EEEEEE;
 	font-weight:bold;
 	border: 1px solid #ccc;
 	border-top:1px solid #eee;
@@ -19,12 +19,19 @@ nav.portalCancel{
 		background:#52616B;
 	}
 	}
+	input{
+		height:auto;
+	}
+	a{
+		color:#FFFFFF;
+		text-decoration: none;
+	}
 }
 
-@media screen and(min-width:758px){
+@media screen and (min-width:758px){
 	nav.portalCancel{
 		text-align:right;
-		a{
+		a, input{
 			width:20%;
 			text-align:center;
 			margin-right:2em;

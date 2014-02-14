@@ -11,23 +11,41 @@ div.continue{
 			margin-left:1em;
 			display:block;
 			margin-top:1em;
+			color:$orange;
+		}
+		&.btn{
+			display:block;
+			margin:0 auto;
+			width:80%;
 		}
 	}
-	button{
+	button,input{
 	  width:80%;
 	}
 	button[disabled]{
 		opacity:0.3;
 	}
-  nav{
-    margin-top:1em;
-  }
+	nav{
+		margin-top:1em;
+	}
+	input.return{
+		display:block;
+		background:none;
+		border:none;
+		color:$orange;
+		margin:0 auto;
+		text-decoration: underline;
+		margin-top:1em;
+	}
+	.btn{
+			@include orangeToLight;
+	}
 }
 
 
 @media screen and (min-width:758px){
   div.continue{
-    button{
+    button,input, a.btn{
       width:40%;
     }
   }

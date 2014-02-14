@@ -1,8 +1,18 @@
-label{
+label,span.lab, span.labN{
 	font-weight:bold;
 	display:block;
 	font-size:1em;
 	padding-top:1em;
 	color:#777777;
 	text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+	&.sub{
+		font-size:0.875em;
+	}
+	&.labN{
+		float:left;
+		margin-right:0.5em;
+	}
+	&.labelTitle{
+		margin-bottom:0.5em;
+	}
 }
