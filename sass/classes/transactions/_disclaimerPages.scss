@@ -1,0 +1,38 @@
+div.disclaimerPage, form.disclaimerPage{
+	h2{
+		font-size:1.2em;
+		border-top:1px dotted #EEEEEE;
+		padding-top:0.5em;
+		&:first-child{
+			border-top:none;
+			padding-top:none;
+		}
+	}
+	a{
+		color:$blueDarker;
+	}
+	nav.portalCancel{
+		a{
+			color:#EEEEEE;
+		}
+	}
+
+		div.disclaimerContent{
+			height:22em;
+			overflow:auto;
+			border:1px solid #CCCCCC;
+			margin-top:2em;
+			padding:0.5em;
+			padding-bottom:2em;
+			background:#f2f2f2;
+			&.short{
+				height:15em;
+			}
+		}
+
+
+}
+
+
+@media screen and (min-width:758px){
+}
