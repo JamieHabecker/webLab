@@ -1,0 +1,142 @@
+div.accountDetails{
+	ul{
+		margin-left:0;
+		padding-left:0;
+		li{
+			list-style-type: none;
+			display:inline-block;
+		}
+	}
+	ul.loggedInNav{
+		li{
+			list-style-type: none;
+			display: inline-block;
+		}
+	}
+
+	ul.title{
+		li{
+			&:first-child{
+				span{
+					font-weight:bold;
+				}
+			}
+			&:last-child{
+				float:right;
+			}
+			input{
+				background:none;
+				border:none;
+				color:$orange;
+				text-decoration: underline;
+			}
+		}
+	}
+	article{
+		height:auto;
+		min-height:0;
+		div{
+			padding-left:1em;
+			ul{
+				li{
+					a{
+						color:$orange;
+						margin-left:2em;
+					}
+					ul{
+						li{
+							margin-left:1em;
+						}
+					}
+				}
+			}
+		}
+		h2{
+			@include compTitle;
+		}
+		&.gen{
+			float:none;
+		}
+		&.alerts{
+			margin-bottom:3em;
+			background:#F7D2CF;
+			ul{
+				li{
+					padding-left:0.5em;
+			a{
+				color:#333333;
+				font-weight:bold;
+				margin-left:1em;
+				display: inline-block;
+			}
+				}
+			}
+		}
+		&.comp{
+			padding-bottom:1em;
+			min-height:15em;
+			ul{
+				li{
+					display:block;
+				}
+			}
+			table{
+				width:97%;
+				margin-top:1em;
+				border-color:#cccccc;
+				tr{
+					th{
+						text-align: left;
+					}
+					td{
+						padding:0.5em;
+					}
+				}
+			}
+			a{
+				color:$orange;
+				text-decoration: underline;
+				margin-top:1em;
+				margin-right:1em;
+				&.manage{
+					float:right;
+				}
+			}
+			&.first{
+				clear:left;
+			}
+			ul.address{
+				li{
+					margin-bottom:0.5em;
+				}
+			}
+		}
+	}
+	&.pinNotify{
+		table{
+			width:100%;
+			tr{
+				width:100%;
+				td{
+					width:100%;
+					background: $listHover;
+					padding:0.5em;
+					border:1px solid #cccccc;
+					&:hover{
+						background:$focusYellow;
+					}
+					input{
+						float:left;
+						margin-right:1em;
+					}
+					label{
+						width:100%;
+						display:block;
+						margin-top:-7px;
+
+					}
+				}
+			}
+		}
+	}
+}
